@@ -1,0 +1,139 @@
+---
+{
+  "component": "tab",
+  "title": "Tab",
+  "description": "Tab component documentation for Tremplin.",
+  "lead": "Switch between related panels using a keyboard-accessible tab list.",
+  "variants": [
+    {
+      "title": "Tabs and panels",
+      "description": "Author both sides of every relationship. The plugin fills missing roles and panel labels from trigger IDs, but does not invent IDs, aria-controls or panel tabindex."
+    },
+    {
+      "title": "Pills",
+      "description": "Theme composition changes presentation without changing the Tab interaction contract."
+    },
+    {
+      "title": "Vertical pills",
+      "description": "Author aria-orientation=vertical. Both arrow axes still navigate in DOM order in this pin."
+    },
+    {
+      "title": "Underline and disabled state",
+      "description": "Native disabled prevents click activation and removes the tab from arrow navigation. Every tab still has a uniquely paired panel."
+    },
+    {
+      "title": "List-group tabs",
+      "description": "List group can supply the tab triggers; these are panel-switching controls, not ordinary current-page navigation. The copyable active-color tokens explicitly compose body/inverse colors for readable contrast."
+    },
+    {
+      "title": "Instant pane transitions",
+      "description": "Every pane fades in by default. Outgoing panes leave immediately; tab-pane-instant disables entry animation without a fade class."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Logical styling adapts to RTL, but Right/Down still mean next in DOM order and Left/Up previous. The plugin does not reverse horizontal keys for RTL."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "ArrowRight / ArrowDown",
+      "behavior": "Automatically select/focus the next enabled tab in DOM order, wrapping at the end, including RTL."
+    },
+    {
+      "keys": "ArrowLeft / ArrowUp",
+      "behavior": "Select/focus the previous enabled tab, wrapping at the start. Modifier shortcuts are not intercepted."
+    },
+    {
+      "keys": "Home / End",
+      "behavior": "Select/focus the first/last enabled tab."
+    },
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Enter/leave the tab list through its selected trigger; author panel tabindex when it needs a focus stop."
+    }
+  ],
+  "guidelines": [
+    "Author IDs, aria-controls, aria-labelledby, initial aria-selected and focusable panels; do not rely on the plugin to invent every relationship.",
+    "Use dynamic tablist/tab/tabpanel roles for panel switching, not ordinary page navigation.",
+    "Active triggers initialize on window load; newly inserted widgets require explicit initialization.",
+    "hide on the old trigger and show on the new trigger are cancelable. hidden notifies immediate outgoing removal; shown waits for the entering pane.",
+    "show returns a completion promise; stale pending activations do not emit a misleading shown notification.",
+    "Both arrow axes follow DOM order regardless of orientation or RTL; unmodified arrows/Home/End activate automatically.",
+    "Do not place tabs in menus: the pinned documentation explicitly warns about usability and accessibility problems."
+  ],
+  "events": {
+    "click.trm.tab": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+    "hidden.trm.tab": "On the outgoing trigger after immediate deactivation; relatedTarget is the incoming trigger.",
+    "hide.trm.tab": "Cancelable start on the old trigger; relatedTarget is the incoming trigger.",
+    "keydown.trm.tab": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+    "load.trm.tab": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+    "show.trm.tab": "Cancelable start on the incoming trigger; relatedTarget is the old trigger, if any.",
+    "shown.trm.tab": "On the new trigger after the pane entry callback; stale activations are ignored."
+  }
+}
+---
+
+import { componentApi } from '../../../data/component-api'
+import ApiOptions from '../../../components/component/ApiOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("tab")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="tab" />
+
+{componentDetail("tab").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="tab" />
+</>}
+
+{componentDetail("tab").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("tab").sass} standalone={true} />
+</>}
+
+{componentDetail("tab").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="tab" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="tab" />
+
+{documentedComponents.find(component => component.name === "tab").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="tab" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("tab").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("tab").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<ApiOptions name="tab" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="tab" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="tab" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="tab" />
+<p class="mt-4"><a href="/api/tab/">View the generated {componentApi("tab").definition.className}{" API reference →"}</a></p>

@@ -1,0 +1,651 @@
+[
+  {
+    "name": "menu",
+    "title": "Menu",
+    "description": "Menu component documentation for Tremplin.",
+    "lead": "Display contextual actions with positioning, auto-close, keyboard navigation, and submenus.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Actions and disabled items",
+          "description": "Static presentation sample: native disabled buttons cannot activate. For unavailable links, remove or guard the destination; CSS disabled styling is not a keyboard guard.",
+          "markup": "<div class=\"menu show position-static \" style=\"max-inline-size: 100%; \"><button class=\"menu-item\" type=\"button\" >Rename</button><button class=\"menu-item\" type=\"button\" >Duplicate</button><hr class=\"menu-divider\"><button class=\"menu-item\" type=\"button\" disabled>Archive unavailable</button><a class=\"menu-item disabled\" role=\"link\" aria-disabled=\"true\" tabindex=\"-1\">Unavailable destination</a></div>"
+        },
+        {
+          "title": "Headers and descriptions",
+          "description": "Static content composition with explicit readable foregrounds. Headers and descriptions do not create a command controller.",
+          "markup": "<div class=\"menu show position-static \" style=\"max-inline-size: 100%; \"><h3 class=\"menu-header fg-body\">Share project</h3><button class=\"menu-item\" type=\"button\" ><span class=\"menu-item-content\"><strong>Copy link</strong><span class=\"menu-item-description fg-body\">Anyone with the link can view</span></span></button><span class=\"menu-text fg-body\">Choose how to share.</span></div>"
+        },
+        {
+          "title": "Scrollable menu",
+          "description": "A real toggle initializes keyboard handling; menu-scrollable constrains overflow using the actual max-height fallback token.",
+          "markup": "<div><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"menu\" aria-expanded=\"false\" aria-controls=\"countries-menu\" >Choose country</button><div class=\"menu menu-scrollable\" id=\"countries-menu\" style=\"--trm-menu-max-height: 9rem\"><button class=\"menu-item\" type=\"button\" >France</button><button class=\"menu-item\" type=\"button\" >Germany</button><button class=\"menu-item\" type=\"button\" >India</button><button class=\"menu-item\" type=\"button\" >Japan</button><button class=\"menu-item\" type=\"button\" >United Kingdom</button></div></div>"
+        },
+        {
+          "title": "Submenu structure",
+          "description": "Initialize the owning top-level toggle. Nested submenu triggers receive popup/expanded state; logical entry/exit keys follow document direction. This example uses click submenu activation.",
+          "markup": "<div><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"menu\" aria-expanded=\"false\" aria-controls=\"project-menu\" data-trm-submenu-trigger=\"click\">Project menu</button><div class=\"menu\" id=\"project-menu\"><button class=\"menu-item\" type=\"button\" >Download</button><div class=\"submenu\"><button class=\"menu-item\" type=\"button\" aria-expanded=\"false\" aria-controls=\"share-menu\">Share</button><div class=\"menu\" id=\"share-menu\"><button class=\"menu-item\" type=\"button\" >Copy project link</button><button class=\"menu-item\" type=\"button\" >Email project</button></div></div></div></div>"
+        },
+        {
+          "title": "Auto-close policies",
+          "description": "Default, inside-only, outside-only and manual policies govern clicks. Escape still closes while focus is in a menu, including autoClose=false; forms are exempt from normal inside-click closing.",
+          "markup": "<div class=\"hstack flex-wrap gap-2\"><div><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"menu\" aria-expanded=\"false\" aria-controls=\"policy-menu-0\" data-trm-auto-close=\"true\">Default close</button><div class=\"menu\" id=\"policy-menu-0\"><button class=\"menu-item\" type=\"button\" >Choose option</button></div></div><div><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"menu\" aria-expanded=\"false\" aria-controls=\"policy-menu-1\" data-trm-auto-close=\"inside\">Inside close</button><div class=\"menu\" id=\"policy-menu-1\"><button class=\"menu-item\" type=\"button\" >Choose option</button></div></div><div><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"menu\" aria-expanded=\"false\" aria-controls=\"policy-menu-2\" data-trm-auto-close=\"outside\">Outside close</button><div class=\"menu\" id=\"policy-menu-2\"><button class=\"menu-item\" type=\"button\" >Choose option</button></div></div><div><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"menu\" aria-expanded=\"false\" aria-controls=\"policy-menu-3\" data-trm-auto-close=\"false\">Manual close</button><div class=\"menu\" id=\"policy-menu-3\"><button class=\"menu-item\" type=\"button\" >Choose option</button></div></div></div>"
+        },
+        {
+          "title": "Responsive placement",
+          "description": "Placement prefixes use viewport breakpoints. Floating UI resolves logical end from the document direction, flips/shifts when necessary and updates on resize.",
+          "markup": "<div><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"menu\" aria-expanded=\"false\" aria-controls=\"responsive-menu\" data-trm-placement=\"bottom-start md:end\">Responsive placement</button><div class=\"menu\" id=\"responsive-menu\"><button class=\"menu-item\" type=\"button\" >Rename</button><button class=\"menu-item\" type=\"button\" >Duplicate</button><hr class=\"menu-divider\"><button class=\"menu-item\" type=\"button\" disabled>Archive unavailable</button></div></div>"
+        },
+        {
+          "title": "Native form content",
+          "description": "Generic menus can contain native forms. Clicking the checkbox keeps the menu open; no application-menu roles or automatic submission behavior are added.",
+          "markup": "<div><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"menu\" aria-expanded=\"false\" aria-controls=\"form-menu\" >Notification options</button><div class=\"menu\" id=\"form-menu\"><form class=\"p-2\"><div class=\"form-field\"><input class=\"check\" type=\"checkbox\" id=\"menu-email\"><label for=\"menu-email\">Email notifications</label></div></form></div></div>"
+        },
+        {
+          "title": "Selected and translucent presentation",
+          "description": "Selected/check styling is authored state, not an automatic radio or selection model. Translucent adds backdrop filtering.",
+          "markup": "<div class=\"menu show position-static menu-translucent\" style=\"max-inline-size: 100%; \"><button class=\"menu-item selected\" type=\"button\" aria-pressed=\"true\">Compact view <span class=\"menu-item-check\" aria-hidden=\"true\">✓</span></button><button class=\"menu-item\" type=\"button\" aria-pressed=\"false\">Comfortable view</button></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Static dark presentation uses logical alignment. Interactive submenu arrow direction follows the document, not only an isolated dir wrapper.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"menu show position-static \" style=\"max-inline-size: 100%; \"><button class=\"menu-item\" type=\"button\" >Rename project</button><button class=\"menu-item\" type=\"button\" >Duplicate project</button></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-menu-zindex",
+          "defaultValue": "var(--trm-z-menu)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-gap",
+          "defaultValue": "0.125rem",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-min-width",
+          "defaultValue": "10rem",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-padding-x",
+          "defaultValue": "0.25rem",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-padding-y",
+          "defaultValue": "0.25rem",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-spacer",
+          "defaultValue": "0.125rem",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-font-size",
+          "defaultValue": "var(--trm-font-size-sm)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-box-shadow",
+          "defaultValue": "var(--trm-box-shadow-lg)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-divider-bg",
+          "defaultValue": "var(--trm-border-color-translucent)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-divider-margin-y",
+          "defaultValue": "0.125rem",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-divider-margin-x",
+          "defaultValue": "0.25rem",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-item-color",
+          "defaultValue": "var(--trm-menu-color, var(--trm-fg-body))",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-item-hover-color",
+          "defaultValue": "var(--trm-menu-color, var(--trm-fg-body))",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-item-hover-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-item-active-color",
+          "defaultValue": "var(--trm-primary-contrast)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-item-active-bg",
+          "defaultValue": "var(--trm-primary-bg)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-item-disabled-color",
+          "defaultValue": "var(--trm-fg-3)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-item-gap",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-item-padding-x",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-item-padding-y",
+          "defaultValue": "0.25rem",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-item-border-radius",
+          "defaultValue": "var(--trm-radius-5)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-icon-size",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-description-font-size",
+          "defaultValue": "var(--trm-font-size-xs)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-check-color",
+          "defaultValue": "currentcolor",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-header-color",
+          "defaultValue": "var(--trm-fg-3)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-header-padding-x",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-header-padding-y",
+          "defaultValue": "0.25rem",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-transition-property",
+          "defaultValue": "opacity, transform, display",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-menu-transition-timing",
+          "defaultValue": "var(--trm-transition-timing-overlay)",
+          "purpose": "Default exported through $menu-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "ArrowDown / ArrowUp",
+          "behavior": "Open from the toggle and focus enabled items; navigation stops at each end once inside."
+        },
+        {
+          "keys": "Home / End",
+          "behavior": "Focus the first/last enabled item in the current menu."
+        },
+        {
+          "keys": "ArrowRight / ArrowLeft",
+          "behavior": "Enter/leave a submenu; reversed for an RTL document."
+        },
+        {
+          "keys": "Enter / Space",
+          "behavior": "Activate a native item or open its submenu."
+        },
+        {
+          "keys": "Escape",
+          "behavior": "Close the current submenu or root menu and return focus to its trigger, regardless of autoClose."
+        },
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Use native focus navigation; eligible menus close when focus leaves. Forms and autoClose policy affect dismissal."
+        }
+      ],
+      "guidelines": [
+        "Use data-trm-toggle=\"menu\" even with programmatic calls so global keyboard/close handling can find the trigger.",
+        "Floating UI is required: use the bundle or resolve the dependency in a module build.",
+        "Menu does not add complete ARIA application-menu roles or typeahead. Use native links/buttons and author an appropriate complete widget model if required.",
+        "Disabled styling alone does not guard an anchor; use native disabled or remove/guard the destination.",
+        "Static show examples illustrate styling; initialized toggles demonstrate the JavaScript contract.",
+        "show/hide start events are cancelable on the trigger. shown/hidden report settled CSS transitions; hide restores any moved menu to its original parent.",
+        "container can move the menu outside clipping ancestors; test geometry, focus and document RTL. update recalculates placement."
+      ],
+      "sass": "@use 'tremplin/scss/menu' with (\n  $menu-tokens: (\n    --trm-menu-padding-x: .5rem,\n    --trm-menu-item-padding-y: .375rem\n  )\n);"
+    },
+    "example": "<div><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"menu\" aria-expanded=\"false\" aria-controls=\"example-actions\" >Actions</button><div class=\"menu\" id=\"example-actions\"><a class=\"menu-item\" href=\"/getting-started/install/\">Edit</a><button class=\"menu-item\" type=\"button\" >Duplicate</button></div></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_menu.scss",
+    "definition": {
+      "name": "menu",
+      "className": "Menu",
+      "options": [
+        {
+          "name": "autoClose",
+          "type": "boolean | \"inside\" | \"outside\" | undefined",
+          "required": false
+        },
+        {
+          "name": "boundary",
+          "type": "string | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "container",
+          "type": "string | boolean | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "display",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "offset",
+          "type": "FloatingOffsetOption | undefined",
+          "required": false
+        },
+        {
+          "name": "floatingConfig",
+          "type": "FloatingConfigOption | undefined",
+          "required": false
+        },
+        {
+          "name": "menu",
+          "type": "HTMLElement | null | undefined",
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "reference",
+          "type": "string | Element | Record<string, any> | undefined",
+          "required": false
+        },
+        {
+          "name": "strategy",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "submenuTrigger",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "submenuDelay",
+          "type": "number | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "toggle(): Promise<void>",
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "dispose(): void",
+        "update(): void"
+      ],
+      "events": [
+        "hidden.trm.menu",
+        "hide.trm.menu",
+        "show.trm.menu",
+        "shown.trm.menu"
+      ],
+      "dataAttributes": [
+        "data-trm-auto-close",
+        "data-trm-boundary",
+        "data-trm-container",
+        "data-trm-display",
+        "data-trm-floating-config",
+        "data-trm-menu",
+        "data-trm-offset",
+        "data-trm-placement",
+        "data-trm-reference",
+        "data-trm-strategy",
+        "data-trm-submenu-delay",
+        "data-trm-submenu-trigger",
+        "data-trm-toggle",
+        "data-trm-toggle=\"menu\""
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "hidden.trm.menu": "On the toggle after exit and Floating UI cleanup; a moved menu is restored to its original parent.",
+      "hide.trm.menu": "Cancelable start on the toggle; clickEvent is supplied for click-driven dismissal.",
+      "show.trm.menu": "Cancelable start on the toggle, before opening or moving the menu.",
+      "shown.trm.menu": "On the toggle after the entry transition settles, if still open."
+    },
+    "moduleImport": "import Menu from 'tremplin/menu'",
+    "javascript": "import Menu from 'tremplin/menu'\n\nconst element = document.querySelector('[data-trm-toggle=\"menu\"]')\nconst instance = Menu.getOrCreateInstance(element)"
+  },
+  {
+    "name": "tab",
+    "title": "Tab",
+    "description": "Tab component documentation for Tremplin.",
+    "lead": "Switch between related panels using a keyboard-accessible tab list.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Tabs and panels",
+          "description": "Author both sides of every relationship. The plugin fills missing roles and panel labels from trigger IDs, but does not invent IDs, aria-controls or panel tabindex.",
+          "markup": "<div class=\"nav nav-tabs\" role=\"tablist\" aria-label=\"Account sections\"><button class=\"nav-link active\" id=\"account-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#account-panel\" type=\"button\" role=\"tab\" aria-controls=\"account-panel\" aria-selected=\"true\">Account</button><button class=\"nav-link\" id=\"security-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#security-panel\" type=\"button\" role=\"tab\" aria-controls=\"security-panel\" aria-selected=\"false\" tabindex=\"-1\">Security</button><button class=\"nav-link\" id=\"billing-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#billing-panel\" type=\"button\" role=\"tab\" aria-controls=\"billing-panel\" aria-selected=\"false\" tabindex=\"-1\">Billing</button></div><div class=\"tab-content p-3\"><section class=\"tab-pane active show\" id=\"account-panel\" role=\"tabpanel\" aria-labelledby=\"account-tab\" tabindex=\"0\">Account settings</section><section class=\"tab-pane\" id=\"security-panel\" role=\"tabpanel\" aria-labelledby=\"security-tab\" tabindex=\"0\">Security settings</section><section class=\"tab-pane\" id=\"billing-panel\" role=\"tabpanel\" aria-labelledby=\"billing-tab\" tabindex=\"0\">Billing settings</section></div>"
+        },
+        {
+          "title": "Pills",
+          "description": "Theme composition changes presentation without changing the Tab interaction contract.",
+          "markup": "<div class=\"vstack gap-3\"><div class=\"nav nav-pills theme-inverse\" role=\"tablist\" aria-label=\"activity sections\"><button class=\"nav-link active\" type=\"button\" role=\"tab\" id=\"activity-0-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#activity-0-panel\" aria-controls=\"activity-0-panel\" aria-selected=\"true\">Daily</button><button class=\"nav-link\" type=\"button\" role=\"tab\" id=\"activity-1-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#activity-1-panel\" aria-controls=\"activity-1-panel\" aria-selected=\"false\" tabindex=\"-1\">Weekly</button></div><div class=\"tab-content\"><section class=\"tab-pane active show\" id=\"activity-0-panel\" role=\"tabpanel\" aria-labelledby=\"activity-0-tab\" tabindex=\"0\">Daily content</section><section class=\"tab-pane\" id=\"activity-1-panel\" role=\"tabpanel\" aria-labelledby=\"activity-1-tab\" tabindex=\"0\">Weekly content</section></div></div>"
+        },
+        {
+          "title": "Vertical pills",
+          "description": "Author aria-orientation=vertical. Both arrow axes still navigate in DOM order in this pin.",
+          "markup": "<div class=\"vstack gap-3\"><div class=\"nav nav-pills nav-pills-vertical theme-inverse\" role=\"tablist\" aria-label=\"team sections\" aria-orientation=\"vertical\"><button class=\"nav-link active\" type=\"button\" role=\"tab\" id=\"team-0-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#team-0-panel\" aria-controls=\"team-0-panel\" aria-selected=\"true\">Personal</button><button class=\"nav-link\" type=\"button\" role=\"tab\" id=\"team-1-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#team-1-panel\" aria-controls=\"team-1-panel\" aria-selected=\"false\" tabindex=\"-1\">Team</button></div><div class=\"tab-content\"><section class=\"tab-pane active show\" id=\"team-0-panel\" role=\"tabpanel\" aria-labelledby=\"team-0-tab\" tabindex=\"0\">Personal content</section><section class=\"tab-pane\" id=\"team-1-panel\" role=\"tabpanel\" aria-labelledby=\"team-1-tab\" tabindex=\"0\">Team content</section></div></div>"
+        },
+        {
+          "title": "Underline and disabled state",
+          "description": "Native disabled prevents click activation and removes the tab from arrow navigation. Every tab still has a uniquely paired panel.",
+          "markup": "<div class=\"vstack gap-3\"><div class=\"nav nav-underline\" role=\"tablist\" aria-label=\"project sections\"><button class=\"nav-link active\" type=\"button\" role=\"tab\" id=\"project-0-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#project-0-panel\" aria-controls=\"project-0-panel\" aria-selected=\"true\">Overview</button><button class=\"nav-link\" type=\"button\" role=\"tab\" id=\"project-1-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#project-1-panel\" aria-controls=\"project-1-panel\" aria-selected=\"false\" tabindex=\"-1\">Activity</button><button class=\"nav-link\" type=\"button\" role=\"tab\" id=\"project-2-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#project-2-panel\" aria-controls=\"project-2-panel\" aria-selected=\"false\" tabindex=\"-1\" disabled>Archived</button></div><div class=\"tab-content\"><section class=\"tab-pane active show\" id=\"project-0-panel\" role=\"tabpanel\" aria-labelledby=\"project-0-tab\" tabindex=\"0\">Overview content</section><section class=\"tab-pane\" id=\"project-1-panel\" role=\"tabpanel\" aria-labelledby=\"project-1-tab\" tabindex=\"0\">Activity content</section><section class=\"tab-pane\" id=\"project-2-panel\" role=\"tabpanel\" aria-labelledby=\"project-2-tab\" tabindex=\"0\">Archived content</section></div></div>"
+        },
+        {
+          "title": "List-group tabs",
+          "description": "List group can supply the tab triggers; these are panel-switching controls, not ordinary current-page navigation. The copyable active-color tokens explicitly compose body/inverse colors for readable contrast.",
+          "markup": "<div class=\"vstack gap-3\"><div class=\"list-group theme-inverse\" style=\"--trm-list-group-active-bg: var(--trm-fg-body); --trm-list-group-active-color: var(--trm-bg-body); --trm-list-group-active-border-color: var(--trm-fg-body)\" role=\"tablist\" aria-label=\"list-tabs sections\"><button class=\"list-group-item list-group-item-action active\" type=\"button\" role=\"tab\" id=\"list-tabs-0-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#list-tabs-0-panel\" aria-controls=\"list-tabs-0-panel\" aria-selected=\"true\">Design</button><button class=\"list-group-item list-group-item-action\" type=\"button\" role=\"tab\" id=\"list-tabs-1-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#list-tabs-1-panel\" aria-controls=\"list-tabs-1-panel\" aria-selected=\"false\" tabindex=\"-1\">Build</button></div><div class=\"tab-content\"><section class=\"tab-pane active show\" id=\"list-tabs-0-panel\" role=\"tabpanel\" aria-labelledby=\"list-tabs-0-tab\" tabindex=\"0\">Design content</section><section class=\"tab-pane\" id=\"list-tabs-1-panel\" role=\"tabpanel\" aria-labelledby=\"list-tabs-1-tab\" tabindex=\"0\">Build content</section></div></div>"
+        },
+        {
+          "title": "Instant pane transitions",
+          "description": "Every pane fades in by default. Outgoing panes leave immediately; tab-pane-instant disables entry animation without a fade class.",
+          "markup": "<div class=\"vstack gap-3\"><div class=\"nav nav-tabs\" role=\"tablist\" aria-label=\"instant sections\"><button class=\"nav-link active\" type=\"button\" role=\"tab\" id=\"instant-0-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#instant-0-panel\" aria-controls=\"instant-0-panel\" aria-selected=\"true\">Preview</button><button class=\"nav-link\" type=\"button\" role=\"tab\" id=\"instant-1-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#instant-1-panel\" aria-controls=\"instant-1-panel\" aria-selected=\"false\" tabindex=\"-1\">Source</button></div><div class=\"tab-content\"><section class=\"tab-pane tab-pane-instant active show\" id=\"instant-0-panel\" role=\"tabpanel\" aria-labelledby=\"instant-0-tab\" tabindex=\"0\">Preview content</section><section class=\"tab-pane tab-pane-instant\" id=\"instant-1-panel\" role=\"tabpanel\" aria-labelledby=\"instant-1-tab\" tabindex=\"0\">Source content</section></div></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Logical styling adapts to RTL, but Right/Down still mean next in DOM order and Left/Up previous. The plugin does not reverse horizontal keys for RTL.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"vstack gap-3\"><div class=\"nav nav-tabs\" role=\"tablist\" aria-label=\"rtl-tabs sections\"><button class=\"nav-link active\" type=\"button\" role=\"tab\" id=\"rtl-tabs-0-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#rtl-tabs-0-panel\" aria-controls=\"rtl-tabs-0-panel\" aria-selected=\"true\">Summary</button><button class=\"nav-link\" type=\"button\" role=\"tab\" id=\"rtl-tabs-1-tab\" data-trm-toggle=\"tab\" data-trm-target=\"#rtl-tabs-1-panel\" aria-controls=\"rtl-tabs-1-panel\" aria-selected=\"false\" tabindex=\"-1\">Preferences</button></div><div class=\"tab-content\"><section class=\"tab-pane active show\" id=\"rtl-tabs-0-panel\" role=\"tabpanel\" aria-labelledby=\"rtl-tabs-0-tab\" tabindex=\"0\">Summary content</section><section class=\"tab-pane\" id=\"rtl-tabs-1-panel\" role=\"tabpanel\" aria-labelledby=\"rtl-tabs-1-tab\" tabindex=\"0\">Preferences content</section></div></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-nav-gap",
+          "defaultValue": "0.125rem",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-gap",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-align",
+          "defaultValue": "center",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-justify",
+          "defaultValue": "center",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-padding-x",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-padding-y",
+          "defaultValue": "0.375rem",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-color",
+          "defaultValue": "var(--trm-fg-2)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-hover-color",
+          "defaultValue": "var(--trm-fg-1)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-hover-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-active-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-active-bg",
+          "defaultValue": "var(--trm-bg-2)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-disabled-color",
+          "defaultValue": "var(--trm-fg-4)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-transition-property",
+          "defaultValue": "color, background-color, border-color",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-transition-timing",
+          "defaultValue": "ease-in-out",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-border-radius",
+          "defaultValue": "var(--trm-radius-5)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-link-hover-border-color",
+          "defaultValue": "var(--trm-border-subtle)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-link-active-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-link-active-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-link-active-border-color",
+          "defaultValue": "var(--trm-border-color) var(--trm-border-color) var(--trm-bg-body)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-padding",
+          "defaultValue": "0.25rem",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-border-radius",
+          "defaultValue": "3rem",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-link-active-color",
+          "defaultValue": "var(--trm-primary-contrast)",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-link-active-bg",
+          "defaultValue": "var(--trm-primary-bg)",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-link-border-radius",
+          "defaultValue": "3rem",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-underline-border-width",
+          "defaultValue": "0.125rem",
+          "purpose": "Default exported through $nav-underline-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-underline-link-active-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $nav-underline-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tab-pane-transition-property",
+          "defaultValue": "opacity",
+          "purpose": "Default exported through $tab-pane-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tab-pane-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $tab-pane-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tab-pane-transition-timing",
+          "defaultValue": "linear",
+          "purpose": "Default exported through $tab-pane-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "ArrowRight / ArrowDown",
+          "behavior": "Automatically select/focus the next enabled tab in DOM order, wrapping at the end, including RTL."
+        },
+        {
+          "keys": "ArrowLeft / ArrowUp",
+          "behavior": "Select/focus the previous enabled tab, wrapping at the start. Modifier shortcuts are not intercepted."
+        },
+        {
+          "keys": "Home / End",
+          "behavior": "Select/focus the first/last enabled tab."
+        },
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Enter/leave the tab list through its selected trigger; author panel tabindex when it needs a focus stop."
+        }
+      ],
+      "guidelines": [
+        "Author IDs, aria-controls, aria-labelledby, initial aria-selected and focusable panels; do not rely on the plugin to invent every relationship.",
+        "Use dynamic tablist/tab/tabpanel roles for panel switching, not ordinary page navigation.",
+        "Active triggers initialize on window load; newly inserted widgets require explicit initialization.",
+        "hide on the old trigger and show on the new trigger are cancelable. hidden notifies immediate outgoing removal; shown waits for the entering pane.",
+        "show returns a completion promise; stale pending activations do not emit a misleading shown notification.",
+        "Both arrow axes follow DOM order regardless of orientation or RTL; unmodified arrows/Home/End activate automatically.",
+        "Do not place tabs in menus: the pinned documentation explicitly warns about usability and accessibility problems."
+      ],
+      "sass": "@use 'tremplin/scss/nav' with (\n  $nav-tabs-tokens: (--trm-nav-tabs-border-radius: .5rem),\n  $tab-pane-tokens: (--trm-tab-pane-transition-duration: .2s)\n);"
+    },
+    "example": "<div class=\"nav nav-tabs\" role=\"tablist\" aria-label=\"Profile sections\"><button class=\"nav-link active\" id=\"profile-tab\" type=\"button\" data-trm-toggle=\"tab\" data-trm-target=\"#profile\" role=\"tab\" aria-controls=\"profile\" aria-selected=\"true\">Profile</button><button class=\"nav-link\" id=\"settings-tab\" type=\"button\" data-trm-toggle=\"tab\" data-trm-target=\"#settings\" role=\"tab\" aria-controls=\"settings\" aria-selected=\"false\" tabindex=\"-1\">Settings</button></div><div class=\"tab-content p-3\"><section class=\"tab-pane active show\" id=\"profile\" role=\"tabpanel\" aria-labelledby=\"profile-tab\" tabindex=\"0\">Profile content</section><section class=\"tab-pane\" id=\"settings\" role=\"tabpanel\" aria-labelledby=\"settings-tab\" tabindex=\"0\">Settings content</section></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_nav.scss",
+    "definition": {
+      "name": "tab",
+      "className": "Tab",
+      "options": [],
+      "methods": [
+        "show(): Promise<void>",
+        "dispose(): void"
+      ],
+      "events": [
+        "click.trm.tab",
+        "hidden.trm.tab",
+        "hide.trm.tab",
+        "keydown.trm.tab",
+        "load.trm.tab",
+        "show.trm.tab",
+        "shown.trm.tab"
+      ],
+      "dataAttributes": [
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"tab\""
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "click.trm.tab": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "hidden.trm.tab": "On the outgoing trigger after immediate deactivation; relatedTarget is the incoming trigger.",
+      "hide.trm.tab": "Cancelable start on the old trigger; relatedTarget is the incoming trigger.",
+      "keydown.trm.tab": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "load.trm.tab": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "show.trm.tab": "Cancelable start on the incoming trigger; relatedTarget is the old trigger, if any.",
+      "shown.trm.tab": "On the new trigger after the pane entry callback; stale activations are ignored."
+    },
+    "moduleImport": "import Tab from 'tremplin/tab'",
+    "javascript": "import Tab from 'tremplin/tab'\n\nconst element = document.querySelector('[data-trm-toggle=\"tab\"]')\nconst instance = Tab.getOrCreateInstance(element)"
+  }
+]

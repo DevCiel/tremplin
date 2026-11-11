@@ -1,0 +1,67 @@
+---
+{
+  "title": "RTL",
+  "description": "Enable right-to-left interfaces with Tremplin logical properties and one stylesheet.",
+  "group": "Getting started",
+  "lead": "Use the document direction and language to adapt layout without a separate RTL build.",
+  "order": 10
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { gettingStartedExamples as samples } from '../../../data/getting-started-examples'
+import { frameworkVersion, installCommand, localPackage, requiredPeers, packageMetadata as pkg } from '../../../data/installation-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">1. Set language and direction</h2>
+
+<Code sample={samples["rtl#0"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">2. Prefer logical utilities</h2>
+
+<div class="docs-example"><Html source={samples["rtl#1"].example} /></div>
+
+<div class="table-responsive"><table class="table table-bordered">
+<thead><tr><th scope="col">Use</th><th scope="col">Meaning</th></tr></thead>
+<tbody>
+<tr><td><code>{"ms-* / me-*"}</code></td><td><code>{"Margin at inline start / end."}</code></td></tr>
+<tr><td><code>{"ps-* / pe-*"}</code></td><td><code>{"Padding at inline start / end."}</code></td></tr>
+<tr><td><code>{"text-start / text-end"}</code></td><td><code>{"Alignment relative to writing direction."}</code></td></tr>
+<tr><td><code>{"drawer-start / drawer-end"}</code></td><td><code>{"Drawer placement relative to writing direction."}</code></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">3. Author logical CSS</h2>
+
+<Code sample={samples["rtl#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">4. Isolate mixed-direction content</h2>
+
+<p>Wrap addresses, identifiers, and code in an appropriate <code>{"dir=\"ltr\""}</code> container, or use <code>{"<bdi>"}</code> for an unknown-direction value. Preserve logical DOM reading order; do not reverse elements merely to imitate visual RTL.</p>
+
+<Code sample={samples["rtl#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">5. Test directional interactions</h2>
+
+<ol class="docs-steps">
+<li>Verify drawer placement, menu positioning, horizontal navigation, and Datepicker arrow keys.</li>
+<li>Check nested mixed-direction regions, focus order, and reading order.</li>
+<li>If an application changes language at runtime, retest or recreate affected plugin instances so cached positioning and direction state are refreshed.</li>
+</ol>
+
+<div class="docs-callout docs-callout-info">The same stylesheet supports both directions. RTL styling does not translate your text, labels, date locale, or icon meaning; those remain application responsibilities.</div>
+
+</section>

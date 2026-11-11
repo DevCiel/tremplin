@@ -1,0 +1,22 @@
+name: Feature request
+description: Suggest an improvement to Tremplin.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: Explain the user need and any current workaround.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed improvement
+      description: Describe the behavior, examples, and accessibility considerations.
+    validations:
+      required: true
+  - type: input
+    id: upstream
+    attributes:
+      label: Supporting reference, if applicable
+      description: Link to a specification, example, or related issue that explains the requested improvement.

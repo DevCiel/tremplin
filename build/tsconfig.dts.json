@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.core.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noEmitOnError": true,
+    "newLine": "lf",
+    "rootDir": "../src/js",
+    "outDir": "../js/dist"
+  },
+  "include": ["../src/js/**/*.ts"],
+  "exclude": ["../src/js/extensions/**"]
+}

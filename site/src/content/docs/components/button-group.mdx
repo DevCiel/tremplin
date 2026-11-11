@@ -1,0 +1,108 @@
+---
+{
+  "component": "button-group",
+  "title": "Button Group",
+  "description": "Button Group component documentation for Tremplin.",
+  "lead": "Group related button actions horizontally, vertically, or in a wrapping toolbar.",
+  "variants": [
+    {
+      "title": "Structural styles and dividers",
+      "description": "Use real solid, outline or subtle variants. btn-group-divider paints separators between adjacent controls in either orientation."
+    },
+    {
+      "title": "Group sizes",
+      "description": "Set xs, sm or lg on each group; the button size generator applies tokens to its direct button-like children. The unmodified group uses the default size."
+    },
+    {
+      "title": "Native checkbox group",
+      "description": "Each real checkbox can be selected independently. Put the input inside its btn-check label; no Button plugin or invented group controller is needed."
+    },
+    {
+      "title": "Native radio group",
+      "description": "Same-name native radios select one value. Native radio keyboard behavior is separate from Button pressed-state toggles."
+    },
+    {
+      "title": "Toolbar and input group",
+      "description": "The toolbar wraps separate groups and a named input group. Its CSS does not implement an editor or roving tabindex."
+    },
+    {
+      "title": "Nested Menu",
+      "description": "A nested group keeps the join geometry. The named native trigger uses the real Menu data API; group CSS alone does not open or manage the menu."
+    },
+    {
+      "title": "Vertical group and links",
+      "description": "Vertical groups share edge rounding and optional separators. Link groups remain navigation, with a real current destination."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Logical seams and edge radii follow direction. The inverse theme is chosen deliberately for readable controls."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Follow native controls in DOM order; group CSS provides no roving tabindex."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Activate native buttons; Space changes native checkbox state. Links retain native Enter navigation."
+    },
+    {
+      "keys": "Arrow keys",
+      "behavior": "Native same-name radios supply their browser keyboard behavior. Menu has its own arrow/Escape policy when initialized."
+    }
+  ],
+  "guidelines": [
+    "Give groups and toolbars meaningful labels and the appropriate group or toolbar role.",
+    "Use structural button variants on direct children so the join and sizing selectors match.",
+    "Configure sizes on every nested group separately; native inputs inside btn-check labels retain checked semantics.",
+    "Button groups have no independent token map; customize their button tokens before the button module is loaded.",
+    "Menu behavior belongs to Menu JavaScript. Split-menu patterns are not supported in vertical groups.",
+    "Keep DOM order meaningful; use native disabled or deliberately guard/remove a disabled link destination."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("button-group")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="button-group" />
+
+{componentDetail("button-group").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="button-group" />
+</>}
+
+{componentDetail("button-group").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("button-group").sass} standalone={true} />
+</>}
+
+{componentDetail("button-group").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="button-group" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="button-group" />
+
+{documentedComponents.find(component => component.name === "button-group").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="button-group" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Button group layout is CSS-only. Native checkbox and radio examples need no group plugin; the nested Menu example requires Menu JavaScript.</p>

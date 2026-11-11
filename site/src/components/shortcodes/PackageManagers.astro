@@ -1,0 +1,9 @@
+---
+import { installationManagers } from '../../data/installation-examples'
+---
+<div class="docs-package-tabs" data-package-tabs>
+  <div class="docs-package-tablist" role="tablist" aria-label="Package managers">
+    {installationManagers.map(([manager], managerIndex) => <button id={`tab-${manager.toLowerCase()}`} role="tab" type="button" tabindex={managerIndex === 0 ? 0 : -1} aria-selected={managerIndex === 0 ? 'true' : 'false'} aria-controls={`panel-${manager.toLowerCase()}`}>{manager}</button>)}
+  </div>
+  {installationManagers.map(([manager, command], managerIndex) => <div class="docs-package-panel" id={`panel-${manager.toLowerCase()}`} role="tabpanel" aria-labelledby={`tab-${manager.toLowerCase()}`} hidden={managerIndex !== 0}><code>{command}</code><button class="docs-copy" type="button" aria-label={`Copy ${manager.toLowerCase()} install command`}>Copy</button></div>)}
+</div>

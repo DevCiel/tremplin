@@ -1,0 +1,27 @@
+{
+  "upstreamCommit": "9062790fdb2379593a2973416dc5a3bfb203e4e3",
+  "reference": "https://github.com/twbs/bootstrap/blob/9062790fdb2379593a2973416dc5a3bfb203e4e3/scss/_config.scss",
+  "spacer": "1rem",
+  "spacers": {
+    "0": "0",
+    "1": "0.25rem",
+    "2": "0.375rem",
+    "3": "0.5rem",
+    "4": "0.75rem",
+    "5": "1rem",
+    "6": "1.25rem",
+    "7": "1.5rem",
+    "8": "1.75rem",
+    "9": "2rem",
+    "10": "2.25rem",
+    "11": "2.5rem",
+    "12": "3rem"
+  },
+  "negativeSpacers": {
+    "-1": "-0.25rem",
+    "-2": "-0.5rem"
+  },
+  "gridGutterX": "1.5rem",
+  "gridGutterY": "0",
+  "gridGap": "1.5rem"
+}

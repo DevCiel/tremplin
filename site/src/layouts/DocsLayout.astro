@@ -1,0 +1,29 @@
+---
+import PageMeta from '../components/PageMeta.astro'
+import Header from '../components/header/Header.astro'
+import DocsSidebar from '../components/DocsSidebar.astro'
+import TableOfContents from '../components/TableOfContents.astro'
+import Footer from '../components/footer/Footer.astro'
+import Scripts from '../components/Scripts.astro'
+
+interface Props { title: string; description?: string; searchable?: boolean }
+const { title, description = 'Tremplin frontend framework documentation', searchable = true } = Astro.props
+const isHome = Astro.url.pathname === '/'
+---
+<!doctype html>
+<html lang="en" data-trm-theme="light">
+<head><PageMeta title={title} description={description} noindex={!searchable} /></head>
+<body class:list={[isHome ? 'docs-home' : 'docs-document', { 'docs-install': Astro.url.pathname === '/getting-started/install/' }]}>
+  <a class="docs-skip-link" href="#main-content">Skip to content</a>
+  <Header />
+  <div class="docs-shell">
+    <DocsSidebar />
+    <div class="docs-workspace">
+      <main class="docs-main" id="main-content" tabindex="-1" data-pagefind-body={searchable ? '' : undefined} data-pagefind-ignore={!searchable ? '' : undefined}><slot /></main>
+      <TableOfContents />
+    </div>
+  </div>
+  <Footer />
+  <Scripts />
+</body>
+</html>

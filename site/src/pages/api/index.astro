@@ -1,0 +1,21 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro'
+import api from '../../../../metadata/api.json'
+import manifest from '../../../../metadata/components.json'
+
+const descriptions = new Map(manifest.components.map(component => [component.name, component.accessibility]))
+---
+<DocsLayout title="API reference" description="Generated Tremplin component API reference.">
+  <span class="badge">Generated from source</span>
+  <h1>Component API reference</h1>
+  <p class="lead">Options, methods, lifecycle events, and data attributes are extracted from Tremplin's TypeScript sources and checked against a compatibility baseline.</p>
+  <div class="row g-3">
+    {api.components.map(component => (
+      <div class="col-md-6"><article class="card h-100"><div class="card-body">
+        <h2 class="h4"><a href={`/api/${component.name}/`}>{component.className}</a></h2>
+        <p>{descriptions.get(component.name)}</p>
+        <div class="cluster"><span class="badge">{component.options.length} options</span><span class="badge">{component.methods.length} methods</span><span class="badge">{component.events.length} events</span></div>
+      </div></article></div>
+    ))}
+  </div>
+</DocsLayout>

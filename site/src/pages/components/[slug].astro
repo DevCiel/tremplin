@@ -1,0 +1,63 @@
+---
+import { getCollection, render } from 'astro:content'
+import ComponentHeader from '../../components/component/Header.astro'
+import { authoredComponentNames } from '../../libs/component-mdx'
+import DocsLayout from '../../layouts/DocsLayout.astro'
+import { formsDemoJavascript } from '../../data/forms-overview-docs'
+import { paletteDemoJavascript, sheetDemoJavascript } from '../../data/sheet-command-docs'
+import { advancedDemoJavascript } from '../../data/advanced-input-docs'
+import { chipsSubmissionJavascript } from '../../data/choice-input-docs'
+import { standaloneChipJavascript } from '../../data/chip-table-docs'
+import { isLocalPattern, localPatternJavascript } from '../../data/local-pattern-docs'
+import { navbarFocusJavascript } from '../../data/adaptive-navigation-docs'
+import { displayName } from '../../data/component-docs'
+import { documentedComponents, implementationName, componentTitle, componentReference } from '../../data/component-reference'
+
+export async function getStaticPaths() {
+  const pages = new Map((await getCollection('docs')).filter(page => page.id.startsWith('components/')).map(page => [page.id, page]))
+  if (pages.size !== authoredComponentNames.length || authoredComponentNames.some(name => !pages.has('components/' + name))) throw new Error('Component MDX routes do not match the migration registry')
+  return documentedComponents.map((component, index) => ({
+    params: { slug: component.name },
+    props: { component, index, document: pages.get('components/' + component.name) }
+  }))
+}
+
+const { component, index, document } = Astro.props
+if (!document) throw new Error('Missing authored component document: ' + component.name)
+const Content = (await render(document)).Content
+const localName = implementationName(component.name)
+const patternJavascript = isLocalPattern(localName) ? localPatternJavascript[localName] : undefined
+const title = componentTitle(component.name)
+const reference = componentReference(component.name)
+const previous = documentedComponents[index - 1]
+const next = documentedComponents[index + 1]
+---
+<DocsLayout title={title} description={document?.data.description ?? `${title} component documentation for Tremplin.`}>
+  <ComponentHeader component={component} title={title} localName={localName} reference={reference} authored={Boolean(document)} />
+
+  <Content />
+
+  <nav class="docs-pagination" aria-label="Component documentation pages">
+    {previous ? <a rel="prev" href={`/components/${previous.name}/`}><small>Previous</small><span>← {displayName(previous.name)}</span></a> : <span></span>}
+    {next ? <a rel="next" href={`/components/${next.name}/`}><small>Next</small><span>{displayName(next.name)} →</span></a> : <span></span>}
+  </nav>
+  {localName === 'toast' && <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const Toast = window.TremplinFramework?.Toast
+      document.querySelectorAll('[data-docs-toast-show]').forEach(trigger => {
+        const target = document.querySelector(trigger.getAttribute('data-docs-toast-show'))
+        if (!Toast || !target) return
+        const notification = Toast.getOrCreateInstance(target)
+        trigger.addEventListener('click', () => notification.show())
+      })
+    })
+  </script>}
+  {localName === 'navbar' && <script is:inline set:html={navbarFocusJavascript}></script>}
+  {localName === 'chip' && <script is:inline set:html={standaloneChipJavascript}></script>}
+  {localName === 'forms' && <script is:inline set:html={formsDemoJavascript}></script>}
+  {localName === 'command-palette' && <script is:inline type="module" set:html={paletteDemoJavascript.replaceAll("from 'tremplin/extensions/command-palette'", "from '/js/tremplin-command-palette.min.js'")}></script>}
+  {component.name === 'bottom-sheet' && <script is:inline set:html={sheetDemoJavascript}></script>}
+  {localName === 'chips' && <script is:inline set:html={chipsSubmissionJavascript}></script>}
+  {patternJavascript && <script is:inline set:html={patternJavascript}></script>}
+  {['datepicker','range','strength'].includes(localName) && <script is:inline type="module" set:html={advancedDemoJavascript.replaceAll("from 'tremplin'", "from '/js/tremplin-docs.min.js'")}></script>}
+</DocsLayout>

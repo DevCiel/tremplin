@@ -1,0 +1,272 @@
+@use "sass:map";
+@use "config" as *;
+
+@function theme-color-values($key) {
+  $result: ();
+
+  @each $color-name, $color-map in $theme-colors {
+    @if map.has-key($color-map, $key) {
+      $result: map.merge($result, ($color-name: map.get($color-map, $key)));
+    }
+  }
+
+  @return $result;
+}
+
+// Themes map sub-keys
+//
+// Return var() references to root tokens instead of raw values.
+// Ex: theme-color-refs("bg") => (primary: var(--trm-primary-bg), accent: var(--trm-accent-bg), ...)
+@function theme-color-refs($key) {
+  $result: ();
+
+  @each $color-name, $color-map in $theme-colors {
+    @if map.has-key($color-map, $key) {
+      $result: map.merge($result, ($color-name: var(--trm-#{$color-name}-#{$key})));
+    }
+  }
+
+  @return $result;
+}
+
+// Theme token to root tokens
+//
+// Returns the global :root token reference for a given a given token map, prefix, and key.
+// Ex: theme-token-refs($theme-bgs, "bg") => (body: var(--trm-bg-body), 1: var(--trm-bg-1), ...)
+// Skips `inherit` since it's a CSS-wide keyword that can't be stored in a custom property.
+@function theme-token-refs($map, $prefix) {
+  $result: ();
+
+  @each $key, $value in $map {
+    @if $value != inherit {
+      $result: map.merge($result, ($key: var(--trm-#{$prefix}-#{$key})));
+    }
+  }
+
+  @return $result;
+}
+
+// Generate opacity values using color-mix()
+// $fallback lets the referenced $color-var fall back to another color (e.g. currentcolor)
+// when it hasn't been set by a companion color utility.
+@function theme-opacity-values($color-var, $fallback: null, $opacities: $util-opacity) {
+  $result: ();
+  // stylelint-disable-next-line scss/at-function-named-arguments, @stylistic/function-whitespace-after
+  $color: if(sass($fallback): var($color-var, $fallback); else: var($color-var));
+
+  @each $key, $value in $opacities {
+    @if $key == 100 {
+      // For 100%, use direct variable reference (more efficient)
+      $result: map.merge($result, ($key: $color));
+    } @else {
+      // For other values, use color-mix()
+      $percentage: $key * 1%;
+      $result: map.merge($result, ($key: color-mix(in oklch, $color $percentage, transparent)));
+    }
+  }
+
+  @return $result;
+}
+
+// Set each --trm-theme-* token to `initial` so descendants drop inherited theme colors.
+// Use `initial`, not `unset`. `unset` inherits from the parent again.
+// scss-docs-start generate-theme-reset
+@mixin generate-theme-reset() {
+  .theme-reset {
+    $keys: ();
+
+    @each $color-map in map.values($theme-colors) {
+      @each $key in map.keys($color-map) {
+        $keys: map.merge($keys, ($key: true));
+      }
+    }
+
+    @each $key in map.keys($keys) {
+      --trm-theme-#{$key}: initial;
+    }
+  }
+}
+// scss-docs-end generate-theme-reset
+
+// Generate theme classes dynamically based on the keys in each theme color map
+@mixin generate-theme-classes() {
+  @each $color-name, $color-map in $theme-colors {
+    .theme-#{$color-name} {
+      @each $key, $value in $color-map {
+        --trm-theme-#{$key}: var(--trm-#{$color-name}-#{$key});
+      }
+    }
+  }
+
+  @include generate-theme-reset();
+}
+
+// Theme maps use the `defaults()` pattern so `@use ... with (...)` merges custom
+// values on top of the built-ins instead of replacing the whole map. Set a key
+// to `null` to remove it. See scss/_config.scss for `defaults()`.
+
+// scss-docs-start theme-colors
+$theme-colors: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$theme-colors: defaults(
+  (
+    "primary": (
+      "base": var(--trm-blue-500),
+      "fg": light-dark(var(--trm-blue-600), var(--trm-blue-400)),
+      "fg-emphasis": light-dark(var(--trm-blue-800), var(--trm-blue-200)),
+      "bg": var(--trm-blue-500),
+      "bg-subtle": light-dark(var(--trm-blue-100), var(--trm-blue-900)),
+      "bg-muted": light-dark(var(--trm-blue-200), var(--trm-blue-800)),
+      "border": light-dark(var(--trm-blue-300), var(--trm-blue-600)),
+      "focus-ring": light-dark(color-mix(in oklch, var(--trm-blue-500) 50%, var(--trm-bg-body)), color-mix(in oklch, var(--trm-blue-500) 75%, var(--trm-bg-body))),
+      "contrast": var(--trm-white)
+    ),
+    "accent": (
+      "base": var(--trm-indigo-500),
+      "fg": light-dark(var(--trm-indigo-600), color-mix(in oklch, var(--trm-indigo-400), var(--trm-indigo-300))),
+      "fg-emphasis": light-dark(var(--trm-indigo-800), var(--trm-indigo-300)),
+      "bg": var(--trm-indigo-500),
+      "bg-subtle": light-dark(var(--trm-indigo-100), var(--trm-indigo-900)),
+      "bg-muted": light-dark(var(--trm-indigo-200), var(--trm-indigo-800)),
+      "border": light-dark(var(--trm-indigo-300), var(--trm-indigo-600)),
+      "focus-ring": light-dark(color-mix(in oklch, var(--trm-indigo-500) 50%, var(--trm-bg-body)), color-mix(in oklch, var(--trm-indigo-500) 75%, var(--trm-bg-body))),
+      "contrast": var(--trm-white)
+    ),
+    "success": (
+      "base": var(--trm-green-500),
+      "fg": light-dark(var(--trm-green-600), var(--trm-green-400)),
+      "fg-emphasis": light-dark(var(--trm-green-800), var(--trm-green-300)),
+      "bg": var(--trm-green-500),
+      "bg-subtle": light-dark(var(--trm-green-100), var(--trm-green-900)),
+      "bg-muted": light-dark(var(--trm-green-200), var(--trm-green-800)),
+      "border": light-dark(var(--trm-green-300), var(--trm-green-600)),
+      "focus-ring": light-dark(color-mix(in oklch, var(--trm-green-500) 50%, var(--trm-bg-body)), color-mix(in oklch, var(--trm-green-500) 75%, var(--trm-bg-body))),
+      "contrast": var(--trm-white)
+    ),
+    "danger": (
+      "base": var(--trm-red-500),
+      "fg": light-dark(var(--trm-red-600), var(--trm-red-400)),
+      "fg-emphasis": light-dark(var(--trm-red-800), var(--trm-red-300)),
+      "bg": var(--trm-red-500),
+      "bg-subtle": light-dark(var(--trm-red-100), var(--trm-red-900)),
+      "bg-muted": light-dark(var(--trm-red-200), var(--trm-red-800)),
+      "border": light-dark(var(--trm-red-300), var(--trm-red-600)),
+      "focus-ring": light-dark(color-mix(in oklch, var(--trm-red-500) 50%, var(--trm-bg-body)), color-mix(in oklch, var(--trm-red-500) 75%, var(--trm-bg-body))),
+      "contrast": var(--trm-white)
+    ),
+    "warning": (
+      "base": var(--trm-yellow-500),
+      "fg": light-dark(var(--trm-yellow-700), var(--trm-yellow-400)),
+      "fg-emphasis": light-dark(var(--trm-yellow-800), var(--trm-yellow-300)),
+      "bg": var(--trm-yellow-500),
+      "bg-subtle": light-dark(var(--trm-yellow-100), var(--trm-yellow-900)),
+      "bg-muted": light-dark(var(--trm-yellow-200), var(--trm-yellow-800)),
+      "border": light-dark(var(--trm-yellow-300), var(--trm-yellow-600)),
+      "focus-ring": light-dark(color-mix(in oklch, var(--trm-yellow-500) 50%, var(--trm-bg-body)), color-mix(in oklch, var(--trm-yellow-400) 85%, var(--trm-bg-body))),
+      "contrast": var(--trm-gray-900)
+    ),
+    "info": (
+      "base": var(--trm-cyan-500),
+      "fg": light-dark(var(--trm-cyan-600), var(--trm-cyan-400)),
+      "fg-emphasis": light-dark(var(--trm-cyan-800), var(--trm-cyan-300)),
+      "bg": var(--trm-cyan-500),
+      "bg-subtle": light-dark(var(--trm-cyan-100), var(--trm-cyan-900)),
+      "bg-muted": light-dark(var(--trm-cyan-200), var(--trm-cyan-800)),
+      "border": light-dark(var(--trm-cyan-300), var(--trm-cyan-600)),
+      "focus-ring": light-dark(color-mix(in oklch, var(--trm-cyan-500) 50%, var(--trm-bg-body)), color-mix(in oklch, var(--trm-cyan-500) 75%, var(--trm-bg-body))),
+      "contrast": var(--trm-gray-900)
+    ),
+    "inverse": (
+      "base": var(--trm-gray-900),
+      "fg": light-dark(var(--trm-gray-900), var(--trm-gray-200)),
+      "fg-emphasis": light-dark(var(--trm-gray-975), var(--trm-white)),
+      "bg": light-dark(var(--trm-gray-900), var(--trm-gray-025)),
+      "bg-subtle": light-dark(var(--trm-gray-100), var(--trm-gray-900)),
+      "bg-muted": light-dark(var(--trm-gray-200), var(--trm-gray-300)),
+      "border": light-dark(var(--trm-gray-400), var(--trm-gray-100)),
+      "focus-ring": color-mix(in oklch, light-dark(var(--trm-gray-900), var(--trm-gray-100)) 50%, var(--trm-bg-body)),
+      "contrast": light-dark(var(--trm-white), var(--trm-gray-900))
+    ),
+    "secondary": (
+      "base": var(--trm-gray-200),
+      "fg": light-dark(var(--trm-gray-600), var(--trm-gray-400)),
+      "fg-emphasis": light-dark(var(--trm-gray-800), var(--trm-gray-200)),
+      "bg": light-dark(var(--trm-gray-100), var(--trm-gray-600)),
+      "bg-subtle": light-dark(var(--trm-gray-050), var(--trm-gray-800)),
+      "bg-muted": light-dark(var(--trm-gray-100), var(--trm-gray-700)),
+      "border": light-dark(var(--trm-gray-300), var(--trm-gray-600)),
+      "focus-ring": color-mix(in oklch, light-dark(var(--trm-gray-500), var(--trm-gray-300)) 50%, var(--trm-bg-body)),
+      "contrast": light-dark(var(--trm-gray-900), var(--trm-white))
+    )
+  ),
+  $theme-colors
+);
+// scss-docs-end theme-colors
+
+$theme-bgs: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$theme-bgs: defaults(
+  (
+    "body": light-dark(var(--trm-white), var(--trm-gray-975)),
+    "1": light-dark(var(--trm-gray-025), var(--trm-gray-950)),
+    "2": light-dark(var(--trm-gray-050), var(--trm-gray-900)),
+    "3": light-dark(var(--trm-gray-100), var(--trm-gray-800)),
+    "4": light-dark(var(--trm-gray-200), var(--trm-gray-700)),
+    "fg": var(--trm-fg-body),
+    "white": var(--trm-white),
+    "black": var(--trm-black),
+    "transparent": transparent,
+    "inherit": inherit,
+  ),
+  $theme-bgs
+);
+
+$theme-fgs: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$theme-fgs: defaults(
+  (
+    "body": light-dark(var(--trm-gray-900), var(--trm-gray-050)),
+    "1": light-dark(var(--trm-gray-800), var(--trm-gray-200)),
+    "2": light-dark(var(--trm-gray-700), var(--trm-gray-300)),
+    "3": light-dark(var(--trm-gray-600), var(--trm-gray-500)),
+    "4": light-dark(var(--trm-gray-500), var(--trm-gray-600)),
+    "bg": var(--trm-bg-body),
+    "white": var(--trm-white),
+    "black": var(--trm-black),
+    "inherit": inherit,
+  ),
+  $theme-fgs
+);
+
+$theme-borders: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$theme-borders: defaults(
+  (
+    "bg": var(--trm-bg-body),
+    "body": light-dark(var(--trm-gray-300), var(--trm-gray-800)),
+    "muted": light-dark(var(--trm-gray-200), var(--trm-gray-800)),
+    "subtle": light-dark(color-mix(in oklch, var(--trm-gray-100), var(--trm-gray-200)), color-mix(in oklch, var(--trm-gray-800), var(--trm-gray-900))),
+    "emphasized": light-dark(var(--trm-gray-400), var(--trm-gray-600)),
+    "white": var(--trm-white),
+    "black": var(--trm-black),
+  ),
+  $theme-borders
+);
+
+$util-opacity: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$util-opacity: defaults(
+  (
+    10: .1,
+    20: .2,
+    30: .3,
+    40: .4,
+    50: .5,
+    60: .6,
+    70: .7,
+    80: .8,
+    90: .9,
+    100: 1
+  ),
+  $util-opacity
+);

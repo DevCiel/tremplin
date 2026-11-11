@@ -1,0 +1,36 @@
+import { defineCollection, z } from 'astro:content'
+import { glob } from 'astro/loaders'
+import { guides as authoredGuides } from './data/guide-docs'
+
+const docs = defineCollection({
+  loader: glob({
+    pattern: '**/*.mdx', base: new URL('./content/docs/', import.meta.url),
+    generateId: ({ entry }) => entry.replaceAll('\\', '/').replace(/\/index\.mdx$/, '').replace(/\.mdx$/, '')
+  }),
+  schema: z.object({
+    title: z.string().min(1), description: z.string().min(1),
+    group: z.string().optional(), lead: z.string().optional(), order: z.number().int().nonnegative().optional()
+  })
+})
+
+// Keep the tested, executable guide examples in one place while their prose is
+// migrated independently. Do not generate duplicate maintained MDX copies.
+const guideSchema = z.object({
+  slug: z.string().regex(/^[a-z0-9-]+(?:\/[a-z0-9-]+)*$/),
+  group: z.string().min(1), title: z.string().min(1), description: z.string().min(1), lead: z.string(),
+  sections: z.array(z.object({
+    heading: z.string().min(1), level: z.union([z.literal(2), z.literal(3)]).optional(),
+    steps: z.array(z.string()).optional(), paragraphs: z.array(z.string()).optional(),
+    code: z.array(z.object({ label: z.string().optional(), language: z.string(), source: z.string() })).optional(),
+    table: z.object({ headings: z.array(z.string()), rows: z.array(z.array(z.string())), keyboardScroll: z.boolean().optional() }).optional(),
+    callout: z.string().optional(), example: z.string().optional()
+  })),
+  reference: z.object({ title: z.string(), url: z.string() }).optional(),
+  clientScript: z.string().optional()
+})
+const guides = defineCollection({
+  loader: async () => authoredGuides.map((guide, order) => ({ id: guide.slug, guide, order })).filter(entry => entry.guide.source !== 'mdx'),
+  schema: z.object({ guide: guideSchema, order: z.number().int().nonnegative() })
+})
+
+export const collections = { docs, guides }

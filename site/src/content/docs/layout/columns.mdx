@@ -1,0 +1,67 @@
+---
+{
+  "title": "Columns",
+  "description": "Align, wrap, reorder, and offset Flexbox columns without changing semantic reading order.",
+  "group": "Layout",
+  "lead": "Align, wrap, reorder, and offset Flexbox columns without changing semantic reading order.",
+  "order": 3
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { layoutExamples as samples } from '../../../data/layout-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Alignment</h2>
+
+<p>{"Use align-items-* on the row and align-self-* on a column for vertical alignment. Use justify-content-* to distribute remaining horizontal space. A row filled by twelve column units has no extra space to distribute."}</p>
+
+<div class="docs-example"><Html source={samples["layout/columns#0"].example} /></div>
+
+<Code sample={samples["layout/columns#0"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Column wrapping</h2>
+
+<Code sample={samples["layout/columns#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Column breaks</h2>
+
+<p>Prefer a simpler row structure when a decorative break makes the document harder to understand. A break element is not a meaningful content item.</p>
+
+<Code sample={samples["layout/columns#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Reordering</h2>
+
+<div class="docs-callout docs-callout-info">Visual ordering does not change screen-reader or keyboard navigation order. Keep the DOM order usable and avoid visually moving interactive controls into a confusing focus sequence.</div>
+
+<Code sample={samples["layout/columns#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Offsetting columns</h2>
+
+<p>Offsets set logical inline-start margins in LTR and RTL. Reset with md:offset-0. Default offsets run from 0 through 11; full-row offsets and infix aliases are not emitted. Ordering utilities do not change DOM or keyboard order.</p>
+
+<div class="docs-example"><Html source={samples["layout/columns#4"].example} /></div>
+
+<Code sample={samples["layout/columns#4"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Standalone column classes</h2>
+
+<p>A col-N class sets an explicit width even outside a row, but row-specific gutters and wrapping do not apply. For article text wrapping around media, prefer a dedicated layout rather than assuming a column class supplies an entire grid.</p>
+
+</section>

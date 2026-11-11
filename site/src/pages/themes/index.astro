@@ -1,0 +1,17 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro'
+const presets = [
+  { name: 'Ocean', value: 'ocean', file: 'tremplin-ocean.css' },
+  { name: 'Forest', value: 'forest', file: 'tremplin-forest.css' }
+]
+---
+<DocsLayout title="Theme presets" description="Current Tremplin semantic-token theme examples.">
+  <h1>Theme presets</h1>
+  <p class="lead">Presets override current semantic tokens without changing component markup or adding compatibility classes.</p>
+  <div class="row g-4">
+    {presets.map(preset => <div class="md:col-6"><section class="theme-demo rounded p-4" data-trm-theme={preset.value}><span class="badge theme-primary">{preset.name}</span><h2 class="h3 mt-3">Component preview</h2><p>Buttons, forms, cards and alerts use the current token set.</p><div class="d-flex flex-wrap gap-3 mb-3"><button class="btn-solid theme-primary" type="button">Primary action</button><button class="btn-outline theme-primary" type="button">Secondary</button></div><div class="alert theme-success">Theme tokens applied successfully.</div><label class="form-label" for={`theme-${preset.value}`}>Project name</label><input class="form-control" id={`theme-${preset.value}`} value="Tremplin" /></section><p class="mt-2"><code>{preset.file}</code></p></div>)}
+  </div>
+  <h2>Installation</h2>
+  <pre><code>{`<link rel="stylesheet" href="tremplin.min.css">\n<link rel="stylesheet" href="tremplin-ocean.css">\n<html data-trm-theme="ocean">`}</code></pre>
+</DocsLayout>
+<style>.theme-demo{border:1px solid var(--trm-border-color);background:var(--trm-bg-body);color:var(--trm-fg-body)}</style>

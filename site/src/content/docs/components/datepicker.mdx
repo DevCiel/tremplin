@@ -1,0 +1,151 @@
+---
+{
+  "component": "datepicker",
+  "title": "Datepicker",
+  "description": "Datepicker component documentation for Tremplin.",
+  "lead": "Use Vanilla Calendar Pro through the Tremplin Datepicker adapter.",
+  "variants": [
+    {
+      "title": "Declarative date field",
+      "description": "The displayed date is locale formatted. Calendar click selection is different from manually editing the text."
+    },
+    {
+      "title": "Bounded dates",
+      "description": "dateMin/dateMax configure the calendar; native text-input min/max do not. The sample starts in the bounded month."
+    },
+    {
+      "title": "Inline calendar and explicit ISO field",
+      "description": "Calendar Pro replaces inline children in this pin. The copied application handler maintains a sibling hidden ISO field instead; the named region contains calendar width."
+    },
+    {
+      "title": "Multiple months",
+      "description": "The enabled months extension shows two columns. This example explicitly sets the supported minimum-width token to 36rem so they remain side-by-side; the named region owns horizontal scrolling on mobile."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "The adapter copies the nearest cached theme ancestor to its generated calendar. RTL layout does not imply an adapter-owned keyboard policy."
+    },
+    {
+      "title": "Multiple dates and range",
+      "description": "Multiple selection stays open; a completed range requests hide after 100 ms. Displayed separators are not a server serialization contract."
+    },
+    {
+      "title": "Named button trigger",
+      "description": "Use a display child so the purpose text survives date updates. A button alone is not a successful submitted date field."
+    },
+    {
+      "title": "Formatting, first weekday and popup theme",
+      "description": "This example uses an Intl format object, Sunday first and an explicit dark popup theme. This changes presentation, not ISO validation."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Focus input / click button",
+      "behavior": "Uses the adapter data API. Button toggles; inline show/hide/toggle are no-ops."
+    },
+    {
+      "keys": "Arrow keys / Enter / Space in calendar",
+      "behavior": "Calendar Pro owns native date/month/year button focus and activation; test the generated control, not a former local-calendar API."
+    },
+    {
+      "keys": "Outside focus / pointer",
+      "behavior": "Requests hide through the adapter. No automatic focus restoration is promised."
+    }
+  ],
+  "guidelines": [
+    "Use a labelled type=text field, not a second native type=date popup. ISO preselection is an array, while named text-input submission is formatted display text.",
+    "getSelectedDates() returns a copy. setSelectedDates() updates display but does not dispatch adapter change or native input/change. Calendar Pro replaces an inline child field; the example uses a sibling field and a disclosed click-change handler instead. Sync that field explicitly after API calls.",
+    "Manual text edits after initialization do not automatically resync the selection array. Supply an explicit application parse/validation policy or use a native date input where appropriate.",
+    "Popup visibility callbacks and promises do not establish focus restoration or async animation completion. Inline mode remains visible; disposal destroys the calendar, observer and owned outside handlers.",
+    "vcpOptions is spread before adapter-owned configuration: only the months extension is enabled, callbacks/settings can be overwritten, and sanitizer enforcement stays mandatory.",
+    "Keep the approved Calendar HTML sanitizer and same-origin dist/icons/datepicker-chevron.svg relative to dist/css. Never weaken Trusted Types/CSP to make a sample render.",
+    "The explicit contrast wrapper styles are application choices, including a Calendar Pro styles class for body-appended popups. Parent CSS inheritance alone cannot reach those popups. An explicit demo-only hidden-popup display rule prevents stale desktop coordinates from creating mobile resize overflow."
+  ],
+  "events": {
+    "change.trm.datepicker": "Trigger notification from a calendar date click, with direct copied dates and originating event. setSelectedDates and typed text edits do not dispatch it; prevention does not undo selection.",
+    "click.trm.datepicker": "Internal namespaced trigger listener, not a dispatched Datepicker lifecycle event.",
+    "focusin.trm.datepicker": "Internal namespaced outside-focus listener, not a dispatched Datepicker lifecycle event.",
+    "hidden.trm.datepicker": "Trigger notification after Calendar Pro hide() is called, not a guaranteed delayed animation completion or focus-return event.",
+    "hide.trm.datepicker": "Cancelable trigger event before adapter hide(); inline mode does not hide. Outside focus/pointer paths also request adapter hide.",
+    "pointerdown.trm.datepicker": "Internal namespaced outside-pointer listener, not a dispatched Datepicker lifecycle event.",
+    "show.trm.datepicker": "Cancelable trigger event before adapter show(); disabled/already-open and inline cases return without it.",
+    "shown.trm.datepicker": "Trigger notification immediately after Calendar Pro show() is called; no focus-restoration or transition-completion promise is supplied."
+  }
+}
+---
+
+import Contrast from '../../../components/component/Contrast.astro'
+import { advancedDemoJavascript, advancedDemoCss } from '../../../data/advanced-input-docs'
+import { componentApi } from '../../../data/component-api'
+import AdvancedOptions from '../../../components/component/AdvancedOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+<p>This explicit application CSS removes hidden popup layout boxes after desktop-to-mobile resize. Inline examples also use a sibling hidden field and the copied application handler below because this Calendar Pro pin replaces inline children. Neither choice changes the core or weakens CSP.</p>
+<Code source={advancedDemoCss} standalone={true} plain={true} label="Copy calendar demo layout CSS" />
+<Contrast />
+
+<Example markup={componentExample("datepicker")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="datepicker" />
+
+{componentDetail("datepicker").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="datepicker" />
+</>}
+
+{componentDetail("datepicker").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("datepicker").sass} standalone={true} />
+</>}
+
+{componentDetail("datepicker").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="datepicker" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="datepicker" />
+
+{documentedComponents.find(component => component.name === "datepicker").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="datepicker" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("datepicker").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("datepicker").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<p>Configure these optional values before construction; getOrCreateInstance does not reconfigure an existing instance.</p>
+<AdvancedOptions name="datepicker" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="datepicker" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="datepicker" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="datepicker" />
+<p class="mt-4"><a href="/api/datepicker/">View the generated {componentApi("datepicker").definition.className}{" API reference →"}</a></p>
+
+<p>Catalog click/focusin/pointerdown entries are internal listeners, not dispatched Datepicker lifecycle notifications. These source-derived descriptions do not change the frozen scanner baseline.</p>
+
+<h2 id="demo-setup">Explicit browser-bundle demo setup</h2><p>This copied application setup configures marked examples locally. It deliberately disposes any auto-created instance before setting function options; getOrCreateInstance does not reconfigure it. No requests or automatic submission are made.</p>
+<Code source={advancedDemoJavascript} standalone={true} plain={true} label="Copy advanced input demo setup" />

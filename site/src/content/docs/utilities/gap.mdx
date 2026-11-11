@@ -1,0 +1,91 @@
+---
+{
+  "title": "Gap",
+  "description": "Control both gaps together or space rows and columns independently.",
+  "group": "Utilities",
+  "lead": "Control both gaps together or space rows and columns independently.",
+  "order": 18,
+  "utility": {
+    "category": "Flex and Grid",
+    "classes": [
+      "gap-0",
+      "gap-2",
+      "gap-3",
+      "md:gap-4",
+      "row-gap-0",
+      "row-gap-2",
+      "md:row-gap-4",
+      "column-gap-0",
+      "column-gap-3",
+      "md:column-gap-4"
+    ],
+    "notes": "gap-*, row-gap-*, and column-gap-* use the configured spacer scale: key 2 is .375rem, key 3 is .5rem, and key 4 is .75rem. They work with native Grid and Flexbox and support canonical viewport prefixes such as md:gap-4; infix aliases are not generated. Use row gutters for the percentage-based Flexbox grid; adding a native gap to columns already totaling 100% can cause wrapping.",
+    "responsive": true
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/gap"][0].example} /></div>
+
+<Code sample={samples["utilities/gap"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"gap-*, row-gap-*, and column-gap-* use the configured spacer scale: key 2 is .375rem, key 3 is .5rem, and key 4 is .75rem. They work with native Grid and Flexbox and support canonical viewport prefixes such as md:gap-4; infix aliases are not generated. Use row gutters for the percentage-based Flexbox grid; adding a native gap to columns already totaling 100% can cause wrapping."} /></p>
+
+<Code sample={samples["utilities/gap"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Responsive behavior"}</h2>
+
+<p><Html source={"Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Independent row and column spacing"}</h2>
+
+<p><Html source={"gap-3 sets both axes. row-gap-2 and column-gap-4 change the axes independently. In the default scale these are .375rem and .75rem. For a row-oriented flex container, column-gap separates items and row-gap separates wrapped lines. The browser maps Grid rows and columns to the writing mode; the class names do not imply fixed physical x/y axes."} /></p>
+
+<div class="docs-example"><Html source={samples["utilities/gap"][3].example} /></div>
+
+<Code sample={samples["utilities/gap"][3].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Responsive gaps"}</h2>
+
+<p><Html source={"md:row-gap-4 applies at the default md minimum viewport width of 768px. Only prefix-style responsive names are generated. Each gap family is responsive by default; print, dark, and state variants require a family override. With equal importance and specificity, the generated cascade order decides the result, not class order in the HTML. Base axis controls follow base gap shorthands, but a wider responsive shorthand can replace both axes; override that axis at the same breakpoint when needed."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Gap configuration"}</h2>
+
+<p><Html source={"The gap family now uses the same configurable utility map as row-gap and column-gap. Remove a family with null, disable it with enabled: false, or replace its definition. No handwritten gap-* rules are left behind. Definitions are replaced shallowly: supply property, class, values, and any desired flags. The shared spacer map also affects other spacing and gutter helpers. Utilities are not important by default; opt in with important: true on a family, not a global flag."} /></p>
+
+<Code sample={samples["utilities/gap"][5].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

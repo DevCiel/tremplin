@@ -1,0 +1,63 @@
+{
+  "phase": "component-overlay-authored-mdx",
+  "names": [
+    "bottom-sheet",
+    "dialog",
+    "drawer"
+  ],
+  "canonical": [
+    "dialog",
+    "drawer"
+  ],
+  "remaining": 22,
+  "previousPolicy": {
+    "file": "metadata/component-feedback-mdx.json",
+    "sha256": "687af1c1f7704b356503faf778d73510fbeff967f50e6ffe428052f1c076c800"
+  },
+  "historicalSources": {
+    "site/src/data/component-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-docs.before-overlay.ts.txt",
+      "sha256": "50b510493e9cd500f15d896d955d7276cc8be6e255f776757d9b8bc263ce3081"
+    },
+    "site/src/data/component-reference.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-reference.before-overlay.ts.txt",
+      "sha256": "a377408e0915cece5a613e2d577d487266a5e1c6753c6c309de1f67e3cc19013"
+    },
+    "site/src/data/overlay-component-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/overlay-component-docs.before-overlay.ts.txt",
+      "sha256": "f7698c768a525d6d3f5cc7042a2c90e203725d688e01081a16da62cf18014ca6"
+    },
+    "site/src/data/sheet-command-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/sheet-command-docs.before-overlay.ts.txt",
+      "sha256": "9587fac1a2d714b62d49650b31fe2348947646df93ad5049602fe93d8c54c56c"
+    },
+    "site/src/data/component-api.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-api.before-overlay.ts.txt",
+      "sha256": "94afc3b8b977a233cd0bad9ab74dfd3c47d65272091a94bd2e6177af2b89ae27"
+    },
+    "site/src/libs/component-mdx.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-mdx.before-overlay.ts.txt",
+      "sha256": "7bad2bf1651cdc51adad904e886018349acc43bd848497d413b54ec2db956eff"
+    },
+    "site/src/pages/components/[slug].astro": {
+      "snapshot": "tests/fixtures/mdx-migration/component-page.before-overlay.astro.txt",
+      "sha256": "58b05d3db2cec166af10e7cb504b37635422d3d9da6597205c20a9b29bcd1544"
+    }
+  },
+  "expectation": {
+    "snapshot": "tests/fixtures/mdx-migration/component-overlay.before.json",
+    "sha256": "ad64c344155dcc6ced0edcb6901901881cc6b0536b73159b4edfa22f7fab5c94"
+  },
+  "sources": {
+    "site/src/content/docs/components/bottom-sheet.mdx": "b87f63a60f4a0a2f452cb4e4da4a1481f2c4915e3e1950ecde677e74c564c491",
+    "site/src/content/docs/components/dialog.mdx": "0557bac0fb233c7c1e1ba46e018f57def8ff7c38bc4214fc2cde77aa3dd905a7",
+    "site/src/content/docs/components/drawer.mdx": "d1693f1d662103660743a37a3f0cb7a8833c7e5696932418e8045adaf1b4afb4",
+    "site/src/data/component-api.ts": "2a7f9f5c0f0907f58da3e476bf8c90c2beef9031aa787d4fade69c77ea951c08",
+    "site/src/data/component-docs.ts": "2d6d102523d2b72906020100d6a9d17c54e9b6f8a7e64f91775f9d5f7e329efa",
+    "site/src/data/component-reference.ts": "57f576d1e71ace1c9062c4002eb7404dd9aac5b3c1368e4ee56bcdd2c255e0bc",
+    "site/src/data/overlay-component-docs.ts": "c1912856b64ab7d43e14d2f83bdb2e7efe5397f17d411fa309b88f0d6154811f",
+    "site/src/data/sheet-command-docs.ts": "d043d518360cc89b586c6d8df3c7bb4d2c5013bdcb4eb3c7de4410d11c739bf4",
+    "site/src/libs/component-mdx.ts": "e7dff17da6500c550005d63730059b092aeeb0607aefccddb40a99685137d891",
+    "site/src/pages/components/[slug].astro": "5e7e54a243ee100f2d0e7d1ed2fb592f39b344195045dc008716e18a76a8087a"
+  }
+}

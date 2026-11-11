@@ -1,0 +1,9 @@
+
+
+@layer custom {
+  // Tremplin extension: accessible validation summary.
+  .error-summary { padding: 1rem 1.2rem; border: 1px solid var(--trm-danger-base); border-inline-start-width: .35rem; border-radius: var(--trm-radius-6); background: color-mix(in srgb, var(--trm-danger-base) 8%, var(--trm-bg-body)); }
+  .error-summary:focus { outline: 0; box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--trm-danger-base) 25%, transparent); }
+  .error-summary-title { margin-block-end: .5rem; color: var(--trm-danger-fg); font-weight: 700; }
+  .error-summary-list { margin-block-end: 0; padding-inline-start: 1.25rem; }
+}

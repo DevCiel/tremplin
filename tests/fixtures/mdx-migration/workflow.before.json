@@ -1,0 +1,471 @@
+[
+  {
+    "slug": "guides/quickstart",
+    "group": "Guides",
+    "title": "Quickstart",
+    "description": "Start with the locally built CSS and bundled ES module.",
+    "lead": "Start with the locally built CSS and bundled ES module.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/workflow-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Scope and checkout status",
+        "callout": "This is Tremplin-specific setup/adoption guidance, not a verbatim or exhaustive copy of upstream historical documentation. This checkout is unreleased: use a locally packed tarball, not an unverified public npm/CDN package.",
+        "paragraphs": [
+          "Keep consumer experiments in a separate directory so their build output cannot overwrite the framework distribution. Use the Node version required by your chosen bundler. See <a href=\"/getting-started/install/\">installation</a> and <a href=\"/getting-started/bundlers/\">the detailed bundler reference</a>."
+        ]
+      },
+      {
+        "heading": "Build and copy assets",
+        "code": [
+          {
+            "language": "shell",
+            "source": "npm ci\nnpm run build"
+          }
+        ],
+        "paragraphs": [
+          "Copy the complete dist/css, dist/js and dist/icons directories into your application. Preserve the relative calendar SVG URL; do not copy only a CSS file and omit its assets."
+        ]
+      },
+      {
+        "heading": "Load the local browser bundle",
+        "code": [
+          {
+            "language": "html",
+            "source": "<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Tremplin starter</title><link rel=\"stylesheet\" href=\"./dist/css/tremplin.min.css\"></head><body>\n<main class=\"container py-4\">\n  <h1>Welcome to Tremplin</h1>\n  <button class=\"btn-outline theme-inverse\" data-trm-toggle=\"dialog\" data-trm-target=\"#welcome\">Open welcome</button>\n  <dialog class=\"dialog\" id=\"welcome\" aria-labelledby=\"welcome-title\"><div class=\"dialog-body\"><h2 id=\"welcome-title\">Welcome</h2><button class=\"btn-close\" data-trm-dismiss=\"dialog\" aria-label=\"Close\"></button></div></dialog>\n</main>\n<script type=\"module\" src=\"./dist/js/tremplin.bundle.min.js\"></script>\n</body></html>"
+          }
+        ],
+        "paragraphs": [
+          "This self-contained ES module includes positioning and calendar dependencies and registers the data APIs used above. It creates no window global. Do not load a second independently built runtime on the same page."
+        ]
+      },
+      {
+        "heading": "Verify your page",
+        "steps": [
+          "Serve the application over HTTP.",
+          "Open the dialog using its button, dismiss with Escape, and verify focus returns.",
+          "Check narrow viewports, keyboard navigation, reduced motion and readable contrast."
+        ],
+        "paragraphs": [
+          "Automated checks do not replace assistive-technology review. See <a href=\"/getting-started/accessibility/\">accessibility</a> and <a href=\"/getting-started/browsers-devices/\">browser support</a>."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "guides/npm",
+    "group": "Guides",
+    "title": "npm",
+    "description": "Install and consume the exact local Tremplin package with npm.",
+    "lead": "Install and consume the exact local Tremplin package with npm.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/workflow-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Scope and checkout status",
+        "callout": "This is Tremplin-specific setup/adoption guidance, not a verbatim or exhaustive copy of upstream historical documentation. This checkout is unreleased: use a locally packed tarball, not an unverified public npm/CDN package.",
+        "paragraphs": [
+          "Keep consumer experiments in a separate directory so their build output cannot overwrite the framework distribution. Use the Node version required by your chosen bundler. See <a href=\"/getting-started/install/\">installation</a> and <a href=\"/getting-started/bundlers/\">the detailed bundler reference</a>."
+        ]
+      },
+      {
+        "heading": "Install the local package",
+        "paragraphs": [
+          "In the framework checkout, run npm pack and copy the generated archive into your separate consumer project. Then install that exact archive and required positioning/calendar peers."
+        ],
+        "code": [
+          {
+            "language": "shell",
+            "source": "# Framework checkout\nnpm pack\n\n# Separate consumer project containing tremplin-0.8.0-beta.0.tgz\nnpm init -y\nnpm install ./tremplin-0.8.0-beta.0.tgz @floating-ui/dom vanilla-calendar-pro"
+          }
+        ]
+      },
+      {
+        "heading": "Import CSS and JavaScript",
+        "code": [
+          {
+            "language": "javascript",
+            "source": "import 'tremplin/css'\nimport * as tremplin from 'tremplin'\n\n// Importing the root also registers the declarative data APIs.\nconsole.log(tremplin.Dialog.VERSION)"
+          }
+        ],
+        "paragraphs": [
+          "Save this as src/main.js. Root imports register the data APIs; individual subpaths export a default component for targeted programmatic use. Optional Tremplin extensions are separate. See <a href=\"/getting-started/javascript/\">JavaScript</a> and <a href=\"/customize/optimize/\">optimization and distribution formats</a>."
+        ]
+      },
+      {
+        "heading": "Add accessible markup",
+        "code": [
+          {
+            "language": "html",
+            "source": "<main class=\"container py-4\">\n  <h1>Welcome to Tremplin</h1>\n  <button class=\"btn-outline theme-inverse\" data-trm-toggle=\"dialog\" data-trm-target=\"#welcome\">Open welcome</button>\n  <dialog class=\"dialog\" id=\"welcome\" aria-labelledby=\"welcome-title\"><div class=\"dialog-body\"><h2 id=\"welcome-title\">Welcome</h2><button class=\"btn-close\" data-trm-dismiss=\"dialog\" aria-label=\"Close\"></button></div></dialog>\n</main>"
+          }
+        ],
+        "paragraphs": [
+          "Put this body in a complete HTML document with lang, charset, viewport and title. Keep names, labels and the native dialog element. Test opening, Escape and focus return; await shown/hidden events before dependent overlay actions."
+        ]
+      },
+      {
+        "heading": "Individual components and Sass",
+        "code": [
+          {
+            "language": "javascript",
+            "source": "import 'tremplin/css'\nimport Dialog from 'tremplin/dialog'\n\nconst welcome = Dialog.getOrCreateInstance('#welcome')\nawait welcome.show()"
+          }
+        ],
+        "paragraphs": [
+          "This targeted alternative avoids unrelated plugins; the imported component still registers its own data API. For configuration before compilation, follow <a href=\"/customize/sass/\">Sass</a>. The CSS has same-origin SVG dependencies that bundlers must emit or preserve."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "guides/vite",
+    "group": "Guides",
+    "title": "Vite",
+    "description": "Bundle the local package with Vite using standard CSS and ESM imports.",
+    "lead": "Bundle the local package with Vite using standard CSS and ESM imports.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/workflow-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Scope and checkout status",
+        "callout": "This is Tremplin-specific setup/adoption guidance, not a verbatim or exhaustive copy of upstream historical documentation. This checkout is unreleased: use a locally packed tarball, not an unverified public npm/CDN package.",
+        "paragraphs": [
+          "Keep consumer experiments in a separate directory so their build output cannot overwrite the framework distribution. Use the Node version required by your chosen bundler. See <a href=\"/getting-started/install/\">installation</a> and <a href=\"/getting-started/bundlers/\">the detailed bundler reference</a>."
+        ]
+      },
+      {
+        "heading": "Install the local package",
+        "paragraphs": [
+          "In the framework checkout, run npm pack and copy the generated archive into your separate consumer project. Then install that exact archive and required positioning/calendar peers."
+        ],
+        "code": [
+          {
+            "language": "shell",
+            "source": "# Framework checkout\nnpm pack\n\n# Separate consumer project containing tremplin-0.8.0-beta.0.tgz\nnpm init -y\nnpm install ./tremplin-0.8.0-beta.0.tgz @floating-ui/dom vanilla-calendar-pro"
+          }
+        ]
+      },
+      {
+        "heading": "Prepare the consumer",
+        "code": [
+          {
+            "language": "shell",
+            "source": "npm install --save-dev vite\nnpx vite"
+          }
+        ],
+        "paragraphs": [
+          "Use a root index.html pointing to src/main.js with a module script. Run commands in the separate consumer, not the framework checkout."
+        ]
+      },
+      {
+        "heading": "Import CSS and JavaScript",
+        "code": [
+          {
+            "language": "javascript",
+            "source": "import 'tremplin/css'\nimport * as tremplin from 'tremplin'\n\n// Importing the root also registers the declarative data APIs.\nconsole.log(tremplin.Dialog.VERSION)"
+          }
+        ],
+        "paragraphs": [
+          "Save this as src/main.js. Root imports register the data APIs; individual subpaths export a default component for targeted programmatic use. Optional Tremplin extensions are separate. See <a href=\"/getting-started/javascript/\">JavaScript</a> and <a href=\"/customize/optimize/\">optimization and distribution formats</a>."
+        ]
+      },
+      {
+        "heading": "Add accessible markup",
+        "code": [
+          {
+            "language": "html",
+            "source": "<main class=\"container py-4\">\n  <h1>Welcome to Tremplin</h1>\n  <button class=\"btn-outline theme-inverse\" data-trm-toggle=\"dialog\" data-trm-target=\"#welcome\">Open welcome</button>\n  <dialog class=\"dialog\" id=\"welcome\" aria-labelledby=\"welcome-title\"><div class=\"dialog-body\"><h2 id=\"welcome-title\">Welcome</h2><button class=\"btn-close\" data-trm-dismiss=\"dialog\" aria-label=\"Close\"></button></div></dialog>\n</main>"
+          }
+        ],
+        "paragraphs": [
+          "Put this body in a complete HTML document with lang, charset, viewport and title. Keep names, labels and the native dialog element. Test opening, Escape and focus return; await shown/hidden events before dependent overlay actions."
+        ]
+      },
+      {
+        "heading": "Entry and production build",
+        "code": [
+          {
+            "language": "html",
+            "source": "<script type=\"module\" src=\"/src/main.js\"></script>"
+          },
+          {
+            "language": "shell",
+            "source": "npx vite build\nnpx vite preview"
+          }
+        ],
+        "paragraphs": [
+          "Inspect the emitted CSS, JavaScript and SVG requests. Check the built preview, not only the dev server. Do not hardcode source import URLs into your production HTML."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "guides/webpack",
+    "group": "Guides",
+    "title": "Webpack",
+    "description": "Use Webpack loaders and an HTML template to consume the local package.",
+    "lead": "Use Webpack loaders and an HTML template to consume the local package.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/workflow-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Scope and checkout status",
+        "callout": "This is Tremplin-specific setup/adoption guidance, not a verbatim or exhaustive copy of upstream historical documentation. This checkout is unreleased: use a locally packed tarball, not an unverified public npm/CDN package.",
+        "paragraphs": [
+          "Keep consumer experiments in a separate directory so their build output cannot overwrite the framework distribution. Use the Node version required by your chosen bundler. See <a href=\"/getting-started/install/\">installation</a> and <a href=\"/getting-started/bundlers/\">the detailed bundler reference</a>."
+        ]
+      },
+      {
+        "heading": "Install the local package",
+        "paragraphs": [
+          "In the framework checkout, run npm pack and copy the generated archive into your separate consumer project. Then install that exact archive and required positioning/calendar peers."
+        ],
+        "code": [
+          {
+            "language": "shell",
+            "source": "# Framework checkout\nnpm pack\n\n# Separate consumer project containing tremplin-0.8.0-beta.0.tgz\nnpm init -y\nnpm install ./tremplin-0.8.0-beta.0.tgz @floating-ui/dom vanilla-calendar-pro"
+          }
+        ]
+      },
+      {
+        "heading": "Install the consumer tools",
+        "code": [
+          {
+            "language": "shell",
+            "source": "npm install --save-dev webpack webpack-cli webpack-dev-server style-loader css-loader html-webpack-plugin"
+          }
+        ]
+      },
+      {
+        "heading": "Import CSS and JavaScript",
+        "code": [
+          {
+            "language": "javascript",
+            "source": "import 'tremplin/css'\nimport * as tremplin from 'tremplin'\n\n// Importing the root also registers the declarative data APIs.\nconsole.log(tremplin.Dialog.VERSION)"
+          }
+        ],
+        "paragraphs": [
+          "Save this as src/main.js. Root imports register the data APIs; individual subpaths export a default component for targeted programmatic use. Optional Tremplin extensions are separate. See <a href=\"/getting-started/javascript/\">JavaScript</a> and <a href=\"/customize/optimize/\">optimization and distribution formats</a>."
+        ]
+      },
+      {
+        "heading": "Add accessible markup",
+        "code": [
+          {
+            "language": "html",
+            "source": "<main class=\"container py-4\">\n  <h1>Welcome to Tremplin</h1>\n  <button class=\"btn-outline theme-inverse\" data-trm-toggle=\"dialog\" data-trm-target=\"#welcome\">Open welcome</button>\n  <dialog class=\"dialog\" id=\"welcome\" aria-labelledby=\"welcome-title\"><div class=\"dialog-body\"><h2 id=\"welcome-title\">Welcome</h2><button class=\"btn-close\" data-trm-dismiss=\"dialog\" aria-label=\"Close\"></button></div></dialog>\n</main>"
+          }
+        ],
+        "paragraphs": [
+          "Put this body in a complete HTML document with lang, charset, viewport and title. Keep names, labels and the native dialog element. Test opening, Escape and focus return; await shown/hidden events before dependent overlay actions."
+        ]
+      },
+      {
+        "heading": "Configure and build",
+        "code": [
+          {
+            "language": "javascript",
+            "source": "// webpack.config.cjs\nconst HtmlWebpackPlugin = require('html-webpack-plugin')\nmodule.exports = {\n  mode: 'development',\n  entry: './src/main.js',\n  output: { filename: 'app.js', clean: true },\n  module: { rules: [{ test: /\\.css$/i, use: ['style-loader', 'css-loader'] }] },\n  plugins: [new HtmlWebpackPlugin({ template: './index.html' })]\n}"
+          },
+          {
+            "language": "shell",
+            "source": "npx webpack serve\nnpx webpack --mode production"
+          }
+        ],
+        "paragraphs": [
+          "The HTML template contains the body above but no manual src/main.js script: HtmlWebpackPlugin injects the bundled entry. The loaders handle CSS URLs including the calendar SVG. Production CSS extraction is a separate application build choice; verify emitted assets and CSP rather than assuming dev style injection fits production."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "guides/parcel",
+    "group": "Guides",
+    "title": "Parcel",
+    "description": "Use an HTML entry point and let Parcel resolve the package assets.",
+    "lead": "Use an HTML entry point and let Parcel resolve the package assets.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/workflow-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Scope and checkout status",
+        "callout": "This is Tremplin-specific setup/adoption guidance, not a verbatim or exhaustive copy of upstream historical documentation. This checkout is unreleased: use a locally packed tarball, not an unverified public npm/CDN package.",
+        "paragraphs": [
+          "Keep consumer experiments in a separate directory so their build output cannot overwrite the framework distribution. Use the Node version required by your chosen bundler. See <a href=\"/getting-started/install/\">installation</a> and <a href=\"/getting-started/bundlers/\">the detailed bundler reference</a>."
+        ]
+      },
+      {
+        "heading": "Install the local package",
+        "paragraphs": [
+          "In the framework checkout, run npm pack and copy the generated archive into your separate consumer project. Then install that exact archive and required positioning/calendar peers."
+        ],
+        "code": [
+          {
+            "language": "shell",
+            "source": "# Framework checkout\nnpm pack\n\n# Separate consumer project containing tremplin-0.8.0-beta.0.tgz\nnpm init -y\nnpm install ./tremplin-0.8.0-beta.0.tgz @floating-ui/dom vanilla-calendar-pro"
+          }
+        ]
+      },
+      {
+        "heading": "Install and serve",
+        "code": [
+          {
+            "language": "shell",
+            "source": "npm pkg delete main\nnpm install --save-dev parcel\nnpx parcel index.html"
+          }
+        ],
+        "paragraphs": [
+          "For this separately created browser application, remove npm init's default main field so Parcel does not infer a library target. Do not remove main from the Tremplin framework package. See <a href=\"https://parceljs.org/features/targets/\">Parcel target configuration</a> when retaining an intentional library target."
+        ]
+      },
+      {
+        "heading": "Import CSS and JavaScript",
+        "code": [
+          {
+            "language": "javascript",
+            "source": "import 'tremplin/css'\nimport * as tremplin from 'tremplin'\n\n// Importing the root also registers the declarative data APIs.\nconsole.log(tremplin.Dialog.VERSION)"
+          }
+        ],
+        "paragraphs": [
+          "Save this as src/main.js. Root imports register the data APIs; individual subpaths export a default component for targeted programmatic use. Optional Tremplin extensions are separate. See <a href=\"/getting-started/javascript/\">JavaScript</a> and <a href=\"/customize/optimize/\">optimization and distribution formats</a>."
+        ]
+      },
+      {
+        "heading": "Add accessible markup",
+        "code": [
+          {
+            "language": "html",
+            "source": "<main class=\"container py-4\">\n  <h1>Welcome to Tremplin</h1>\n  <button class=\"btn-outline theme-inverse\" data-trm-toggle=\"dialog\" data-trm-target=\"#welcome\">Open welcome</button>\n  <dialog class=\"dialog\" id=\"welcome\" aria-labelledby=\"welcome-title\"><div class=\"dialog-body\"><h2 id=\"welcome-title\">Welcome</h2><button class=\"btn-close\" data-trm-dismiss=\"dialog\" aria-label=\"Close\"></button></div></dialog>\n</main>"
+          }
+        ],
+        "paragraphs": [
+          "Put this body in a complete HTML document with lang, charset, viewport and title. Keep names, labels and the native dialog element. Test opening, Escape and focus return; await shown/hidden events before dependent overlay actions."
+        ]
+      },
+      {
+        "heading": "Connect the entry and build",
+        "code": [
+          {
+            "language": "html",
+            "source": "<script type=\"module\" src=\"./src/main.js\"></script>"
+          },
+          {
+            "language": "shell",
+            "source": "npx parcel build index.html"
+          }
+        ],
+        "paragraphs": [
+          "Put the module script in the complete index.html document. Check the resulting CSS, runtime and SVG URLs using a static HTTP server. Deployment base paths and cache policy belong to the consumer application."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "guides/contribute",
+    "group": "Guides",
+    "title": "Contribute",
+    "description": "Work on this checkout without drifting from the approved reference.",
+    "lead": "Work on this checkout without drifting from the approved reference.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/workflow-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Scope and checkout status",
+        "callout": "This is Tremplin-specific setup/adoption guidance, not a verbatim or exhaustive copy of upstream historical documentation. This checkout is unreleased: use a locally packed tarball, not an unverified public npm/CDN package.",
+        "paragraphs": [
+          "Keep consumer experiments in a separate directory so their build output cannot overwrite the framework distribution. Use the Node version required by your chosen bundler. See <a href=\"/getting-started/install/\">installation</a> and <a href=\"/getting-started/bundlers/\">the detailed bundler reference</a>."
+        ]
+      },
+      {
+        "heading": "Prepare the reference and build",
+        "code": [
+          {
+            "language": "shell",
+            "source": "npm ci\nnpm run audit:tremplin -- --fetch --stage --check\nnpm run validate:tremplin-stage\nnpm run build\nnpm run check:production-css"
+          }
+        ],
+        "paragraphs": [
+          "The reference is an explicit fixed revision, not whatever upstream main contains today. Preserve licenses, namespace adaptations and the approved security/accessibility exception registry."
+        ]
+      },
+      {
+        "heading": "Check a change",
+        "code": [
+          {
+            "language": "shell",
+            "source": "npm run typecheck\nnpm run test:typecheck-boundaries\nnpm test\nnpm run check:api\nnpm run check:no-legacy"
+          }
+        ],
+        "paragraphs": [
+          "Use the relevant browser/site tests after building their assets. See the repository migration plan for remaining site/visual/manual acceptance. The prior serial unit pass does not prove parallel CI timing stability."
+        ]
+      },
+      {
+        "heading": "Review and release discipline",
+        "paragraphs": [
+          "Never regenerate an API or screenshot baseline merely to hide a failing check. Explain behavioral differences against the pin, keep examples and prose aligned, and preserve independent expected inventories. This checkout remains release-blocked; successful focused checks are not permission to publish."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "guides/migration",
+    "group": "Guides",
+    "title": "Migration",
+    "description": "Adopt the current Tremplin core instead of legacy aliases.",
+    "lead": "Adopt the current Tremplin core instead of legacy aliases.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/workflow-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Scope and checkout status",
+        "callout": "This is Tremplin-specific setup/adoption guidance, not a verbatim or exhaustive copy of upstream historical documentation. This checkout is unreleased: use a locally packed tarball, not an unverified public npm/CDN package.",
+        "paragraphs": [
+          "Keep consumer experiments in a separate directory so their build output cannot overwrite the framework distribution. Use the Node version required by your chosen bundler. See <a href=\"/getting-started/install/\">installation</a> and <a href=\"/getting-started/bundlers/\">the detailed bundler reference</a>."
+        ]
+      },
+      {
+        "heading": "Audit your markup and imports",
+        "steps": [
+          "Replace responsive infix names with canonical prefixes, such as md:col-6 and 2xl:col-3.",
+          "Use button variants plus semantic themes, such as btn-outline theme-inverse, instead of old btn-primary-style aliases.",
+          "Use Menu for dropdown behavior and native Dialog/Drawer elements for overlays.",
+          "Import optional extensions separately; there is no legacy compatibility bundle."
+        ],
+        "paragraphs": [
+          "Public styling classes are unprefixed. Framework-owned CSS properties, events and data hooks retain the trm namespace. See <a href=\"/getting-started/contents/\">package contents</a>."
+        ]
+      },
+      {
+        "heading": "Update JavaScript contracts",
+        "paragraphs": [
+          "Combobox uses a trigger with an adjacent Menu, real option focus and optional hidden submitted values, not an active-descendant text-input shim.",
+          "Toggler only changes its configured class/attribute. It does not synchronize hidden, ARIA, dismissal or focus. Use Collapse or native overlay components when those behaviors are needed.",
+          "Overlay methods may be asynchronous; wait for actual completion before dependent interactions. See <a href=\"/customize/transitions/\">transitions</a>."
+        ]
+      },
+      {
+        "heading": "Rebuild and verify",
+        "paragraphs": [
+          "Configure each Sass module before its first load and use its owning-module APIs. Follow <a href=\"/customize/sass/\">Sass customization</a> and <a href=\"/utilities/api/\">the Utility API</a>, not retired variable/map convenience files.",
+          "Test compiled assets, package subpaths, keyboard behavior, focus return, RTL and contrast. The strict core keeps approved source exceptions explicit; an old screenshot is not authority to restore retired CSS. This adoption guide is not an exhaustive reproduction of every upstream historical migration note."
+        ]
+      }
+    ]
+  }
+]

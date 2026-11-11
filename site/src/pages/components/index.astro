@@ -1,0 +1,36 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro'
+import { documentedComponents, componentNavigationGroups as componentGroups, componentIntro, componentTitle as displayName } from '../../data/component-reference'
+
+const components = new Map(documentedComponents.map(component => [component.name, component]))
+---
+<DocsLayout title="Components" description="Accessible CSS and TypeScript components included with Tremplin.">
+  <p class="docs-eyebrow">Components</p>
+  <h1>Build interfaces from accessible primitives</h1>
+  <p class="lead">Tremplin includes presentational CSS, typed interaction plugins, and application patterns. Every public styling class is unprefixed; framework-owned data attributes, events, and custom properties use the <code>trm</code> namespace.</p>
+
+  <div class="docs-callout docs-callout-info">
+    <strong>Generated and checked.</strong> Component pages combine the maintained feature manifest with API data extracted directly from the TypeScript source.
+  </div>
+
+  <p>The first section documents core component topics and their supported styling, tokens and behavior. Placeholder and Toasts share the existing Skeleton and Toast implementations; additional patterns and Tremplin extensions remain separate.</p>
+
+  {Object.entries(componentGroups).map(([group, names]) => {
+    const entries = names.map(name => components.get(name)).filter(Boolean)
+    if (!entries.length) return null
+    return <section class="docs-section" aria-labelledby={`group-${group.toLowerCase().replaceAll(' ', '-')}`}>
+      <h2 id={`group-${group.toLowerCase().replaceAll(' ', '-')}`}>{group}</h2>
+      <div class="docs-card-grid">
+        {entries.map(component => component && <article class="card h-100">
+          <div class="card-body">
+            <div class="cluster justify-content-between">
+              <h3 class="h5 mb-0"><a class="stretched-link" href={`/components/${component.name}/`}>{displayName(component.name)}</a></h3>
+              <span class="badge">{component.kind}</span>
+            </div>
+            <p class="mt-3 mb-0">{componentIntro(component.name) ?? component.accessibility}</p>
+          </div>
+        </article>)}
+      </div>
+    </section>
+  })}
+</DocsLayout>

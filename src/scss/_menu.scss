@@ -1,0 +1,302 @@
+@use "config" as *;
+@use "functions" as *;
+@use "mixins/border-radius" as *;
+@use "mixins/box-shadow" as *;
+@use "mixins/tokens" as *;
+@use "mixins/transition" as *;
+
+// stylelint-disable scss/dollar-variable-default, custom-property-no-missing-var-function
+$menu-tokens: () !default;
+
+// scss-docs-start menu-tokens
+$menu-tokens: defaults(
+  (
+    --trm-menu-zindex: var(--trm-z-menu),
+    --trm-menu-gap: .125rem,
+    --trm-menu-min-width: 10rem,
+    --trm-menu-padding-x: .25rem,
+    --trm-menu-padding-y: .25rem,
+    --trm-menu-spacer: .125rem,
+    --trm-menu-font-size: var(--trm-font-size-sm),
+    --trm-menu-color: var(--trm-fg-body),
+    --trm-menu-bg: var(--trm-bg-body),
+    // --trm-menu-border-color: var(--trm-border-color-translucent),
+    // --trm-menu-border-radius: var(--trm-radius-7),
+    // --trm-menu-border-width: var(--trm-border-width),
+    --trm-menu-box-shadow: var(--trm-box-shadow-lg),
+    // --trm-menu-max-height: none,
+    --trm-menu-divider-bg: var(--trm-border-color-translucent),
+    --trm-menu-divider-margin-y: .125rem,
+    --trm-menu-divider-margin-x: .25rem,
+    --trm-menu-item-color: var(--trm-menu-color, var(--trm-fg-body)),
+    --trm-menu-item-hover-color: var(--trm-menu-color, var(--trm-fg-body)),
+    --trm-menu-item-hover-bg: var(--trm-bg-1),
+    --trm-menu-item-active-color: var(--trm-primary-contrast),
+    --trm-menu-item-active-bg: var(--trm-primary-bg),
+    --trm-menu-item-disabled-color: var(--trm-fg-3),
+    --trm-menu-item-gap: .5rem,
+    --trm-menu-item-padding-x: .75rem,
+    --trm-menu-item-padding-y: .25rem,
+    --trm-menu-item-border-radius: var(--trm-radius-5),
+    --trm-menu-icon-size: 1rem,
+    --trm-menu-description-font-size: var(--trm-font-size-xs),
+    --trm-menu-check-color: currentcolor,
+    --trm-menu-header-color: var(--trm-fg-3),
+    --trm-menu-header-padding-x: .75rem,
+    --trm-menu-header-padding-y: .25rem,
+    --trm-menu-transition-property: "opacity, transform, display",
+    --trm-menu-transition-duration: .15s,
+    --trm-menu-transition-timing: var(--trm-transition-timing-overlay),
+  ),
+  $menu-tokens
+);
+// scss-docs-end menu-tokens
+
+// stylelint-enable custom-property-no-missing-var-function, scss/dollar-variable-default
+
+@layer components {
+  .menu {
+    @include tokens($menu-tokens);
+
+    position: absolute;
+    z-index: var(--trm-menu-zindex);
+    display: none;
+    flex-direction: column;
+    gap: var(--trm-menu-gap);
+    min-width: var(--trm-menu-min-width);
+    max-height: var(--trm-menu-max-height, none);
+    padding: var(--trm-menu-padding-y) var(--trm-menu-padding-x);
+    margin: 0;
+    overflow-y: var(--trm-menu-overflow-y, initial);
+    overscroll-behavior: contain;
+    font-size: var(--trm-menu-font-size);
+    color: var(--trm-menu-color);
+    text-align: start;
+    list-style-type: "";
+    background-color: var(--trm-menu-bg);
+    background-clip: padding-box;
+    border: var(--trm-menu-border-width, var(--trm-border-width)) solid var(--trm-menu-border-color, var(--trm-border-color-translucent));
+    @include border-radius(var(--trm-menu-border-radius, var(--trm-radius-7)));
+    @include box-shadow(var(--trm-menu-box-shadow));
+    opacity: 0;
+    transform: scale(.95);
+    transform-origin: top left;
+
+    &[data-trm-placement^="top"] {
+      transform-origin: bottom left;
+    }
+
+    &[data-trm-placement="bottom"] {
+      transform-origin: top center;
+    }
+
+    &[data-trm-placement="top"] {
+      transform-origin: bottom center;
+    }
+
+    &[data-trm-placement="bottom-end"] {
+      transform-origin: top right;
+    }
+
+    &[data-trm-placement="top-end"] {
+      transform-origin: bottom right;
+    }
+
+    &[data-trm-placement^="left"] {
+      transform-origin: top right;
+    }
+
+    // `display` transitions discretely so the menu stays laid out until the
+    // fade-out finishes. Keep it in --trm-menu-transition-property when you
+    // override the list.
+    @include transition-props(
+      var(--trm-menu-transition-property),
+      var(--trm-menu-transition-duration),
+      var(--trm-menu-transition-timing),
+      allow-discrete
+    );
+
+    &.show {
+      display: flex;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @starting-style {
+    .menu.show {
+      opacity: 0;
+      transform: scale(.95);
+    }
+  }
+
+  .menu-scrollable {
+    --trm-menu-max-height: 80dvh;
+    --trm-menu-overflow-y: auto;
+  }
+
+  .menu-translucent {
+    --trm-menu-item-hover-bg-light: color-mix(in oklch, var(--trm-bg-1) 90%, transparent);
+    --trm-menu-item-hover-bg-dark: color-mix(in oklch, var(--trm-bg-1) 80%, transparent);
+
+    --trm-menu-item-active-bg-light: color-mix(in oklch, var(--trm-primary-bg) 80%, transparent);
+    --trm-menu-item-active-bg-dark: color-mix(in oklch, var(--trm-primary-bg) 70%, transparent);
+
+    --trm-menu-item-active-bg: light-dark(var(--trm-menu-item-active-bg-light), var(--trm-menu-item-active-bg-dark));
+    --trm-menu-item-hover-bg: light-dark(var(--trm-menu-item-hover-bg-light), var(--trm-menu-item-hover-bg-dark));
+
+    background-color: color-mix(in oklch, var(--trm-menu-bg) 80%, transparent);
+    backdrop-filter: blur(5px) saturate(180%);
+  }
+
+  .menu-divider {
+    height: 0;
+    margin: var(--trm-menu-divider-margin-y) var(--trm-menu-divider-margin-x);
+    overflow: hidden;
+    border-block-start: 1px solid var(--trm-menu-divider-bg);
+    opacity: 1;
+  }
+
+  .menu-item {
+    display: flex;
+    gap: var(--trm-menu-item-gap);
+    align-items: center;
+    width: 100%;
+    padding: var(--trm-menu-item-padding-y) var(--trm-menu-item-padding-x);
+    font-weight: var(--trm-menu-item-font-weight, var(--trm-font-weight-normal));
+    color: var(--trm-theme-fg, var(--trm-menu-item-color));
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    @include border-radius(var(--trm-menu-item-border-radius, 0));
+
+    &:hover,
+    &:focus {
+      color: var(--trm-theme-fg-emphasis, var(--trm-menu-item-hover-color));
+      background-color: var(--trm-theme-bg-subtle, var(--trm-menu-item-hover-bg));
+      // @include gradient-bg(var(--trm-theme-bg-subtle, var(--trm-menu-item-hover-bg)));
+    }
+
+    &.active,
+    &:active {
+      color: var(--trm-theme-contrast, var(--trm-menu-item-active-color));
+      background-color: var(--trm-theme-bg, var(--trm-menu-item-active-bg));
+      // @include gradient-bg(var(--trm-theme-bg, var(--trm-menu-item-active-bg)));
+
+      .menu-item-icon {
+        color: inherit !important; // stylelint-disable-line declaration-no-important
+      }
+    }
+
+    &.selected {
+      font-weight: var(--trm-font-weight-semibold);
+    }
+
+    &.disabled,
+    &:disabled {
+      color: var(--trm-menu-item-disabled-color);
+      pointer-events: none;
+      background-color: transparent;
+      // stylelint-disable-next-line scss/at-function-named-arguments
+      background-image: if(sass($enable-gradients): none; else: null);
+    }
+  }
+
+  .menu-item-icon {
+    flex-shrink: 0;
+    align-self: flex-start;
+    width: var(--trm-menu-icon-size);
+    height: auto;
+    margin-top: .125rem;
+  }
+
+  .menu-item-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: fit-content;
+  }
+
+  .menu-item-description {
+    font-size: var(--trm-menu-description-font-size);
+    font-weight: var(--trm-font-weight-normal);
+    color: color-mix(in oklch, currentcolor 65%, transparent);
+  }
+
+  .menu-item-check {
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-block-start: .125rem;
+    margin-inline-start: auto;
+    color: var(--trm-menu-check-color);
+    visibility: hidden;
+
+    .selected > & {
+      visibility: visible;
+    }
+  }
+
+  .menu-header {
+    display: block;
+    padding: var(--trm-menu-header-padding-y) var(--trm-menu-header-padding-x);
+    margin-bottom: 0;
+    font-size: var(--trm-font-size-sm);
+    color: var(--trm-menu-header-color);
+    white-space: nowrap;
+  }
+
+  .menu-text {
+    display: block;
+    padding: var(--trm-menu-item-padding-y) var(--trm-menu-item-padding-x);
+    color: var(--trm-fg-2);
+  }
+
+  // scss-docs-start submenu
+  .submenu {
+    position: relative;
+
+    > .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    > .menu-item::after {
+      display: inline-block;
+      flex-shrink: 0;
+      width: .375em;
+      height: .375em;
+      margin-inline-start: auto;
+      content: "";
+      border-color: currentcolor;
+      border-style: solid;
+      border-width: 0 .125em .125em 0;
+      transform: rotate(-45deg);
+
+      [dir="rtl"] & {
+        transform: rotate(135deg);
+      }
+    }
+
+    > .menu {
+      top: 0;
+      margin-top: calc(-1 * var(--trm-menu-padding-y));
+    }
+
+    &:hover > .menu-item,
+    &:focus-within > .menu-item {
+      color: var(--trm-menu-item-hover-color);
+      background-color: var(--trm-menu-item-hover-bg);
+    }
+
+    &.show > .menu-item {
+      color: var(--trm-menu-item-hover-color);
+      background-color: var(--trm-menu-item-hover-bg);
+    }
+  }
+  // scss-docs-end submenu
+}

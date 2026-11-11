@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "phase": "tremplin-branding-and-notice-packaging",
+  "reference": "9062790fdb2379593a2973416dc5a3bfb203e4e3",
+  "licenseSource": "licenses/third-party-code.txt",
+  "rootNotice": "THIRD_PARTY_NOTICES.txt",
+  "distributionNotice": "dist/THIRD_PARTY_NOTICES.txt",
+  "retiredNoticePaths": ["LICENSE.bootstrap", "dist/LICENSE.bootstrap"],
+  "distributionExceptions": ["dist/icons/datepicker-chevron.svg", "dist/LICENSE", "dist/THIRD_PARTY_NOTICES.txt"],
+  "distributionFiles": 29,
+  "consumerMetadata": ["metadata/api.json", "metadata/public-api.json"],
+  "filesAfter": ["dist", "!dist/cjs/**", "!dist/types/**", "!dist/js/adapters/**", "!dist/js/extensions/**", "!dist/css/tremplin-extensions*", "!dist/strict-build-graph.json", "js/dist", "src/js", "!src/js/extensions/**", "src/scss", "!src/scss/extensions/**", "metadata/api.json", "metadata/public-api.json", "README.md", "CHANGELOG.md", "SECURITY.md", "CONTRIBUTING.md", "GOVERNANCE.md", "LICENSE", "THIRD_PARTY_NOTICES.txt"],
+  "noticePolicy": "Preserve the exact Git-verified reused-code license and complete bundled dependency licenses. Consolidate duplicate filenames, never copyright or permission text.",
+  "publicIdentity": "Tremplin product branding; no claim of independent authorship of reused code. Original provenance and copyright records remain truthful.",
+  "coreAlgorithmsChanged": false,
+  "exportsChanged": false,
+  "versionChanged": false,
+  "localOnly": true,
+  "releaseBlocked": true
+}

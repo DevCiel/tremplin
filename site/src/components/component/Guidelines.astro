@@ -1,0 +1,7 @@
+---
+import { componentDetail } from '../../data/component-reference'
+interface Props { name: string }
+const rows = componentDetail(Astro.props.name)?.guidelines
+if (!rows) throw new Error('Missing usage guidance')
+---
+<ul>{rows.map(guideline => <li>{guideline}</li>)}</ul>

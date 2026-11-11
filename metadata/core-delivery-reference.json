@@ -1,0 +1,782 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "repository": "twbs/bootstrap",
+    "commit": "9062790fdb2379593a2973416dc5a3bfb203e4e3",
+    "files": [
+      {
+        "path": ".browserslistrc",
+        "gitBlob": "281c2d86feb231800b99d95852dd75447cb4e38e"
+      },
+      {
+        "path": "build/banner.mjs",
+        "gitBlob": "3fea93c8f1d2290379ebd10dd2c2b28d6873b962"
+      },
+      {
+        "path": "build/browser-targets.mjs",
+        "gitBlob": "2c21bfc646f0c9a6e72d9e8ce99d68a38344677a"
+      },
+      {
+        "path": "build/build-plugins.mjs",
+        "gitBlob": "d7388368c91c74e2f34bba74d0f1c80a1981e756"
+      },
+      {
+        "path": "build/bundlewatch-fix.mjs",
+        "gitBlob": "2b20e55324cc7ff4d73a20469eb86e3e9410a0bd"
+      },
+      {
+        "path": "build/bundlewatch-table.mjs",
+        "gitBlob": "e4759881bac1d93fdc14e21d5a8e513b73642cc5"
+      },
+      {
+        "path": "build/change-version.mjs",
+        "gitBlob": "0c33c43fdc1065a83b60b0363ff987d0e686cae6"
+      },
+      {
+        "path": "build/check-unused-imports.mjs",
+        "gitBlob": "6ebfa15705614f06e248df5c4c86b6a3a229dc76"
+      },
+      {
+        "path": "build/clean-astro.mjs",
+        "gitBlob": "dfe204ca360c333f93a357f5e3ae055d670a7d29"
+      },
+      {
+        "path": "build/copy-site.mjs",
+        "gitBlob": "99cffca0d3e0ac173d2acf61e715af51b144236d"
+      },
+      {
+        "path": "build/css-minify.mjs",
+        "gitBlob": "19082d61fc625ae9868fc2e37dd2b597fd7d234d"
+      },
+      {
+        "path": "build/docs-prep.sh",
+        "gitBlob": "357768abea7aa84bcb98da7bf0d3395a0d7a7fe7"
+      },
+      {
+        "path": "build/generate-sri.mjs",
+        "gitBlob": "921400f7a54e12aeaae18046b9bdb6c83b86af00"
+      },
+      {
+        "path": "build/generate-utilities-json.mjs",
+        "gitBlob": "3c5e93331a872d5990ed2691a6ee2c5d2cf4fd74"
+      },
+      {
+        "path": "build/generate-utilities-metadata.scss",
+        "gitBlob": "3789de00c4c02db66adb97ca6188963d002006e1"
+      },
+      {
+        "path": "build/html-validate.mjs",
+        "gitBlob": "1ad686efee0826c96b7286d735f90a931491e52c"
+      },
+      {
+        "path": "build/postcss.config.mjs",
+        "gitBlob": "7fe36ec06aad109f1fbcef578aa5af398fd1e63c"
+      },
+      {
+        "path": "build/rolldown.config.mjs",
+        "gitBlob": "d5a697af1cbf837eaa045ab007ca6212cf74c1b0"
+      },
+      {
+        "path": "build/screenshot-examples.mjs",
+        "gitBlob": "bfd6ccc7a1fd9a41c5f8315e746ecf2f9b9762cb"
+      },
+      {
+        "path": "build/tsconfig.dts.json",
+        "gitBlob": "4eab1ea5bbe34a242536d53e0c89dbe0a3b2fe11"
+      },
+      {
+        "path": "build/zip-examples.mjs",
+        "gitBlob": "93a40e0a1b55cabdb5a0fd1d530d979dc8b07c90"
+      },
+      {
+        "path": "dist/css/bootstrap-grid.css",
+        "gitBlob": "08fc48f8ad004e3ebfa416e86a1d2b97548ca8fc"
+      },
+      {
+        "path": "dist/css/bootstrap-grid.css.map",
+        "gitBlob": "4a9ea85d9b4138f6a578c802f86ab510a989e3c5"
+      },
+      {
+        "path": "dist/css/bootstrap-grid.min.css",
+        "gitBlob": "7938b8745bdc9f21de2ce8e56cb3b564cdce17ba"
+      },
+      {
+        "path": "dist/css/bootstrap-grid.min.css.map",
+        "gitBlob": "71442d6dea4ae52c9bade1391a9d006e74e84441"
+      },
+      {
+        "path": "dist/css/bootstrap-reboot.css",
+        "gitBlob": "0839df001252d844c916c6bd94ad0e0ca9d31148"
+      },
+      {
+        "path": "dist/css/bootstrap-reboot.css.map",
+        "gitBlob": "fccd4b37808e400330a24463bcb8114a2724e76d"
+      },
+      {
+        "path": "dist/css/bootstrap-reboot.min.css",
+        "gitBlob": "1dd301bd81e6984f1920010c1d5aca976827a7d3"
+      },
+      {
+        "path": "dist/css/bootstrap-reboot.min.css.map",
+        "gitBlob": "77838c9ac9cdda62ac334e56faff75926d201f77"
+      },
+      {
+        "path": "dist/css/bootstrap-utilities.css",
+        "gitBlob": "b3dd445146edda24fc2af6b6b824641fda79968a"
+      },
+      {
+        "path": "dist/css/bootstrap-utilities.css.map",
+        "gitBlob": "6c778427945ad06cdb204cad66fdf25d9ffdd45b"
+      },
+      {
+        "path": "dist/css/bootstrap-utilities.metadata.json",
+        "gitBlob": "6c1d4cc9877afd4f6c1986a71cff718951365408"
+      },
+      {
+        "path": "dist/css/bootstrap-utilities.min.css",
+        "gitBlob": "b55edfc723330e96d1dbe74cd73be7cc09986ff0"
+      },
+      {
+        "path": "dist/css/bootstrap-utilities.min.css.map",
+        "gitBlob": "283f9782348ba83e19bcefec50106ec6c0dc82a1"
+      },
+      {
+        "path": "dist/css/bootstrap.css",
+        "gitBlob": "1eeb5913ed9073b8a85224653242b867df27551a"
+      },
+      {
+        "path": "dist/css/bootstrap.css.map",
+        "gitBlob": "55fa739518530c7ab36ba826c800fb63be3f16f9"
+      },
+      {
+        "path": "dist/css/bootstrap.min.css",
+        "gitBlob": "5ddddd5e7a559dd6e65d9aad13c3cd2265f100e5"
+      },
+      {
+        "path": "dist/css/bootstrap.min.css.map",
+        "gitBlob": "cfbdf9d1860c911548c616f4dd85a52bc43492a0"
+      },
+      {
+        "path": "dist/js/bootstrap.bundle.js",
+        "gitBlob": "3d561b7cd8af012eedb77d579867b87cf7d745cd"
+      },
+      {
+        "path": "dist/js/bootstrap.bundle.js.map",
+        "gitBlob": "c7d4db7d9e1704d59e6474d97a6b35069ff08618"
+      },
+      {
+        "path": "dist/js/bootstrap.bundle.min.js",
+        "gitBlob": "e11bbf5a54ef2e7cda5fec610fd23ead69f5e5b0"
+      },
+      {
+        "path": "dist/js/bootstrap.bundle.min.js.map",
+        "gitBlob": "a6dd4462b125b6d54e764c1d08008fd05d1dda18"
+      },
+      {
+        "path": "dist/js/bootstrap.js",
+        "gitBlob": "49346e36e549e54c20ebaad9fd59a4008a042e46"
+      },
+      {
+        "path": "dist/js/bootstrap.js.map",
+        "gitBlob": "17c2e681a40b392b1eb37c93ee1a800c8d08769f"
+      },
+      {
+        "path": "dist/js/bootstrap.min.js",
+        "gitBlob": "a9e4eb66b15fdbd02fa52b88bef5dce0b1a052a1"
+      },
+      {
+        "path": "dist/js/bootstrap.min.js.map",
+        "gitBlob": "6bc9d3f834bc213fd08ac822202aaeb3fdc2a7cc"
+      },
+      {
+        "path": "js/dist/alert.d.ts",
+        "gitBlob": "fad375d9bbf8ce11262e405faf209fa2b4c47c42"
+      },
+      {
+        "path": "js/dist/alert.d.ts.map",
+        "gitBlob": "7adf9fedfd0af9acd4f4d37461427b00f283f355"
+      },
+      {
+        "path": "js/dist/alert.js",
+        "gitBlob": "1fd9de22658777bbe2828b7c0468ef182a31497f"
+      },
+      {
+        "path": "js/dist/alert.js.map",
+        "gitBlob": "f284a9b004be5290f7225ef432c953fea9548766"
+      },
+      {
+        "path": "js/dist/base-component.d.ts",
+        "gitBlob": "17a2cb589794d1d5795a4ccc68eb40f752cab3e1"
+      },
+      {
+        "path": "js/dist/base-component.d.ts.map",
+        "gitBlob": "a9c4d196e2fbeea01d876999c7306fcea2f7a5eb"
+      },
+      {
+        "path": "js/dist/base-component.js",
+        "gitBlob": "a10e9f13f66e688053695e12f25ae87cac0c7d86"
+      },
+      {
+        "path": "js/dist/base-component.js.map",
+        "gitBlob": "9e9dc5614cae55b43b3a03fc885a68a01c4d1ba0"
+      },
+      {
+        "path": "js/dist/button.d.ts",
+        "gitBlob": "76620d61eb69d2904064bcf756a8b508f85456b7"
+      },
+      {
+        "path": "js/dist/button.d.ts.map",
+        "gitBlob": "fad42781c35b6dfbb8f5595ed8ccf18f2d3ed64a"
+      },
+      {
+        "path": "js/dist/button.js",
+        "gitBlob": "e913323503aea60db46d39f4d47f9be43f2b9203"
+      },
+      {
+        "path": "js/dist/button.js.map",
+        "gitBlob": "a19473d8f3817481e749b4d5176d1ebd370796dc"
+      },
+      {
+        "path": "js/dist/carousel.d.ts",
+        "gitBlob": "083b3b6956f18c4738c5f12dd4293ba6bc17dcb6"
+      },
+      {
+        "path": "js/dist/carousel.d.ts.map",
+        "gitBlob": "6814b7cad418e37733401f22daa647ae6010f571"
+      },
+      {
+        "path": "js/dist/carousel.js",
+        "gitBlob": "dc4a4e0daf0bb6c23ade301aaaf36b3377ea5d5b"
+      },
+      {
+        "path": "js/dist/carousel.js.map",
+        "gitBlob": "90287fc92aa0dbe81c703b2da65767df13e1beba"
+      },
+      {
+        "path": "js/dist/chips.d.ts",
+        "gitBlob": "a9ef2fa8d438556274a1f76e90cbbcfa9ab033a8"
+      },
+      {
+        "path": "js/dist/chips.d.ts.map",
+        "gitBlob": "6e91d27bcabb674f16c42a04714de131c2674e6f"
+      },
+      {
+        "path": "js/dist/chips.js",
+        "gitBlob": "0f0c59464af06ba645b3b1539c935557034df885"
+      },
+      {
+        "path": "js/dist/chips.js.map",
+        "gitBlob": "8710fa35380a09590172460a2f0db079934009d2"
+      },
+      {
+        "path": "js/dist/collapse.d.ts",
+        "gitBlob": "daf18df316c60592cff83d2799fa4127f93098d6"
+      },
+      {
+        "path": "js/dist/collapse.d.ts.map",
+        "gitBlob": "33591bcffe8e0ef77f22294409978b00255d21a5"
+      },
+      {
+        "path": "js/dist/collapse.js",
+        "gitBlob": "13fdc653745920700cdb9628ca39e2a9709d966c"
+      },
+      {
+        "path": "js/dist/collapse.js.map",
+        "gitBlob": "6f6c504a61d3887a4f721f83c4c30383c152e50c"
+      },
+      {
+        "path": "js/dist/combobox.d.ts",
+        "gitBlob": "ac8a1782d1bd351369655a621e8caa7da2420344"
+      },
+      {
+        "path": "js/dist/combobox.d.ts.map",
+        "gitBlob": "ebca7514f24a069c8c002e5d2fdf54f62e74a935"
+      },
+      {
+        "path": "js/dist/combobox.js",
+        "gitBlob": "2308992cbb9238489e01fb31fbca23aa334814b6"
+      },
+      {
+        "path": "js/dist/combobox.js.map",
+        "gitBlob": "bd563feb0399290c5f458f4859cd8b8851932b30"
+      },
+      {
+        "path": "js/dist/datepicker.d.ts",
+        "gitBlob": "cd7e0beaab3a53e1cc63b712194a709a6d534b10"
+      },
+      {
+        "path": "js/dist/datepicker.d.ts.map",
+        "gitBlob": "b9564dc87074d0b4801db36812a94ba3b65f0163"
+      },
+      {
+        "path": "js/dist/datepicker.js",
+        "gitBlob": "d69f06f6064be298056609c5d722e525e7cf6142"
+      },
+      {
+        "path": "js/dist/datepicker.js.map",
+        "gitBlob": "2479d45eb0ff51ee49624994c90012550ca25d4d"
+      },
+      {
+        "path": "js/dist/dialog-base.d.ts",
+        "gitBlob": "9f878930a08c6d104bb3aa07a14651432f70aacb"
+      },
+      {
+        "path": "js/dist/dialog-base.d.ts.map",
+        "gitBlob": "8b3c095e9695136407f08d661598fbd9750cde92"
+      },
+      {
+        "path": "js/dist/dialog-base.js",
+        "gitBlob": "166b8b0f57a7d659101f8a3ddb57bef38c525ca5"
+      },
+      {
+        "path": "js/dist/dialog-base.js.map",
+        "gitBlob": "5b9b88566ebfec83f33f99b038665d951a6967cc"
+      },
+      {
+        "path": "js/dist/dialog.d.ts",
+        "gitBlob": "f02bd2afb44c91d6eaee59bc4fc5dbde2c8129a3"
+      },
+      {
+        "path": "js/dist/dialog.d.ts.map",
+        "gitBlob": "c762fec82a823ad1b92cfd49e8e654c5f29e24ae"
+      },
+      {
+        "path": "js/dist/dialog.js",
+        "gitBlob": "a03fbcee58527556a6ba0d8bcf73f89f99b38588"
+      },
+      {
+        "path": "js/dist/dialog.js.map",
+        "gitBlob": "241e6dbd80c1f71d41ec0dbe5c1e25519a66c2e4"
+      },
+      {
+        "path": "js/dist/dom/data.d.ts",
+        "gitBlob": "4bba607180d53decd131457c4828ccfe576a0043"
+      },
+      {
+        "path": "js/dist/dom/data.d.ts.map",
+        "gitBlob": "37d0b00b59dbecf15af92632ce426e85df2864b4"
+      },
+      {
+        "path": "js/dist/dom/data.js",
+        "gitBlob": "db474a93c29587d41fbfef2c94883db45e596cf0"
+      },
+      {
+        "path": "js/dist/dom/data.js.map",
+        "gitBlob": "e5dc54080320cf930cb3564377bd1e70c70106f4"
+      },
+      {
+        "path": "js/dist/dom/event-handler.d.ts",
+        "gitBlob": "c76debe231490ec7a7908319903380b36abf69bd"
+      },
+      {
+        "path": "js/dist/dom/event-handler.d.ts.map",
+        "gitBlob": "9584d7d081b293da741f63cad76b988b266647d2"
+      },
+      {
+        "path": "js/dist/dom/event-handler.js",
+        "gitBlob": "84324cf3f0018d1b093c0a1532f35e8dfcbdee6e"
+      },
+      {
+        "path": "js/dist/dom/event-handler.js.map",
+        "gitBlob": "d118c52987206adef95969850043d998438626d2"
+      },
+      {
+        "path": "js/dist/dom/manipulator.d.ts",
+        "gitBlob": "6540d92d384375bf39b0729c3725c5b97a1053e9"
+      },
+      {
+        "path": "js/dist/dom/manipulator.d.ts.map",
+        "gitBlob": "a43143bb858420af61a74a42e1e154247eea0b1f"
+      },
+      {
+        "path": "js/dist/dom/manipulator.js",
+        "gitBlob": "f49d24dc1e6d0fd21ef69eacdb97e4e9a3d232bf"
+      },
+      {
+        "path": "js/dist/dom/manipulator.js.map",
+        "gitBlob": "e05070d2b61f0aade9cdd32a7ae259aa02d1e780"
+      },
+      {
+        "path": "js/dist/dom/selector-engine.d.ts",
+        "gitBlob": "2989874145648b1ca672bbd5c93280d8aef657aa"
+      },
+      {
+        "path": "js/dist/dom/selector-engine.d.ts.map",
+        "gitBlob": "856b1aa3d15e463a5d0fab67fc555c1073489e9a"
+      },
+      {
+        "path": "js/dist/dom/selector-engine.js",
+        "gitBlob": "3a53da2e5d716d88866528ed9fea891fe1d3bf12"
+      },
+      {
+        "path": "js/dist/dom/selector-engine.js.map",
+        "gitBlob": "9f9733d16316c6e18da1c970ec1bc3b812a20265"
+      },
+      {
+        "path": "js/dist/drawer.d.ts",
+        "gitBlob": "53eb10f4f5572d92e8899db9d82c128ee262b348"
+      },
+      {
+        "path": "js/dist/drawer.d.ts.map",
+        "gitBlob": "dc771af2a43172e9b7bd59af0cbb01e0219bc485"
+      },
+      {
+        "path": "js/dist/drawer.js",
+        "gitBlob": "93341ba3a18990627e88b54ee2fea81552b7ec6f"
+      },
+      {
+        "path": "js/dist/drawer.js.map",
+        "gitBlob": "b5e7354a3549a451fa3c5407578786268f18878d"
+      },
+      {
+        "path": "js/dist/index.d.ts",
+        "gitBlob": "103db291b71be787f5b89f3676451be989d84f2b"
+      },
+      {
+        "path": "js/dist/index.d.ts.map",
+        "gitBlob": "ea6ce4720b6ae3390b1f16f77098200ab155a10b"
+      },
+      {
+        "path": "js/dist/index.js",
+        "gitBlob": "22beaa454c4856ed2a8f05465adf9fc81e6feb7d"
+      },
+      {
+        "path": "js/dist/index.js.map",
+        "gitBlob": "cea46236a10bd4acf6bccea400f5b1efdd6dc476"
+      },
+      {
+        "path": "js/dist/menu.d.ts",
+        "gitBlob": "e4089ba7dfafc2cd9f207db0f7409c65518ee567"
+      },
+      {
+        "path": "js/dist/menu.d.ts.map",
+        "gitBlob": "91a7ca2302041ab106245aee336cb11428fa558e"
+      },
+      {
+        "path": "js/dist/menu.js",
+        "gitBlob": "2189bc212358b2ef6c086a1a9b83adc545f75701"
+      },
+      {
+        "path": "js/dist/menu.js.map",
+        "gitBlob": "f7a24e58855b65f59e682cad2c0d09d871b404ee"
+      },
+      {
+        "path": "js/dist/nav-overflow.d.ts",
+        "gitBlob": "db027f8f4c1881dd4f34b756c6ab13e3691ab75c"
+      },
+      {
+        "path": "js/dist/nav-overflow.d.ts.map",
+        "gitBlob": "5e176d9563a359dce89a00ad323c1904ab0a29e2"
+      },
+      {
+        "path": "js/dist/nav-overflow.js",
+        "gitBlob": "29e3b5b5482013966bce5593376320c2a62cb072"
+      },
+      {
+        "path": "js/dist/nav-overflow.js.map",
+        "gitBlob": "5c03eed0d277c9adde3be716aaf10078b35b8569"
+      },
+      {
+        "path": "js/dist/otp-input.d.ts",
+        "gitBlob": "7e770a7e3d690b143179e5f46dff70ee1d7c4f52"
+      },
+      {
+        "path": "js/dist/otp-input.d.ts.map",
+        "gitBlob": "0d09d8c3275640bc5ef8ef1acdc6d6e68d2d1808"
+      },
+      {
+        "path": "js/dist/otp-input.js",
+        "gitBlob": "97e8576c234c995687dbfb126dcbbc23fca7d22c"
+      },
+      {
+        "path": "js/dist/otp-input.js.map",
+        "gitBlob": "a0c10d104582f4c2727fca3596a41a543bc1d2af"
+      },
+      {
+        "path": "js/dist/popover.d.ts",
+        "gitBlob": "3a06b4c279b34cdbfdcdc9a0839650027b283043"
+      },
+      {
+        "path": "js/dist/popover.d.ts.map",
+        "gitBlob": "4f31e70289489029516ce7d4d002a8879bb76082"
+      },
+      {
+        "path": "js/dist/popover.js",
+        "gitBlob": "cd66e327e88a7fa788852a7657f13148ae15068d"
+      },
+      {
+        "path": "js/dist/popover.js.map",
+        "gitBlob": "b0d546a5826f4065a48f3d45b35eebe19f4373dd"
+      },
+      {
+        "path": "js/dist/range.d.ts",
+        "gitBlob": "8eceb194ac3a979269f566d82f30d6a43df96dd2"
+      },
+      {
+        "path": "js/dist/range.d.ts.map",
+        "gitBlob": "a13b488911ebfcb027e197e14f4dbd4d13ca1e60"
+      },
+      {
+        "path": "js/dist/range.js",
+        "gitBlob": "bc62e46b4a678fed4fa5c75a507368ffd91d8bbb"
+      },
+      {
+        "path": "js/dist/range.js.map",
+        "gitBlob": "2f663e92fb8d0d7d4a00a0259cb4f31c5b0a276b"
+      },
+      {
+        "path": "js/dist/scrollspy.d.ts",
+        "gitBlob": "5fa76231aede4495d25bbbdaba2e9bfa2a0de661"
+      },
+      {
+        "path": "js/dist/scrollspy.d.ts.map",
+        "gitBlob": "c23e51a231c91f4e70102e3e994f116fc9b3e6fc"
+      },
+      {
+        "path": "js/dist/scrollspy.js",
+        "gitBlob": "a5d53874e3785081b0ebac84de178174f836eb7a"
+      },
+      {
+        "path": "js/dist/scrollspy.js.map",
+        "gitBlob": "687682878355ccb581e45c5a1f00dd77ffb57066"
+      },
+      {
+        "path": "js/dist/strength.d.ts",
+        "gitBlob": "fb5a8ef12651f515377e491ee47eb6d5cb06d406"
+      },
+      {
+        "path": "js/dist/strength.d.ts.map",
+        "gitBlob": "0785b0140aea3f605728e10b5ef1ee46acb26ade"
+      },
+      {
+        "path": "js/dist/strength.js",
+        "gitBlob": "b79348a861855f9cc4d5ba432249bb1fe880b3a4"
+      },
+      {
+        "path": "js/dist/strength.js.map",
+        "gitBlob": "63327a76af1e6fa26bfb2b67815c0c05ff94b550"
+      },
+      {
+        "path": "js/dist/tab.d.ts",
+        "gitBlob": "19f54f7b8785e8406516c23de2d5415b87ecde67"
+      },
+      {
+        "path": "js/dist/tab.d.ts.map",
+        "gitBlob": "087e647d7e290cc53b7745346739385d108a48c5"
+      },
+      {
+        "path": "js/dist/tab.js",
+        "gitBlob": "671107cd1a55a7e6142aee263c07273ba36f6fa6"
+      },
+      {
+        "path": "js/dist/tab.js.map",
+        "gitBlob": "1598eeffbf5931f708b89b8502fb9befb6433aea"
+      },
+      {
+        "path": "js/dist/toast.d.ts",
+        "gitBlob": "f7eaa9c54cfccfe524933424ee8b38989820e4e3"
+      },
+      {
+        "path": "js/dist/toast.d.ts.map",
+        "gitBlob": "d69729997255076327ff1386aa34f7a9c9e762b7"
+      },
+      {
+        "path": "js/dist/toast.js",
+        "gitBlob": "59356359b638201fe9e636c7859cd90a32698fbc"
+      },
+      {
+        "path": "js/dist/toast.js.map",
+        "gitBlob": "db0425a046522aab3b6c26d6ed39590a80eea7db"
+      },
+      {
+        "path": "js/dist/toggler.d.ts",
+        "gitBlob": "e76d824e39a89d9e6c4a09d013c85e45c9482d8b"
+      },
+      {
+        "path": "js/dist/toggler.d.ts.map",
+        "gitBlob": "c92f9fad1e129590c67e6420ba9172286c3b498c"
+      },
+      {
+        "path": "js/dist/toggler.js",
+        "gitBlob": "6b4c87135ad9f374858c42c49d5a30e0c16dd4c4"
+      },
+      {
+        "path": "js/dist/toggler.js.map",
+        "gitBlob": "8b0d7a7e6928c1929795e3892a7dd02953c15e70"
+      },
+      {
+        "path": "js/dist/tooltip.d.ts",
+        "gitBlob": "8733cc60b4d191ca974537a69c18acd7b38a01f3"
+      },
+      {
+        "path": "js/dist/tooltip.d.ts.map",
+        "gitBlob": "7530a1ce7b87bdad3e9e8a0b0027f89a7c482e13"
+      },
+      {
+        "path": "js/dist/tooltip.js",
+        "gitBlob": "a3b16eaa702d073b864a4d2b10423b209b6d0a38"
+      },
+      {
+        "path": "js/dist/tooltip.js.map",
+        "gitBlob": "d6cd6714db38d7ba04c368db040f35170bed1f55"
+      },
+      {
+        "path": "js/dist/util/component-functions.d.ts",
+        "gitBlob": "d5f4c390ef097ccf33625ae46a33b3581a5cec45"
+      },
+      {
+        "path": "js/dist/util/component-functions.d.ts.map",
+        "gitBlob": "8b461dfafe974082ab929f9c45765ee205a27f11"
+      },
+      {
+        "path": "js/dist/util/component-functions.js",
+        "gitBlob": "a6cfc3d104ee3018670a775e6951a7d89069cf47"
+      },
+      {
+        "path": "js/dist/util/component-functions.js.map",
+        "gitBlob": "354401c6252d7002b2931d82f375073f3e28b8a6"
+      },
+      {
+        "path": "js/dist/util/config.d.ts",
+        "gitBlob": "bbb47e5fa0cafa8ca390f09191ac0843ceda1c73"
+      },
+      {
+        "path": "js/dist/util/config.d.ts.map",
+        "gitBlob": "b20780a022fda0e530e7a88aa358ef682e4dc7a1"
+      },
+      {
+        "path": "js/dist/util/config.js",
+        "gitBlob": "6e436898669b433a2717c8247ff65099013477f2"
+      },
+      {
+        "path": "js/dist/util/config.js.map",
+        "gitBlob": "b922b317795086aeb70ea0fd6fe9b71deaf07f6a"
+      },
+      {
+        "path": "js/dist/util/floating-ui.d.ts",
+        "gitBlob": "e56cfe0a11bb43c8d50d0ebd26804d01a7de24ad"
+      },
+      {
+        "path": "js/dist/util/floating-ui.d.ts.map",
+        "gitBlob": "084fa706d46227ad43852ff4b6ab0ce79b76c4dc"
+      },
+      {
+        "path": "js/dist/util/floating-ui.js",
+        "gitBlob": "c0851e110c89d0a7ae1258bd0980c8f43ddae2cb"
+      },
+      {
+        "path": "js/dist/util/floating-ui.js.map",
+        "gitBlob": "b9955d97eadf32a487688bf53925039873fac63d"
+      },
+      {
+        "path": "js/dist/util/index.d.ts",
+        "gitBlob": "f0aa61fdbc5447d6d930c0197a166598e44c1102"
+      },
+      {
+        "path": "js/dist/util/index.d.ts.map",
+        "gitBlob": "83e8e73bbb51063520e9bffe38af52c98714c874"
+      },
+      {
+        "path": "js/dist/util/index.js",
+        "gitBlob": "4c57a726df57ce31a9842fc39858488835d9034e"
+      },
+      {
+        "path": "js/dist/util/index.js.map",
+        "gitBlob": "d0f0e57e51c9b81019aba5884c3a418318358b48"
+      },
+      {
+        "path": "js/dist/util/sanitizer.d.ts",
+        "gitBlob": "daba4973fe76d5c0f6d1ddf273116f92cbcc8de9"
+      },
+      {
+        "path": "js/dist/util/sanitizer.d.ts.map",
+        "gitBlob": "511f72e6b41b41828dc791cfd4c5f425cf799314"
+      },
+      {
+        "path": "js/dist/util/sanitizer.js",
+        "gitBlob": "30dff1a6ef9e3d750f531969326d74e45fcf5f90"
+      },
+      {
+        "path": "js/dist/util/sanitizer.js.map",
+        "gitBlob": "a16d5b2011103cd1a7eafd9130cae31711c89a35"
+      },
+      {
+        "path": "js/dist/util/swipe.d.ts",
+        "gitBlob": "49c5daeebf50d415bda7cb2bdb034ae1d3581585"
+      },
+      {
+        "path": "js/dist/util/swipe.d.ts.map",
+        "gitBlob": "af84db8d5273424db7743ef1a870a92f464c4188"
+      },
+      {
+        "path": "js/dist/util/swipe.js",
+        "gitBlob": "7b094761df2a48e909b11de10a14a81362684b16"
+      },
+      {
+        "path": "js/dist/util/swipe.js.map",
+        "gitBlob": "b7498cafcc069dca49e3299f3b4a9901e783c187"
+      },
+      {
+        "path": "js/dist/util/template-factory.d.ts",
+        "gitBlob": "b1150b5ad4170b414cbcf75c85726555eaad1da7"
+      },
+      {
+        "path": "js/dist/util/template-factory.d.ts.map",
+        "gitBlob": "72517840b227fa66923094ca0f6b696e1c1e8508"
+      },
+      {
+        "path": "js/dist/util/template-factory.js",
+        "gitBlob": "3af6afb9625afd2d21576507070af74d5e03d0b5"
+      },
+      {
+        "path": "js/dist/util/template-factory.js.map",
+        "gitBlob": "84f17c0689f3a1da1877587757cd6519360c221f"
+      }
+    ]
+  },
+  "sourceDerivedModuleOutputs": [
+    {
+      "source": "js/src/util/scroll-lock.ts",
+      "sourceGitBlob": "2d684b7378a9f271be79df723102092b08675855",
+      "reason": "The pinned source requires ScrollLock and the upstream module builder emits it, but its four compiled files are absent from the checked-in js/dist tree. Preserve all 35 source modules rather than copy that stale omission.",
+      "outputs": [
+        "js/dist/util/scroll-lock.js",
+        "js/dist/util/scroll-lock.js.map",
+        "js/dist/util/scroll-lock.d.ts",
+        "js/dist/util/scroll-lock.d.ts.map"
+      ]
+    }
+  ],
+  "sourceRoots": {
+    "js/src/": "src/js/",
+    "scss/": "src/scss/"
+  },
+  "distributionRoots": [
+    "dist/css/",
+    "dist/js/"
+  ],
+  "pluginOutputRoot": "js/dist/",
+  "distributionBasename": "tremplin",
+  "excludedProductRoots": [
+    "examples/",
+    "icons/",
+    "starters/",
+    "themes/",
+    "src/adapters/",
+    "src/integrations/",
+    "src/js/extensions/",
+    "src/scss/extensions/"
+  ],
+  "deferredBuildTools": [
+    "build/screenshot-examples.mjs",
+    "build/zip-examples.mjs"
+  ],
+  "requiredDistributionExceptions": [
+    "dist/icons/datepicker-chevron.svg",
+    "dist/LICENSE",
+    "dist/LICENSE.bootstrap",
+    "dist/THIRD_PARTY_NOTICES.txt"
+  ],
+  "localOnly": true,
+  "publishBlocked": true
+}

@@ -1,0 +1,63 @@
+---
+{
+  "title": "Sass",
+  "description": "Compile Tremplin’s module-based Sass and configure it before the first load.",
+  "group": "Customize",
+  "lead": "Compile Tremplin’s module-based Sass and configure it before the first load.",
+  "order": 1
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { customizeExamples as samples } from '../../../data/customize-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">About Sass</h2>
+
+<p>Use Dart Sass modules. Configure the owning module before its first load; later @use {"..."} with cannot reconfigure it. Full and focused entry points have different forwarding surfaces. These examples use the strict pinned API, not retired framework aliases.</p>
+
+<Code sample={samples["customize/sass#0"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">File structure</h2>
+
+<Code sample={samples["customize/sass#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Importing</h2>
+
+<p>{"Root and component token maps use literal --trm-* keys. Import functions and mixins explicitly from their owning modules; the main entry does not re-export every Sass helper."}</p>
+
+<Code sample={samples["customize/sass#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Compiling</h2>
+
+<p>Link public/app.css from your application; do not also load the full default stylesheet. Run this in a consumer application with the published package or local tarball installed.</p>
+
+<Code sample={samples["customize/sass#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Maps and loops</h2>
+
+<p>The defaults() helper shallow-merges supported override maps and removes null keys. A replaced utility family must supply its complete definition. Not every map uses defaults(): breakpoints and zindex-levels replace their maps. Keep dependent keys coherent.</p>
+
+<Code sample={samples["customize/sass#4"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Functions and mixins</h2>
+
+<p>Use defaults() from config, map helpers from functions, explicit layout/breakpoints and mixins/grid APIs, and mixins/focus-ring, border-radius, box-shadow or transition as needed. There are no core spacer(), token(), radius(), font-size() or media-up() convenience aliases. Read the module before depending on its exports.</p>
+
+</section>

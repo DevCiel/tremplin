@@ -1,0 +1,50 @@
+---
+title: Framework integrations
+description: Use Tremplin core lifecycle methods with React and Vue.
+---
+
+# Framework integrations
+
+Experimental adapter sources remain in this repository for future separation.
+They are not exported as `tremplin/react` or `tremplin/vue` by the core package.
+There is no separately published adapter package yet. Use core components directly
+and let one owner manage each piece of state.
+
+## React lifecycle
+
+```tsx
+import { useEffect, useRef } from 'react'
+import Collapse from 'tremplin/collapse'
+
+function Details() {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!ref.current) return
+    const instance = Collapse.getOrCreateInstance(ref.current, { toggle: false })
+    return () => instance.dispose()
+  }, [])
+  return <div ref={ref} className="collapse">Content</div>
+}
+```
+
+## Vue lifecycle
+
+Place this code inside a Vue `script setup` block with `lang="ts"`, and give the
+panel template element `ref="details"` and `class="collapse"`.
+
+```ts
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import Collapse from 'tremplin/collapse'
+
+const details = ref<HTMLElement | null>(null)
+let instance: Collapse | undefined
+onMounted(() => {
+  if (details.value) instance = Collapse.getOrCreateInstance(details.value, { toggle: false })
+})
+onBeforeUnmount(() => instance?.dispose())
+```
+
+Initialize after mount and call `dispose()` before removing the element. React
+and Vue are application dependencies only when your application uses them; the
+Tremplin core package requires neither. Import `tremplin/css` once in the application
+entry and use native data-API triggers or component methods to control the panel.

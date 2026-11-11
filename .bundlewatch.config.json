@@ -1,0 +1,7 @@
+{
+  "files": [
+    { "path": "./dist/css/tremplin.min.css", "maxSize": "56 kB" },
+    { "path": "./dist/js/tremplin.min.js", "maxSize": "60 kB" },
+    { "path": "./dist/js/tremplin.bundle.min.js", "maxSize": "62 kB" }
+  ]
+}

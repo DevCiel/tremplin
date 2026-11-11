@@ -1,0 +1,92 @@
+---
+{
+  "component": "breadcrumb",
+  "title": "Breadcrumb",
+  "description": "Breadcrumb component documentation for Tremplin.",
+  "lead": "Show the current page location within a navigational hierarchy.",
+  "variants": [
+    {
+      "title": "Text dividers",
+      "description": "Explicit decorative content replaces the empty-divider CSS mask. No obsolete divider-string token or implicit separator is needed."
+    },
+    {
+      "title": "SVG dividers",
+      "description": "Nonempty dividers use authored SVG instead of the default pseudo-element. Keep decorative shapes out of the accessible hierarchy."
+    },
+    {
+      "title": "Divider dimensions",
+      "description": "Use the real icon dimension/margin tokens. The full mask URL remains available in the token table; separator color does not carry page meaning."
+    },
+    {
+      "title": "Long and wrapping trails",
+      "description": "Breadcrumb wraps by default. Keep labels concise and verify longer hierarchy names at small widths."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Spacing follows direction; an explicitly authored left-pointing separator is used here. A mask does not automatically mirror its SVG path."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Follow ancestor links; the non-link current item and decorative dividers are not keyboard controls."
+    },
+    {
+      "keys": "Enter",
+      "behavior": "Navigate through a focused ancestor link."
+    }
+  ],
+  "guidelines": [
+    "Use a named navigation landmark and an ordered list for hierarchy.",
+    "Add explicit breadcrumb-divider elements and authored aria-hidden; do not assume CSS hides content from assistive technology.",
+    "Use breadcrumb-link on each destination/current surface and mark exactly one current item.",
+    "Separators can be empty for the CSS mask or contain text/SVG; there is no breadcrumb-divider string token.",
+    "These examples deliberately compose fg-body for readable ancestor text. Test colors when customizing tokens.",
+    "Localize directional glyphs deliberately; logical spacing is not automatic icon mirroring."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("breadcrumb")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="breadcrumb" />
+
+{componentDetail("breadcrumb").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="breadcrumb" />
+</>}
+
+{componentDetail("breadcrumb").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("breadcrumb").sass} standalone={true} />
+</>}
+
+{componentDetail("breadcrumb").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="breadcrumb" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="breadcrumb" />
+
+{documentedComponents.find(component => component.name === "breadcrumb").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="breadcrumb" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Breadcrumb is CSS-only. Explicit divider elements and authored ARIA supply presentation and hierarchy; no navigation controller is installed.</p>

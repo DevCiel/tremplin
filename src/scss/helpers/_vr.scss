@@ -1,0 +1,9 @@
+@layer helpers {
+  .vr {
+    display: inline-block;
+    align-self: stretch;
+    width: var(--trm-vr-border-width, var(--trm-border-width));
+    min-height: 1em;
+    background-color: var(--trm-border-color);
+  }
+}

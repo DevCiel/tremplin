@@ -1,0 +1,34 @@
+{
+  "decision": "User-requested follow-up audit: remove unrelated legacy CSS/Sass/JavaScript before proceeding with feature migration.",
+  "date": "2026-11-05",
+  "sourceTargets": [
+    "src/runtime/hybrid.ts",
+    "src/scss/extensions/_palette.scss",
+    "tsup.config.ts",
+    "tsup.browser.config.ts",
+    "tsup.browser.dev.config.ts",
+    "scripts/audit-bootstrap-scss.mjs",
+    "docs/index.html"
+  ],
+  "generatedTargets": [
+    "site/public/js/tremplin.js",
+    "site-dist/js/tremplin.js"
+  ],
+  "transientCachesRemoved": ["test-results/.playwright-artifacts-6"],
+  "mirroredOutputs": ["site/public/dist", "site-dist/dist"],
+  "rebuiltAssembly": "artifacts/bootstrap6-integrations/3b7f32318876bbd3c9cc14d3f891d744f39cd538",
+  "retiredCssTokens": [
+    "--trm-primary", "--trm-secondary", "--trm-success", "--trm-danger",
+    "--trm-warning", "--trm-info", "--trm-light", "--trm-dark",
+    "--trm-body-bg", "--trm-body-color", "--trm-surface", "--trm-surface-raised",
+    "--trm-muted", "--trm-radius", "--trm-radius-sm", "--trm-radius-lg",
+    "--trm-shadow", "--trm-danger-text", "--trm-focus-color", "--trm-gray-50"
+  ],
+  "retained": {
+    "bootstrap": "All pinned core modules and upstream compatibility behavior, plus the six approved security/accessibility exceptions.",
+    "dependencies": "Required node_modules, calendar/Floating UI assets and hash-verified Bootstrap reference caches are not obsolete Tremplin code.",
+    "extensionsAndThemes": "Current optional components and Ocean/Forest presets remain, with legacy fallback branches replaced by strict tokens.",
+    "fixtures": "Root examples and documentation/test strings still used by the pending migration suite are inputs, not alternate framework implementations. Do not delete useful regression coverage by searching for old class names.",
+    "evidence": "Historical non-executable reports and screenshots remain evidence; obsolete executable runtime copies and the old transient trace CSS cache are removed."
+  }
+}

@@ -1,0 +1,333 @@
+@use "functions" as *;
+@use "config" as *;
+@use "mixins/border-radius" as *;
+@use "mixins/focus-ring" as *;
+@use "mixins/gradients" as *;
+@use "mixins/tokens" as *;
+@use "mixins/transition" as *;
+
+$nav-tokens: () !default;
+
+// scss-docs-start nav-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$nav-tokens: defaults(
+  (
+    --trm-nav-gap: .125rem,
+    --trm-nav-link-gap: .5rem,
+    --trm-nav-link-align: center,
+    --trm-nav-link-justify: center,
+    --trm-nav-link-padding-x: .75rem,
+    --trm-nav-link-padding-y: .375rem,
+    --trm-nav-link-color: var(--trm-fg-2),
+    --trm-nav-link-hover-color: var(--trm-fg-1),
+    --trm-nav-link-hover-bg: var(--trm-bg-1),
+    --trm-nav-link-active-color: var(--trm-fg-body),
+    --trm-nav-link-active-bg: var(--trm-bg-2),
+    --trm-nav-link-disabled-color: var(--trm-fg-4),
+    --trm-nav-link-border-width: var(--trm-border-width),
+    --trm-nav-link-transition-property: "color, background-color, border-color",
+    --trm-nav-link-transition-duration: .15s,
+    --trm-nav-link-transition-timing: ease-in-out,
+  ),
+  $nav-tokens
+);
+// scss-docs-end nav-tokens
+
+$nav-tabs-tokens: () !default;
+
+// scss-docs-start nav-tabs-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$nav-tabs-tokens: defaults(
+  (
+    --trm-nav-tabs-border-width: var(--trm-border-width),
+    --trm-nav-tabs-border-color: var(--trm-border-color),
+    --trm-nav-tabs-border-radius: var(--trm-radius-5),
+    --trm-nav-tabs-link-hover-border-color: var(--trm-border-subtle),
+    --trm-nav-tabs-link-active-color: var(--trm-fg-body),
+    --trm-nav-tabs-link-active-bg: var(--trm-bg-body),
+    --trm-nav-tabs-link-active-border-color: var(--trm-border-color) var(--trm-border-color) var(--trm-bg-body),
+  ),
+  $nav-tabs-tokens
+);
+// scss-docs-end nav-tabs-tokens
+
+$nav-pills-tokens: () !default;
+
+// scss-docs-start nav-pills-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$nav-pills-tokens: defaults(
+  (
+    --trm-nav-pills-bg: var(--trm-bg-1),
+    --trm-nav-pills-padding: .25rem,
+    --trm-nav-pills-border-radius: 3rem,
+    --trm-nav-pills-link-active-color: var(--trm-primary-contrast),
+    --trm-nav-pills-link-active-bg: var(--trm-primary-bg),
+    --trm-nav-pills-link-border-radius: 3rem,
+  ),
+  $nav-pills-tokens
+);
+// scss-docs-end nav-pills-tokens
+
+$nav-underline-tokens: () !default;
+
+// scss-docs-start nav-underline-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$nav-underline-tokens: defaults(
+  (
+    --trm-nav-gap: 1rem,
+    --trm-nav-link-active-bg: transparent,
+    --trm-nav-underline-border-width: .125rem,
+    --trm-nav-underline-link-active-color: var(--trm-fg-body),
+  ),
+  $nav-underline-tokens
+);
+// scss-docs-end nav-underline-tokens
+
+$tab-pane-tokens: () !default;
+
+// scss-docs-start tab-pane-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$tab-pane-tokens: defaults(
+  (
+    --trm-tab-pane-transition-property: "opacity",
+    --trm-tab-pane-transition-duration: .15s,
+    --trm-tab-pane-transition-timing: linear,
+  ),
+  $tab-pane-tokens
+);
+// scss-docs-end tab-pane-tokens
+
+// Base class
+//
+// Kickstart any navigation component with a set of style resets. Works with
+// `<nav>`s, `<ul>`s or `<ol>`s.
+
+@layer components {
+  .nav {
+    @include tokens($nav-tokens);
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--trm-nav-gap);
+    padding-inline-start: 0;
+    margin-bottom: 0;
+    list-style-type: "";
+  }
+
+  .nav-item {
+    display: flex;
+  }
+
+  .nav-link {
+    display: flex;
+    gap: var(--trm-nav-link-gap);
+    align-items: var(--trm-nav-link-align);
+    justify-content: var(--trm-nav-link-justify);
+    padding: var(--trm-nav-link-padding-y) var(--trm-nav-link-padding-x);
+    font-weight: var(--trm-nav-link-font-weight);
+    color: var(--trm-theme-fg, var(--trm-nav-link-color));
+    text-decoration: none;
+    white-space: nowrap;
+    background: none;
+    border: var(--trm-nav-link-border-width) solid transparent;
+    @include border-radius(var(--trm-radius-5));
+    @include transition-props(
+      var(--trm-nav-link-transition-property),
+      var(--trm-nav-link-transition-duration),
+      var(--trm-nav-link-transition-timing)
+    );
+
+    &:hover,
+    &:focus {
+      color: var(--trm-theme-fg-emphasis, var(--trm-nav-link-hover-color));
+      background-color: var(--trm-theme-bg-muted, var(--trm-nav-link-hover-bg));
+    }
+
+    &:focus-visible {
+      --trm-focus-ring-offset: 1px;
+      color: var(--trm-theme-fg-emphasis, var(--trm-nav-link-hover-color));
+      @include focus-ring(true);
+    }
+
+    &.active,
+    &:active {
+      color: var(--trm-theme-fg, var(--trm-nav-link-active-color));
+      background-color: var(--trm-theme-bg-subtle, var(--trm-nav-link-active-bg));
+    }
+
+    // Disabled state lightens text
+    &.disabled,
+    &:disabled {
+      color: var(--trm-nav-link-disabled-color);
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+
+  //
+  // Tabs
+  //
+
+  .nav-tabs {
+    // scss-docs-start nav-tabs-css-vars
+    @include tokens($nav-tabs-tokens);
+    // scss-docs-end nav-tabs-css-vars
+
+    box-shadow: inset 0 calc(-1 * var(--trm-nav-tabs-border-width)) 0 var(--trm-nav-tabs-border-color);
+
+    .nav-link {
+      border: var(--trm-nav-tabs-border-width) solid transparent;
+      border-bottom-color: var(--trm-nav-tabs-border-color);
+      @include border-radius(var(--trm-nav-tabs-border-radius));
+      @include border-bottom-radius(0);
+
+      &:hover {
+        // Prevents active .nav-link tab overlapping focus outline of previous/next .nav-link
+        isolation: isolate;
+        border-color: var(--trm-nav-tabs-link-hover-border-color);
+        border-bottom-color: var(--trm-nav-tabs-border-color);
+      }
+    }
+
+    .nav-link.active,
+    .nav-item.show .nav-link {
+      color: var(--trm-nav-tabs-link-active-color);
+      background-color: var(--trm-nav-tabs-link-active-bg);
+      border-color: var(--trm-nav-tabs-link-active-border-color);
+      border-bottom-color: var(--trm-nav-tabs-link-active-bg);
+    }
+
+    .menu {
+      margin-top: calc(-1 * var(--trm-nav-tabs-border-width));
+      @include border-top-radius(0);
+    }
+  }
+
+  //
+  // Pills
+  //
+
+  .nav-pills {
+    @include tokens($nav-pills-tokens);
+
+    display: inline-flex;
+    padding: var(--trm-nav-pills-padding);
+    background-color: var(--trm-nav-pills-bg);
+    @include border-radius(var(--trm-nav-pills-border-radius));
+
+    .nav-link {
+      @include border-radius(var(--trm-nav-pills-link-border-radius));
+    }
+
+    .nav-link.active,
+    .show > .nav-link {
+      color: var(--trm-theme-contrast, var(--trm-nav-pills-link-active-color));
+      @include gradient-bg(var(--trm-theme-bg, var(--trm-nav-pills-link-active-bg)));
+    }
+  }
+
+  .nav-pills-vertical {
+    flex-direction: column;
+    align-items: stretch;
+
+    .nav-item,
+    .nav-link {
+      width: 100%;
+    }
+  }
+
+  //
+  // Underline
+  //
+
+  .nav-underline {
+    // scss-docs-start nav-underline-css-vars
+    @include tokens($nav-underline-tokens);
+    // scss-docs-end nav-underline-css-vars
+
+    .nav-link {
+      padding-inline: 0;
+      border: 0;
+      border-block-end: var(--trm-nav-underline-border-width) solid transparent;
+      @include border-radius(0);
+
+      &:hover,
+      &:focus {
+        border-block-end-color: currentcolor;
+      }
+    }
+
+    .nav-link.active,
+    .show > .nav-link {
+      font-weight: var(--trm-font-weight-bold);
+      color: var(--trm-nav-underline-link-active-color);
+      border-block-end-color: currentcolor;
+    }
+  }
+
+  //
+  // Justified variants
+  //
+
+  .nav-fill {
+    display: flex;
+
+    > .nav-link,
+    .nav-item {
+      flex: 1 1 auto;
+      text-align: center;
+    }
+  }
+
+  .nav-justified {
+    display: flex;
+
+    > .nav-link,
+    .nav-item {
+      flex-grow: 1;
+      flex-basis: 0;
+      text-align: center;
+    }
+  }
+
+  .nav-fill,
+  .nav-justified {
+    .nav-item .nav-link {
+      width: 100%; // Make sure button will grow
+    }
+  }
+
+  // Tabbable tabs
+  //
+  // Hide tabbable panes to start, show them when `.active`
+
+  .tab-content {
+    > .tab-pane {
+      @include tokens($tab-pane-tokens);
+
+      display: none;
+
+      // The pane fades in on its own, from the starting state below. Only the
+      // entry animates: two in-flow panes cannot cross-fade without stacking,
+      // so the outgoing pane leaves at once. Add .tab-pane-instant to skip it.
+      &:not(.tab-pane-instant) {
+        @include transition-props(
+          var(--trm-tab-pane-transition-property),
+          var(--trm-tab-pane-transition-duration),
+          var(--trm-tab-pane-transition-timing)
+        );
+      }
+    }
+    > .active {
+      display: block;
+    }
+  }
+
+  // The pane is not rendered before .active lands, so the fade-in needs an
+  // explicit starting state.
+  @starting-style {
+    .tab-content > .tab-pane:not(.tab-pane-instant).active {
+      opacity: 0;
+    }
+  }
+}

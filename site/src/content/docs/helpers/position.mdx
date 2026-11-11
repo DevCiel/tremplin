@@ -1,0 +1,55 @@
+---
+{
+  "title": "Position",
+  "description": "Place fixed and viewport-responsive sticky elements without obscuring content.",
+  "group": "Helpers",
+  "lead": "Place fixed and viewport-responsive sticky elements without obscuring content.",
+  "order": 3
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { helpersExamples as samples } from '../../../data/helpers-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Fixed top and bottom"}</h2>
+
+<p><Html source={"Fixed helpers use physical inset shorthands and --trm-z-fixed. They leave normal flow, so reserve enough application space and test text zoom, safe areas and the on-screen keyboard. These are code-only examples to avoid covering the documentation."} /></p>
+
+<Code sample={samples["helpers/position"][0].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Sticky top"}</h2>
+
+<p><Html source={"sticky-top sets position: sticky, top: 0 and z-index: var(--trm-z-sticky). sticky-bottom uses bottom: 0. The helper has no literal z-index fallback; include root tokens or supply that token yourself."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/position"][1].example} /></div>
+
+<Code sample={samples["helpers/position"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Responsive positioning"}</h2>
+
+<p><Html source={"Canonical prefixes use viewport range queries: md starts at 768px. They are not stack-container queries, and no infix or xxl aliases are generated. Below the threshold, an element retains ordinary positioning unless another rule changes it."} /></p>
+
+<p><Html source={"Both base and responsive position declarations have normal priority in the helpers layer. They do not include important declarations or a second utility-layer copy. Avoid contradictory position classes; generated CSS order, not HTML class order, controls conflicts."} /></p>
+
+<Code sample={samples["helpers/position"][2].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Physical edges and configuration"}</h2>
+
+<p><Html source={"Top and bottom remain physical edges in vertical writing modes, matching the pin. Fixed insets also remain physical. Configure the shared breakpoint map before the helper; the same map supplies responsive stack container thresholds. There is no separate legacy CQ scale."} /></p>
+
+<p><Html source={"Scope --trm-z-sticky or --trm-z-fixed to customize layer values. Ordinary z-index still cannot cross an ancestor stacking context or outrank the native top layer. Keep focused controls and anchored headings clear of persistent bars."} /></p>
+
+<Code sample={samples["helpers/position"][3].code[0]} standalone={true} />
+
+</section>

@@ -1,0 +1,53 @@
+---
+{
+  "title": "Quickstart",
+  "description": "Start with the locally built CSS and bundled ES module.",
+  "group": "Guides",
+  "lead": "Start with the locally built CSS and bundled ES module.",
+  "order": 0
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { workflowExamples as samples } from '../../../data/workflow-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Scope and checkout status</h2>
+
+<p>Keep consumer experiments in a separate directory so their build output cannot overwrite the framework distribution. Use the Node version required by your chosen bundler. See <a href="/getting-started/install/">{"installation"}</a> and <a href="/getting-started/bundlers/">{"the detailed bundler reference"}</a>.</p>
+
+<div class="docs-callout docs-callout-info">This is Tremplin-specific setup/adoption guidance, not a verbatim or exhaustive copy of upstream historical documentation. This checkout is unreleased: use a locally packed tarball, not an unverified public npm/CDN package.</div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Build and copy assets</h2>
+
+<p>Copy the complete dist/css, dist/js and dist/icons directories into your application. Preserve the relative calendar SVG URL; do not copy only a CSS file and omit its assets.</p>
+
+<Code sample={samples["guides/quickstart#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Load the local browser bundle</h2>
+
+<p>This self-contained ES module includes positioning and calendar dependencies and registers the data APIs used above. It creates no window global. Do not load a second independently built runtime on the same page.</p>
+
+<Code sample={samples["guides/quickstart#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Verify your page</h2>
+
+<p>Automated checks do not replace assistive-technology review. See <a href="/getting-started/accessibility/">{"accessibility"}</a> and <a href="/getting-started/browsers-devices/">{"browser support"}</a>.</p>
+
+<ol class="docs-steps">
+<li>Serve the application over HTTP.</li>
+<li>Open the dialog using its button, dismiss with Escape, and verify focus returns.</li>
+<li>Check narrow viewports, keyboard navigation, reduced motion and readable contrast.</li>
+</ol>
+
+</section>

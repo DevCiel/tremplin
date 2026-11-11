@@ -1,0 +1,62 @@
+{
+  "format": "tremplin-reviewed-upstream-transition-v1",
+  "from": "3b7f32318876bbd3c9cc14d3f891d744f39cd538",
+  "to": "9062790fdb2379593a2973416dc5a3bfb203e4e3",
+  "reviewedOn": "2026-11-09",
+  "sourceModules": {
+    "scss": 102,
+    "javascript": 35
+  },
+  "securityLiteralEditsChanged": false,
+  "publicApiDelta": {
+    "addedCssClasses": [
+      "dialog-2xl"
+    ],
+    "removedCssClasses": [],
+    "componentApiChanged": false,
+    "packageExportsChanged": false,
+    "sassApiChanged": false
+  },
+  "historicalScopeUpdates": [
+    {
+      "file": "metadata/strict-api-baseline.json",
+      "before": "d25081fdf87e799f40525e540ded1615729da9a3517ce615daf9816e8ed34b67",
+      "after": "ed40371b4691a56ae11cc0025c79a2b126ffdb70a2a97af0ff8963daad8df27c"
+    },
+    {
+      "file": "metadata/bootstrap6-security-patches.json",
+      "before": "ff4658e324e38d79e9cad20b2869867725a83fa64107468fb16a04c45e475f68",
+      "after": "5d7c7d7c08b7eae7803d5bac272bb4bfe55f5aee076e00b8125d9ff87be7b078"
+    },
+    {
+      "file": "metadata/bootstrap6-reference.json",
+      "before": "b37994647e3baad1f908bb1c3212c1531ba4e05642838ce59d6cbba6966dcbc9",
+      "after": "bc8afb781311e89af5ed2794380c58718c0f533acec20ae34d061c79b1463ea6"
+    },
+    {
+      "file": "metadata/documentation-tokens.json",
+      "before": "dd43d627c44e7128639431a56766998b2455b1d42ac6e336a21110da0a40d11c",
+      "after": "8071c9e1ff310bf41b5b4c210e411512aea7438451d20b291808b3f0739d96f5"
+    },
+    {
+      "file": "dist/css/tremplin.css",
+      "before": "2a286a2b093bb07c581baf5c7af79b383a183de87ab503557639a6ed14e16b21",
+      "after": "c869beb7c761b9489ed3328567a8272a5b1be966e465a47383c3583a4c85707b"
+    },
+    {
+      "file": "src/js/dialog-base.ts",
+      "before": "200b1d982987fefa5a7ed69dd8831a784f07bc6c39a4ed1993c17f6005169a1c",
+      "after": "e59de5b3c58879f03725bb4be80bef7c64f5be4771559bcf8d30345b3ed8d515"
+    },
+    {
+      "file": "src/scss/forms/_switch.scss",
+      "before": "5140b6302b469ccbfc5cf836f29186441303603ad5533ba132fe0a99df83c612",
+      "after": "afb4a8187b0437bc3aa59256463f6f6e7ab2e581708db7385f07f46a7b885623"
+    },
+    {
+      "file": "src/scss/_root.scss",
+      "before": "69edc7a3e62dd73d018ae5bd39a9b3cd24bcde830d9041e2c91018f0dce4d610",
+      "after": "d1676d621619d62a8c0f11c614cd4c6164cad47548d540184e6c4bb953616c96"
+    }
+  ]
+}

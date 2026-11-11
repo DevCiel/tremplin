@@ -1,0 +1,70 @@
+---
+{
+  "title": "Combobox",
+  "description": "Filter and choose a value from a locally authored list of suggestions.",
+  "group": "Forms",
+  "lead": "Select identifiers with an authored button, Menu and local search.",
+  "order": 11
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/combobox"][0].example} /></div>
+
+<Code sample={examples["forms/combobox"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Explicit demo accessibility CSS"}</h2>
+
+<p>{"These guides add an individual chip focus outline and readable Combobox placeholder/no-results text as explicit application styling. Copy this CSS with the markup; the pinned core remains unchanged."}</p>
+
+<Code sample={examples["forms/combobox"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Multiple and preselected values"}</h2>
+
+<p>{"The generated hidden input stores selected identifiers. Multiple values are one comma-separated string, not repeated inputs; display labels and descriptions remain separate. Native reset and disabled-trigger submission require explicit application policies."}</p>
+
+<div class="docs-example"><Html source={examples["forms/combobox"][2].example} /></div>
+
+<Code sample={examples["forms/combobox"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Focus and search behavior"}</h2>
+
+<p>{"Put data-trm-toggle=combobox on a named native trigger, include combobox-value, and follow it with the actual Menu. The wrapper form-field is a layout helper, not an invented combobox CSS class."}</p>
+
+<p>{"Author labelled listbox/options and a separate labelled search input. Options receive real focus, not aria-activedescendant tracking. The pin binds any supplied search input even if search=false, and does not generate one from search=true."}</p>
+
+<p>{"Set data-trm-name for a generated hidden input. Single mode stores an identifier; multiple mode joins identifiers with commas. Validate delimiter-sensitive values and native form reset/disabled policies in your application."}</p>
+
+<p>{"There is no getValue/setValue API or free-text display/input contract. Initial selected items seed display and hidden value; labels/descriptions are not the submitted identifier."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Events and completion"}</h2>
+
+<p>{"The known owned-Menu registry notice is preserved. Combobox shown/hidden and returned promises do not await Menu transitions; observe shown.trm.menu/hidden.trm.menu for settled state."}</p>
+
+<p>{"Events expose value/item directly, not event.detail. change is post-mutation; only show/hide are read as cancellation gates. Outside dismissal may occur through Menu without Combobox hide/hidden notifications."}</p>
+
+<p>{"Use native disabled options; filtering can count their text while keyboard navigation excludes them. Group labels/no-results elements are authored, not generated or automatically regrouped."}</p>
+
+<p>{"Combobox has no own configurable Sass token map. It reuses form-control and Menu tokens; the sibling Menu rule sets max height 300px. The copied focus/contrast CSS is a demo choice, not a core patch."}</p>
+
+<Code sample={examples["forms/combobox"][4].code[0]} standalone={true} />
+
+</section>

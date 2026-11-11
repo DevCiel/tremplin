@@ -1,0 +1,125 @@
+---
+{
+  "component": "strength",
+  "title": "Strength",
+  "description": "Strength component documentation for Tremplin.",
+  "lead": "Provide advisory segmented password feedback with a readable text message.",
+  "variants": [
+    {
+      "title": "Segmented feedback",
+      "description": "Synthetic prefilled text is evaluated on initialization. This score is illustrative feedback, not evidence that a real password is safe."
+    },
+    {
+      "title": "Empty password",
+      "description": "Default zero score yields no level. Text/segment updates happen on transitions; do not pre-author misleading feedback in an initially empty meter."
+    },
+    {
+      "title": "Single bar",
+      "description": "The actual strength-bar CSS derives width from the level attribute. The native password field remains the only editable input."
+    },
+    {
+      "title": "Custom local scorer",
+      "description": "The copied demo function uses length only and complete message keys. This is a deliberately simple illustration, not a security recommendation."
+    },
+    {
+      "title": "Static CSS states",
+      "description": "Each bar has authored state and readable context, without a linked password input or an ARIA numeric-meter promise."
+    },
+    {
+      "title": "Native readonly and disabled inputs",
+      "description": "Native input states control user editing; evaluate() still reads an application-assigned value. Nothing is submitted by this page."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Text status and segment count accompany color; these bars never receive focus."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Native password editing",
+      "behavior": "Input/change evaluations follow the real password field. Decorative bars/segments never enter the tab sequence."
+    }
+  ],
+  "guidelines": [
+    "Use explicit data-trm-input or a single password field per parent; the text feedback is the first strength-text in the meter parent, not an arbitrary global target.",
+    "Default scoring uses eight length/category points. Zero maps to null; thresholds [2,4,6] are inclusive ceilings. This heuristic is not authentication policy or a compromised-password check.",
+    "strengthChange is dispatched only when the level changes. Different scores within the same level do not refresh text or dispatch a new plugin event. Event password is redacted as *** or empty.",
+    "Nested messages/weights replace their default objects rather than deep-merging. Supply all keys; missing weight keys can yield NaN and an accidental strong result. Validate custom scorer outputs and thresholds separately.",
+    "A custom scorer is called only for nonempty text. minLength affects scoring, not native minlength or form validity. evaluate() is needed after programmatic value changes.",
+    "There is no numeric ARIA meter. Decorative aria-hidden segments/bar and an associated readable polite status are application markup; dispose removes owned input listeners but leaves the displayed DOM/state."
+  ],
+  "events": {
+    "strengthChange.trm.strength": "Wrapper notification only when the level changes, including nonempty initial evaluation. Direct strength/score and redacted password (*** or empty) are supplied. Not every score change, and not a mutation veto."
+  }
+}
+---
+
+import { advancedDemoJavascript } from '../../../data/advanced-input-docs'
+import { componentApi } from '../../../data/component-api'
+import AdvancedOptions from '../../../components/component/AdvancedOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("strength")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="strength" />
+
+{componentDetail("strength").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="strength" />
+</>}
+
+{componentDetail("strength").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("strength").sass} standalone={true} />
+</>}
+
+{componentDetail("strength").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="strength" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="strength" />
+
+{documentedComponents.find(component => component.name === "strength").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="strength" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("strength").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("strength").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<p>Configure these optional values before construction; getOrCreateInstance does not reconfigure an existing instance.</p>
+<AdvancedOptions name="strength" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="strength" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="strength" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="strength" />
+<p class="mt-4"><a href="/api/strength/">View the generated {componentApi("strength").definition.className}{" API reference →"}</a></p>
+
+<h2 id="demo-setup">Explicit browser-bundle demo setup</h2><p>This copied application setup configures marked examples locally. It deliberately disposes any auto-created instance before setting function options; getOrCreateInstance does not reconfigure it. No requests or automatic submission are made.</p>
+<Code source={advancedDemoJavascript} standalone={true} plain={true} label="Copy advanced input demo setup" />

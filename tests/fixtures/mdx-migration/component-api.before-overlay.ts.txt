@@ -1,0 +1,28 @@
+import api from '../../../metadata/api.json' with { type: 'json' }
+import { componentImport, componentTarget } from './component-reference'
+import { componentMdxMetadata } from '../libs/component-mdx'
+
+export const authoredApiComponentNames = ['alert', 'button', 'collapse', 'menu', 'scrollspy', 'tab', 'toast'] as const
+
+/** Generated API definitions remain live; MDX owns explanatory prose. */
+export function componentApi(name: string) {
+  if (!authoredApiComponentNames.some(topic => topic === name)) throw new Error('No authored component API adapter: ' + name)
+  const definition = api.components.find(component => component.name === name)
+  if (!definition) throw new Error('Missing generated component API: ' + name)
+  const moduleImport = componentImport(name, definition.className)
+  const selector = componentTarget(name)
+  return {
+    definition, commonMethods: api.commonMethods, moduleImport,
+    javascript: `${moduleImport}\n\nconst element = document.querySelector('${selector}')\nconst instance = ${definition.className}.getOrCreateInstance(element)`
+  }
+}
+
+export function componentApiEvents(name: string) {
+  const { definition } = componentApi(name)
+  const descriptions = componentMdxMetadata(name)?.events
+  return definition.events.map(event => {
+    const description = descriptions?.[event]
+    if (typeof description !== 'string' || !description) throw new Error('Missing authored lifecycle description: ' + event)
+    return { event, description }
+  })
+}

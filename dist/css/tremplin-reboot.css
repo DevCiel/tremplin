@@ -1,0 +1,859 @@
+/*!
+  * Tremplin Reboot v0.8.0-beta.0 (https://gettremplin.com)
+  * Copyright 2011-2026 The Bootstrap Authors
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+  */
+:root,
+:host {
+  --trm-blue-025: color-mix(in oklch, var(--trm-white) 94%, oklch(60% 0.24 240deg));
+  --trm-blue-050: color-mix(in oklch, var(--trm-white) 90%, oklch(60% 0.24 240deg));
+  --trm-blue-100: color-mix(in oklch, var(--trm-white) 80%, oklch(60% 0.24 240deg));
+  --trm-blue-200: color-mix(in oklch, var(--trm-white) 60%, oklch(60% 0.24 240deg));
+  --trm-blue-300: color-mix(in oklch, var(--trm-white) 40%, oklch(60% 0.24 240deg));
+  --trm-blue-400: color-mix(in oklch, var(--trm-white) 20%, oklch(60% 0.24 240deg));
+  --trm-blue-500: oklch(60% 0.24 240deg);
+  --trm-blue-600: color-mix(in oklch, var(--trm-black) 16%, oklch(60% 0.24 240deg));
+  --trm-blue-700: color-mix(in oklch, var(--trm-black) 32%, oklch(60% 0.24 240deg));
+  --trm-blue-800: color-mix(in oklch, var(--trm-black) 48%, oklch(60% 0.24 240deg));
+  --trm-blue-900: color-mix(in oklch, var(--trm-black) 64%, oklch(60% 0.24 240deg));
+  --trm-blue-950: color-mix(in oklch, var(--trm-black) 70%, oklch(60% 0.24 240deg));
+  --trm-blue-975: color-mix(in oklch, var(--trm-black) 76%, oklch(60% 0.24 240deg));
+  --trm-indigo-025: color-mix(in oklch, var(--trm-white) 94%, oklch(56% 0.26 288deg));
+  --trm-indigo-050: color-mix(in oklch, var(--trm-white) 90%, oklch(56% 0.26 288deg));
+  --trm-indigo-100: color-mix(in oklch, var(--trm-white) 80%, oklch(56% 0.26 288deg));
+  --trm-indigo-200: color-mix(in oklch, var(--trm-white) 60%, oklch(56% 0.26 288deg));
+  --trm-indigo-300: color-mix(in oklch, var(--trm-white) 40%, oklch(56% 0.26 288deg));
+  --trm-indigo-400: color-mix(in oklch, var(--trm-white) 20%, oklch(56% 0.26 288deg));
+  --trm-indigo-500: oklch(56% 0.26 288deg);
+  --trm-indigo-600: color-mix(in oklch, var(--trm-black) 16%, oklch(56% 0.26 288deg));
+  --trm-indigo-700: color-mix(in oklch, var(--trm-black) 32%, oklch(56% 0.26 288deg));
+  --trm-indigo-800: color-mix(in oklch, var(--trm-black) 48%, oklch(56% 0.26 288deg));
+  --trm-indigo-900: color-mix(in oklch, var(--trm-black) 64%, oklch(56% 0.26 288deg));
+  --trm-indigo-950: color-mix(in oklch, var(--trm-black) 70%, oklch(56% 0.26 288deg));
+  --trm-indigo-975: color-mix(in oklch, var(--trm-black) 76%, oklch(56% 0.26 288deg));
+  --trm-violet-025: color-mix(in oklch, var(--trm-white) 94%, oklch(56% 0.24 300deg));
+  --trm-violet-050: color-mix(in oklch, var(--trm-white) 90%, oklch(56% 0.24 300deg));
+  --trm-violet-100: color-mix(in oklch, var(--trm-white) 80%, oklch(56% 0.24 300deg));
+  --trm-violet-200: color-mix(in oklch, var(--trm-white) 60%, oklch(56% 0.24 300deg));
+  --trm-violet-300: color-mix(in oklch, var(--trm-white) 40%, oklch(56% 0.24 300deg));
+  --trm-violet-400: color-mix(in oklch, var(--trm-white) 20%, oklch(56% 0.24 300deg));
+  --trm-violet-500: oklch(56% 0.24 300deg);
+  --trm-violet-600: color-mix(in oklch, var(--trm-black) 16%, oklch(56% 0.24 300deg));
+  --trm-violet-700: color-mix(in oklch, var(--trm-black) 32%, oklch(56% 0.24 300deg));
+  --trm-violet-800: color-mix(in oklch, var(--trm-black) 48%, oklch(56% 0.24 300deg));
+  --trm-violet-900: color-mix(in oklch, var(--trm-black) 64%, oklch(56% 0.24 300deg));
+  --trm-violet-950: color-mix(in oklch, var(--trm-black) 70%, oklch(56% 0.24 300deg));
+  --trm-violet-975: color-mix(in oklch, var(--trm-black) 76%, oklch(56% 0.24 300deg));
+  --trm-purple-025: color-mix(in oklch, var(--trm-white) 94%, oklch(56% 0.24 320deg));
+  --trm-purple-050: color-mix(in oklch, var(--trm-white) 90%, oklch(56% 0.24 320deg));
+  --trm-purple-100: color-mix(in oklch, var(--trm-white) 80%, oklch(56% 0.24 320deg));
+  --trm-purple-200: color-mix(in oklch, var(--trm-white) 60%, oklch(56% 0.24 320deg));
+  --trm-purple-300: color-mix(in oklch, var(--trm-white) 40%, oklch(56% 0.24 320deg));
+  --trm-purple-400: color-mix(in oklch, var(--trm-white) 20%, oklch(56% 0.24 320deg));
+  --trm-purple-500: oklch(56% 0.24 320deg);
+  --trm-purple-600: color-mix(in oklch, var(--trm-black) 16%, oklch(56% 0.24 320deg));
+  --trm-purple-700: color-mix(in oklch, var(--trm-black) 32%, oklch(56% 0.24 320deg));
+  --trm-purple-800: color-mix(in oklch, var(--trm-black) 48%, oklch(56% 0.24 320deg));
+  --trm-purple-900: color-mix(in oklch, var(--trm-black) 64%, oklch(56% 0.24 320deg));
+  --trm-purple-950: color-mix(in oklch, var(--trm-black) 70%, oklch(56% 0.24 320deg));
+  --trm-purple-975: color-mix(in oklch, var(--trm-black) 76%, oklch(56% 0.24 320deg));
+  --trm-pink-025: color-mix(in oklch, var(--trm-white) 94%, oklch(60% 0.22 4deg));
+  --trm-pink-050: color-mix(in oklch, var(--trm-white) 90%, oklch(60% 0.22 4deg));
+  --trm-pink-100: color-mix(in oklch, var(--trm-white) 80%, oklch(60% 0.22 4deg));
+  --trm-pink-200: color-mix(in oklch, var(--trm-white) 60%, oklch(60% 0.22 4deg));
+  --trm-pink-300: color-mix(in oklch, var(--trm-white) 40%, oklch(60% 0.22 4deg));
+  --trm-pink-400: color-mix(in oklch, var(--trm-white) 20%, oklch(60% 0.22 4deg));
+  --trm-pink-500: oklch(60% 0.22 4deg);
+  --trm-pink-600: color-mix(in oklch, var(--trm-black) 16%, oklch(60% 0.22 4deg));
+  --trm-pink-700: color-mix(in oklch, var(--trm-black) 32%, oklch(60% 0.22 4deg));
+  --trm-pink-800: color-mix(in oklch, var(--trm-black) 48%, oklch(60% 0.22 4deg));
+  --trm-pink-900: color-mix(in oklch, var(--trm-black) 64%, oklch(60% 0.22 4deg));
+  --trm-pink-950: color-mix(in oklch, var(--trm-black) 70%, oklch(60% 0.22 4deg));
+  --trm-pink-975: color-mix(in oklch, var(--trm-black) 76%, oklch(60% 0.22 4deg));
+  --trm-red-025: color-mix(in oklch, var(--trm-white) 94%, oklch(60% 0.22 20deg));
+  --trm-red-050: color-mix(in oklch, var(--trm-white) 90%, oklch(60% 0.22 20deg));
+  --trm-red-100: color-mix(in oklch, var(--trm-white) 80%, oklch(60% 0.22 20deg));
+  --trm-red-200: color-mix(in oklch, var(--trm-white) 60%, oklch(60% 0.22 20deg));
+  --trm-red-300: color-mix(in oklch, var(--trm-white) 40%, oklch(60% 0.22 20deg));
+  --trm-red-400: color-mix(in oklch, var(--trm-white) 20%, oklch(60% 0.22 20deg));
+  --trm-red-500: oklch(60% 0.22 20deg);
+  --trm-red-600: color-mix(in oklch, var(--trm-black) 16%, oklch(60% 0.22 20deg));
+  --trm-red-700: color-mix(in oklch, var(--trm-black) 32%, oklch(60% 0.22 20deg));
+  --trm-red-800: color-mix(in oklch, var(--trm-black) 48%, oklch(60% 0.22 20deg));
+  --trm-red-900: color-mix(in oklch, var(--trm-black) 64%, oklch(60% 0.22 20deg));
+  --trm-red-950: color-mix(in oklch, var(--trm-black) 70%, oklch(60% 0.22 20deg));
+  --trm-red-975: color-mix(in oklch, var(--trm-black) 76%, oklch(60% 0.22 20deg));
+  --trm-orange-025: color-mix(in oklch, var(--trm-white) 94%, oklch(70% 0.22 52deg));
+  --trm-orange-050: color-mix(in oklch, var(--trm-white) 90%, oklch(70% 0.22 52deg));
+  --trm-orange-100: color-mix(in oklch, var(--trm-white) 80%, oklch(70% 0.22 52deg));
+  --trm-orange-200: color-mix(in oklch, var(--trm-white) 60%, oklch(70% 0.22 52deg));
+  --trm-orange-300: color-mix(in oklch, var(--trm-white) 40%, oklch(70% 0.22 52deg));
+  --trm-orange-400: color-mix(in oklch, var(--trm-white) 20%, oklch(70% 0.22 52deg));
+  --trm-orange-500: oklch(70% 0.22 52deg);
+  --trm-orange-600: color-mix(in oklch, var(--trm-black) 16%, oklch(70% 0.22 52deg));
+  --trm-orange-700: color-mix(in oklch, var(--trm-black) 32%, oklch(70% 0.22 52deg));
+  --trm-orange-800: color-mix(in oklch, var(--trm-black) 48%, oklch(70% 0.22 52deg));
+  --trm-orange-900: color-mix(in oklch, var(--trm-black) 64%, oklch(70% 0.22 52deg));
+  --trm-orange-950: color-mix(in oklch, var(--trm-black) 70%, oklch(70% 0.22 52deg));
+  --trm-orange-975: color-mix(in oklch, var(--trm-black) 76%, oklch(70% 0.22 52deg));
+  --trm-amber-025: color-mix(in oklch, var(--trm-white) 94%, oklch(79% 0.2 78deg));
+  --trm-amber-050: color-mix(in oklch, var(--trm-white) 90%, oklch(79% 0.2 78deg));
+  --trm-amber-100: color-mix(in oklch, var(--trm-white) 80%, oklch(79% 0.2 78deg));
+  --trm-amber-200: color-mix(in oklch, var(--trm-white) 60%, oklch(79% 0.2 78deg));
+  --trm-amber-300: color-mix(in oklch, var(--trm-white) 40%, oklch(79% 0.2 78deg));
+  --trm-amber-400: color-mix(in oklch, var(--trm-white) 20%, oklch(79% 0.2 78deg));
+  --trm-amber-500: oklch(79% 0.2 78deg);
+  --trm-amber-600: color-mix(in oklch, var(--trm-black) 16%, oklch(79% 0.2 78deg));
+  --trm-amber-700: color-mix(in oklch, var(--trm-black) 32%, oklch(79% 0.2 78deg));
+  --trm-amber-800: color-mix(in oklch, var(--trm-black) 48%, oklch(79% 0.2 78deg));
+  --trm-amber-900: color-mix(in oklch, var(--trm-black) 64%, oklch(79% 0.2 78deg));
+  --trm-amber-950: color-mix(in oklch, var(--trm-black) 70%, oklch(79% 0.2 78deg));
+  --trm-amber-975: color-mix(in oklch, var(--trm-black) 76%, oklch(79% 0.2 78deg));
+  --trm-yellow-025: color-mix(in oklch, var(--trm-white) 94%, oklch(88% 0.24 88deg));
+  --trm-yellow-050: color-mix(in oklch, var(--trm-white) 90%, oklch(88% 0.24 88deg));
+  --trm-yellow-100: color-mix(in oklch, var(--trm-white) 80%, oklch(88% 0.24 88deg));
+  --trm-yellow-200: color-mix(in oklch, var(--trm-white) 60%, oklch(88% 0.24 88deg));
+  --trm-yellow-300: color-mix(in oklch, var(--trm-white) 40%, oklch(88% 0.24 88deg));
+  --trm-yellow-400: color-mix(in oklch, var(--trm-white) 20%, oklch(88% 0.24 88deg));
+  --trm-yellow-500: oklch(88% 0.24 88deg);
+  --trm-yellow-600: color-mix(in oklch, var(--trm-black) 16%, oklch(88% 0.24 88deg));
+  --trm-yellow-700: color-mix(in oklch, var(--trm-black) 32%, oklch(88% 0.24 88deg));
+  --trm-yellow-800: color-mix(in oklch, var(--trm-black) 48%, oklch(88% 0.24 88deg));
+  --trm-yellow-900: color-mix(in oklch, var(--trm-black) 64%, oklch(88% 0.24 88deg));
+  --trm-yellow-950: color-mix(in oklch, var(--trm-black) 70%, oklch(88% 0.24 88deg));
+  --trm-yellow-975: color-mix(in oklch, var(--trm-black) 76%, oklch(88% 0.24 88deg));
+  --trm-lime-025: color-mix(in oklch, var(--trm-white) 94%, oklch(65% 0.24 135deg));
+  --trm-lime-050: color-mix(in oklch, var(--trm-white) 90%, oklch(65% 0.24 135deg));
+  --trm-lime-100: color-mix(in oklch, var(--trm-white) 80%, oklch(65% 0.24 135deg));
+  --trm-lime-200: color-mix(in oklch, var(--trm-white) 60%, oklch(65% 0.24 135deg));
+  --trm-lime-300: color-mix(in oklch, var(--trm-white) 40%, oklch(65% 0.24 135deg));
+  --trm-lime-400: color-mix(in oklch, var(--trm-white) 20%, oklch(65% 0.24 135deg));
+  --trm-lime-500: oklch(65% 0.24 135deg);
+  --trm-lime-600: color-mix(in oklch, var(--trm-black) 16%, oklch(65% 0.24 135deg));
+  --trm-lime-700: color-mix(in oklch, var(--trm-black) 32%, oklch(65% 0.24 135deg));
+  --trm-lime-800: color-mix(in oklch, var(--trm-black) 48%, oklch(65% 0.24 135deg));
+  --trm-lime-900: color-mix(in oklch, var(--trm-black) 64%, oklch(65% 0.24 135deg));
+  --trm-lime-950: color-mix(in oklch, var(--trm-black) 70%, oklch(65% 0.24 135deg));
+  --trm-lime-975: color-mix(in oklch, var(--trm-black) 76%, oklch(65% 0.24 135deg));
+  --trm-green-025: color-mix(in oklch, var(--trm-white) 94%, oklch(64% 0.22 160deg));
+  --trm-green-050: color-mix(in oklch, var(--trm-white) 90%, oklch(64% 0.22 160deg));
+  --trm-green-100: color-mix(in oklch, var(--trm-white) 80%, oklch(64% 0.22 160deg));
+  --trm-green-200: color-mix(in oklch, var(--trm-white) 60%, oklch(64% 0.22 160deg));
+  --trm-green-300: color-mix(in oklch, var(--trm-white) 40%, oklch(64% 0.22 160deg));
+  --trm-green-400: color-mix(in oklch, var(--trm-white) 20%, oklch(64% 0.22 160deg));
+  --trm-green-500: oklch(64% 0.22 160deg);
+  --trm-green-600: color-mix(in oklch, var(--trm-black) 16%, oklch(64% 0.22 160deg));
+  --trm-green-700: color-mix(in oklch, var(--trm-black) 32%, oklch(64% 0.22 160deg));
+  --trm-green-800: color-mix(in oklch, var(--trm-black) 48%, oklch(64% 0.22 160deg));
+  --trm-green-900: color-mix(in oklch, var(--trm-black) 64%, oklch(64% 0.22 160deg));
+  --trm-green-950: color-mix(in oklch, var(--trm-black) 70%, oklch(64% 0.22 160deg));
+  --trm-green-975: color-mix(in oklch, var(--trm-black) 76%, oklch(64% 0.22 160deg));
+  --trm-teal-025: color-mix(in oklch, var(--trm-white) 94%, oklch(68% 0.22 190deg));
+  --trm-teal-050: color-mix(in oklch, var(--trm-white) 90%, oklch(68% 0.22 190deg));
+  --trm-teal-100: color-mix(in oklch, var(--trm-white) 80%, oklch(68% 0.22 190deg));
+  --trm-teal-200: color-mix(in oklch, var(--trm-white) 60%, oklch(68% 0.22 190deg));
+  --trm-teal-300: color-mix(in oklch, var(--trm-white) 40%, oklch(68% 0.22 190deg));
+  --trm-teal-400: color-mix(in oklch, var(--trm-white) 20%, oklch(68% 0.22 190deg));
+  --trm-teal-500: oklch(68% 0.22 190deg);
+  --trm-teal-600: color-mix(in oklch, var(--trm-black) 16%, oklch(68% 0.22 190deg));
+  --trm-teal-700: color-mix(in oklch, var(--trm-black) 32%, oklch(68% 0.22 190deg));
+  --trm-teal-800: color-mix(in oklch, var(--trm-black) 48%, oklch(68% 0.22 190deg));
+  --trm-teal-900: color-mix(in oklch, var(--trm-black) 64%, oklch(68% 0.22 190deg));
+  --trm-teal-950: color-mix(in oklch, var(--trm-black) 70%, oklch(68% 0.22 190deg));
+  --trm-teal-975: color-mix(in oklch, var(--trm-black) 76%, oklch(68% 0.22 190deg));
+  --trm-cyan-025: color-mix(in oklch, var(--trm-white) 94%, oklch(69% 0.22 220deg));
+  --trm-cyan-050: color-mix(in oklch, var(--trm-white) 90%, oklch(69% 0.22 220deg));
+  --trm-cyan-100: color-mix(in oklch, var(--trm-white) 80%, oklch(69% 0.22 220deg));
+  --trm-cyan-200: color-mix(in oklch, var(--trm-white) 60%, oklch(69% 0.22 220deg));
+  --trm-cyan-300: color-mix(in oklch, var(--trm-white) 40%, oklch(69% 0.22 220deg));
+  --trm-cyan-400: color-mix(in oklch, var(--trm-white) 20%, oklch(69% 0.22 220deg));
+  --trm-cyan-500: oklch(69% 0.22 220deg);
+  --trm-cyan-600: color-mix(in oklch, var(--trm-black) 16%, oklch(69% 0.22 220deg));
+  --trm-cyan-700: color-mix(in oklch, var(--trm-black) 32%, oklch(69% 0.22 220deg));
+  --trm-cyan-800: color-mix(in oklch, var(--trm-black) 48%, oklch(69% 0.22 220deg));
+  --trm-cyan-900: color-mix(in oklch, var(--trm-black) 64%, oklch(69% 0.22 220deg));
+  --trm-cyan-950: color-mix(in oklch, var(--trm-black) 70%, oklch(69% 0.22 220deg));
+  --trm-cyan-975: color-mix(in oklch, var(--trm-black) 76%, oklch(69% 0.22 220deg));
+  --trm-brown-025: color-mix(in oklch, var(--trm-white) 94%, oklch(60% 0.12 54deg));
+  --trm-brown-050: color-mix(in oklch, var(--trm-white) 90%, oklch(60% 0.12 54deg));
+  --trm-brown-100: color-mix(in oklch, var(--trm-white) 80%, oklch(60% 0.12 54deg));
+  --trm-brown-200: color-mix(in oklch, var(--trm-white) 60%, oklch(60% 0.12 54deg));
+  --trm-brown-300: color-mix(in oklch, var(--trm-white) 40%, oklch(60% 0.12 54deg));
+  --trm-brown-400: color-mix(in oklch, var(--trm-white) 20%, oklch(60% 0.12 54deg));
+  --trm-brown-500: oklch(60% 0.12 54deg);
+  --trm-brown-600: color-mix(in oklch, var(--trm-black) 16%, oklch(60% 0.12 54deg));
+  --trm-brown-700: color-mix(in oklch, var(--trm-black) 32%, oklch(60% 0.12 54deg));
+  --trm-brown-800: color-mix(in oklch, var(--trm-black) 48%, oklch(60% 0.12 54deg));
+  --trm-brown-900: color-mix(in oklch, var(--trm-black) 64%, oklch(60% 0.12 54deg));
+  --trm-brown-950: color-mix(in oklch, var(--trm-black) 70%, oklch(60% 0.12 54deg));
+  --trm-brown-975: color-mix(in oklch, var(--trm-black) 76%, oklch(60% 0.12 54deg));
+  --trm-gray-025: color-mix(in oklch, var(--trm-white) 94%, oklch(60% 0.02 245deg));
+  --trm-gray-050: color-mix(in oklch, var(--trm-white) 90%, oklch(60% 0.02 245deg));
+  --trm-gray-100: color-mix(in oklch, var(--trm-white) 80%, oklch(60% 0.02 245deg));
+  --trm-gray-200: color-mix(in oklch, var(--trm-white) 60%, oklch(60% 0.02 245deg));
+  --trm-gray-300: color-mix(in oklch, var(--trm-white) 40%, oklch(60% 0.02 245deg));
+  --trm-gray-400: color-mix(in oklch, var(--trm-white) 20%, oklch(60% 0.02 245deg));
+  --trm-gray-500: oklch(60% 0.02 245deg);
+  --trm-gray-600: color-mix(in oklch, var(--trm-black) 16%, oklch(60% 0.02 245deg));
+  --trm-gray-700: color-mix(in oklch, var(--trm-black) 32%, oklch(60% 0.02 245deg));
+  --trm-gray-800: color-mix(in oklch, var(--trm-black) 48%, oklch(60% 0.02 245deg));
+  --trm-gray-900: color-mix(in oklch, var(--trm-black) 64%, oklch(60% 0.02 245deg));
+  --trm-gray-950: color-mix(in oklch, var(--trm-black) 70%, oklch(60% 0.02 245deg));
+  --trm-gray-975: color-mix(in oklch, var(--trm-black) 76%, oklch(60% 0.02 245deg));
+  --trm-pewter-025: color-mix(in oklch, var(--trm-white) 94%, oklch(65% 0.01 290deg));
+  --trm-pewter-050: color-mix(in oklch, var(--trm-white) 90%, oklch(65% 0.01 290deg));
+  --trm-pewter-100: color-mix(in oklch, var(--trm-white) 80%, oklch(65% 0.01 290deg));
+  --trm-pewter-200: color-mix(in oklch, var(--trm-white) 60%, oklch(65% 0.01 290deg));
+  --trm-pewter-300: color-mix(in oklch, var(--trm-white) 40%, oklch(65% 0.01 290deg));
+  --trm-pewter-400: color-mix(in oklch, var(--trm-white) 20%, oklch(65% 0.01 290deg));
+  --trm-pewter-500: oklch(65% 0.01 290deg);
+  --trm-pewter-600: color-mix(in oklch, var(--trm-black) 16%, oklch(65% 0.01 290deg));
+  --trm-pewter-700: color-mix(in oklch, var(--trm-black) 32%, oklch(65% 0.01 290deg));
+  --trm-pewter-800: color-mix(in oklch, var(--trm-black) 48%, oklch(65% 0.01 290deg));
+  --trm-pewter-900: color-mix(in oklch, var(--trm-black) 64%, oklch(65% 0.01 290deg));
+  --trm-pewter-950: color-mix(in oklch, var(--trm-black) 70%, oklch(65% 0.01 290deg));
+  --trm-pewter-975: color-mix(in oklch, var(--trm-black) 76%, oklch(65% 0.01 290deg));
+}
+
+@layer colors, config, root, reboot, layout, content, forms, components, custom, helpers, utilities;
+:root,
+:host {
+  --trm-black: #000;
+  --trm-white: #fff;
+  --trm-gradient: linear-gradient(180deg, color-mix(var(--trm-white) 15%, transparent), color-mix(var(--trm-white) 0%, transparent));
+  --trm-body-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --trm-body-font-size: 1rem;
+  --trm-body-font-weight: var(--trm-font-weight-normal);
+  --trm-body-line-height: 1.5;
+  --trm-heading-color: inherit;
+  --trm-hr-border-color: var(--trm-border-color);
+  --trm-link-color: light-dark(var(--trm-primary-base), var(--trm-primary-fg));
+  --trm-link-decoration: underline;
+  --trm-link-underline-offset: 0.2em;
+  --trm-link-hover-color: color-mix(in oklch, var(--trm-link-color) 90%, #000);
+  --trm-font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Monaco, 'Cascadia Mono', Consolas, 'Liberation Mono', monospace;
+  --trm-code-font-size: 95%;
+  --trm-code-color: var(--trm-fg-2);
+  --trm-border-width: 1px;
+  --trm-border-width-keyline: 0.5px;
+  --trm-border-style: solid;
+  --trm-border-color: light-dark(var(--trm-gray-200), var(--trm-gray-700));
+  --trm-border-color-translucent: color-mix(in oklch, var(--trm-fg-body) 15%, transparent);
+  --trm-shadow-color: #000;
+  --trm-shadow-strength: 1;
+  --trm-transition-timing-overlay: cubic-bezier(0.22, 1, 0.36, 1);
+  --trm-spacer: 1rem;
+  --trm-focus-ring-width: 3px;
+  --trm-focus-ring-offset: 1px;
+  --trm-focus-ring-color: var(--trm-primary-focus-ring);
+  --trm-focus-ring: var(--trm-focus-ring-width) solid var(--trm-focus-ring-color);
+  --trm-control-checked-bg: var(--trm-primary-base);
+  --trm-control-checked-border-color: var(--trm-control-checked-bg);
+  --trm-control-active-bg: var(--trm-primary-base);
+  --trm-control-active-border-color: var(--trm-control-active-bg);
+  --trm-control-disabled-bg: var(--trm-bg-3);
+  --trm-control-disabled-opacity: 0.65;
+  --trm-control-transition-duration: 0.15s;
+  --trm-control-transition-timing: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --trm-btn-input-fg: var(--trm-fg-body);
+  --trm-btn-input-bg: var(--trm-bg-body);
+  --trm-btn-input-gap: 0.375rem;
+  --trm-btn-input-min-height: 2.375rem;
+  --trm-btn-input-padding-y: 0.375rem;
+  --trm-btn-input-padding-x: 0.75rem;
+  --trm-btn-input-font-size: var(--trm-body-font-size);
+  --trm-btn-input-font-weight: var(--trm-font-weight-normal);
+  --trm-btn-input-line-height: var(--trm-body-line-height);
+  --trm-btn-input-border-radius: var(--trm-radius-5);
+  --trm-btn-input-xs-gap: var(--trm-spacer-1);
+  --trm-btn-input-xs-min-height: 1.5rem;
+  --trm-btn-input-xs-padding-y: 0.125rem;
+  --trm-btn-input-xs-padding-x: 0.5rem;
+  --trm-btn-input-xs-font-size: var(--trm-font-size-xs);
+  --trm-btn-input-xs-line-height: 1.125;
+  --trm-btn-input-xs-border-radius: var(--trm-radius-5);
+  --trm-btn-input-sm-gap: 0.375rem;
+  --trm-btn-input-sm-min-height: 2rem;
+  --trm-btn-input-sm-padding-y: 0.25rem;
+  --trm-btn-input-sm-padding-x: 0.625rem;
+  --trm-btn-input-sm-font-size: var(--trm-font-size-sm);
+  --trm-btn-input-sm-line-height: var(--trm-line-height-sm);
+  --trm-btn-input-sm-border-radius: var(--trm-radius-5);
+  --trm-btn-input-lg-gap: 0.375rem;
+  --trm-btn-input-lg-min-height: 2.75rem;
+  --trm-btn-input-lg-padding-y: 0.5rem;
+  --trm-btn-input-lg-padding-x: 1rem;
+  --trm-btn-input-lg-font-size: var(--trm-font-size-md);
+  --trm-btn-input-lg-line-height: var(--trm-line-height-md);
+  --trm-btn-input-lg-border-radius: var(--trm-radius-7);
+  --trm-font-size-xs: 0.75rem;
+  --trm-line-height-xs: 1.25;
+  --trm-font-size-sm: 0.875rem;
+  --trm-line-height-sm: 1.5;
+  --trm-font-size-md: 1rem;
+  --trm-line-height-md: 1.5;
+  --trm-font-size-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+  --trm-line-height-lg: 1.5;
+  --trm-font-size-xl: clamp(1.5rem, 1.1rem + 0.75vw, 1.75rem);
+  --trm-line-height-xl: 1.4285714286;
+  --trm-font-size-2xl: clamp(1.75rem, 1.3rem + 1vw, 2rem);
+  --trm-line-height-2xl: 1.3333333333;
+  --trm-font-size-3xl: clamp(2rem, 1.5rem + 1.875vw, 2.5rem);
+  --trm-line-height-3xl: 1.2;
+  --trm-font-size-4xl: clamp(2.25rem, 1.75rem + 2.5vw, 3rem);
+  --trm-line-height-4xl: 1.1;
+  --trm-font-size-5xl: clamp(3rem, 2rem + 5vw, 4rem);
+  --trm-line-height-5xl: 1.1;
+  --trm-font-size-6xl: clamp(3.75rem, 2.5rem + 6.25vw, 5rem);
+  --trm-line-height-6xl: 1;
+  --trm-font-weight-lighter: lighter;
+  --trm-font-weight-light: 300;
+  --trm-font-weight-normal: 400;
+  --trm-font-weight-medium: 500;
+  --trm-font-weight-semibold: 600;
+  --trm-font-weight-bold: 700;
+  --trm-font-weight-bolder: bolder;
+  --trm-primary-base: var(--trm-blue-500);
+  --trm-primary-fg: light-dark(var(--trm-blue-600), var(--trm-blue-400));
+  --trm-primary-fg-emphasis: light-dark(var(--trm-blue-800), var(--trm-blue-200));
+  --trm-primary-bg: var(--trm-blue-500);
+  --trm-primary-bg-subtle: light-dark(var(--trm-blue-100), var(--trm-blue-900));
+  --trm-primary-bg-muted: light-dark(var(--trm-blue-200), var(--trm-blue-800));
+  --trm-primary-border: light-dark(var(--trm-blue-300), var(--trm-blue-600));
+  --trm-primary-focus-ring: light-dark(color-mix(in oklch, var(--trm-blue-500) 50%, var(--trm-bg-body)), color-mix(in oklch, var(--trm-blue-500) 75%, var(--trm-bg-body)));
+  --trm-primary-contrast: var(--trm-white);
+  --trm-accent-base: var(--trm-indigo-500);
+  --trm-accent-fg: light-dark(var(--trm-indigo-600), color-mix(in oklch, var(--trm-indigo-400), var(--trm-indigo-300)));
+  --trm-accent-fg-emphasis: light-dark(var(--trm-indigo-800), var(--trm-indigo-300));
+  --trm-accent-bg: var(--trm-indigo-500);
+  --trm-accent-bg-subtle: light-dark(var(--trm-indigo-100), var(--trm-indigo-900));
+  --trm-accent-bg-muted: light-dark(var(--trm-indigo-200), var(--trm-indigo-800));
+  --trm-accent-border: light-dark(var(--trm-indigo-300), var(--trm-indigo-600));
+  --trm-accent-focus-ring: light-dark(color-mix(in oklch, var(--trm-indigo-500) 50%, var(--trm-bg-body)), color-mix(in oklch, var(--trm-indigo-500) 75%, var(--trm-bg-body)));
+  --trm-accent-contrast: var(--trm-white);
+  --trm-success-base: var(--trm-green-500);
+  --trm-success-fg: light-dark(var(--trm-green-600), var(--trm-green-400));
+  --trm-success-fg-emphasis: light-dark(var(--trm-green-800), var(--trm-green-300));
+  --trm-success-bg: var(--trm-green-500);
+  --trm-success-bg-subtle: light-dark(var(--trm-green-100), var(--trm-green-900));
+  --trm-success-bg-muted: light-dark(var(--trm-green-200), var(--trm-green-800));
+  --trm-success-border: light-dark(var(--trm-green-300), var(--trm-green-600));
+  --trm-success-focus-ring: light-dark(color-mix(in oklch, var(--trm-green-500) 50%, var(--trm-bg-body)), color-mix(in oklch, var(--trm-green-500) 75%, var(--trm-bg-body)));
+  --trm-success-contrast: var(--trm-white);
+  --trm-danger-base: var(--trm-red-500);
+  --trm-danger-fg: light-dark(var(--trm-red-600), var(--trm-red-400));
+  --trm-danger-fg-emphasis: light-dark(var(--trm-red-800), var(--trm-red-300));
+  --trm-danger-bg: var(--trm-red-500);
+  --trm-danger-bg-subtle: light-dark(var(--trm-red-100), var(--trm-red-900));
+  --trm-danger-bg-muted: light-dark(var(--trm-red-200), var(--trm-red-800));
+  --trm-danger-border: light-dark(var(--trm-red-300), var(--trm-red-600));
+  --trm-danger-focus-ring: light-dark(color-mix(in oklch, var(--trm-red-500) 50%, var(--trm-bg-body)), color-mix(in oklch, var(--trm-red-500) 75%, var(--trm-bg-body)));
+  --trm-danger-contrast: var(--trm-white);
+  --trm-warning-base: var(--trm-yellow-500);
+  --trm-warning-fg: light-dark(var(--trm-yellow-700), var(--trm-yellow-400));
+  --trm-warning-fg-emphasis: light-dark(var(--trm-yellow-800), var(--trm-yellow-300));
+  --trm-warning-bg: var(--trm-yellow-500);
+  --trm-warning-bg-subtle: light-dark(var(--trm-yellow-100), var(--trm-yellow-900));
+  --trm-warning-bg-muted: light-dark(var(--trm-yellow-200), var(--trm-yellow-800));
+  --trm-warning-border: light-dark(var(--trm-yellow-300), var(--trm-yellow-600));
+  --trm-warning-focus-ring: light-dark(color-mix(in oklch, var(--trm-yellow-500) 50%, var(--trm-bg-body)), color-mix(in oklch, var(--trm-yellow-400) 85%, var(--trm-bg-body)));
+  --trm-warning-contrast: var(--trm-gray-900);
+  --trm-info-base: var(--trm-cyan-500);
+  --trm-info-fg: light-dark(var(--trm-cyan-600), var(--trm-cyan-400));
+  --trm-info-fg-emphasis: light-dark(var(--trm-cyan-800), var(--trm-cyan-300));
+  --trm-info-bg: var(--trm-cyan-500);
+  --trm-info-bg-subtle: light-dark(var(--trm-cyan-100), var(--trm-cyan-900));
+  --trm-info-bg-muted: light-dark(var(--trm-cyan-200), var(--trm-cyan-800));
+  --trm-info-border: light-dark(var(--trm-cyan-300), var(--trm-cyan-600));
+  --trm-info-focus-ring: light-dark(color-mix(in oklch, var(--trm-cyan-500) 50%, var(--trm-bg-body)), color-mix(in oklch, var(--trm-cyan-500) 75%, var(--trm-bg-body)));
+  --trm-info-contrast: var(--trm-gray-900);
+  --trm-inverse-base: var(--trm-gray-900);
+  --trm-inverse-fg: light-dark(var(--trm-gray-900), var(--trm-gray-200));
+  --trm-inverse-fg-emphasis: light-dark(var(--trm-gray-975), var(--trm-white));
+  --trm-inverse-bg: light-dark(var(--trm-gray-900), var(--trm-gray-025));
+  --trm-inverse-bg-subtle: light-dark(var(--trm-gray-100), var(--trm-gray-900));
+  --trm-inverse-bg-muted: light-dark(var(--trm-gray-200), var(--trm-gray-300));
+  --trm-inverse-border: light-dark(var(--trm-gray-400), var(--trm-gray-100));
+  --trm-inverse-focus-ring: color-mix(in oklch, light-dark(var(--trm-gray-900), var(--trm-gray-100)) 50%, var(--trm-bg-body));
+  --trm-inverse-contrast: light-dark(var(--trm-white), var(--trm-gray-900));
+  --trm-secondary-base: var(--trm-gray-200);
+  --trm-secondary-fg: light-dark(var(--trm-gray-600), var(--trm-gray-400));
+  --trm-secondary-fg-emphasis: light-dark(var(--trm-gray-800), var(--trm-gray-200));
+  --trm-secondary-bg: light-dark(var(--trm-gray-100), var(--trm-gray-600));
+  --trm-secondary-bg-subtle: light-dark(var(--trm-gray-050), var(--trm-gray-800));
+  --trm-secondary-bg-muted: light-dark(var(--trm-gray-100), var(--trm-gray-700));
+  --trm-secondary-border: light-dark(var(--trm-gray-300), var(--trm-gray-600));
+  --trm-secondary-focus-ring: color-mix(in oklch, light-dark(var(--trm-gray-500), var(--trm-gray-300)) 50%, var(--trm-bg-body));
+  --trm-secondary-contrast: light-dark(var(--trm-gray-900), var(--trm-white));
+  --trm-bg-body: light-dark(var(--trm-white), var(--trm-gray-975));
+  --trm-bg-1: light-dark(var(--trm-gray-025), var(--trm-gray-950));
+  --trm-bg-2: light-dark(var(--trm-gray-050), var(--trm-gray-900));
+  --trm-bg-3: light-dark(var(--trm-gray-100), var(--trm-gray-800));
+  --trm-bg-4: light-dark(var(--trm-gray-200), var(--trm-gray-700));
+  --trm-bg-fg: var(--trm-fg-body);
+  --trm-bg-white: var(--trm-white);
+  --trm-bg-black: var(--trm-black);
+  --trm-bg-transparent: transparent;
+  --trm-bg-inherit: inherit;
+  --trm-fg-body: light-dark(var(--trm-gray-900), var(--trm-gray-050));
+  --trm-fg-1: light-dark(var(--trm-gray-800), var(--trm-gray-200));
+  --trm-fg-2: light-dark(var(--trm-gray-700), var(--trm-gray-300));
+  --trm-fg-3: light-dark(var(--trm-gray-600), var(--trm-gray-500));
+  --trm-fg-4: light-dark(var(--trm-gray-500), var(--trm-gray-600));
+  --trm-fg-bg: var(--trm-bg-body);
+  --trm-fg-white: var(--trm-white);
+  --trm-fg-black: var(--trm-black);
+  --trm-fg-inherit: inherit;
+  --trm-border-bg: var(--trm-bg-body);
+  --trm-border-body: light-dark(var(--trm-gray-300), var(--trm-gray-800));
+  --trm-border-muted: light-dark(var(--trm-gray-200), var(--trm-gray-800));
+  --trm-border-subtle: light-dark(color-mix(in oklch, var(--trm-gray-100), var(--trm-gray-200)), color-mix(in oklch, var(--trm-gray-800), var(--trm-gray-900)));
+  --trm-border-emphasized: light-dark(var(--trm-gray-400), var(--trm-gray-600));
+  --trm-border-white: var(--trm-white);
+  --trm-border-black: var(--trm-black);
+  --trm-breakpoint-xs: 0;
+  --trm-breakpoint-sm: 576px;
+  --trm-breakpoint-md: 768px;
+  --trm-breakpoint-lg: 1024px;
+  --trm-breakpoint-xl: 1280px;
+  --trm-breakpoint-2xl: 1536px;
+  --trm-spacer-0: 0;
+  --trm-spacer-1: 0.25rem;
+  --trm-spacer-2: 0.375rem;
+  --trm-spacer-3: 0.5rem;
+  --trm-spacer-4: 0.75rem;
+  --trm-spacer-5: 1rem;
+  --trm-spacer-6: 1.25rem;
+  --trm-spacer-7: 1.5rem;
+  --trm-spacer-8: 1.75rem;
+  --trm-spacer-9: 2rem;
+  --trm-spacer-10: 2.25rem;
+  --trm-spacer-11: 2.5rem;
+  --trm-spacer-12: 3rem;
+  --trm-radius-0: 0;
+  --trm-radius-1: 0.125rem;
+  --trm-radius-2: 0.1875rem;
+  --trm-radius-3: 0.25rem;
+  --trm-radius-4: 0.375rem;
+  --trm-radius-5: 0.5rem;
+  --trm-radius-6: 0.625rem;
+  --trm-radius-7: 0.75rem;
+  --trm-radius-8: 0.875rem;
+  --trm-radius-9: 1rem;
+  --trm-radius-pill: 50rem;
+  --trm-box-shadow: 0 .125rem .25rem -.0625rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h / calc(.04 * var(--trm-shadow-strength) * var(--trm-so, 1))), 0 .375rem .75rem -.125rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h / calc(.05 * var(--trm-shadow-strength) * var(--trm-so, 1))), 0 .75rem 1.5rem -.25rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h / calc(.06 * var(--trm-shadow-strength) * var(--trm-so, 1)));
+  --trm-box-shadow-xs: 0 0.0625rem 0.125rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h/calc(0.04 * var(--trm-shadow-strength) * var(--trm-so, 1)));
+  --trm-box-shadow-sm: 0 .0625rem .125rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h / calc(.04 * var(--trm-shadow-strength) * var(--trm-so, 1))), 0 .125rem .375rem -.0625rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h / calc(.05 * var(--trm-shadow-strength) * var(--trm-so, 1)));
+  --trm-box-shadow-lg: 0 .125rem .375rem -.0625rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h / calc(.05 * var(--trm-shadow-strength) * var(--trm-so, 1))), 0 .375rem 1rem -.1875rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h / calc(.06 * var(--trm-shadow-strength) * var(--trm-so, 1))), 0 .75rem 2rem -.375rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h / calc(.07 * var(--trm-shadow-strength) * var(--trm-so, 1))), 0 1.5rem 3.5rem -.75rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h / calc(.08 * var(--trm-shadow-strength) * var(--trm-so, 1)));
+  --trm-box-shadow-xl: 0 .1875rem .5rem -.0625rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h / calc(.05 * var(--trm-shadow-strength) * var(--trm-so, 1))), 0 .5rem 1.25rem -.1875rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h / calc(.06 * var(--trm-shadow-strength) * var(--trm-so, 1))), 0 1rem 2.5rem -.375rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h / calc(.07 * var(--trm-shadow-strength) * var(--trm-so, 1))), 0 2rem 5rem -.75rem oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h / calc(.09 * var(--trm-shadow-strength) * var(--trm-so, 1)));
+  --trm-box-shadow-inset: inset 0 1px 2px light-dark(oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h/calc(8% * var(--trm-so, 1))), oklch(from var(--trm-sc, var(--trm-shadow-color)) l c h/calc(26% * var(--trm-so, 1))));
+  --trm-z-n1: -1;
+  --trm-z-0: 0;
+  --trm-z-1: 1;
+  --trm-z-2: 2;
+  --trm-z-3: 3;
+  --trm-z-menu: 1000;
+  --trm-z-sticky: 1010;
+  --trm-z-fixed: 1020;
+  --trm-z-drawer: 1030;
+  --trm-z-dialog: 1040;
+  --trm-z-popover: 1050;
+  --trm-z-tooltip: 1060;
+  --trm-z-toast: 1070;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  :host {
+    --trm-shadow-strength: 2.4;
+  }
+}
+[data-trm-theme=dark] {
+  --trm-shadow-strength: 2.4;
+  color-scheme: dark;
+}
+
+[data-trm-theme=light] {
+  --trm-shadow-strength: 1;
+  color-scheme: light;
+}
+
+:root,
+:host {
+  --trm-heading-margin-bottom: var(--trm-spacer-2);
+  --trm-heading-line-height: 1.2;
+  --trm-paragraph-margin-bottom: var(--trm-spacer);
+  --trm-legend-margin-bottom: var(--trm-spacer-2);
+  --trm-legend-font-size: 1.5rem;
+  --trm-list-padding-x: var(--trm-spacer-7);
+}
+
+@layer reboot {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  :root,
+  :host {
+    accent-color: var(--trm-primary-base);
+  }
+  iframe {
+    color-scheme: light dark;
+    border: 0;
+  }
+  body {
+    margin: 0;
+    font-family: var(--trm-body-font-family);
+    font-size: var(--trm-body-font-size);
+    font-weight: var(--trm-body-font-weight);
+    line-height: var(--trm-body-line-height);
+    color: var(--trm-fg-body);
+    text-align: var(--trm-body-text-align);
+    background-color: var(--trm-bg-body);
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  hr {
+    margin: var(--trm-hr-margin-y, var(--trm-spacer)) 0;
+    border: 0;
+    border-block-start: var(--trm-border-width) solid var(--trm-hr-border-color);
+  }
+  h6,
+  .h6, h5,
+  .h5, h4,
+  .h4, h3,
+  .h3, h2,
+  .h2, h1,
+  .h1 {
+    margin-top: 0;
+    margin-bottom: var(--trm-heading-margin-bottom);
+    font-family: var(--trm-heading-font-family);
+    font-style: var(--trm-heading-font-style);
+    font-weight: var(--trm-heading-font-weight, var(--trm-font-weight-medium));
+    line-height: var(--trm-heading-line-height);
+    color: var(--trm-heading-color);
+  }
+  h1,
+  .h1 {
+    font-size: var(--trm-font-size-3xl);
+  }
+  h2,
+  .h2 {
+    font-size: var(--trm-font-size-2xl);
+  }
+  h3,
+  .h3 {
+    font-size: var(--trm-font-size-xl);
+  }
+  h4,
+  .h4 {
+    font-size: var(--trm-font-size-lg);
+  }
+  h5,
+  .h5 {
+    font-size: var(--trm-font-size-md);
+  }
+  h6,
+  .h6 {
+    font-size: var(--trm-font-size-sm);
+  }
+  p {
+    margin-top: 0;
+    margin-bottom: var(--trm-paragraph-margin-bottom);
+  }
+  abbr[title] {
+    -webkit-text-decoration: underline dotted;
+    text-decoration: underline dotted;
+    cursor: help;
+    -webkit-text-decoration-skip-ink: none;
+    text-decoration-skip-ink: none;
+  }
+  .initialism {
+    font-size: var(--trm-initialism-font-size, var(--trm-font-size-xs));
+    text-transform: uppercase;
+  }
+  address {
+    margin-bottom: var(--trm-spacer);
+    font-style: normal;
+    line-height: inherit;
+  }
+  ol,
+  ul {
+    padding-inline-start: var(--trm-list-padding-x);
+  }
+  ol,
+  ul,
+  dl {
+    margin-top: 0;
+    margin-bottom: var(--trm-spacer);
+  }
+  ol ol,
+  ul ul,
+  ol ul,
+  ul ol {
+    margin-bottom: 0;
+  }
+  dt {
+    font-weight: var(--trm-dt-font-weight, var(--trm-font-weight-bold));
+  }
+  dd {
+    margin-inline-start: 0;
+    margin-bottom: var(--trm-spacer-2);
+  }
+  blockquote {
+    margin: 0 0 var(--trm-spacer);
+  }
+  blockquote > * {
+    margin-block: 0;
+  }
+  b,
+  strong {
+    font-weight: var(--trm-font-weight-bolder);
+  }
+  small,
+  .small {
+    font-size: var(--trm-small-font-size, 87.5%);
+  }
+  mark,
+  .mark {
+    --trm-mark-padding: 0.1875em;
+    --trm-mark-color: var(--trm-fg-body);
+    --trm-mark-bg: light-dark(var(--trm-yellow-100), var(--trm-yellow-900));
+    padding: var(--trm-mark-padding);
+    color: var(--trm-mark-color);
+    background-color: var(--trm-mark-bg);
+  }
+  sub,
+  sup {
+    position: relative;
+    font-size: var(--trm-sub-sup-font-size, 0.75em);
+    line-height: 0;
+    vertical-align: baseline;
+  }
+  sub {
+    bottom: -0.25em;
+  }
+  sup {
+    top: -0.5em;
+  }
+  a {
+    color: var(--trm-theme-fg, var(--trm-link-color));
+    -webkit-text-decoration: var(--trm-link-decoration);
+    text-decoration: var(--trm-link-decoration);
+    text-underline-offset: var(--trm-link-underline-offset);
+  }
+  a:hover {
+    color: var(--trm-theme-fg-emphasis, var(--trm-link-hover-color));
+    -webkit-text-decoration: var(--trm-link-hover-decoration, var(--trm-link-decoration));
+    text-decoration: var(--trm-link-hover-decoration, var(--trm-link-decoration));
+  }
+  a:not([href], [class]), a:not([href], [class]):hover {
+    color: inherit;
+    text-decoration: none;
+  }
+  pre,
+  code,
+  kbd,
+  samp {
+    font-family: var(--trm-font-mono);
+    font-size: 1em;
+  }
+  pre {
+    display: block;
+    margin-top: 0;
+    margin-bottom: var(--trm-spacer);
+    overflow: auto;
+    font-size: var(--trm-code-font-size);
+    color: var(--trm-code-color, inherit);
+    scrollbar-gutter: stable;
+  }
+  pre code {
+    font-size: inherit;
+    color: inherit;
+    word-break: normal;
+  }
+  code {
+    font-size: var(--trm-code-font-size);
+    color: var(--trm-code-color);
+    word-wrap: break-word;
+  }
+  a > code {
+    color: inherit;
+  }
+  kbd {
+    --trm-kbd-padding-y: 0.125rem;
+    --trm-kbd-padding-x: var(--trm-spacer-1);
+    --trm-kbd-font-size: var(--trm-font-size-xs);
+    --trm-kbd-color: var(--trm-bg-body);
+    --trm-kbd-bg: var(--trm-fg-2);
+    --trm-kbd-border-radius: var(--trm-radius-3);
+    padding: var(--trm-kbd-padding-y) var(--trm-kbd-padding-x);
+    font-size: var(--trm-kbd-font-size);
+    color: var(--trm-kbd-color);
+    background-color: var(--trm-kbd-bg);
+    border-radius: var(--trm-kbd-border-radius);
+  }
+  kbd kbd {
+    padding: 0;
+    font-size: 1em;
+  }
+  figure {
+    margin: 0 0 var(--trm-spacer);
+  }
+  img,
+  svg {
+    vertical-align: middle;
+  }
+  table {
+    caption-side: bottom;
+    border-collapse: collapse;
+  }
+  caption {
+    padding-block: var(--trm-spacer-2);
+    color: var(--trm-fg-3);
+    text-align: start;
+  }
+  th {
+    text-align: inherit;
+    text-align: -webkit-match-parent;
+  }
+  thead,
+  tbody,
+  tfoot,
+  tr,
+  td,
+  th {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+  }
+  label {
+    display: inline-block;
+  }
+  button {
+    border-radius: 0;
+  }
+  button:focus:not(:focus-visible) {
+    outline: 0;
+  }
+  input,
+  button,
+  select,
+  optgroup,
+  textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+  input:is([type=date], [type=datetime-local], [type=month], [type=week], [type=time]) {
+    position: relative;
+  }
+  input:is([type=date], [type=datetime-local], [type=month], [type=week], [type=time])::-webkit-calendar-picker-indicator {
+    position: absolute;
+    inset-inline-end: var(--trm-control-padding-x, 0.75rem);
+  }
+  [role=button] {
+    cursor: pointer;
+  }
+  select {
+    word-wrap: normal;
+  }
+  select:disabled {
+    opacity: 1;
+  }
+  [list]:not([type=date], [type=datetime-local], [type=month], [type=week], [type=time])::-webkit-calendar-picker-indicator {
+    display: none !important;
+  }
+  button,
+  [type=button],
+  [type=reset],
+  [type=submit] {
+    -webkit-appearance: button;
+  }
+  button:not(:disabled),
+  [type=button]:not(:disabled),
+  [type=reset]:not(:disabled),
+  [type=submit]:not(:disabled) {
+    cursor: pointer;
+  }
+  textarea {
+    resize: vertical;
+  }
+  fieldset {
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+  legend {
+    float: inline-start;
+    width: 100%;
+    padding: 0;
+    margin-bottom: var(--trm-legend-margin-bottom);
+    font-size: var(--trm-legend-font-size);
+    font-weight: var(--trm-legend-font-weight);
+    line-height: inherit;
+  }
+  legend + * {
+    clear: inline-start;
+  }
+  ::-webkit-datetime-edit-fields-wrapper,
+  ::-webkit-datetime-edit-text,
+  ::-webkit-datetime-edit-millisecond-field,
+  ::-webkit-datetime-edit-second-field,
+  ::-webkit-datetime-edit-minute-field,
+  ::-webkit-datetime-edit-hour-field,
+  ::-webkit-datetime-edit-meridiem-field,
+  ::-webkit-datetime-edit-ampm-field,
+  ::-webkit-datetime-edit-day-field,
+  ::-webkit-datetime-edit-week-field,
+  ::-webkit-datetime-edit-month-field,
+  ::-webkit-datetime-edit-year-field {
+    padding: 0;
+  }
+  ::-webkit-inner-spin-button,
+  ::-webkit-outer-spin-button {
+    height: auto;
+  }
+  [type=search] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px;
+  }
+  [type=search]::-webkit-search-cancel-button {
+    cursor: pointer;
+    filter: grayscale(1);
+  }
+  [type=tel],
+  [type=url],
+  [type=email],
+  [type=number] {
+    direction: ltr;
+  }
+  ::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+  ::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  ::file-selector-button {
+    font: inherit;
+    -webkit-appearance: button;
+  }
+  output {
+    display: inline-block;
+  }
+  summary {
+    display: list-item;
+    cursor: pointer;
+  }
+  progress {
+    vertical-align: baseline;
+  }
+  [hidden] {
+    display: none !important;
+  }
+}
+/*# sourceMappingURL=tremplin-reboot.css.map */

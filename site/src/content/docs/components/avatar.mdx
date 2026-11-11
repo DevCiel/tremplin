@@ -1,0 +1,108 @@
+---
+{
+  "component": "avatar",
+  "title": "Avatar",
+  "description": "Avatar component documentation for Tremplin.",
+  "lead": "Represent a person or organization with an image, initials, or grouped identities.",
+  "variants": [
+    {
+      "title": "Image avatars",
+      "description": "Inside avatar, avatar-img fills the wrapper with object-fit:cover. Standalone avatar-img needs dimensions. This local SVG is an original illustration, not a remote photo."
+    },
+    {
+      "title": "Initials and themes",
+      "description": "Give initials a full accessible identity. Solid theme supplies contrast; subtle uses theme foreground and subtle background."
+    },
+    {
+      "title": "Sizes and custom size",
+      "description": "Core sizes are xs, sm, default, lg and xl. Use the real size token for custom values, not square/link/wrapper aliases."
+    },
+    {
+      "title": "Status indicators",
+      "description": "A named status has a distinct shape and color. Identity remains on the image; status has its own role=img and complete label."
+    },
+    {
+      "title": "Status with sizes",
+      "description": "The size map changes status at xs/lg/xl and border width at lg/xl. Small inherits default status size; not every property scales proportionally."
+    },
+    {
+      "title": "Avatar stack",
+      "description": "Use avatar-stack, not avatar-group. The pin uses row-reverse, physical margin-left overlap and hover lift; it does not synchronize reading order or add keyboard behavior."
+    },
+    {
+      "title": "Stack sizes and additional count",
+      "description": "Stack size modifiers apply to direct avatar children. A named count is presentation, not an automatically expandable control."
+    },
+    {
+      "title": "Native linked identity",
+      "description": "Use a native link for navigation. Visible text names it, so duplicate initials are hidden. There is no avatar-link controller or class."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Theme follows inherited tokens. Status right/bottom and stack margin-left stay physical in this pin; RTL does not imply fully mirrored stack geometry."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Enter",
+      "behavior": "Only authored native links/buttons are interactive. Plain avatars and stacks are not in the tab order."
+    }
+  ],
+  "guidelines": [
+    "Use avatar plus avatar-img for wrapped images, or dimensions for standalone images. Give useful alt text; use empty alt only when nearby text duplicates identity.",
+    "Initials need a full identity through a named image role, not an unexplained abbreviation.",
+    "Give avatar-status its own named role=img; it is not a live region or presence service.",
+    "Use avatar-stack and its direct-child sizes. There are no avatar-group, avatar-square, avatar-link or avatar-wrapper classes.",
+    "A stack uses row-reverse and physical margin-left. Verify visual order/overlap in the actual document direction; do not infer semantic reordering.",
+    "Use native controls for actions. The core adds no avatar focus manager, data API or image-error fallback.",
+    "Configure avatar-tokens and avatar-sizes for size/status/border behavior. Hover lift is visual, not keyboard handling."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import Contrast from '../../../components/component/Contrast.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Contrast />
+
+<Example markup={componentExample("avatar")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="avatar" />
+
+{componentDetail("avatar").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="avatar" />
+</>}
+
+{componentDetail("avatar").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("avatar").sass} standalone={true} />
+</>}
+
+{componentDetail("avatar").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="avatar" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="avatar" />
+
+{documentedComponents.find(component => component.name === "avatar").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="avatar" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>This is a CSS component and does not require Tremplin JavaScript.</p>

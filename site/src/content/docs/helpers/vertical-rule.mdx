@@ -1,0 +1,53 @@
+---
+{
+  "title": "Vertical rule",
+  "description": "Separate adjacent regions with a decorative physical vertical rule.",
+  "group": "Helpers",
+  "lead": "Separate adjacent regions with a decorative physical vertical rule.",
+  "order": 7
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { helpersExamples as samples } from '../../../data/helpers-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"How it works"}</h2>
+
+<p><Html source={"vr uses inline-block display, stretched flex alignment, physical width and min-height: 1em. Width reads --trm-vr-border-width before --trm-border-width; background reads --trm-border-color. There is no literal width/color fallback or helper opacity declaration."} /></p>
+
+<p><Html source={"Changing color alone does not recolor the rule. Set its boundary token instead. Physical width and minimum height do not swap axes with vertical writing modes."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Example"}</h2>
+
+<p><Html source={"Hide purely decorative separators from assistive technology. If a separator communicates a meaningful boundary, choose appropriate semantics and an explicit vertical orientation."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/vertical-rule"][1].example} /></div>
+
+<Code sample={samples["helpers/vertical-rule"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"With stacks"}</h2>
+
+<p><Html source={"The rule stretches within an adequately tall horizontal layout. A column stack does not automatically turn it into a full-width horizontal divider."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/vertical-rule"][2].example} /></div>
+
+<Code sample={samples["helpers/vertical-rule"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"CSS"}</h2>
+
+<p><Html source={"Use the dedicated width token for one rule or the global border-width token for a broader change. The root token set supplies the boundary colors for each mode. Test contrast and forced colors; a decorative line should not be the only explanation of status."} /></p>
+
+<Code sample={samples["helpers/vertical-rule"][3].code[0]} standalone={true} />
+
+</section>

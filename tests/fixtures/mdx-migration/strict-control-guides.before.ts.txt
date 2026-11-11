@@ -1,0 +1,11 @@
+import type { Guide } from './guide-docs'
+import { choiceFormsGuides } from './choice-input-docs'
+import { advancedFormsGuides } from './advanced-input-docs'
+
+export const strictControlGuides:Record<string,Guide>={
+  chips:choiceFormsGuides.chips,
+  datepicker:advancedFormsGuides.datepicker,
+  'otp-input':advancedFormsGuides['otp-input'],
+  range:advancedFormsGuides.range,
+  'password-strength':advancedFormsGuides.strength
+}

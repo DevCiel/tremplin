@@ -1,0 +1,657 @@
+import type { Guide } from './guide-docs'
+
+// Strict pinned Bootstrap 6 contracts; optional extensions are not core defaults.
+export const customizeGuides: Guide[] = [
+  {
+    "slug": "customize/overview",
+    "group": "Customize",
+    "title": "Overview",
+    "description": "Choose runtime CSS tokens or a custom Sass build to adapt Tremplin to your project.",
+    "lead": "Choose runtime CSS tokens or a custom Sass build to adapt Tremplin to your project.",
+    "sections": [
+      {
+        "heading": "Overview",
+        "paragraphs": [
+          "Use the complete compiled stylesheet for a quick start. Add application CSS after it for brand changes, or compile Sass when changing generated scales and feature switches. Public component classes remain unprefixed; runtime variables use --trm-*."
+        ]
+      },
+      {
+        "heading": "Sass vs CSS",
+        "table": {
+          "headings": [
+            "Approach",
+            "Choose it for"
+          ],
+          "rows": [
+            [
+              "CSS variables",
+              "Runtime brand colors, surfaces, typography, and scoped themes."
+            ],
+            [
+              "Sass",
+              "Build-time maps, breakpoints, generated utilities, and global switches."
+            ],
+            [
+              "Application CSS",
+              "Composition and component-specific rules that your application owns."
+            ]
+          ]
+        },
+        "paragraphs": [
+          "Start with <a href=\"/customize/sass/\">Sass</a>, <a href=\"/customize/options/\">Options</a>, <a href=\"/customize/theme/\">Theme</a>, or <a href=\"/customize/css-variables/\">CSS variables</a>."
+        ]
+      },
+      {
+        "heading": "Cascade layers",
+        "code": [
+          {
+            "language": "css",
+            "source": "@layer colors, config, root, reboot, layout, content, forms, components, custom, helpers, utilities;"
+          }
+        ],
+        "paragraphs": [
+          "The full and utilities entries establish this order through root. Individual modules and focused entries can introduce layers in a different sequence; establish the complete order before composing application layers. Optional Tremplin extensions live in custom and are not loaded by the strict core.",
+          "Palette output, root tokens, transition classes, drawer rules, keyframes and composition-property registrations include deliberate unlayered output. Directory names alone do not determine layer ownership."
+        ]
+      },
+      {
+        "heading": "Application overrides",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss';\n@layer custom { .project-button { border-radius: 1rem; } }\n.project-card { padding: 2rem; }"
+          }
+        ],
+        "paragraphs": [
+          "For normal declarations, later layers win before specificity; unlayered application rules beat named layers. Important declarations reverse layer precedence. Utility importance is configured per family/property, not by a global enable-important-utilities switch.",
+          "Choose one full or focused entry per stylesheet. Declare application layers after the framework order; do not wrap the whole distribution in another layer unless deliberately changing its contract."
+        ]
+      },
+      {
+        "heading": "CSPs and embedded SVGs",
+        "paragraphs": [
+          "Some controls use embedded SVG images. Review image-src allowances, fonts, and script policies for your deployment. Test a strict policy against your actual pages rather than disabling CSP. Sanitized HTML and Trusted Types guidance is in the <a href=\"/getting-started/javascript/\">JavaScript guide</a>."
+        ]
+      },
+      {
+        "heading": "Implementation boundary",
+        "callout": "The core is verified against a fixed source contract and recorded security/accessibility fixes. Optional extensions are separate. Prerelease status and source checks do not certify every color combination or accessibility scenario."
+      }
+    ],
+    "reference": {title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/customize-guides.ts'}
+  },
+  {
+    "slug": "customize/sass",
+    "group": "Customize",
+    "title": "Sass",
+    "description": "Compile Tremplin’s module-based Sass and configure it before the first load.",
+    "lead": "Compile Tremplin’s module-based Sass and configure it before the first load.",
+    "sections": [
+      {
+        "heading": "About Sass",
+        "paragraphs": [
+          "Use Dart Sass modules. Configure the owning module before its first load; later @use ... with cannot reconfigure it. Full and focused entry points have different forwarding surfaces. These examples use the strict pinned API, not retired framework aliases."
+        ],
+        "code": [
+          {
+            "language": "shell",
+            "source": "npm install --save-dev sass"
+          }
+        ]
+      },
+      {
+        "heading": "File structure",
+        "code": [
+          {
+            "language": "text",
+            "source": "src/scss/\n  _colors.scss        base semantic colors\n  _config.scss        configuration and utility defaults\n  _theme.scss         semantic theme maps\n  _root.scss          emitted runtime variables\n  buttons/ content/ forms/ helpers/ layout/ mixins/ utilities/\n  extensions/         Tremplin-only additions\n  tremplin.scss       full entry point"
+          }
+        ]
+      },
+      {
+        "heading": "Importing",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss' with (\n  $radius: .75rem,\n  $enable-shadows: false,\n  $root-tokens: (--trm-body-font-family: 'Arial, sans-serif')\n);\n@use 'sass:map';\n@use 'tremplin/scss/config' as config;\n@use 'tremplin/scss/mixins/focus-ring' as focus;\n.product-focus {\n  padding: map.get(config.$spacers, 3);\n  &:focus-visible { @include focus.focus-ring(true); }\n}"
+          }
+        ],
+        "paragraphs": [
+          "Root and component token maps use literal --trm-* keys. Import functions and mixins explicitly from their owning modules; the main entry does not re-export every Sass helper."
+        ]
+      },
+      {
+        "heading": "Compiling",
+        "code": [
+          {
+            "language": "shell",
+            "source": "npx sass --load-path=node_modules app.scss public/app.css --style=compressed"
+          }
+        ],
+        "paragraphs": [
+          "Link public/app.css from your application; do not also load the full default stylesheet. Run this in a consumer application with the published package or local tarball installed."
+        ]
+      },
+      {
+        "heading": "Maps and loops",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss' with (\n  $spacers: (6: 4rem, 2: null),\n  $utilities: ('cursor': (property: cursor, class: cursor, values: (pointer: pointer), important: false))\n);"
+          }
+        ],
+        "paragraphs": [
+          "The defaults() helper shallow-merges supported override maps and removes null keys. A replaced utility family must supply its complete definition. Not every map uses defaults(): breakpoints and zindex-levels replace their maps. Keep dependent keys coherent."
+        ]
+      },
+      {
+        "heading": "Functions and mixins",
+        "paragraphs": [
+          "Use defaults() from config, map helpers from functions, explicit layout/breakpoints and mixins/grid APIs, and mixins/focus-ring, border-radius, box-shadow or transition as needed. There are no core spacer(), token(), radius(), font-size() or media-up() convenience aliases. Read the module before depending on its exports."
+        ]
+      }
+    ],
+    "reference": {title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/customize-guides.ts'}
+  },
+  {
+    "slug": "customize/options",
+    "group": "Customize",
+    "title": "Options",
+    "description": "Use supported Sass switches to control generated framework styles.",
+    "lead": "Use supported Sass switches to control generated framework styles.",
+    "sections": [
+      {
+        "heading": "Global options",
+        "table": {
+          "headings": [
+            "Variable",
+            "Pinned default / purpose"
+          ],
+          "rows": [
+            [
+              "$enable-rounded",
+              "true: radius mixins"
+            ],
+            [
+              "$enable-shadows",
+              "true: shadow mixins"
+            ],
+            [
+              "$enable-gradients",
+              "true: gradient mixins"
+            ],
+            [
+              "$enable-transitions",
+              "true: transition mixins"
+            ],
+            [
+              "$enable-reduced-motion",
+              "true: preference-gated transition mixins"
+            ],
+            [
+              "$enable-smooth-scroll",
+              "false: opt-in root smooth scrolling"
+            ],
+            [
+              "$enable-grid-classes",
+              "true: Flexbox grid"
+            ],
+            [
+              "$enable-container-classes",
+              "true: containers"
+            ],
+            [
+              "$enable-cssgrid",
+              "true: CSS Grid placement"
+            ],
+            [
+              "$enable-button-pointers",
+              "true: enabled button pointer"
+            ],
+            [
+              "$enable-deprecation-messages",
+              "true: Sass deprecation warnings"
+            ]
+          ]
+        },
+        "paragraphs": [
+          "Utility importance is a family/property option. The color-mode mixin defaults to media-query; root light-dark() color selection and data-trm-theme selectors are separate behavior."
+        ]
+      },
+      {
+        "heading": "Configure your build",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss' with (\n  $enable-rounded: false,\n  $enable-shadows: false,\n  $enable-smooth-scroll: false\n);"
+          }
+        ]
+      },
+      {
+        "heading": "Verify switch coverage",
+        "callout": "Flags affect only code paths that read them. Disabling shadow/radius mixins does not remove the independent shadow/rounded utilities. Motion flags do not remove every direct CSS rule or application animation; inspect the built stylesheet and test preference changes."
+      }
+    ],
+    "reference": {title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/customize-guides.ts'}
+  },
+  {
+    "slug": "customize/color",
+    "group": "Customize",
+    "title": "Color",
+    "description": "Use Tremplin’s semantic palette and pair every color with readable content.",
+    "lead": "Use Tremplin’s semantic palette and pair every color with readable content.",
+    "sections": [
+      {
+        "heading": "Colors",
+        "table": {
+          "headings": [
+            "Palette family",
+            "Default base"
+          ],
+          "rows": [
+            [
+              "blue",
+              "oklch(60% 0.24 240)"
+            ],
+            [
+              "indigo",
+              "oklch(56% 0.26 288)"
+            ],
+            [
+              "green",
+              "oklch(64% 0.22 160)"
+            ],
+            [
+              "red",
+              "oklch(60% 0.22 20)"
+            ],
+            [
+              "gray",
+              "oklch(60% 0.02 245)"
+            ]
+          ]
+        },
+        "paragraphs": [
+          "The colors map includes sixteen hue/neutral families. Base 500 values, tint keys 025/050/100 through 400 and shade keys 600 through 950 generate runtime palette properties such as --trm-blue-500. Semantic roles are defined separately by theme."
+        ]
+      },
+      {
+        "heading": "How it works",
+        "paragraphs": [
+          "colors emits runtime palette properties; theme defines semantic roles and light-dark() values; root emits role references and other global tokens. Semantic names are primary, accent, secondary, success, danger, warning, info and inverse. A base color is not a universal accessible foreground/background pair."
+        ]
+      },
+      {
+        "heading": "Customizing",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss' with ($colors: (blue: #075985));"
+          },
+          {
+            "language": "css",
+            "source": ":root {\n  --trm-primary-base: #075985;\n  --trm-primary-bg: #075985;\n  --trm-primary-contrast: #fff;\n}"
+          }
+        ],
+        "paragraphs": [
+          "A palette-map change regenerates that family's tonal references. A runtime primary-base override alone does not change primary-bg, fg or every state. Review all role pairs in both color modes."
+        ]
+      },
+      {
+        "heading": "From colors to theme",
+        "paragraphs": [
+          "Changing a base color does not automatically recompute every local emphasis or dark-mode value. Review the <a href=\"/customize/theme/\">theme mappings</a> and test each state in both modes. Never rely on color alone to communicate errors or status."
+        ]
+      }
+    ],
+    "reference": {title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/customize-guides.ts'}
+  },
+  {
+    "slug": "customize/theme",
+    "group": "Customize",
+    "title": "Theme",
+    "description": "Apply semantic color roles consistently across application surfaces and controls.",
+    "lead": "Apply semantic color roles consistently across application surfaces and controls.",
+    "sections": [
+      {
+        "heading": "How it works",
+        "paragraphs": [
+          "Root role tokens such as --trm-primary-bg, --trm-primary-fg and --trm-primary-border supply theme-primary's contextual --trm-theme-* references. Components opt into the corresponding contextual roles. A theme helper assigns variables; surface utilities paint foreground/background/border separately."
+        ]
+      },
+      {
+        "heading": "Theme colors",
+        "code": [
+          {
+            "language": "css",
+            "source": ".billing-area {\n  --trm-primary-base: #075985;\n  --trm-primary-bg: #075985;\n  --trm-primary-contrast: #fff;\n  --trm-primary-bg-subtle: #e0f2fe;\n  --trm-primary-fg-emphasis: #0c4a6e;\n}"
+          }
+        ],
+        "paragraphs": [
+          "Use exact role names: fg-emphasis, not text-emphasis. Pair solid backgrounds with contrast, and subtle backgrounds with an appropriate foreground; measure contrast rather than assuming every role combination passes."
+        ]
+      },
+      {
+        "heading": "Layer colors",
+        "paragraphs": [
+          "Neutral foregrounds are --trm-fg-body and --trm-fg-1 through 4; backgrounds use --trm-bg-body and --trm-bg-1 through 4. Configure theme-fgs, theme-bgs and theme-borders for neutral roles. Theme-reset clears inherited contextual roles with initial, not unset."
+        ]
+      },
+      {
+        "heading": "Theme utility classes",
+        "code": [
+          {
+            "language": "html",
+            "source": "<button class=\"btn-outline theme-inverse\" type=\"button\">Continue</button>"
+          }
+        ],
+        "paragraphs": [
+          "The eight semantic theme-* helpers are accompanied by theme-muted and theme-contrast. There are no theme-light/theme-dark aliases. Native light/dark color mode selection is independent of contextual semantic themes.",
+          "The pinned primary solid button has approximately 3.56:1 white-on-blue normal-text contrast in light mode. Use a measured existing variant or explicitly configured application roles when required; source parity is not a contrast guarantee."
+        ]
+      },
+      {
+        "heading": "Theme Sass map",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss' with (\n  $theme-colors: (primary: (\n    base: #075985, fg: light-dark(#075985, #bae6fd),\n    fg-emphasis: light-dark(#0c4a6e, #e0f2fe),\n    bg: #075985, bg-subtle: light-dark(#e0f2fe, #082f49),\n    bg-muted: light-dark(#bae6fd, #0c4a6e),\n    border: light-dark(#7dd3fc, #0369a1),\n    focus-ring: #38bdf8, contrast: #fff\n  ))\n);"
+          }
+        ],
+        "paragraphs": [
+          "Theme-colors merging is shallow: replacing primary replaces its entire role map, not just one nested token. Supply every role you need. Other semantic entries remain unless explicitly removed with null."
+        ]
+      }
+    ],
+    "reference": {title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/customize-guides.ts'}
+  },
+  {
+    "slug": "customize/color-modes",
+    "group": "Customize",
+    "title": "Color modes",
+    "description": "Choose light, dark, automatic, or scoped custom themes.",
+    "lead": "Choose light, dark, automatic, or scoped custom themes.",
+    "sections": [
+      {
+        "heading": "Dark mode",
+        "code": [
+          {
+            "language": "html",
+            "source": "<html lang=\"en\" data-trm-theme=\"dark\">"
+          }
+        ],
+        "paragraphs": [
+          "Set data-trm-theme on the root or a subtree. It changes runtime colors without loading a second stylesheet."
+        ]
+      },
+      {
+        "heading": "Usage",
+        "code": [
+          {
+            "language": "js",
+            "source": "let chosen = 'auto'\ntry { chosen = localStorage.getItem('theme') ?? 'auto' } catch {}\nif (chosen === 'light' || chosen === 'dark') {\n  document.documentElement.dataset.trmTheme = chosen\n} else {\n  document.documentElement.removeAttribute('data-trm-theme')\n}"
+          }
+        ],
+        "paragraphs": [
+          "Without an explicit data-trm-theme value, root advertises light dark and follows the platform preference. Auto is an application choice implemented by removing the override, not a separate compiled theme."
+        ]
+      },
+      {
+        "heading": "Custom color modes",
+        "code": [
+          {
+            "language": "css",
+            "source": "[data-trm-theme=\"product\"] {\n  color-scheme: light;\n  --trm-bg-body: #f8fafc;\n  --trm-fg-body: #0f172a;\n  --trm-bg-1: #f1f5f9;\n  --trm-border-color: #94a3b8;\n}"
+          }
+        ],
+        "paragraphs": [
+          "A new attribute value has no built-in mode rules: set color-scheme and a coherent token set yourself. Test nested modes, native controls and overlays."
+        ]
+      },
+      {
+        "heading": "CSS variables and Sass",
+        "paragraphs": [
+          "The explicit mixins/color-mode module defaults to media-query output. Configure config.$color-mode-type to data to select attribute-based mixin output. This controls the mixin, not root's existing light-dark() and explicit light/dark selectors."
+        ]
+      }
+    ],
+    "reference": {title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/customize-guides.ts'}
+  },
+  {
+    "slug": "customize/components",
+    "group": "Customize",
+    "title": "Components",
+    "description": "Compose interfaces with base classes, modifiers, responsive utilities, and local CSS.",
+    "lead": "Compose interfaces with base classes, modifiers, responsive utilities, and local CSS.",
+    "sections": [
+      {
+        "heading": "Base classes",
+        "code": [
+          {
+            "language": "html",
+            "source": "<article class=\"card\">\n  <div class=\"card-body\">\n    <h2>Project summary</h2>\n    <p>Use semantic HTML inside component classes.</p>\n  </div>\n</article>"
+          }
+        ]
+      },
+      {
+        "heading": "Theme variants",
+        "paragraphs": [
+          "Use base variants such as btn-solid or btn-outline together with theme-inverse, theme-primary or another semantic role. There is no btn-primary compatibility class. Follow each component's contextual-token contract rather than assuming all controls read every token."
+        ]
+      },
+      {
+        "heading": "Responsive",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-flex flex-column md:flex-row gap-3\">\n  <article class=\"card\"><div class=\"card-body\">First</div></article>\n  <article class=\"card\"><div class=\"card-body\">Second</div></article>\n</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Creating your own",
+        "code": [
+          {
+            "language": "css",
+            "source": ".project-notice {\n  padding: 1rem;\n  border-inline-start: .25rem solid var(--trm-primary-border);\n  background: var(--trm-bg-1);\n  color: var(--trm-fg-body);\n}"
+          }
+        ],
+        "paragraphs": [
+          "Keep application selectors separate from core classes. Interactive behavior also requires accessible state, keyboard support, lifecycle cleanup and tests."
+        ]
+      }
+    ],
+    "reference": {title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/customize-guides.ts'}
+  },
+  {
+    "slug": "customize/transitions",
+    "group": "Customize",
+    "title": "Transitions",
+    "description": "Customize motion without breaking component lifecycle and reduced-motion behavior.",
+    "lead": "Customize motion without breaking component lifecycle and reduced-motion behavior.",
+    "sections": [
+      {
+        "heading": "How it works",
+        "paragraphs": [
+          "Explicit transition mixins emit animated declarations inside prefers-reduced-motion: no-preference by default. Collapse uses block-size/display, allow-discrete and interpolate-size where supported; other components own their tokens rather than relying on generic fade. Unsupported browsers change final state immediately."
+        ]
+      },
+      {
+        "heading": "State classes",
+        "paragraphs": [
+          "The fade and collapse styles expose show and component-specific state rules. Let the component control its own state rather than changing classes concurrently with an in-flight operation."
+        ]
+      },
+      {
+        "heading": "Customize the motion",
+        "code": [
+          {
+            "language": "css",
+            "source": ".collapse {\n  --trm-transition-collapse-duration: .2s;\n  --trm-transition-collapse-timing: ease-out;\n}\n.fade { --trm-transition-fade-duration: .1s; }"
+          }
+        ]
+      },
+      {
+        "heading": "Remove the motion",
+        "code": [
+          {
+            "language": "css",
+            "source": "@media (prefers-reduced-motion: reduce) {\n  .project-notice { transition: none; animation: none; }\n}"
+          }
+        ],
+        "paragraphs": [
+          "Test the operating-system reduced-motion preference, not only a global duration override. Removing motion must not hide content or suppress the final component state."
+        ]
+      },
+      {
+        "heading": "Events and promises",
+        "paragraphs": [
+          "Check each method's return type. Dialog, Drawer, Toast, Tooltip, Menu and several other components return promises from show/hide; their completion callbacks run before those promises settle. Button.toggle and Toggler.toggle are synchronous. Use the documented lifecycle events or supported promises rather than assuming one return contract for every plugin.",
+          "Combobox.show/hide return promises but do not await the internal Menu transition in this pin: Combobox shown/hidden events and its promise can precede Menu completion. When layout depends on the settled menu, observe shown.trm.menu or hidden.trm.menu on the trigger. Do not concurrently force state classes during an operation."
+        ]
+      }
+    ],
+    "reference": {title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/customize-guides.ts'}
+  },
+  {
+    "slug": "customize/rtl",
+    "group": "Customize",
+    "title": "RTL",
+    "description": "Use logical direction and one stylesheet for left-to-right and right-to-left pages.",
+    "lead": "Use logical direction and one stylesheet for left-to-right and right-to-left pages.",
+    "sections": [
+      {
+        "heading": "How it works",
+        "paragraphs": [
+          "The local styles favor logical inline/block properties. Language and writing direction are separate document settings. There is no separate Tremplin RTL distribution to load."
+        ]
+      },
+      {
+        "heading": "Required HTML",
+        "code": [
+          {
+            "language": "html",
+            "source": "<html lang=\"ar\" dir=\"rtl\">\n<!-- Include the same tremplin.min.css used for LTR. -->"
+          }
+        ]
+      },
+      {
+        "heading": "Switching directions",
+        "code": [
+          {
+            "language": "css",
+            "source": ".project-notice {\n  padding-inline: 1rem;\n  border-inline-start: .25rem solid var(--trm-primary-border);\n  text-align: start;\n}"
+          }
+        ],
+        "paragraphs": [
+          "Use ms/me and ps/pe utilities. Isolate code and email addresses with an appropriate dir value. Test directional keyboard controls and recreate affected instances if they cache direction."
+        ]
+      },
+      {
+        "heading": "Additional resources",
+        "paragraphs": [
+          "The <a href=\"/getting-started/rtl/\">RTL getting-started guide</a> includes mixed-direction markup and a verification checklist. Check reading order, focus order, localization, and directional icons."
+        ]
+      }
+    ],
+    "reference": {title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/customize-guides.ts'}
+  },
+  {
+    "slug": "customize/optimize",
+    "group": "Customize",
+    "title": "Optimize",
+    "description": "Ship the assets your application needs and verify the production output.",
+    "lead": "Ship the assets your application needs and verify the production output.",
+    "sections": [
+      {
+        "heading": "Lean Sass setup",
+        "paragraphs": [
+          "Choose the full stylesheet or a focused grid, reboot, or utilities build. Do not stack focused bundles on the full build without a reason. Individual Sass modules have dependencies; review their @use graph before composing a custom entry."
+        ]
+      },
+      {
+        "heading": "Lean JavaScript",
+        "code": [
+          {
+            "language": "js",
+            "source": "import 'tremplin/css'\nimport Collapse from 'tremplin/collapse'\nCollapse.getOrCreateInstance('#details')"
+          }
+        ],
+        "paragraphs": [
+          "Use the default export from a component subpath, or a named export from the main module. Optional adapters and extensions remain separate. Inspect the production bundle to verify tree shaking."
+        ]
+      },
+      {
+        "heading": "Unused CSS",
+        "paragraphs": [
+          "If purging selectors, preserve dynamically applied state classes, data-attribute selectors, and markup generated by plugins. Test overlays, validation, responsive variants, and dark mode after purging."
+        ]
+      },
+      {
+        "heading": "Minify and gzip",
+        "paragraphs": [
+          "Use minified production assets and configure HTTP compression and caching at your server. Retain a trusted integrity manifest. The repository size checks are development safeguards, not deployment compression settings."
+        ],
+        "code": [
+          {
+            "language": "shell",
+            "source": "# In the framework repository\nnpm run check:size\nnpm run test:package"
+          }
+        ]
+      },
+      {
+        "heading": "Non-blocking files and HTTPS",
+        "paragraphs": [
+          "All browser distributions are ESM: use type=\"module\" or an application bundler. Standard tremplin(.min).js leaves Floating UI and Vanilla Calendar Pro external; tremplin.bundle(.min).js includes them. Use an import map for the standard browser build. No public build creates a window global. Serve production assets over HTTPS. Publication remains blocked for this prerelease; follow the installation guide's local asset instructions."
+        ]
+      }
+    ],
+    "reference": {title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/customize-guides.ts'}
+  },
+  {
+    "slug": "customize/css-variables",
+    "group": "Customize",
+    "title": "CSS variables",
+    "description": "Override global and component tokens at runtime without recompiling Sass.",
+    "lead": "Override global and component tokens at runtime without recompiling Sass.",
+    "sections": [
+      {
+        "heading": "Global tokens",
+        "code": [
+          {
+            "language": "css",
+            "source": ":root {\n  --trm-primary-base: #075985;\n  --trm-primary-bg: #075985;\n  --trm-primary-contrast: #fff;\n  --trm-focus-ring-width: 3px;\n  --trm-focus-ring-color: rgb(7 89 133 / .5);\n}"
+          }
+        ],
+        "paragraphs": [
+          "Set actual consumed roles. Radius uses numbered --trm-radius-* tokens, not a single legacy radius variable. Token maps may redeclare properties on components, so scope local overrides on the component when necessary."
+        ]
+      },
+      {
+        "heading": "Local overrides",
+        "code": [
+          {
+            "language": "css",
+            "source": ".brand-button.btn-solid {\n  --trm-btn-bg: #075985;\n  --trm-btn-border-color: #075985;\n  --trm-btn-color: #fff;\n}"
+          }
+        ],
+        "paragraphs": [
+          "Use tokens consumed by that variant and review hover, active, focus and disabled pairs too. A token existing on root does not guarantee every component reads it."
+        ]
+      },
+      {
+        "heading": "Namespace policy",
+        "paragraphs": [
+          "Classes remain unprefixed. CSS variables use --trm-* and behavior hooks use data-trm-*. Keep frameworks with overlapping selectors out of the same document unless you deliberately isolate them."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Check every theme and interactive state, including keyboard focus and disabled controls. Breakpoint conditions require Sass configuration rather than runtime CSS variable substitutions. See <a href=\"/getting-started/css-variables/\">Getting started with CSS variables</a> for a step-by-step introduction."
+        ]
+      }
+    ],
+    "reference": {title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/customize-guides.ts'}
+  }
+]

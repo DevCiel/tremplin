@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" data-trm-theme="light">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tremplin discovery components</title><link rel="stylesheet" href="../dist/css/tremplin.css">
+  <link rel="stylesheet" href="../artifacts/documentation-assets/dist/css/tremplin-extensions.css">
+  <link rel="stylesheet" href="examples.css">
+</head>
+<body>
+  <main class="container py-5 stack" style="--trm-stack-gap:3rem">
+    <header class="prose"><span class="badge">v0.4 alpha.2</span><h1 class="display-5">Find anything quickly</h1><p class="lead">Accessible combobox and command-palette patterns with complete keyboard support.</p></header>
+
+    <section class="row g-4 align-items-start">
+      <div class="col-12 md:col-6"><h2>Combobox</h2><div class="combobox">
+        <span class="form-label" id="city-label">Choose a city</span>
+        <button class="form-control combobox-toggle" type="button" id="city" data-trm-toggle="combobox" data-trm-search="true" data-trm-name="city" data-trm-placeholder="Choose a city" aria-labelledby="city-label city-value" aria-controls="city-menu" aria-expanded="false"><span class="combobox-value" id="city-value">Choose a city</span></button>
+        <div class="menu" id="city-menu">
+          <input class="form-control combobox-search-input" type="search" aria-label="Search cities" placeholder="Start typing">
+          <button class="menu-item" type="button" data-trm-value="par">Paris</button>
+          <button class="menu-item" type="button" data-trm-value="lon">London</button>
+          <button class="menu-item" type="button" data-trm-value="lis">Lisbon</button>
+          <button class="menu-item" type="button" data-trm-value="nyc">New York</button>
+          <div class="combobox-no-results d-none">No cities found</div>
+        </div>
+      </div></div>
+      <div class="col-12 md:col-6"><h2>Command palette (optional extension)</h2><p>Open the palette using the button or <kbd>Ctrl</kbd> + <kbd>K</kbd>.</p><button class="btn-outline theme-primary" data-trm-toggle="command-palette" data-trm-target="#commands">Open commands</button></div>
+    </section>
+  </main>
+
+  <div class="command-palette" id="commands" data-trm-command-palette hidden aria-labelledby="commands-title"><div class="command-palette-dialog"><div class="command-palette-header"><span aria-hidden="true">&#128269;</span><input class="command-palette-input" aria-label="Search commands" placeholder="Search commands"><button class="btn-close" data-trm-dismiss="command-palette" aria-label="Close">&times;</button></div><h2 class="visually-hidden" id="commands-title">Command palette</h2><div class="command-palette-list"><button class="command-item" data-value="new" data-keywords="create project">New project <span class="command-shortcut">N</span></button><button class="command-item" data-value="theme" data-keywords="dark light appearance">Change theme <span class="command-shortcut">T</span></button><button class="command-item" data-value="settings" data-keywords="preferences configuration">Open settings <span class="command-shortcut">S</span></button><div class="command-palette-empty" hidden>No matching commands</div></div></div></div>
+  <script type="module" src="../site/public/js/tremplin-command-palette.min.js"></script>
+</body>
+</html>

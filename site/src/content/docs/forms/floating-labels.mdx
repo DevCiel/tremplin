@@ -1,0 +1,137 @@
+---
+{
+  "title": "Floating labels",
+  "description": "Keep a visible label associated with a field while its position changes.",
+  "group": "Forms",
+  "lead": "Keep a visible label associated with a field while its position changes.",
+  "order": 8
+}
+---
+
+import GuideTable from '../../../components/shortcodes/GuideTable.astro'
+import { formsTables } from '../../../data/forms-tables'
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<p>{"The label precedes its direct-child form-control. A nonempty placeholder lets :placeholder-shown detect empty text fields; it is transparent until focus and is not the accessible label. :has() follows focus/value without JavaScript."}</p>
+
+<div class="docs-example"><Html source={examples["forms/floating-labels"][0].example} /></div>
+
+<Code sample={examples["forms/floating-labels"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Filled and validation states"}</h2>
+
+<p>{"An existing value floats its label. Static is-invalid/ARIA state does not clear itself when edited; use application validation for recovery."}</p>
+
+<div class="docs-example"><Html source={examples["forms/floating-labels"][1].example} /></div>
+
+<Code sample={examples["forms/floating-labels"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Textareas"}</h2>
+
+<p>{"Floating textarea height comes from the wrapper, not rows. Set --trm-form-floating-height for taller fields; the label mask follows focus/value and disabled state."}</p>
+
+<div class="docs-example"><Html source={examples["forms/floating-labels"][2].example} /></div>
+
+<Code sample={examples["forms/floating-labels"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Selects"}</h2>
+
+<p>{"Select labels always float. Floating selects with multiple or size are not supported; use the ordinary Form control pattern."}</p>
+
+<div class="docs-example"><Html source={examples["forms/floating-labels"][3].example} /></div>
+
+<Code sample={examples["forms/floating-labels"][3].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Date and time"}</h2>
+
+<p>{"Date, time, datetime-local, month and week have explicit floated selectors and need no placeholder. Native pickers and fallback input types remain browser/OS-owned."}</p>
+
+<div class="docs-example"><Html source={examples["forms/floating-labels"][4].example} /></div>
+
+<Code sample={examples["forms/floating-labels"][4].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Disabled and readonly plaintext"}</h2>
+
+<p>{"Disabled values are skipped by focus/submission. Readonly text stays focusable; plaintext floats even when empty. The copied demo CSS restores its focus outline and strengthens disabled-label contrast."}</p>
+
+<div class="docs-example"><Html source={examples["forms/floating-labels"][5].example} /></div>
+
+<Code sample={examples["forms/floating-labels"][5].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"Input groups"}</h2>
+
+<p>{"Keep feedback outside input-group in a parent form-field and associate it with the input. Mark the floating wrapper and control for explicit invalid-state stacking."}</p>
+
+<div class="docs-example"><Html source={examples["forms/floating-labels"][6].example} /></div>
+
+<Code sample={examples["forms/floating-labels"][6].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Always floating"}</h2>
+
+<p>{"form-floating-always works on the floating element or an ancestor, keeping the placeholder visible while empty and unfocused."}</p>
+
+<div class="docs-example"><Html source={examples["forms/floating-labels"][7].example} /></div>
+
+<Code sample={examples["forms/floating-labels"][7].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">{"Layout"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/floating-labels"][8].example} /></div>
+
+<Code sample={examples["forms/floating-labels"][8].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-9">
+<h2 id="section-9">{"CSS variables"}</h2>
+
+<p>{"These defaults come from the actual component token map. Configure the map before first Sass load or override its CSS property on the component itself. Shared root sizing and form-control properties are documented separately."}</p>
+
+<GuideTable table={{ headings: ["Property","Default"], rows: formsTables["forms/floating-labels#9"], keyboardScroll: true }} labelledby="section-9" />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-10">
+<h2 id="section-10">{"Sass customization"}</h2>
+
+<Code sample={examples["forms/floating-labels"][10].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-11">
+<h2 id="section-11">{"Explicit demo accessibility CSS"}</h2>
+
+<p>{"Copy this scoped application CSS with the demo wrappers. It strengthens feedback/placeholder/floating-label and tooltip contrast, restores plaintext focus, mirrors the physical select caret in RTL and gives adorned disabled wrappers a visible background. The tooltip is positioned within the example padding. These are demo choices, not new core defaults."}</p>
+
+<Code sample={examples["forms/floating-labels"][11].code[0]} standalone={true} />
+
+</section>

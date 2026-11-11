@@ -1,0 +1,136 @@
+---
+{
+  "component": "otp-input",
+  "title": "Otp Input",
+  "description": "Otp Input component documentation for Tremplin.",
+  "lead": "Collect one-time codes in one native input with decorative visual slots.",
+  "variants": [
+    {
+      "title": "Verification code",
+      "description": "One named real input backs all slots; no code is transmitted by this page."
+    },
+    {
+      "title": "Six-digit code",
+      "description": "The six-slot example explicitly uses responsive size/gap tokens; copy them with the markup. Core defaults remain unchanged."
+    },
+    {
+      "title": "Masked display",
+      "description": "Masking affects visual dots only. The real type=text input, accessible value and FormData still contain the synthetic sample code."
+    },
+    {
+      "title": "Invalid code",
+      "description": "The authored description/aria-invalid mark an application error, not a result from complete events."
+    },
+    {
+      "title": "Connected and grouped letters",
+      "description": "Actual connected slots and decorative groups. ASCII filters keep one value; group separators do not become submitted characters."
+    },
+    {
+      "title": "Native sizes",
+      "description": "Use otp-sm/lg on the wrapper. These are still one field each, not independent per-slot inputs."
+    },
+    {
+      "title": "Readonly and disabled",
+      "description": "Native attributes block user edits. Programmatic setValue/clear are not gated by readonly/disabled; disposal does not restore all mutated input attributes."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Slots follow direction visually. The pinned pointer hit-test still scans physical right edges in DOM order; do not claim complete RTL tapping support."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Typing / Backspace / Delete",
+      "behavior": "Uses one real input with overwrite/deletion interception, not independent digit fields."
+    },
+    {
+      "keys": "Arrow keys / selection / Tab",
+      "behavior": "Native caret/selection drives one decorative active slot. Keyboard focus targets the first empty or last full slot."
+    },
+    {
+      "keys": "Paste / autofill",
+      "behavior": "ASCII sanitize before truncating. A full sanitized paste replaces the whole value; shorter pastes use the selection."
+    }
+  ],
+  "guidelines": [
+    "Put data-trm-otp on a wrapper with one labelled named input. Slots/separators are generated and aria-hidden; no slot-by-slot ARIA or custom arrow roving contract is supplied.",
+    "Runtime event suffix is .trm.otpInput. The frozen scanner uses the filename otp-input; these pages correct presentation only, not core or baseline metadata.",
+    "setValue() sanitizes and can emit complete repeatedly, but not plugin input. clear() clears and focuses without plugin input/complete. User changes emit plugin input then completion checks.",
+    "Masking is visual only; no hashing, server verification, transport, expiry or attempt-limit policy is supplied. Do not log codes or automatically submit on a completion notification.",
+    "Readonly/disabled guard user handlers, not programmatic value methods. dispose removes generated slots/listeners/rendered class, but does not restore type, maxlength, inputmode, pattern or otp-input class.",
+    "The RTL pointer algorithm is not direction-aware. Confirm real-device tap positions, SMS/password-manager autofill and assistive technology behavior separately from automated desktop checks."
+  ],
+  "events": {
+    "complete.trm.otpInput": "Wrapper notification each time the completion check sees a full value, including repeated setValue calls. value is direct and sensitive; never log it. Not a validation result or cancellation gate.",
+    "input.trm.otpInput": "Wrapper notification after a user input/paste/overwrite/delete path, with direct value. setValue and clear do not emit this plugin notification; a bubbling native input is a separate event."
+  }
+}
+---
+
+import { componentApi } from '../../../data/component-api'
+import AdvancedOptions from '../../../components/component/AdvancedOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("otp-input")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="otp-input" />
+
+{componentDetail("otp-input").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="otp-input" />
+</>}
+
+{componentDetail("otp-input").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("otp-input").sass} standalone={true} />
+</>}
+
+{componentDetail("otp-input").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="otp-input" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="otp-input" />
+
+{documentedComponents.find(component => component.name === "otp-input").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="otp-input" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("otp-input").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("otp-input").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<p>Configure these optional values before construction; getOrCreateInstance does not reconfigure an existing instance.</p>
+<AdvancedOptions name="otp-input" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="otp-input" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="otp-input" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="otp-input" />
+<p class="mt-4"><a href="/api/otp-input/">View the generated {componentApi("otp-input").definition.className}{" API reference →"}</a></p>
+
+<p>OTP runtime keys use <code>{".trm.otpInput"}</code>, not the filename suffix in the frozen scanner. This presentation correction does not change the baseline or core.</p>

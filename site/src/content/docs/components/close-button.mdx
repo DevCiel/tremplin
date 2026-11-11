@@ -1,0 +1,87 @@
+---
+{
+  "component": "close-button",
+  "title": "Close Button",
+  "description": "Close Button component documentation for Tremplin.",
+  "lead": "Provide a named close control and connect it to an explicit action.",
+  "variants": [
+    {
+      "title": "Disabled state",
+      "description": "Native disabled blocks user activation; the pinned CSS reduces opacity and suppresses pointer interaction."
+    },
+    {
+      "title": "Dismiss an alert",
+      "description": "The Alert data API removes this alert. The icon class alone has no action, and application code must arrange suitable focus after removal."
+    },
+    {
+      "title": "Size and opacity tokens",
+      "description": "Customize actual close-control tokens on the control. Leave its content empty; do not add a second text glyph."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "The mask paints with the inherited foreground. Set a suitable local background and foreground as well as the theme; do not assume that theme alone inverts every icon."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Focus an enabled native button. Native disabled removes it from keyboard activation."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Run the assigned action; dismissal needs the corresponding component data API or application handler."
+    }
+  ],
+  "guidelines": [
+    "Provide an accessible name for every icon-only control and specify type=\"button\".",
+    "Keep btn-close empty: its SVG CSS mask is painted with currentColor, not injected pseudo-text.",
+    "A standalone example demonstrates the control; it does not close the page or invent an overlay controller.",
+    "Use the correct data-trm-dismiss target for the owning component; focus restoration is not a close-button CSS feature.",
+    "Custom mask data URLs require an appropriate image CSP; this is separate from the calendar external SVG asset policy."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("close-button")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="close-button" />
+
+{componentDetail("close-button").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="close-button" />
+</>}
+
+{componentDetail("close-button").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("close-button").sass} standalone={true} />
+</>}
+
+{componentDetail("close-button").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="close-button" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="close-button" />
+
+{documentedComponents.find(component => component.name === "close-button").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="close-button" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>The close icon is CSS-only and has no action by itself. The dismissible Alert example requires Alert JavaScript; application code arranges suitable focus after removal.</p>

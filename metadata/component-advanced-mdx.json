@@ -1,0 +1,63 @@
+{
+  "phase": "component-advanced-authored-mdx",
+  "names": [
+    "datepicker",
+    "otp-input",
+    "range",
+    "strength"
+  ],
+  "canonical": [
+    "datepicker",
+    "otp-input",
+    "range",
+    "strength"
+  ],
+  "remaining": 9,
+  "previousPolicy": {
+    "file": "metadata/component-choice-mdx.json",
+    "sha256": "fa96d8f11d7da2324a4d2feb81d5cae1249c6f5a4cc450743ba394c995d15401"
+  },
+  "historicalSources": {
+    "site/src/data/component-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-docs.before-advanced.ts.txt",
+      "sha256": "3000727f2b6f898d3ff6a4a2917e17d91991ee77160d7bf1fbc72ee9f4e1737f"
+    },
+    "site/src/data/strict-control-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/strict-control-docs.before-advanced.ts.txt",
+      "sha256": "7ebec166e0013e09f91cbb4797a4bc3e984ee4a1709f8a6250184876be9bde0d"
+    },
+    "site/src/data/advanced-input-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/advanced-input-docs.before-advanced.ts.txt",
+      "sha256": "ddecc42a869b316cae64e2777c75f3ce8a7cae432f1e12efca0817eae0020f3e"
+    },
+    "site/src/data/component-api.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-api.before-advanced.ts.txt",
+      "sha256": "70a04f16ec43c270ee365e191d49e010115d0b6ed827e31de8c4c5af3008b045"
+    },
+    "site/src/libs/component-mdx.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-mdx.before-advanced.ts.txt",
+      "sha256": "689171a095a4765d678f2ad201d07924ce0cb06009018aa67d12573cd3296d45"
+    },
+    "site/src/pages/components/[slug].astro": {
+      "snapshot": "tests/fixtures/mdx-migration/component-page.before-advanced.astro.txt",
+      "sha256": "567ba70a110824d7dfffb490dabeb7f644e1734bfef2f31988cc833984de46b5"
+    }
+  },
+  "expectation": {
+    "snapshot": "tests/fixtures/mdx-migration/component-advanced.before.json",
+    "sha256": "256cd84a461c38e860131973a81f659bc411b3d8640a01e57e5006f319c74a50"
+  },
+  "sources": {
+    "site/src/components/component/AdvancedOptions.astro": "002c413c14b593dd5b5a14b91cd71e4bd7f45727da7e87bddb2478279cab0edd",
+    "site/src/content/docs/components/datepicker.mdx": "e2fa7f06f0310a9f6ae1f6a4e3ea5fea10434dad1adc037501ef0b111c1b7cbf",
+    "site/src/content/docs/components/otp-input.mdx": "a5f6590a3835b4e0824302a860c20dcc1afcd3a2bab390b65895f38763371708",
+    "site/src/content/docs/components/range.mdx": "18e31054d724c52b6feaa3795d0e5eacb12763af03fc398839af154dbd7ae2c8",
+    "site/src/content/docs/components/strength.mdx": "76b77cd1de93c452dbb46140eff279a543f7dbf934713ff71837c3bc5b825940",
+    "site/src/data/advanced-input-docs.ts": "15c4ddf523b9af0db7f5b7d3ab6760342ec82d266f79dc761663c874c6481a80",
+    "site/src/data/component-api.ts": "a47a4eb2db767b825d6070e46dd1f8890c20508a682f546ed5978b9be3de7724",
+    "site/src/data/component-docs.ts": "dcd7acb7c43cd0e0c97083867019e5711451d9a5551c49ab8955040dbca8525c",
+    "site/src/data/strict-control-docs.ts": "e19b648c4005f7feefe23da104ecc8386ccd54496fc0e01dcb6a37d0a8b5dc2f",
+    "site/src/libs/component-mdx.ts": "2dc1d3e121b3b6badedd0bc02e50e0ff46de31741a819a6e5cfc08eac59cc2aa",
+    "site/src/pages/components/[slug].astro": "fee46ad63ee3c61235c20aceebde06d06fcc2a0aa91db635f324198254141db0"
+  }
+}

@@ -1,0 +1,14 @@
+---
+import { documentationNavigation } from '../libs/navigation'
+const { guides } = documentationNavigation()
+interface Props { slug: string }
+const { slug } = Astro.props
+const index = guides.findIndex(guide => guide.slug === slug)
+if (index < 0) throw new Error('Unknown guide pagination: ' + slug)
+const previous = guides[index - 1]
+const next = guides[index + 1]
+---
+  <nav class="docs-pagination" aria-label="Documentation pages">
+    {previous ? <a rel="prev" href={`/${previous.slug}/`}><small>Previous</small><span>← {previous.title}</span></a> : <a rel="prev" href="/getting-started/"><small>Previous</small><span>← Getting started</span></a>}
+    {next ? <a rel="next" href={`/${next.slug}/`}><small>Next</small><span>{next.title} →</span></a> : <span></span>}
+  </nav>

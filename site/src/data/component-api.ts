@@ -1,0 +1,37 @@
+import { paletteApiJavascript } from './sheet-command-docs'
+import { isAdvancedTopic, advancedApiJavascript, advancedRuntimeEvent } from './advanced-input-docs'
+import { choiceApiJavascript } from './choice-input-docs'
+import { adaptiveRuntimeEvent } from './adaptive-navigation-docs'
+import api from '../../../metadata/api.json' with { type: 'json' }
+import { componentImport, componentTarget } from './component-reference'
+import { componentMdxMetadata } from '../libs/component-mdx'
+
+export const authoredApiComponentNames = ['alert', 'button', 'carousel', 'chips', 'collapse', 'combobox', 'datepicker', 'dialog', 'drawer', 'menu', 'nav-overflow', 'otp-input', 'popover', 'range', 'scrollspy', 'strength', 'tab', 'toast', 'toggler', 'tooltip'] as const
+
+export const authoredExtensionApiComponentNames = ['command-palette'] as const
+
+/** Generated API definitions remain live; MDX owns explanatory prose. */
+export function componentApi(name: string) {
+  if (!authoredApiComponentNames.some(topic => topic === name) && name !== 'bottom-sheet' && !authoredExtensionApiComponentNames.some(topic => topic === name)) throw new Error('No authored component API adapter: ' + name)
+  // Bottom Sheet composes Drawer; it is not a second plugin or API definition.
+  const implementation = name === 'bottom-sheet' ? 'drawer' : name
+  const definition = api.components.find(component => component.name === implementation)
+  if (!definition) throw new Error('Missing generated component API: ' + name)
+  const moduleImport = componentImport(name, definition.className)
+  const selector = componentTarget(name)
+  return {
+    definition, commonMethods: api.commonMethods, moduleImport,
+    javascript: name === 'command-palette' ? paletteApiJavascript : isAdvancedTopic(name) ? advancedApiJavascript[name] : name === 'chips' || name === 'combobox' ? choiceApiJavascript[name] : `${moduleImport}\n\nconst element = document.querySelector('${selector}')\nconst instance = ${definition.className}.getOrCreateInstance(element)${name === 'toggler' ? '\ninstance.toggle() // Mutates the configured target, not its external launcher.' : ''}`
+  }
+}
+
+export function componentApiEvents(name: string) {
+  const { definition } = componentApi(name)
+  const descriptions = componentMdxMetadata(name === 'bottom-sheet' ? 'drawer' : name)?.events
+  return definition.events.map(catalogEvent => {
+    const event = advancedRuntimeEvent(name === 'nav-overflow' ? adaptiveRuntimeEvent(catalogEvent) : catalogEvent)
+    const description = descriptions?.[event]
+    if (typeof description !== 'string' || !description) throw new Error('Missing authored lifecycle description: ' + event)
+    return { event, description }
+  })
+}

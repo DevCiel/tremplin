@@ -1,0 +1,6 @@
+---
+import { componentApi } from '../../data/component-api'
+interface Props { name: string }
+const options = componentApi(Astro.props.name).definition.options
+---
+{options.length ? <div class="table-responsive" tabindex="0" role="region" aria-label="Scrollable component options"><table class="table table-bordered"><thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Required</th></tr></thead><tbody>{options.map(option => <tr><td><code>{option.name}</code></td><td><code>{option.type}</code></td><td>{option.required ? 'Yes' : 'No'}</td></tr>)}</tbody></table></div> : <p>This component has no configuration options.</p>}

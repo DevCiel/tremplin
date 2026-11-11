@@ -1,0 +1,126 @@
+import type { Guide } from './guide-docs'
+import pkg from '../../../package.json' with { type: 'json' }
+import integrity from '../../../dist/integrity.json' with { type: 'json' }
+
+export const frameworkVersion = pkg.version
+export const installCommand = `${pkg.name}@${frameworkVersion}`
+export const localPackage = `./vendor/${pkg.name}-${frameworkVersion}.tgz`
+export const requiredPeers = '@floating-ui/dom vanilla-calendar-pro'
+export const installationManagers = [
+  ['npm', `npm install ${localPackage} ${requiredPeers}`],
+  ['pnpm', `pnpm add ${localPackage} ${requiredPeers}`],
+  ['Yarn', `yarn add ${localPackage} ${requiredPeers}`],
+  ['Bun', `bun add ${localPackage} ${requiredPeers}`]
+] as const
+
+// ESM browser bundle: peers included, no implicit window global.
+export const starterHtml = `<!doctype html>
+<html lang="en" data-trm-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Tremplin project</title>
+  <link rel="stylesheet" href="./dist/css/tremplin.min.css">
+</head>
+<body>
+  <main class="container py-5">
+    <h1>Hello, Tremplin!</h1>
+    <p>Build your first responsive interface.</p>
+    <button class="btn-solid theme-inverse" type="button"
+      data-trm-toggle="collapse" data-trm-target="#welcome"
+      aria-expanded="false" aria-controls="welcome">Show details</button>
+    <div class="collapse mt-3" id="welcome">
+      <div class="card card-body">Your framework is working.</div>
+    </div>
+  </main>
+  <script type="module" src="./dist/js/tremplin.bundle.min.js"></script>
+</body>
+</html>`
+
+const cdn = `https://cdn.jsdelivr.net/npm/${installCommand}/dist`
+const css = 'css/tremplin.min.css', js = 'js/tremplin.bundle.min.js'
+export const installationGuide: Guide = {
+  slug: 'getting-started/install', group: 'Getting started', title: 'Install Tremplin',
+  description: 'Install Tremplin step by step with local assets, an npm tarball, or published packages.',
+  lead: 'Add Tremplin to your project with a package manager, CDN, or local source files.',
+  reference: {title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/installation-guide.ts'},
+  sections: [
+    { heading: 'Install', paragraphs: [
+      `This checkout is Tremplin ${frameworkVersion}, an unreleased development version. Start with local assets or a locally packed tarball; these instructions do not establish that a public npm or CDN release exists.`,
+      'For a separate application, first build the framework and run <code>npm pack</code> as described under Download. Copy the generated tarball into that application’s <code>vendor/</code> folder, then choose your package manager below. Install both positioning and calendar peers. Do not install the package into its own framework checkout.'
+    ], code: [{ language: 'shell', source: installationManagers[0][1] }], callout: 'Follow the <a href="/guides/npm/">npm guide</a> or <a href="/guides/vite/">Vite guide</a> for a consumer application. To work on this documentation website instead, follow <a href="#section-11">Build from source</a> below. The framework repository and a consumer application have different startup commands.' },
+    { heading: 'Using npm', level: 3, paragraphs: [
+      'Import the root namespace when you need several plugins, or use named root exports such as <code>Tooltip</code>, <code>Toast</code>, and <code>Popover</code>. Individual component subpaths export their component as the default. Your bundler resolves the package exports and shared chunks; do not copy an individual chunk in isolation.',
+      'The example target must exist before calling a component method. Root imports register the core data APIs; a focused component import registers its own data API. Optional adapters and Tremplin extensions are separate from the core.'
+    ], code: [
+      { label: 'Application entry after the target markup exists', language: 'js', source: "import 'tremplin/css'\nimport * as tremplin from 'tremplin'\n\ntremplin.Collapse.getOrCreateInstance('#welcome')" },
+      { label: 'Named root imports', language: 'js', source: "import { Tooltip, Toast, Popover } from 'tremplin'" },
+      { label: 'Individual component entry (alternative to the root import)', language: 'js', source: "import 'tremplin/css'\nimport Collapse from 'tremplin/collapse'\n\nCollapse.getOrCreateInstance('#welcome')" }
+    ], table: { headings: ['Package metadata', 'Path or purpose'], rows: [
+      ['<code>sass</code>', `<code>${pkg.sass}</code>`], ['<code>style</code>', `<code>${pkg.style}</code>`], ['<code>exports["."].types</code>', `<code>${pkg.exports['.'].types}</code>`], ['<code>exports</code>', 'Core CSS, Sass, and native component entry points. Optional adapters and extensions are retained in the repository, not shipped in the core package.']
+    ] }, callout: 'Use <code>@floating-ui/dom</code> for positioning and <code>vanilla-calendar-pro</code> for Datepicker. See <a href="/getting-started/javascript/">JavaScript</a> for lifecycle and disposal, and <a href="/getting-started/browsers-devices/">Browsers and devices</a> for support targets. On Windows, use <code>npm.cmd</code> if PowerShell blocks <code>npm.ps1</code>.' },
+    { heading: 'Using Yarn', level: 3, paragraphs: [
+      'For a consumer application using Yarn Berry, choose the node-modules linker if your tools do not support Plug’n’Play. Copy the locally packed archive into vendor/ before installing. Run the application’s own development script afterward; do not assume every project has a yarn start command.'
+    ], code: [{ language: 'shell', source: `yarn config set nodeLinker node-modules\nyarn add ${localPackage} ${requiredPeers}` }], callout: 'Keep the framework repository’s npm lockfile and use <code>npm ci</code> when building Tremplin itself. After a release has actually been published and verified, registry installation becomes <code>npm install ' + installCommand + ' ' + requiredPeers + '</code>.' },
+    { heading: 'More packages', paragraphs: ["Tremplin currently supports a local npm-compatible tarball and compiled local assets. This project does not provide official RubyGems, Composer, or NuGet packages. Do not assume a similarly named registry package belongs to Tremplin."] },
+    { heading: 'Using RubyGems', level: 3, paragraphs: ['There is no official Tremplin gem. In a Rails or other Ruby application, use your JavaScript asset pipeline or copy the compiled distribution into public assets. Preserve the relative CSS, JavaScript, and icon paths shown in the local HTML workflow below.'] },
+    { heading: 'Using NuGet', level: 3, paragraphs: ['There is no official Tremplin NuGet package. In ASP.NET, place the compiled distribution under wwwroot and reference it from your layout, or use an npm-based frontend build. PHP applications can also serve those assets directly; there is no official Tremplin Composer package.'] },
+    { heading: 'CDN', paragraphs: [
+      'The following version-pinned jsDelivr example is a publication template, not the recommended installation for this unreleased checkout. Use it only after verifying that the exact package version exists and its files match the trusted local integrity manifest.',
+      "All browser downloads are ES modules, using Tremplin’s module loading contract. Floating UI and Vanilla Calendar Pro are included in the bundle. The standard build leaves those dependencies external and requires a bundler or import map. Load one runtime owner; no browser build creates a window global."
+    ], code: [{ label: 'After verified publication only', language: 'html', source: `<link rel="stylesheet" href="${cdn}/${css}"
+  integrity="${integrity.assets[css].integrity}" crossorigin="anonymous">
+<script type="module" src="${cdn}/${js}"
+  integrity="${integrity.assets[js].integrity}" crossorigin="anonymous"></script>` }], table: { headings: ['File', 'Local alternative that works now'], rows: [
+      ['Stylesheet', '<a href="/dist/css/tremplin.min.css" download>tremplin.min.css</a>'],
+      ['Browser bundle (positioning and calendar included)', '<a href="/dist/js/tremplin.bundle.min.js" download>tremplin.bundle.min.js</a>'],
+      ['Calendar mask asset', '<a href="/dist/icons/datepicker-chevron.svg" download>datepicker-chevron.svg</a>']
+    ] } },
+    { heading: 'Using CDNs', level: 3, paragraphs: [
+      'Pin the complete version instead of latest. Keep integrity and crossorigin="anonymous" on cross-origin stylesheet and script requests. When an asset changes, update its URL and matching SHA-384 value together.',
+      'The stylesheet references a calendar icon relative to its CSS directory. Preserve the distribution’s <code>css/</code>, <code>js/</code>, and <code>icons/</code> layout when self-hosting. A Content Security Policy must permit the stylesheet, script, and image origins you actually use; do not disable CSP to fix a path error. Focused builds are listed in <a href="/getting-started/contents/">Package contents</a>.'
+    ] },
+    { heading: 'Alternative CDNs', level: 3, paragraphs: [
+      'After npm publication, an npm-backed provider such as unpkg may offer the same versioned files. No cdnjs listing is currently provided by this project. Check the version and bytes against a trusted release manifest; a CDN hostname is not proof that a package is official.'
+    ], code: [{ label: 'Compute the SHA-384 value locally', language: 'shell', source: 'openssl dgst -sha384 -binary tremplin.bundle.min.js | openssl base64 -A' }], callout: 'Security warning: compare the same algorithm, version, and file. If its SHA-384 differs from the trusted manifest, do not load it or disable integrity checks. See the <a href="/getting-started/download/">Download guide</a> for a cross-platform Node.js verification example.' },
+    { heading: 'Download', paragraphs: [
+      'Use compiled assets for a no-build HTML page, or build and pack the repository for a separate bundler application. Local downloads work without registry publication. The consumer tarball is not a complete documentation-site checkout; use this repository to develop the framework or website.'
+    ], table: { headings: ['Type', 'Contents and workflow'], rows: [
+      ['Compiled distribution', 'Use the stylesheet, browser bundle, and calendar icon linked above. Keep their directory layout. No Node.js is needed for the plain HTML page.'],
+      ['Source checkout', 'Sass, TypeScript, tests, and documentation live in the framework repository. Install development dependencies, build, and pack locally as below.']
+    ] } },
+    { heading: 'Use local assets', level: 3, steps: [
+      "Copy <code>dist/css/</code>, <code>dist/js/</code>, and <code>dist/icons/</code> into a <code>dist/</code> folder beside your application’s <code>index.html</code>. For the self-contained bundle, the three linked assets suffice. Separate dependency modules are not part of core dist. Preserve <code>dist/LICENSE</code>, and <code>dist/THIRD_PARTY_NOTICES.txt</code> with redistributed assets.",
+      'Copy the complete document below into <code>index.html</code>. Serve the folder over HTTP through XAMPP or another local server.',
+      'Select “Show details”. The panel should expand and the trigger should expose its expanded state. Select it again to close the panel. Check keyboard focus and the browser console.'
+    ], paragraphs: ['For the standard ESM alternative, bundle the installed peer dependencies yourself, or download the documentation-only <a href="/dist/vendor/floating-ui.js" download>Floating UI</a> and <a href="/dist/vendor/vanilla-calendar-pro.js" download>Calendar Pro</a> modules into a separate <code>vendor/</code> directory. These demo-support files are not core package exports. Preserve their notices. Add the import map before any module script.'], code: [{ language: 'html', source: starterHtml }, { label: 'Standard ESM alternative with separately supplied dependency modules', language: 'html', source: `<script type="importmap">
+{
+  "imports": {
+    "@floating-ui/dom": "./vendor/floating-ui.js",
+    "vanilla-calendar-pro": "./vendor/vanilla-calendar-pro.js"
+  }
+}
+</script>
+<script type="module">
+  import { Collapse } from './dist/js/tremplin.js'
+  // This module runs after parsing: #welcome must exist.
+  Collapse.getOrCreateInstance('#welcome')
+</script>` }], callout: 'Load one complete framework stylesheet and one ES module runtime. The bundle is self-contained; <code>tremplin.min.js</code> requires the import map below. Never mix independently built standard, minified, bundled, or optional-extension runtimes. Root and component entries from the same unminified graph share instances.' },
+    { heading: 'Build from source', level: 3, paragraphs: [
+      'Use the Node version required by this checkout and its installed tools. In the framework repository, install the lockfile dependencies, build the framework, and create a local package tarball. Publishing remains blocked; npm pack creates a local archive and is not a release approval.'
+    ], code: [
+      { label: 'Framework repository', language: 'shell', source: 'npm ci\nnpm run build\nnpm pack' },
+      { label: 'Separate consumer application (adjust the path)', language: 'shell', source: `npm install ../tremplin/tremplin-${frameworkVersion}.tgz ${requiredPeers}` },
+      { label: 'Documentation website, from the framework checkout after building', language: 'shell', source: 'npm run site:prepare\nnpx astro dev --host 127.0.0.1 --port 4321' }
+    ], callout: 'Keep the server terminal open and visit its printed URL, normally <a href="http://127.0.0.1:4321/">http://127.0.0.1:4321/</a>. Use <code>npm.cmd</code> and <code>npx.cmd</code> in Windows PowerShell if execution policy blocks the .ps1 launchers. Do not run a second development server on the same port.' },
+    { heading: 'Troubleshooting', level: 3, table: { headings: ['Symptom', 'Check'], rows: [
+      ['npm E404 or CDN 404', 'Use local downloads or a locally packed tarball until the exact public release is verified.'],
+      ['Missing local tarball', 'Build and pack the framework first, copy the archive into the consumer vendor/ folder, and check its versioned filename.'],
+      ['Unstyled page or missing calendar arrows', 'Check Network requests. Preserve dist/css and dist/icons, including the relative SVG URL.'],
+      ['Button does nothing', 'Check the browser script request, unique target ID, data-trm-target, and console. Use btn-solid or btn-outline rather than retired button classes.'],
+      ['Duplicate runtime error', 'Use only one runtime owner. Remove independently built module copies. Reuse one exact module URL and its shared graph.'],
+      ['localhost refuses connection', 'Start the server in the right folder; keep its terminal running and use the printed host and port.']
+    ] } },
+    { heading: 'For AI tools & LLMs', paragraphs: ['Give coding assistants the <a href="/llms.txt">machine-readable documentation index</a>, <a href="/api/">API reference</a>, and relevant component guides. The <a href="/getting-started/ai/">AI guide</a> explains project conventions. Tremplin does not currently distribute an agent-skills package or llms-full.txt; do not use an unrelated installer as a Tremplin installer.'] }
+  ]
+}

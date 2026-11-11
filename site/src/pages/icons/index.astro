@@ -1,0 +1,30 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro'
+import sprite from '../../../../icons/tremplin-icons.svg?raw'
+
+const icons = [...sprite.matchAll(/<symbol id="([^"]+)"/g)].map(match => match[1])
+---
+<DocsLayout title="Tremplin icons" description="Search and use the Tremplin SVG icon collection.">
+  <span class="badge">{icons.length} icons</span>
+  <h1>Icons</h1>
+  <p class="lead">A dependency-free SVG sprite that inherits the current text color and scales with font size.</p>
+  <label class="form-label" for="icon-filter">Filter icons</label>
+  <input class="form-control mb-4" id="icon-filter" type="search" placeholder="Search by name" autocomplete="off">
+  <div class="icon-catalog" id="icon-catalog">
+    {icons.map(name => <article class="card icon-card" data-icon={name}><div class="card-body"><svg class="icon icon-preview" aria-hidden="true"><use href={`/icons/tremplin-icons.svg#${name}`}></use></svg><strong>{name}</strong><code>&lt;use href="...#{name}"&gt;</code></div></article>)}
+  </div>
+  <h2>Usage</h2>
+  <pre tabindex="0" aria-label="Icon usage example"><code>{`<svg class="icon" aria-hidden="true"><use href="/icons/tremplin-icons.svg#check"></use></svg>`}</code></pre>
+  <p>Decorative icons should use <code>aria-hidden="true"</code>. When an icon communicates meaning, give its containing control a visible label or accessible name.</p>
+</DocsLayout>
+<style>
+  .icon-catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(10rem,1fr));gap:1rem}.icon-card .card-body{display:grid;gap:.6rem;justify-items:center;text-align:center}.icon-preview{font-size:2rem}.icon-card code{max-inline-size:100%;overflow:hidden;text-overflow:ellipsis}.icon-card[hidden]{display:none}
+</style>
+<script>
+  const input = document.querySelector<HTMLInputElement>('#icon-filter')
+  const cards = document.querySelectorAll<HTMLElement>('[data-icon]')
+  input?.addEventListener('input', () => {
+    const query = input.value.trim().toLowerCase()
+    cards.forEach(card => { card.hidden = !card.dataset.icon?.includes(query) })
+  })
+</script>

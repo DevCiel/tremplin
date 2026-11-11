@@ -1,0 +1,93 @@
+---
+{
+  "title": "JavaScript",
+  "description": "Use Tremplin’s browser bundle, ESM imports, data APIs, lifecycle events, and cleanup.",
+  "group": "Getting started",
+  "lead": "Add interaction with declarative attributes or typed component instances. CSS-only pages do not need a script.",
+  "order": 4
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { gettingStartedExamples as samples } from '../../../data/getting-started-examples'
+import { frameworkVersion, installCommand, localPackage, requiredPeers, packageMetadata as pkg } from '../../../data/installation-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">1. Choose a distribution</h2>
+
+<div class="docs-callout docs-callout-info">Browser builds use the Tremplin ES-module contract. Use type={'"module"'}. The standard build needs Floating UI and Vanilla Calendar Pro resolved by your bundler or import map; the bundle includes both. See Install for a complete local import map.</div>
+
+<div class="table-responsive"><table class="table table-bordered">
+<thead><tr><th scope="col">Distribution</th><th scope="col">Usage</th></tr></thead>
+<tbody>
+<tr><td><code>{"tremplin.min.js / tremplin.bundle.min.js"}</code></td><td><code>{"ES modules: standard minified build requires peers; bundle includes them. Neither creates a global."}</code></td></tr>
+<tr><td><code>{"tremplin / tremplin/<component>"}</code></td><td><code>{"ESM package imports for bundlers; declarations are included."}</code></td></tr>
+<tr><td><code>{"CommonJS package exports"}</code></td><td><code>{"Available for tooling, but interactive components require a browser DOM."}</code></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">2. Use the data API</h2>
+
+<p>Use unique target IDs and one behavior toggle per trigger. Component modules register their own data handlers when loaded. Plain text attributes are not a safe way to configure sanitizer callbacks.</p>
+
+<div class="docs-example"><Html source={samples["javascript#1"].example} /></div>
+
+<Code sample={samples["javascript#1"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">3. Create or reuse an instance</h2>
+
+<Code sample={samples["javascript#2"].code[0]} standalone={true} />
+
+<Code sample={samples["javascript#2"].code[1]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">4. Handle lifecycle events</h2>
+
+<p>Register listeners before changing state. Pre-change events can be canceled with <code>{"preventDefault()"}</code>; completion events indicate the finished transition. A canceled or overlapping operation may not emit a completion event.</p>
+
+<Code sample={samples["javascript#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">5. Dependencies and frameworks</h2>
+
+<p>Install <code>{"@floating-ui/dom"}</code> for package-based positioning components such as Menu, Tooltip, and Popover. The browser build includes it. Tremplin Datepicker is implemented locally and does not require Vanilla Calendar Pro.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">6. Dispose when removing DOM</h2>
+
+<p>In React, Vue, or another renderer, initialize core plugins after mount and dispose before removing their elements. Avoid having both a renderer and a plugin independently own the same state. Experimental adapters remain in the repository but are not exported or installed by the core package; use the core lifecycle directly.</p>
+
+<Code sample={samples["javascript#5"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">7. HTML safety and CSP</h2>
+
+<p>Tooltip and Popover sanitize HTML by default. Keep sanitization enabled; supplying DOM elements or custom sanitizers makes the caller responsible for their safety. Under Trusted Types enforcement, permit the private <code>{"tremplin"}</code> policy.</p>
+
+<div class="docs-callout docs-callout-info">These two directives cover Trusted Types only, not a full CSP. See SECURITY.md in the source package for the complete tested baseline. Provide external application scripts or a deliberate nonce strategy under a strict script policy.</div>
+
+<Code sample={samples["javascript#6"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">8. Without JavaScript</h2>
+
+<p>Typography, grid, tables, cards, and other presentational styles continue to work. Script-driven disclosures and overlays need a usable fallback: keep essential content reachable and do not make critical tasks depend on a hidden, uninitialized panel.</p>
+
+</section>

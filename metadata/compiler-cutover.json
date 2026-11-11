@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "phase": "default-core-compiler-cutover",
+  "date": "2026-11-10",
+  "reference": "9062790fdb2379593a2973416dc5a3bfb203e4e3",
+  "scriptReplacements": {
+    "build:manifest": {
+      "before": "node build/integrity.mjs",
+      "after": "node build/integrity.mjs && node build/check-core-output.mjs"
+    },
+    "build:css": {
+      "before": "sass --style=expanded --source-map src/scss/tremplin.scss dist/css/tremplin.css && sass --style=compressed --source-map src/scss/tremplin.scss dist/css/tremplin.min.css && sass --style=expanded --source-map src/scss/tremplin-grid.scss dist/css/tremplin-grid.css && sass --style=compressed --source-map src/scss/tremplin-grid.scss dist/css/tremplin-grid.min.css && sass --style=expanded --source-map src/scss/tremplin-reboot.scss dist/css/tremplin-reboot.css && sass --style=compressed --source-map src/scss/tremplin-reboot.scss dist/css/tremplin-reboot.min.css && sass --style=expanded --source-map src/scss/tremplin-utilities.scss dist/css/tremplin-utilities.css && sass --style=compressed --source-map src/scss/tremplin-utilities.scss dist/css/tremplin-utilities.min.css && npm run build:css:assets",
+      "after": "node build/compile-core.mjs --css"
+    },
+    "build:js": {
+      "before": "node build/build-strict-js.mjs && npm run js-compile-plugins && npm run js-emit-types",
+      "after": "node build/compile-core.mjs --js && npm run js-compile-plugins && npm run js-emit-types"
+    },
+    "build:core-preview": {
+      "before": "node tests/tooling/build-core-preview.mjs",
+      "after": "node build/compile-core.mjs --preview"
+    },
+    "build:js:browser": {
+      "before": "node build/build-strict-js.mjs",
+      "after": "node build/compile-core.mjs --js"
+    },
+    "site:prepare": {
+      "before": "node build/build-site-runtime.mjs && node build/prepare-site.mjs",
+      "after": "node build/build-documentation-assets.mjs && node build/build-site-runtime.mjs && node build/prepare-site.mjs"
+    },
+    "build": {
+      "before": "npm run check:no-legacy && npm run clean && npm run check:bootstrap && npm run build:api && npm run check:api && npm run build:css && npm run build:css:extensions && npm run build:js && npm run build:manifest && npm run check:size && npm run check:no-legacy && npm run build:core-preview",
+      "after": "npm run check:no-legacy && npm run clean && npm run check:bootstrap && npm run build:api && npm run check:api && npm run build:css && npm run build:js && npm run build:manifest && npm run check:size && npm run check:no-legacy && npm run build:core-preview"
+    }
+  },
+  "scriptRemovals": {
+    "build:css:extensions": "sass --style=expanded --source-map src/scss/extensions/index.scss dist/css/tremplin-extensions.css && sass --style=compressed --source-map src/scss/extensions/index.scss dist/css/tremplin-extensions.min.css"
+  },
+  "retiredTools": [
+    "build/build-strict-js.mjs",
+    "tests/tooling/build-core-preview.mjs"
+  ],
+  "retiredOutputRoots": [
+    "dist/cjs",
+    "dist/types",
+    "dist/vendor",
+    "dist/js/adapters",
+    "dist/js/extensions"
+  ],
+  "retiredReport": "dist/strict-build-graph.json",
+  "privateGraph": "artifacts/core-build-graph.json",
+  "privateDocumentationAssets": "artifacts/documentation-assets/dist",
+  "integrityManifest": "dist/integrity.json",
+  "sourceAndFrozenApiChanged": false,
+  "localOnly": true,
+  "releaseBlocked": true
+}

@@ -1,0 +1,44 @@
+{
+  "phase": "component-navigation-authored-mdx",
+  "names": [
+    "button-group",
+    "close-button",
+    "nav"
+  ],
+  "remaining": 30,
+  "previousPolicy": {
+    "file": "metadata/component-collection-mdx.json",
+    "sha256": "43f81ce961eb7aa76a3173bcb9e3afcb813db5853e0e03ca7975c0205774645f"
+  },
+  "historicalSources": {
+    "site/src/data/component-reference.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-reference.before-navigation.ts.txt",
+      "sha256": "45bf88d516d7a625ad6acb395b39939857658b649bc75b129dcef68239260b0a"
+    },
+    "site/src/data/navigation-disclosure-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/navigation-disclosure-docs.before-navigation.ts.txt",
+      "sha256": "56755b3a321cc270f36e3ed3b60443c32ff37669fce970beb61f3ed639221357"
+    },
+    "site/src/libs/component-mdx.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-mdx.before-navigation.ts.txt",
+      "sha256": "a3630924f06b1a03e0e7c496a02cc351fb696f97111e75f62bdcb2b27c6c61c2"
+    },
+    "site/src/pages/components/[slug].astro": {
+      "snapshot": "tests/fixtures/mdx-migration/component-page.before-navigation.astro.txt",
+      "sha256": "eee0df7007d954bf57ef86e5611c3c1bac1563b24efb01068000f1ff018f1c1f"
+    }
+  },
+  "expectation": {
+    "snapshot": "tests/fixtures/mdx-migration/component-navigation.before.json",
+    "sha256": "6629f1167997903641e8103f86cca8c31b85b24d8e3754388bf68d1f41fae098"
+  },
+  "sources": {
+    "site/src/content/docs/components/button-group.mdx": "b5a71a706c9b52617d9c21ded07271fbd88c736de2836db8eb8c629bb5c77a84",
+    "site/src/content/docs/components/close-button.mdx": "6a9a9619d1ada28fa2569d1be73848ae31b552067f11be18fd2378b0f3b2d899",
+    "site/src/content/docs/components/nav.mdx": "7ce71b4d3f906554bdf5e72694c6204252a4e46c6250655d50a85e5ffb020e03",
+    "site/src/data/component-reference.ts": "a377408e0915cece5a613e2d577d487266a5e1c6753c6c309de1f67e3cc19013",
+    "site/src/data/navigation-disclosure-docs.ts": "7a29a8dc9bd582eb130c94035283fda8025151e403fe25d98fc5d60029894cc2",
+    "site/src/libs/component-mdx.ts": "fe8bf689eb50f875d774f67222cc78f8ebc550380dd7b4e4edba53f29b7de01e",
+    "site/src/pages/components/[slug].astro": "a854e1eacf3f41b8ae4e2b5ed8c7060c6c2c258c1668dc393eb3bce84fcb12a3"
+  }
+}

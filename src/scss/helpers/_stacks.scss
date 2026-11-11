@@ -1,0 +1,33 @@
+@use "../layout/breakpoints" as *;
+
+@layer helpers {
+  // scss-docs-start stacks
+  .stack-container {
+    @include set-container();
+  }
+
+  [class*="hstack"],
+  [class*="vstack"] {
+    display: flex;
+    flex: var(--trm-stack-flex, 1 1 auto);
+    flex-direction: var(--trm-stack-direction, row);
+    align-items: var(--trm-stack-align-items, center);
+    align-self: var(--trm-stack-align-self, stretch);
+  }
+
+  @include loop-breakpoints-up() using ($breakpoint, $prefix) {
+    .#{$prefix}vstack {
+      @include container-breakpoint-up($breakpoint) {
+        --trm-stack-direction: column;
+        --trm-stack-align-items: stretch;
+      }
+    }
+    .#{$prefix}hstack {
+      @include container-breakpoint-up($breakpoint) {
+        --trm-stack-direction: row;
+        --trm-stack-align-items: flex-start;
+      }
+    }
+  }
+  // scss-docs-end stacks
+}

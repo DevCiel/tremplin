@@ -1,0 +1,5 @@
+---
+import { mdxGuideMetadata } from '../libs/mdx-metadata'
+const guides = mdxGuideMetadata('getting-started')
+---
+{guides.map((guide, index) => <article class="card"><div class="card-body"><p class="docs-eyebrow">{String(index + 1).padStart(2, '0')}</p><h3 class="h5"><a href={`/${guide.slug}/`}>{guide.title}</a></h3><p>{guide.description}</p></div></article>)}

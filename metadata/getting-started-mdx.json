@@ -1,0 +1,31 @@
+{
+  "phase": "getting-started-authored-mdx",
+  "guides": 11,
+  "historicalSources": {
+    "site/src/data/getting-started-guides.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/getting-started-guides.before.ts.txt",
+      "sha256": "3c424695b86e099cc147625c58e9a33e07aea7e7f96be79806f9f9bc6db631db"
+    },
+    "site/src/data/installation-guide.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/installation-guide.before.ts.txt",
+      "sha256": "67caf0c088cf9601d75e7ddf55ac5b84c78d15c6626f591e2a1ee1fd792dc5cc"
+    }
+  },
+  "sources": {
+    "site/src/content/docs/getting-started/accessibility.mdx": "a43934810b3f08b4be6f3be417472555d2a1ddb1d344bd791f3836aeda851084",
+    "site/src/content/docs/getting-started/ai.mdx": "bc83d1017bc77c55ab9ff7e731e6f2c4f8c394342dc678751d1519e543181fc8",
+    "site/src/content/docs/getting-started/approach.mdx": "429847e0317d2d338b04221908a10ad87bdb902918bc15f3c372dd1f619974d0",
+    "site/src/content/docs/getting-started/browsers-devices.mdx": "edb6ddd4fca7b8b8cd0f8ba5087af14c25c58a57dbf824e8a1061050c67c48a9",
+    "site/src/content/docs/getting-started/bundlers.mdx": "3789f919cc59d616a4016bb64d43f80993eabae1d5ccd568cc2f73dc2dd3a85a",
+    "site/src/content/docs/getting-started/contents.mdx": "fba133259956ff2e1cc3723ce73b8ad9ba23e2ef031a4da09657b81e8b30aaa6",
+    "site/src/content/docs/getting-started/css-variables.mdx": "8a06f3d4f7cbf4d347637bfc6b1467777da42031f5f742eac77c99e4b46d19d4",
+    "site/src/content/docs/getting-started/download.mdx": "c8c00b8dea79ebbc332de5b1f25df24c50d4eb61abcda90ec80febf4c309de75",
+    "site/src/content/docs/getting-started/install.mdx": "d4c0a2f3c3a886a69feb33b33462f3d7e11b29ba24d58c697790414e1aa487ea",
+    "site/src/content/docs/getting-started/javascript.mdx": "7a8a9fa06f519ed41a37c24a39e9d5f52790cc96b622fb30c26b85b4739922ed",
+    "site/src/content/docs/getting-started/rtl.mdx": "956b131a1a6102b6d12c7bcc2fc97787177cefaa57db685f248fad391fbbe127",
+    "site/src/data/getting-started-examples.ts": "39402fb4e386a5b476c8c64b5817f413772357e36c57f22fce0b831f7e6feab5",
+    "site/src/data/getting-started-guides.ts": "231bc07d8b7418cf05d4da2ec9a91b654a9dc772d1de69eda28d4e23e8741865",
+    "site/src/data/installation-examples.ts": "f005c600ce5563e44787b62997282504fa696bf8824f73fcf50ae20b2349d6e2",
+    "site/src/libs/mdx-metadata.ts": "e302a70455a7d848e783cd147c296eb2582bcf9b00d47c93d9172f20540dfa49"
+  }
+}

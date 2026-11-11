@@ -1,0 +1,28 @@
+// Tremplin extension: empty-state presentation.
+@use '../config' as *;
+@use '../mixins/border-radius' as *;
+@use '../mixins/tokens' as *;
+
+$empty-state-tokens: () !default;
+$empty-state-tokens: defaults((
+  --trm-empty-state-min-height: 15rem,
+  --trm-empty-state-gap: .75rem,
+  --trm-empty-state-padding: 2rem,
+  --trm-empty-state-color: var(--trm-fg-body),
+  --trm-empty-state-bg: transparent,
+  --trm-empty-state-border-color: var(--trm-border-color),
+  --trm-empty-state-border-radius: var(--trm-radius-6),
+  --trm-empty-state-icon-size: 3rem,
+  --trm-empty-state-icon-color: var(--trm-fg-2),
+), $empty-state-tokens);
+
+@layer custom {
+  .empty-state { @include tokens($empty-state-tokens); display: grid; min-block-size: var(--trm-empty-state-min-height); place-items: center; align-content: center; gap: var(--trm-empty-state-gap); padding: var(--trm-empty-state-padding); border: 1px dashed var(--trm-empty-state-border-color); background-color: var(--trm-empty-state-bg); color: var(--trm-empty-state-color); text-align: center; @include border-radius(var(--trm-empty-state-border-radius)); }
+  .empty-state > :where(h1, h2, h3, p) { margin: 0; }
+  .empty-state-icon { inline-size: var(--trm-empty-state-icon-size); block-size: var(--trm-empty-state-icon-size); color: var(--trm-empty-state-icon-color); }
+  .empty-state-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+  .empty-state-compact { --trm-empty-state-min-height: 0; --trm-empty-state-padding: 1rem; --trm-empty-state-icon-size: 2rem; }
+  .empty-state-borderless { border-color: transparent; }
+  .empty-state-start { place-items: start; text-align: start; }
+  .empty-state-start .empty-state-actions { justify-content: flex-start; }
+}

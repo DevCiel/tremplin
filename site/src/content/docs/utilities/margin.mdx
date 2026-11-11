@@ -1,0 +1,77 @@
+---
+{
+  "title": "Margin",
+  "description": "Use margin utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use margin utilities from the configured Tremplin utility map.",
+  "order": 25,
+  "utility": {
+    "category": "Spacing",
+    "classes": [
+      "m-0",
+      "mt-3",
+      "ms-3",
+      "me-3",
+      "mx-auto",
+      "ms--1",
+      "me--2",
+      "md:m-3",
+      "md:ms-auto"
+    ],
+    "notes": "Use m/side/x/y prefixes with the shared spacer scale. x/y are logical axes and s/e are inline start/end. Auto margins include responsive prefixes. Negative defaults are only ms--1/me--1 (-.25rem) and ms--2/me--2 (-.5rem), not generic m--*/mx--* or old n spellings.",
+    "responsive": true
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/margin"][0].example} /></div>
+
+<Code sample={samples["utilities/margin"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"Use m/side/x/y prefixes with the shared spacer scale. x/y are logical axes and s/e are inline start/end. Auto margins include responsive prefixes. Negative defaults are only ms--1/me--1 (-.25rem) and ms--2/me--2 (-.5rem), not generic m--*/mx--* or old n spellings."} /></p>
+
+<Code sample={samples["utilities/margin"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Responsive behavior"}</h2>
+
+<p><Html source={"Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Spacer defaults"}</h2>
+
+<p><Html source={"Keys 0–12 are 0, .25, .375, .5, .75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5 and 3rem. Runtime tokens are --trm-spacer-*. The negative-spacers map is independent of positive spacers."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Configure spacing"}</h2>
+
+<Code sample={samples["utilities/margin"][4].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

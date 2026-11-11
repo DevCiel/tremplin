@@ -1,0 +1,89 @@
+---
+{
+  "title": "Bundlers",
+  "description": "Set up Tremplin with Vite and understand Sass, package imports, and peer dependencies.",
+  "group": "Getting started",
+  "lead": "Use Vite for a small working application, or adapt the same package exports to your existing build system.",
+  "order": 9
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { gettingStartedExamples as samples } from '../../../data/getting-started-examples'
+import { frameworkVersion, installCommand, localPackage, requiredPeers, packageMetadata as pkg } from '../../../data/installation-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">1. Create an application folder</h2>
+
+<p>Use a Node.js version supported by your chosen Vite release. Run these in a separate application folder, not in the framework repository.</p>
+
+<Code sample={samples["bundlers#0"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">2. Install Tremplin</h2>
+
+<p>For the current checkout, build and pack Tremplin first, then install its tarball with the path adjusted for your directories. After a registry release is verified, the package name can replace the tarball path.</p>
+
+<Code sample={samples["bundlers#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">3. Add the HTML entry</h2>
+
+<Code sample={samples["bundlers#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">4. Import CSS and the plugin</h2>
+
+<Code sample={samples["bundlers#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">5. Add scripts and run</h2>
+
+<p>Merge these scripts into the application package.json. Open the URL printed by Vite and test the Details button; then build and preview the production output.</p>
+
+<Code sample={samples["bundlers#4"].code[0]} standalone={true} />
+
+<Code sample={samples["bundlers#4"].code[1]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">6. Optional Sass customization</h2>
+
+<p>Install Dart Sass, create app.scss, and import that file from main.js instead of importing the compiled CSS.</p>
+
+<Code sample={samples["bundlers#5"].code[0]} standalone={true} />
+
+<Code sample={samples["bundlers#5"].code[1]} standalone={true} />
+
+<Code sample={samples["bundlers#5"].code[2]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">7. Webpack and other bundlers</h2>
+
+<p>Use the same declared package imports. Configure your existing tool’s CSS and Sass processing and install the Floating UI peer. Browser-native ESM cannot resolve bare package specifiers without additional resolution; plain HTML can use the self-contained ESM bundle with type={'"module"'}, or a standard build with the Install guide’s import map. This guide provides a complete Vite recipe, not a tested configuration for every bundler.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">8. Production review</h2>
+
+<ol class="docs-steps">
+<li>Confirm emitted CSS and JavaScript requests succeed from the deployed base path.</li>
+<li>Check only the components and optional adapters you use are imported.</li>
+<li>Test interactions after minification, keyboard access, and content without JavaScript.</li>
+<li>Run your application tests; use Tremplin’s contributor check only when developing the framework itself.</li>
+</ol>
+
+</section>

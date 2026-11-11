@@ -1,0 +1,132 @@
+@use "functions" as *;
+@use "mixins/lists" as *;
+@use "mixins/border-radius" as *;
+@use "mixins/focus-ring" as *;
+@use "mixins/transition" as *;
+@use "mixins/tokens" as *;
+
+// stylelint-disable custom-property-no-missing-var-function
+$pagination-tokens: () !default;
+
+// scss-docs-start pagination-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$pagination-tokens: defaults(
+  (
+    --trm-pagination-min-height: var(--trm-btn-input-min-height),
+    --trm-pagination-padding-x: var(--trm-btn-input-padding-x),
+    --trm-pagination-padding-y: var(--trm-btn-input-padding-y),
+    --trm-pagination-font-size: var(--trm-btn-input-font-size),
+    --trm-pagination-color: var(--trm-link-color),
+    --trm-pagination-bg: var(--trm-bg-body),
+    --trm-pagination-border-width: var(--trm-border-width),
+    --trm-pagination-border-color: var(--trm-border-color),
+    --trm-pagination-border-radius: var(--trm-btn-input-border-radius),
+    --trm-pagination-hover-color: var(--trm-link-hover-color),
+    --trm-pagination-hover-bg: var(--trm-bg-1),
+    --trm-pagination-hover-border-color: var(--trm-border-color),
+    --trm-pagination-active-color: var(--trm-theme-contrast, var(--trm-primary-contrast)),
+    --trm-pagination-active-bg: var(--trm-theme-bg, var(--trm-primary-bg)),
+    --trm-pagination-active-border-color: var(--trm-theme-bg, var(--trm-primary-bg)),
+    --trm-pagination-disabled-color: var(--trm-fg-3),
+    --trm-pagination-disabled-bg: var(--trm-bg-2),
+    --trm-pagination-disabled-border-color: var(--trm-border-color),
+  ),
+  $pagination-tokens
+);
+// scss-docs-end pagination-tokens
+
+// scss-docs-start pagination-sizes
+$pagination-sizes: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$pagination-sizes: defaults(
+  ("sm", "lg"),
+  $pagination-sizes
+);
+// scss-docs-end pagination-sizes
+// stylelint-enable custom-property-no-missing-var-function
+
+@layer components {
+  .pagination {
+    @include tokens($pagination-tokens);
+
+    display: flex;
+    @include list-unstyled();
+  }
+
+  .page-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--trm-pagination-min-height);
+    padding: var(--trm-pagination-padding-y) var(--trm-pagination-padding-x);
+    font-size: var(--trm-pagination-font-size);
+    color: var(--trm-theme-fg, var(--trm-pagination-color));
+    text-decoration: none;
+    background-color: var(--trm-pagination-bg);
+    border: var(--trm-pagination-border-width) solid var(--trm-pagination-border-color);
+    @include transition(color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out);
+
+    &:hover {
+      z-index: 2;
+      color: var(--trm-theme-fg-emphasis, var(--trm-pagination-hover-color));
+      background-color: var(--trm-theme-bg-subtle, var(--trm-pagination-hover-bg));
+      border-color: var(--trm-theme-border, var(--trm-pagination-hover-border-color));
+    }
+
+    &:focus-visible {
+      z-index: 3;
+      @include focus-ring(true, var(--trm-theme-focus-ring, var(--trm-focus-ring-color)));
+    }
+
+    &.active,
+    .active > & {
+      z-index: 3;
+      color: var(--trm-theme-contrast, var(--trm-pagination-active-color));
+      background-color: var(--trm-theme-bg, var(--trm-pagination-active-bg));
+      border-color: var(--trm-theme-bg, var(--trm-pagination-active-border-color));
+    }
+
+    &.disabled,
+    .disabled > & {
+      color: var(--trm-pagination-disabled-color);
+      pointer-events: none;
+      background-color: var(--trm-pagination-disabled-bg);
+      border-color: var(--trm-pagination-disabled-border-color);
+    }
+  }
+
+  .page-item {
+    &:not(:first-child) .page-link {
+      margin-inline-start: calc(-1 * var(--trm-pagination-border-width));
+    }
+
+    &:first-child {
+      .page-link {
+        @include border-start-radius(var(--trm-pagination-border-radius));
+      }
+    }
+
+    &:last-child {
+      .page-link {
+        @include border-end-radius(var(--trm-pagination-border-radius));
+      }
+    }
+  }
+
+  //
+  // Sizing
+  //
+
+  // scss-docs-start pagination-sizes-loop
+  @each $size, $_ in $pagination-sizes {
+    .pagination-#{$size} {
+      --trm-pagination-min-height: var(--trm-btn-input-#{$size}-min-height);
+      --trm-pagination-padding-y: var(--trm-btn-input-#{$size}-padding-y);
+      --trm-pagination-padding-x: var(--trm-btn-input-#{$size}-padding-x);
+      --trm-pagination-font-size: var(--trm-btn-input-#{$size}-font-size);
+      --trm-pagination-border-radius: var(--trm-btn-input-#{$size}-border-radius);
+    }
+  }
+  // scss-docs-end pagination-sizes-loop
+}

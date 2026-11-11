@@ -1,0 +1,28 @@
+import type { Guide } from './guide-docs'
+import { compositionGuides } from './form-composition-guides'
+import { nativeFormGuides } from './native-form-guides'
+import { formsOverviewGuide } from './forms-overview-docs'
+import { strictControlGuides } from './strict-control-guides'
+import { choiceFormsGuides } from './choice-input-docs'
+
+export { validationScript } from './form-composition-guides'
+
+export const formsGuides: Guide[] = [
+  formsOverviewGuide,
+  nativeFormGuides.field,
+  nativeFormGuides['form-control'],
+  nativeFormGuides.checkbox,
+  nativeFormGuides.radio,
+  nativeFormGuides.switch,
+  strictControlGuides.range!,
+  compositionGuides['input-group'],
+  compositionGuides['floating-labels'],
+  compositionGuides['form-adorn'],
+  strictControlGuides.chips!,
+  choiceFormsGuides.combobox,
+  strictControlGuides.datepicker!,
+  strictControlGuides['otp-input']!,
+  strictControlGuides['password-strength']!,
+  compositionGuides.layout,
+  compositionGuides.validation
+]

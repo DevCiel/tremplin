@@ -1,0 +1,122 @@
+@use "config" as *;
+@use "functions" as *;
+@use "mixins/border-radius" as *;
+@use "mixins/tokens" as *;
+@use "mixins/transition" as *;
+
+$toast-tokens: () !default;
+
+// scss-docs-start toast-tokens
+// stylelint-disable custom-property-no-missing-var-function
+// stylelint-disable-next-line scss/dollar-variable-default
+$toast-tokens: defaults(
+  (
+    --trm-toast-zindex: var(--trm-z-toast),
+    --trm-toast-padding-x: 1rem,
+    --trm-toast-padding-y: .75rem,
+    --trm-toast-spacing: #{$container-padding-x},
+    --trm-toast-max-width: 350px,
+    --trm-toast-font-size: var(--trm-font-size-sm),
+    --trm-toast-color: null,
+    --trm-toast-bg: var(--trm-bg-body),
+    --trm-toast-border-width: var(--trm-border-width),
+    --trm-toast-border-color: var(--trm-border-color-translucent),
+    --trm-toast-border-radius: null,
+    --trm-toast-box-shadow: var(--trm-box-shadow),
+    --trm-toast-header-color: var(--trm-fg-3),
+    --trm-toast-header-bg: var(--trm-bg-1),
+    --trm-toast-header-border-color: var(--trm-border-color-translucent),
+    --trm-toast-transition-property: "opacity, display",
+    --trm-toast-transition-duration: .15s,
+    --trm-toast-transition-timing: linear,
+  ),
+  $toast-tokens
+);
+// stylelint-enable custom-property-no-missing-var-function
+// scss-docs-end toast-tokens
+
+@layer components {
+  .toast {
+    @include tokens($toast-tokens);
+
+    display: none;
+    flex-direction: column;
+    width: var(--trm-toast-max-width);
+    max-width: 100%;
+    overflow: hidden;
+    font-size: var(--trm-toast-font-size);
+    color: var(--trm-toast-color, var(--trm-fg-body));
+    pointer-events: auto;
+    background-color: var(--trm-toast-bg);
+    background-clip: padding-box;
+    border: var(--trm-toast-border-width) solid var(--trm-theme-border, var(--trm-toast-border-color));
+    box-shadow: var(--trm-toast-box-shadow);
+    @include border-radius(var(--trm-toast-border-radius, var(--trm-radius-7)));
+
+    // scss-docs-start toast-transition
+    // Animated variant (default). `display` transitions discretely so the toast
+    // stays laid out until the fade-out finishes. Add .toast-instant to skip it.
+    &:not(.toast-instant) {
+      opacity: 0;
+      @include transition-props(
+        var(--trm-toast-transition-property),
+        var(--trm-toast-transition-duration),
+        var(--trm-toast-transition-timing),
+        allow-discrete
+      );
+    }
+
+    &.show {
+      display: flex;
+      opacity: 1;
+    }
+    // scss-docs-end toast-transition
+  }
+
+  // The toast is not rendered before .show lands, so the fade-in needs an
+  // explicit starting state — the base opacity above cannot serve as one.
+  @starting-style {
+    .toast:not(.toast-instant).show {
+      opacity: 0;
+    }
+  }
+
+  .toast-container {
+    --trm-toast-zindex: var(--trm-z-toast);
+
+    position: absolute;
+    z-index: var(--trm-toast-zindex);
+    width: max-content;
+    max-width: 100%;
+    pointer-events: none;
+
+    > :not(:last-child) {
+      margin-bottom: var(--trm-toast-spacing);
+    }
+  }
+
+  .toast-header {
+    display: flex;
+    align-items: center;
+    padding: var(--trm-toast-padding-y) var(--trm-toast-padding-x);
+    color: var(--trm-theme-fg-emphasis, var(--trm-toast-header-color));
+    background-color: var(--trm-theme-bg-subtle, var(--trm-toast-header-bg));
+    // background-clip: padding-box;
+    border-block-end: var(--trm-toast-border-width, var(--trm-border-width)) solid var(--trm-theme-border, var(--trm-toast-header-border-color, var(--trm-border-color-translucent)));
+
+    .btn-close {
+      margin-inline-start: calc(.5 * var(--trm-toast-padding-x));
+      margin-inline-end: calc(-.25 * var(--trm-toast-padding-x));
+      color: inherit;
+    }
+  }
+
+  .toast-translucent {
+    backdrop-filter: blur(5px) saturate(180%);
+  }
+
+  .toast-body {
+    padding: var(--trm-toast-padding-x);
+    word-wrap: break-word;
+  }
+}

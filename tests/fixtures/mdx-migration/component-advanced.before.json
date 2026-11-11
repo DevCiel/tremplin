@@ -1,0 +1,1041 @@
+[
+  {
+    "name": "datepicker",
+    "title": "Datepicker",
+    "description": "Datepicker component documentation for Tremplin.",
+    "lead": "Use Vanilla Calendar Pro through the Tremplin Datepicker adapter.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Declarative date field",
+          "description": "The displayed date is locale formatted. Calendar click selection is different from manually editing the text.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"guide-deadline\">Deadline</label><input id=\"guide-deadline\" type=\"text\" class=\"form-control\" name=\"deadline\" data-trm-toggle=\"datepicker\" data-trm-vcp-options='{\"styles\":{\"calendar\":\"vc demo-calendar-contrast\"}}' data-trm-selected-dates='[\"2026-10-15\"]' autocomplete=\"off\" ></div>\n</div>"
+        },
+        {
+          "title": "Bounded dates",
+          "description": "dateMin/dateMax configure the calendar; native text-input min/max do not. The sample starts in the bounded month.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"guide-window\">Deployment date</label><input id=\"guide-window\" type=\"text\" class=\"form-control\" name=\"deadline\" data-trm-toggle=\"datepicker\" data-trm-vcp-options='{\"styles\":{\"calendar\":\"vc demo-calendar-contrast\"}}' data-trm-selected-dates='[\"2026-10-15\"]' autocomplete=\"off\" data-trm-date-min=\"2026-10-10\" data-trm-date-max=\"2026-10-20\"></div>\n</div>"
+        },
+        {
+          "title": "Inline calendar and explicit ISO field",
+          "description": "Calendar Pro replaces inline children in this pin. The copied application handler maintains a sibling hidden ISO field instead; the named region contains calendar width.",
+          "markup": "<div class=\"demo-contrast\">\n<form id=\"inline-date-form\"><div class=\"table-responsive focus-ring\" role=\"region\" tabindex=\"0\" aria-label=\"Inline date calendar\"><div id=\"inline-calendar\" data-trm-toggle=\"datepicker\" data-trm-vcp-options='{\"styles\":{\"calendar\":\"vc demo-calendar-contrast\"}}' data-trm-inline=\"true\" data-demo-inline-date data-trm-selected-dates='[\"2026-10-15\"]' data-trm-display-months-count=\"1\"></div></div><input id=\"inline-calendar-value\" type=\"hidden\" name=\"selected-date\" value=\"2026-10-15\"></form>\n</div>"
+        },
+        {
+          "title": "Multiple months",
+          "description": "The enabled months extension shows two columns. This example explicitly sets the supported minimum-width token to 36rem so they remain side-by-side; the named region owns horizontal scrolling on mobile.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"table-responsive focus-ring\" role=\"region\" tabindex=\"0\" aria-label=\"Two-month calendar\"><div id=\"multiple-calendar\" data-trm-toggle=\"datepicker\" data-trm-vcp-options='{\"styles\":{\"calendar\":\"vc demo-calendar-contrast\"}}' data-trm-inline=\"true\" data-demo-inline-date data-trm-selected-dates='[\"2026-10-15\"]' data-trm-display-months-count=\"2\" style=\"--trm-datepicker-min-width: 36rem\"></div></div><input id=\"multiple-calendar-value\" type=\"hidden\" name=\"selected-date\" value=\"2026-10-15\">\n</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "The adapter copies the nearest cached theme ancestor to its generated calendar. RTL layout does not imply an adapter-owned keyboard policy.",
+          "markup": "<div class=\"demo-contrast\">\n<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"form-field\"><label class=\"form-label\" for=\"rtl-deadline\">Review date</label><input id=\"rtl-deadline\" type=\"text\" class=\"form-control\" name=\"deadline\" data-trm-toggle=\"datepicker\" data-trm-vcp-options='{\"styles\":{\"calendar\":\"vc demo-calendar-contrast\"}}' data-trm-selected-dates='[\"2026-10-15\"]' autocomplete=\"off\" ></div></div>\n</div>"
+        },
+        {
+          "title": "Multiple dates and range",
+          "description": "Multiple selection stays open; a completed range requests hide after 100 ms. Displayed separators are not a server serialization contract.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"multiple-dates\">Meeting dates</label><input id=\"multiple-dates\" type=\"text\" class=\"form-control\" name=\"deadline\" data-trm-toggle=\"datepicker\" data-trm-vcp-options='{\"styles\":{\"calendar\":\"vc demo-calendar-contrast\"}}' data-trm-selected-dates='[\"2026-10-15\"]' autocomplete=\"off\" data-trm-selection-mode=\"multiple\"></div><div class=\"form-field\"><label class=\"form-label\" for=\"ranged-dates\">Leave dates</label><input id=\"ranged-dates\" type=\"text\" class=\"form-control\" name=\"deadline\" data-trm-toggle=\"datepicker\" data-trm-vcp-options='{\"styles\":{\"calendar\":\"vc demo-calendar-contrast\"}}' data-trm-selected-dates='[\"2026-10-15\"]' autocomplete=\"off\" data-trm-selection-mode=\"multiple-ranged\"></div>\n</div>"
+        },
+        {
+          "title": "Named button trigger",
+          "description": "Use a display child so the purpose text survives date updates. A button alone is not a successful submitted date field.",
+          "markup": "<div class=\"demo-contrast\">\n<button id=\"button-date\" type=\"button\" class=\"btn-outline theme-primary\" data-trm-toggle=\"datepicker\" data-trm-vcp-options='{\"styles\":{\"calendar\":\"vc demo-calendar-contrast\"}}' data-trm-selected-dates='[\"2026-10-15\"]'><span>Meeting date: </span><span data-trm-datepicker-display>Choose date</span></button>\n</div>"
+        },
+        {
+          "title": "Formatting, first weekday and popup theme",
+          "description": "This example uses an Intl format object, Sunday first and an explicit dark popup theme. This changes presentation, not ISO validation.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"formatted-date\">Formatted date</label><input id=\"formatted-date\" type=\"text\" class=\"form-control\" name=\"deadline\" data-trm-toggle=\"datepicker\" data-trm-vcp-options='{\"styles\":{\"calendar\":\"vc demo-calendar-contrast\"}}' data-trm-selected-dates='[\"2026-10-15\"]' autocomplete=\"off\" data-trm-locale=\"en-GB\" data-trm-first-weekday=\"0\" data-trm-datepicker-theme=\"dark\" data-trm-date-format='{\"year\":\"numeric\",\"month\":\"short\",\"day\":\"2-digit\"}'></div>\n</div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-datepicker-padding",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-border-color",
+          "defaultValue": "var(--trm-border-color-translucent)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-border-radius",
+          "defaultValue": "var(--trm-radius-7)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-box-shadow",
+          "defaultValue": "var(--trm-box-shadow)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-font-size",
+          "defaultValue": "var(--trm-font-size-sm)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-min-width",
+          "defaultValue": "280px",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-zindex",
+          "defaultValue": "var(--trm-z-menu)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-header-font-weight",
+          "defaultValue": "600",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-weekday-color",
+          "defaultValue": "var(--trm-fg-3)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-day-hover-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-day-selected-bg",
+          "defaultValue": "var(--trm-primary-bg)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-day-selected-color",
+          "defaultValue": "var(--trm-primary-contrast)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-day-today-bg",
+          "defaultValue": "var(--trm-bg-2)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-day-today-color",
+          "defaultValue": "var(--trm-fg-1)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-datepicker-day-disabled-color",
+          "defaultValue": "var(--trm-fg-4)",
+          "purpose": "Default exported through $datepicker-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Focus input / click button",
+          "behavior": "Uses the adapter data API. Button toggles; inline show/hide/toggle are no-ops."
+        },
+        {
+          "keys": "Arrow keys / Enter / Space in calendar",
+          "behavior": "Calendar Pro owns native date/month/year button focus and activation; test the generated control, not a former local-calendar API."
+        },
+        {
+          "keys": "Outside focus / pointer",
+          "behavior": "Requests hide through the adapter. No automatic focus restoration is promised."
+        }
+      ],
+      "guidelines": [
+        "Use a labelled type=text field, not a second native type=date popup. ISO preselection is an array, while named text-input submission is formatted display text.",
+        "getSelectedDates() returns a copy. setSelectedDates() updates display but does not dispatch adapter change or native input/change. Calendar Pro replaces an inline child field; the example uses a sibling field and a disclosed click-change handler instead. Sync that field explicitly after API calls.",
+        "Manual text edits after initialization do not automatically resync the selection array. Supply an explicit application parse/validation policy or use a native date input where appropriate.",
+        "Popup visibility callbacks and promises do not establish focus restoration or async animation completion. Inline mode remains visible; disposal destroys the calendar, observer and owned outside handlers.",
+        "vcpOptions is spread before adapter-owned configuration: only the months extension is enabled, callbacks/settings can be overwritten, and sanitizer enforcement stays mandatory.",
+        "Keep the approved Calendar HTML sanitizer and same-origin dist/icons/datepicker-chevron.svg relative to dist/css. Never weaken Trusted Types/CSP to make a sample render.",
+        "The explicit contrast wrapper styles are application choices, including a Calendar Pro styles class for body-appended popups. Parent CSS inheritance alone cannot reach those popups. An explicit demo-only hidden-popup display rule prevents stale desktop coordinates from creating mobile resize overflow."
+      ],
+      "sass": "@use 'tremplin/scss/datepicker' with ($datepicker-tokens: (--trm-datepicker-border-radius: 1rem));"
+    },
+    "example": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"deadline\">Deadline</label><input id=\"deadline\" type=\"text\" class=\"form-control\" name=\"deadline\" data-trm-toggle=\"datepicker\" data-trm-vcp-options='{\"styles\":{\"calendar\":\"vc demo-calendar-contrast\"}}' data-trm-selected-dates='[\"2026-10-15\"]' autocomplete=\"off\" ></div>\n</div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_datepicker.scss",
+    "definition": {
+      "name": "datepicker",
+      "className": "Datepicker",
+      "options": [
+        {
+          "name": "datepickerTheme",
+          "type": "string | null | undefined",
+          "required": false
+        },
+        {
+          "name": "dateMin",
+          "type": "DateAny | null | undefined",
+          "required": false
+        },
+        {
+          "name": "dateMax",
+          "type": "DateAny | null | undefined",
+          "required": false
+        },
+        {
+          "name": "dateFormat",
+          "type": "Intl.DateTimeFormatOptions | ((date: Date, locale: string | undefined) => string) | null | undefined",
+          "required": false
+        },
+        {
+          "name": "displayElement",
+          "type": "string | boolean | HTMLElement | null | undefined",
+          "required": false
+        },
+        {
+          "name": "displayMonthsCount",
+          "type": "MonthsCount | undefined",
+          "required": false
+        },
+        {
+          "name": "firstWeekday",
+          "type": "WeekDayID | undefined",
+          "required": false
+        },
+        {
+          "name": "inline",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "locale",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "positionElement",
+          "type": "string | HTMLElement | null | undefined",
+          "required": false
+        },
+        {
+          "name": "selectedDates",
+          "type": "string[] | undefined",
+          "required": false
+        },
+        {
+          "name": "selectionMode",
+          "type": "DateMode | undefined",
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "PositionToInput | undefined",
+          "required": false
+        },
+        {
+          "name": "vcpOptions",
+          "type": "Options | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "toggle(): Promise<void>",
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "dispose(): void",
+        "getSelectedDates(): string[]",
+        "setSelectedDates(dates: DatesArr): void"
+      ],
+      "events": [
+        "change.trm.datepicker",
+        "click.trm.datepicker",
+        "focusin.trm.datepicker",
+        "hidden.trm.datepicker",
+        "hide.trm.datepicker",
+        "pointerdown.trm.datepicker",
+        "show.trm.datepicker",
+        "shown.trm.datepicker"
+      ],
+      "dataAttributes": [
+        "data-trm-date-format",
+        "data-trm-date-max",
+        "data-trm-date-min",
+        "data-trm-datepicker-display",
+        "data-trm-datepicker-theme",
+        "data-trm-display-element",
+        "data-trm-display-months-count",
+        "data-trm-first-weekday",
+        "data-trm-inline",
+        "data-trm-locale",
+        "data-trm-placement",
+        "data-trm-position-element",
+        "data-trm-selected-dates",
+        "data-trm-selection-mode",
+        "data-trm-theme",
+        "data-trm-toggle",
+        "data-trm-toggle=\"datepicker\"",
+        "data-trm-vcp-options"
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "change.trm.datepicker": "Trigger notification from a calendar date click, with direct copied dates and originating event. setSelectedDates and typed text edits do not dispatch it; prevention does not undo selection.",
+      "click.trm.datepicker": "Internal namespaced trigger listener, not a dispatched Datepicker lifecycle event.",
+      "focusin.trm.datepicker": "Internal namespaced outside-focus listener, not a dispatched Datepicker lifecycle event.",
+      "hidden.trm.datepicker": "Trigger notification after Calendar Pro hide() is called, not a guaranteed delayed animation completion or focus-return event.",
+      "hide.trm.datepicker": "Cancelable trigger event before adapter hide(); inline mode does not hide. Outside focus/pointer paths also request adapter hide.",
+      "pointerdown.trm.datepicker": "Internal namespaced outside-pointer listener, not a dispatched Datepicker lifecycle event.",
+      "show.trm.datepicker": "Cancelable trigger event before adapter show(); disabled/already-open and inline cases return without it.",
+      "shown.trm.datepicker": "Trigger notification immediately after Calendar Pro show() is called; no focus-restoration or transition-completion promise is supplied."
+    },
+    "moduleImport": "import Datepicker from 'tremplin/datepicker'",
+    "javascript": "import Datepicker from 'tremplin/datepicker'\n\nconst picker = Datepicker.getOrCreateInstance('#deadline')\nconst dates = picker.getSelectedDates() // copied ISO-date array\n// setSelectedDates([...]) updates display, but does not emit change.trm.datepicker.",
+    "sourceOptions": [
+      {
+        "name": "datepickerTheme",
+        "type": "string | null",
+        "defaultValue": "null",
+        "description": "Explicit popup theme overrides the cached nearest theme ancestor; auto maps to Calendar Pro system."
+      },
+      {
+        "name": "dateMin",
+        "type": "DateAny | null",
+        "defaultValue": "null",
+        "description": "Forwarded date bound; use a supported date such as YYYY-MM-DD, not text-input min."
+      },
+      {
+        "name": "dateMax",
+        "type": "DateAny | null",
+        "defaultValue": "null",
+        "description": "Forwarded maximum date; not a server scheduling/validation policy."
+      },
+      {
+        "name": "dateFormat",
+        "type": "Intl.DateTimeFormatOptions | function | null",
+        "defaultValue": "null",
+        "description": "Formatting object/function for display. Default is locale date formatting, not ISO submission."
+      },
+      {
+        "name": "displayElement",
+        "type": "string | HTMLElement | boolean | null",
+        "defaultValue": "null",
+        "description": "Separate display; non-input triggers prefer a data-trm-datepicker-display child. false suppresses extra display, not input updates."
+      },
+      {
+        "name": "displayMonthsCount",
+        "type": "MonthsCount",
+        "defaultValue": "1",
+        "description": "Supported months extension; more than one selects multiple calendar layout."
+      },
+      {
+        "name": "firstWeekday",
+        "type": "WeekDayID",
+        "defaultValue": "1",
+        "description": "Monday by default; 0 is Sunday."
+      },
+      {
+        "name": "inline",
+        "type": "boolean",
+        "defaultValue": "false",
+        "description": "Always-visible inline mode; show/hide/toggle are no-ops. Calendar Pro replaces children in this pin; the shown application handler maintains a separate sibling hidden field instead."
+      },
+      {
+        "name": "locale",
+        "type": "string",
+        "defaultValue": "'default'",
+        "description": "Calendar locale and display formatting locale; default uses the environment."
+      },
+      {
+        "name": "positionElement",
+        "type": "string | HTMLElement | null",
+        "defaultValue": "null",
+        "description": "Position relative to this element, otherwise an input form-adorn ancestor or the trigger."
+      },
+      {
+        "name": "selectedDates",
+        "type": "string[]",
+        "defaultValue": "[]",
+        "description": "Initial selected date array; dates also choose the opening month/year."
+      },
+      {
+        "name": "selectionMode",
+        "type": "DateMode",
+        "defaultValue": "'single'",
+        "description": "single, multiple or multiple-ranged. Single/nonempty and completed ranged clicks request hide after 100 ms."
+      },
+      {
+        "name": "placement",
+        "type": "PositionToInput",
+        "defaultValue": "'left'",
+        "description": "Calendar Pro left/center/right/auto placement, not Floating UI placements."
+      },
+      {
+        "name": "vcpOptions",
+        "type": "Options",
+        "defaultValue": "{}",
+        "description": "Spread first, then adapter-owned callbacks, sanitizer and months extension/config overwrite collisions. Other extension-only features are not enabled."
+      }
+    ],
+    "demoCss": ".demo-calendar-contrast[data-vc-calendar-hidden] { display: none; }",
+    "applicationJavascript": "import { Range, Strength } from 'tremplin'\n\ndocument.addEventListener('DOMContentLoaded', () => {\n  document.querySelectorAll('[data-demo-inline-date]').forEach(calendar => {\n    // VCP replaces inline children; keep the successful field outside its render root.\n    calendar.addEventListener('change.trm.datepicker', event => {\n      document.getElementById(calendar.id + '-value').value = event.dates.join(',')\n    })\n  })\n  document.querySelectorAll('[data-demo-percent-range]').forEach(wrapper => {\n    // Deliberately replace any automatically created instance before configuring.\n    Range.getInstance(wrapper)?.dispose()\n    new Range(wrapper, { bubble: true, formatter: value => value + '%' })\n  })\n  document.querySelectorAll('[data-demo-custom-strength]').forEach(meter => {\n    Strength.getInstance(meter)?.dispose()\n    new Strength(meter, {\n      scorer: password => password.length >= 12 ? 7 : 1,\n      messages: { weak: 'Demo: under 12 characters', fair: 'Demo: fair', good: 'Demo: good', strong: 'Demo: 12 or more characters' }\n    })\n  })\n  document.querySelectorAll('[data-demo-range-set]').forEach(button => {\n    button.addEventListener('click', () => {\n      const form = button.closest('form'), wrapper = form.querySelector('.form-range')\n      wrapper.querySelector('input').value = '75'\n      Range.getOrCreateInstance(wrapper).update()\n      form.querySelector('[role=\"status\"]').textContent = 'Demo value set to 75. Native submission is still explicit.'\n    })\n  })\n})"
+  },
+  {
+    "name": "otp-input",
+    "title": "Otp Input",
+    "description": "Otp Input component documentation for Tremplin.",
+    "lead": "Collect one-time codes in one native input with decorative visual slots.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Verification code",
+          "description": "One named real input backs all slots; no code is transmitted by this page.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"guide-otp-code\">Verification code</label><div id=\"guide-otp\" class=\"otp\" data-trm-otp ><input id=\"guide-otp-code\" type=\"text\" name=\"code\" maxlength=\"4\" autocomplete=\"one-time-code\" ></div></div>"
+        },
+        {
+          "title": "Six-digit code",
+          "description": "The six-slot example explicitly uses responsive size/gap tokens; copy them with the markup. Core defaults remain unchanged.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"authenticator-code\">Authenticator code</label><div id=\"authenticator\" class=\"otp\" data-trm-otp style=\"--trm-otp-size: clamp(2rem, 6vw, 2.5rem); --trm-otp-gap: .25rem\"><input id=\"authenticator-code\" type=\"text\" name=\"code\" maxlength=\"6\" autocomplete=\"one-time-code\" ></div></div>"
+        },
+        {
+          "title": "Masked display",
+          "description": "Masking affects visual dots only. The real type=text input, accessible value and FormData still contain the synthetic sample code.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"masked-code-code\">Security code</label><div id=\"masked-code\" class=\"otp\" data-trm-otp data-trm-mask=\"true\"><input id=\"masked-code-code\" type=\"text\" name=\"code\" maxlength=\"4\" autocomplete=\"one-time-code\" value=\"1234\"></div></div>"
+        },
+        {
+          "title": "Invalid code",
+          "description": "The authored description/aria-invalid mark an application error, not a result from complete events.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"expired-code-code\">Expired code</label><div id=\"expired-code\" class=\"otp\" data-trm-otp ><input id=\"expired-code-code\" type=\"text\" name=\"code\" maxlength=\"4\" autocomplete=\"one-time-code\" aria-invalid=\"true\" aria-describedby=\"otp-error\"></div></div><p id=\"otp-error\" class=\"form-text\">Request a new code.</p>"
+        },
+        {
+          "title": "Connected and grouped letters",
+          "description": "Actual connected slots and decorative groups. ASCII filters keep one value; group separators do not become submitted characters.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"connected-code-code\">Connected PIN</label><div id=\"connected-code\" class=\"otp otp-connected\" data-trm-otp ><input id=\"connected-code-code\" type=\"text\" name=\"code\" maxlength=\"4\" autocomplete=\"one-time-code\" ></div></div><div class=\"form-field\"><label class=\"form-label\" for=\"grouped-code-code\">Alphanumeric code</label><div id=\"grouped-code\" class=\"otp\" data-trm-otp data-trm-type=\"alphanumeric\" data-trm-groups=\"[3,3]\" style=\"--trm-otp-size: clamp(2rem, 6vw, 2.5rem); --trm-otp-gap: .25rem\"><input id=\"grouped-code-code\" type=\"text\" name=\"code\" maxlength=\"6\" autocomplete=\"one-time-code\" ></div></div><div class=\"form-field\"><label class=\"form-label\" for=\"alpha-code-code\">Alphabetic code</label><div id=\"alpha-code\" class=\"otp\" data-trm-otp data-trm-type=\"alpha\"><input id=\"alpha-code-code\" type=\"text\" name=\"code\" maxlength=\"4\" autocomplete=\"one-time-code\" ></div></div>"
+        },
+        {
+          "title": "Native sizes",
+          "description": "Use otp-sm/lg on the wrapper. These are still one field each, not independent per-slot inputs.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"small-code-code\">Small code</label><div id=\"small-code\" class=\"otp otp-sm\" data-trm-otp ><input id=\"small-code-code\" type=\"text\" name=\"code\" maxlength=\"4\" autocomplete=\"one-time-code\" ></div></div><div class=\"form-field\"><label class=\"form-label\" for=\"large-code-code\">Large code</label><div id=\"large-code\" class=\"otp otp-lg\" data-trm-otp ><input id=\"large-code-code\" type=\"text\" name=\"code\" maxlength=\"4\" autocomplete=\"one-time-code\" ></div></div>"
+        },
+        {
+          "title": "Readonly and disabled",
+          "description": "Native attributes block user edits. Programmatic setValue/clear are not gated by readonly/disabled; disposal does not restore all mutated input attributes.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"readonly-code-code\">Readonly code</label><div id=\"readonly-code\" class=\"otp\" data-trm-otp ><input id=\"readonly-code-code\" type=\"text\" name=\"code\" maxlength=\"4\" autocomplete=\"one-time-code\" readonly value=\"1234\"></div></div><div class=\"form-field\"><label class=\"form-label\" for=\"disabled-code-code\">Unavailable code</label><div id=\"disabled-code\" class=\"otp\" data-trm-otp ><input id=\"disabled-code-code\" type=\"text\" name=\"code\" maxlength=\"4\" autocomplete=\"one-time-code\" disabled></div></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Slots follow direction visually. The pinned pointer hit-test still scans physical right edges in DOM order; do not claim complete RTL tapping support.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"form-field\"><label class=\"form-label\" for=\"rtl-code-code\">Verification code</label><div id=\"rtl-code\" class=\"otp\" data-trm-otp ><input id=\"rtl-code-code\" type=\"text\" name=\"code\" maxlength=\"4\" autocomplete=\"one-time-code\" ></div></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-otp-size",
+          "defaultValue": "var(--trm-btn-input-lg-min-height)",
+          "purpose": "Default exported through $otp-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-otp-font-size",
+          "defaultValue": "var(--trm-btn-input-font-size)",
+          "purpose": "Default exported through $otp-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-otp-gap",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $otp-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-otp-slot-fg",
+          "defaultValue": "var(--trm-btn-input-fg)",
+          "purpose": "Default exported through $otp-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-otp-slot-bg",
+          "defaultValue": "var(--trm-btn-input-bg)",
+          "purpose": "Default exported through $otp-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-otp-slot-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $otp-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-otp-slot-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $otp-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-otp-slot-border-radius",
+          "defaultValue": "var(--trm-radius-5)",
+          "purpose": "Default exported through $otp-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Typing / Backspace / Delete",
+          "behavior": "Uses one real input with overwrite/deletion interception, not independent digit fields."
+        },
+        {
+          "keys": "Arrow keys / selection / Tab",
+          "behavior": "Native caret/selection drives one decorative active slot. Keyboard focus targets the first empty or last full slot."
+        },
+        {
+          "keys": "Paste / autofill",
+          "behavior": "ASCII sanitize before truncating. A full sanitized paste replaces the whole value; shorter pastes use the selection."
+        }
+      ],
+      "guidelines": [
+        "Put data-trm-otp on a wrapper with one labelled named input. Slots/separators are generated and aria-hidden; no slot-by-slot ARIA or custom arrow roving contract is supplied.",
+        "Runtime event suffix is .trm.otpInput. The frozen scanner uses the filename otp-input; these pages correct presentation only, not core or baseline metadata.",
+        "setValue() sanitizes and can emit complete repeatedly, but not plugin input. clear() clears and focuses without plugin input/complete. User changes emit plugin input then completion checks.",
+        "Masking is visual only; no hashing, server verification, transport, expiry or attempt-limit policy is supplied. Do not log codes or automatically submit on a completion notification.",
+        "Readonly/disabled guard user handlers, not programmatic value methods. dispose removes generated slots/listeners/rendered class, but does not restore type, maxlength, inputmode, pattern or otp-input class.",
+        "The RTL pointer algorithm is not direction-aware. Confirm real-device tap positions, SMS/password-manager autofill and assistive technology behavior separately from automated desktop checks."
+      ],
+      "sass": "@use 'tremplin/scss/forms/otp-input' with ($otp-tokens: (--trm-otp-gap: .75rem));"
+    },
+    "example": "<div class=\"form-field\"><label class=\"form-label\" for=\"otp-example-code\">Verification code</label><div id=\"otp-example\" class=\"otp\" data-trm-otp ><input id=\"otp-example-code\" type=\"text\" name=\"code\" maxlength=\"4\" autocomplete=\"one-time-code\" ></div></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/forms/_otp-input.scss",
+    "definition": {
+      "name": "otp-input",
+      "className": "OtpInput",
+      "options": [
+        {
+          "name": "groups",
+          "type": "number[] | null | undefined",
+          "required": false
+        },
+        {
+          "name": "length",
+          "type": "number | null | undefined",
+          "required": false
+        },
+        {
+          "name": "mask",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "separator",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "string | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "getValue(): string",
+        "setValue(value: string | number): void",
+        "clear(): void",
+        "focus(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "complete.trm.otp-input",
+        "input.trm.otp-input"
+      ],
+      "dataAttributes": [
+        "data-trm-groups",
+        "data-trm-length",
+        "data-trm-mask",
+        "data-trm-otp",
+        "data-trm-separator",
+        "data-trm-type"
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "complete.trm.otpInput": "Wrapper notification each time the completion check sees a full value, including repeated setValue calls. value is direct and sensitive; never log it. Not a validation result or cancellation gate.",
+      "input.trm.otpInput": "Wrapper notification after a user input/paste/overwrite/delete path, with direct value. setValue and clear do not emit this plugin notification; a bubbling native input is a separate event."
+    },
+    "moduleImport": "import OtpInput from 'tremplin/otp-input'",
+    "javascript": "import OtpInput from 'tremplin/otp-input'\n\nconst otp = OtpInput.getOrCreateInstance('#otp-example')\n// The named native input submits the complete value; do not log codes.\n// Runtime events: input.trm.otpInput and complete.trm.otpInput.",
+    "sourceOptions": [
+      {
+        "name": "groups",
+        "type": "number[] | null",
+        "defaultValue": "null",
+        "description": "Decorative group lengths. The final configured size repeats for remaining groups; separators never enter the input value."
+      },
+      {
+        "name": "length",
+        "type": "number | null",
+        "defaultValue": "null",
+        "description": "Truthy configured length, otherwise valid maxlength or six. Use a positive sensible length; no integer/range validation is supplied."
+      },
+      {
+        "name": "mask",
+        "type": "boolean",
+        "defaultValue": "false",
+        "description": "Dots replace only decorative slot text. The real input stays text and still submits the value."
+      },
+      {
+        "name": "separator",
+        "type": "string",
+        "defaultValue": "'·'",
+        "description": "Plain text between configured groups, not HTML."
+      },
+      {
+        "name": "type",
+        "type": "string",
+        "defaultValue": "'numeric'",
+        "description": "numeric, alpha or alphanumeric use ASCII filters and matching inputmode/pattern; unknown strings fall back to numeric."
+      }
+    ]
+  },
+  {
+    "name": "range",
+    "title": "Range",
+    "description": "Range component documentation for Tremplin.",
+    "lead": "Enhance a native slider inside a form-range wrapper with fill, bubble and datalist ticks.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Value bubble",
+          "description": "Range belongs to the wrapper. A bare bubble attribute enables the generated decorative output.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"range-volume\">Volume</label><div id=\"range-volume-range\" class=\"form-range\" data-trm-bubble=\"true\" ><input id=\"range-volume\" class=\"form-range-input\" name=\"volume\" type=\"range\" min=\"0\" max=\"100\" step=\"5\" value=\"40\" ></div></div>"
+        },
+        {
+          "title": "Datalist ticks",
+          "description": "Option labels are literal text. The pin sorts/clamps numeric positions; formatter does not format these labels.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"range-rating\">Rating</label><div id=\"range-rating-range\" class=\"form-range\" data-trm-bubble=\"true\" ><input id=\"range-rating\" class=\"form-range-input\" name=\"volume\" type=\"range\" min=\"0\" max=\"100\" step=\"5\" value=\"40\" list=\"range-marks\"></div></div><datalist id=\"range-marks\"><option value=\"0\" label=\"Low\"></option><option value=\"50\" label=\"Middle\"></option><option value=\"100\" label=\"High\"></option></datalist>"
+        },
+        {
+          "title": "Disabled slider",
+          "description": "Native disabled prevents user focus/edits; the API can still recompute a programmatic value.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"range-disabled\">Unavailable volume</label><div id=\"range-disabled-range\" class=\"form-range\" data-trm-bubble=\"true\" ><input id=\"range-disabled\" class=\"form-range-input\" name=\"volume\" type=\"range\" min=\"0\" max=\"100\" step=\"5\" value=\"40\" disabled></div></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Native keyboard behavior follows the browser, but pinned gradient and bubble use physical left/to-right coordinates. No RTL correction is applied to core.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"form-field\"><label class=\"form-label\" for=\"rtl-volume\">Volume</label><div id=\"rtl-volume-range\" class=\"form-range\" data-trm-bubble=\"true\" ><input id=\"rtl-volume\" class=\"form-range-input\" name=\"volume\" type=\"range\" min=\"0\" max=\"100\" step=\"5\" value=\"40\" ></div></div></div>"
+        },
+        {
+          "title": "Bounds, fractional steps and no bubble",
+          "description": "Actual native constraints and a wrapper without a bubble; the fill still needs Range JavaScript.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"fractional-range\">Rating from one to five</label><div id=\"fractional-range-range\" class=\"form-range\" data-trm-bubble=\"false\" ><input id=\"fractional-range\" class=\"form-range-input\" name=\"volume\" type=\"range\" min=\"1\" max=\"5\" step=\"0.5\" value=\"2.5\" ></div></div>"
+        },
+        {
+          "title": "Theme colors",
+          "description": "A supported theme class on the token-owning wrapper colors the fill and thumb.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"themed-range\">Approved volume</label><div id=\"themed-range-range\" class=\"form-range theme-success\" data-trm-bubble=\"true\" ><input id=\"themed-range\" class=\"form-range-input\" name=\"volume\" type=\"range\" min=\"0\" max=\"100\" step=\"5\" value=\"40\" ></div></div>"
+        },
+        {
+          "title": "Custom bubble formatter",
+          "description": "The copied browser-bundle setup deliberately replaces any auto-created instance before configuring a percent bubble. It does not change native value/submission or tick labels.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"formatted-range\">Percentage</label><div id=\"formatted-range-range\" class=\"form-range\" data-trm-bubble=\"true\" data-demo-percent-range><input id=\"formatted-range\" class=\"form-range-input\" name=\"volume\" type=\"range\" min=\"0\" max=\"100\" step=\"5\" value=\"40\" ></div></div>"
+        },
+        {
+          "title": "Programmatic update and native submission",
+          "description": "This explicit application button sets the native value and calls update(); it does not submit or synthesize input/change.",
+          "markup": "<form id=\"submitted-range-form\" class=\"d-grid gap-4\"><div class=\"form-field\"><label class=\"form-label\" for=\"submitted-range\">Submitted volume</label><div id=\"submitted-range-range\" class=\"form-range\" data-trm-bubble=\"true\" ><input id=\"submitted-range\" class=\"form-range-input\" name=\"volume\" type=\"range\" min=\"0\" max=\"100\" step=\"5\" value=\"40\" ></div></div><button class=\"btn-outline theme-primary\" type=\"button\" data-demo-range-set>Set demo value to 75</button><p role=\"status\">Demo value is 40. This page does not submit data.</p></form>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-range-track-width",
+          "defaultValue": "100%",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-track-height",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-track-cursor",
+          "defaultValue": "pointer",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-track-bg",
+          "defaultValue": "var(--trm-bg-3)",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-track-border-radius",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-track-fill-bg",
+          "defaultValue": "var(--trm-theme-bg, var(--trm-primary-base))",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-track-disabled-bg",
+          "defaultValue": "color-mix(in oklch, var(--trm-bg-4), var(--trm-fg-3))",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-thumb-width",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-thumb-height",
+          "defaultValue": "var(--trm-range-thumb-width)",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-thumb-bg",
+          "defaultValue": "var(--trm-theme-bg, var(--trm-primary-base))",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-thumb-border",
+          "defaultValue": "var(--trm-range-thumb-bg) solid var(--trm-border-color)",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-thumb-border-radius",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-thumb-box-shadow",
+          "defaultValue": "0 1px 2px rgb(0 0 0 / 7.5%), 0 2px 4px rgb(0 0 0 / 7.5%)",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-thumb-active-bg",
+          "defaultValue": "color-mix(in oklch, var(--trm-theme-bg, var(--trm-primary-base)) 70%, var(--trm-bg-body))",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-thumb-disabled-bg",
+          "defaultValue": "var(--trm-fg-3)",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-thumb-transition-property",
+          "defaultValue": "background-color, border-color, box-shadow",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-thumb-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-thumb-transition-timing",
+          "defaultValue": "ease-in-out",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-tick-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-tick-height",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-range-tick-bg",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $range-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Arrows / Home / End",
+          "behavior": "Native range keyboard rules and min/max/step constraints remain browser-owned. A bubble is not an interactive Tooltip plugin."
+        }
+      ],
+      "guidelines": [
+        "Use form-range around one labelled form-range-input; every matching wrapper auto-initializes on document ready.",
+        "The wrapper receives --trm-range-fill as a ratio, not a percentage. Native bounds supply 0/100 when absent; min>=max makes the adapter ratio zero.",
+        "After assigning input.value, call update(). Construction/update and native input/change paths emit changed on the actual input, even when unchanged; it is not a cancelable mutation gate.",
+        "Formatter text uses textContent for the bubble only. Tick labels read option.label without formatter; datalist points are snapshotted once, sorted and clamped to positions.",
+        "The bubble and ticks are aria-hidden. Native name/value submit the numeric value; formatter does not create aria-valuetext or convert submitted units.",
+        "Pinned track gradient is to right and bubble uses left even in RTL; test native thumb versus decoration rather than claiming direction-aware fill. dispose removes generated bubble/ticks/listeners but retains the wrapper fill property."
+      ],
+      "sass": "@use 'tremplin/scss/forms/form-range' with ($range-tokens: (--trm-range-track-height: .75rem));"
+    },
+    "example": "<div class=\"form-field\"><label class=\"form-label\" for=\"volume\">Volume</label><div id=\"volume-range\" class=\"form-range\" data-trm-bubble=\"true\" ><input id=\"volume\" class=\"form-range-input\" name=\"volume\" type=\"range\" min=\"0\" max=\"100\" step=\"5\" value=\"40\" ></div></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/forms/_form-range.scss",
+    "definition": {
+      "name": "range",
+      "className": "Range",
+      "options": [
+        {
+          "name": "bubble",
+          "type": "boolean | null | undefined",
+          "required": false
+        },
+        {
+          "name": "formatter",
+          "type": "((value: number) => string) | null | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "update(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "changed.trm.range"
+      ],
+      "dataAttributes": [
+        "data-trm-bubble",
+        "data-trm-formatter"
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "changed.trm.range": "Notification on the native input after construction, update(), input or change, even if the numeric value is unchanged. Direct value is numeric; canceling does not roll back the slider."
+    },
+    "moduleImport": "import Range from 'tremplin/range'",
+    "javascript": "import Range from 'tremplin/range'\n\nconst range = Range.getOrCreateInstance('#volume-range')\n// After changing the native input value in application code:\nrange.update() // emits changed.trm.range on the native input, even if unchanged",
+    "sourceOptions": [
+      {
+        "name": "bubble",
+        "type": "boolean | null",
+        "defaultValue": "false",
+        "description": "Show a tooltip-shaped decorative output. A bare data-trm-bubble normalizes to enabled."
+      },
+      {
+        "name": "formatter",
+        "type": "((value: number) => string) | null",
+        "defaultValue": "null",
+        "description": "Formats bubble text with textContent. In this pin tick labels use datalist option.label directly; they are not passed through formatter."
+      }
+    ],
+    "applicationJavascript": "import { Range, Strength } from 'tremplin'\n\ndocument.addEventListener('DOMContentLoaded', () => {\n  document.querySelectorAll('[data-demo-inline-date]').forEach(calendar => {\n    // VCP replaces inline children; keep the successful field outside its render root.\n    calendar.addEventListener('change.trm.datepicker', event => {\n      document.getElementById(calendar.id + '-value').value = event.dates.join(',')\n    })\n  })\n  document.querySelectorAll('[data-demo-percent-range]').forEach(wrapper => {\n    // Deliberately replace any automatically created instance before configuring.\n    Range.getInstance(wrapper)?.dispose()\n    new Range(wrapper, { bubble: true, formatter: value => value + '%' })\n  })\n  document.querySelectorAll('[data-demo-custom-strength]').forEach(meter => {\n    Strength.getInstance(meter)?.dispose()\n    new Strength(meter, {\n      scorer: password => password.length >= 12 ? 7 : 1,\n      messages: { weak: 'Demo: under 12 characters', fair: 'Demo: fair', good: 'Demo: good', strong: 'Demo: 12 or more characters' }\n    })\n  })\n  document.querySelectorAll('[data-demo-range-set]').forEach(button => {\n    button.addEventListener('click', () => {\n      const form = button.closest('form'), wrapper = form.querySelector('.form-range')\n      wrapper.querySelector('input').value = '75'\n      Range.getOrCreateInstance(wrapper).update()\n      form.querySelector('[role=\"status\"]').textContent = 'Demo value set to 75. Native submission is still explicit.'\n    })\n  })\n})"
+  },
+  {
+    "name": "strength",
+    "title": "Strength",
+    "description": "Strength component documentation for Tremplin.",
+    "lead": "Provide advisory segmented password feedback with a readable text message.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Segmented feedback",
+          "description": "Synthetic prefilled text is evaluated on initialization. This score is illustrative feedback, not evidence that a real password is safe.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"strength-password\">New password</label><input id=\"strength-password\" class=\"form-control\" name=\"password\" type=\"password\" autocomplete=\"new-password\" aria-describedby=\"strength-password-feedback\" value=\"LongExample123!!\" ><div id=\"strength-password-strength\" class=\"strength\" data-trm-strength data-trm-input=\"#strength-password\" aria-hidden=\"true\" ><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span></div><p id=\"strength-password-feedback\" class=\"strength-text\" role=\"status\" aria-live=\"polite\"></p></div>"
+        },
+        {
+          "title": "Empty password",
+          "description": "Default zero score yields no level. Text/segment updates happen on transitions; do not pre-author misleading feedback in an initially empty meter.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"empty-password\">Password</label><input id=\"empty-password\" class=\"form-control\" name=\"password\" type=\"password\" autocomplete=\"new-password\" aria-describedby=\"empty-password-feedback\" value=\"\" ><div id=\"empty-password-strength\" class=\"strength\" data-trm-strength data-trm-input=\"#empty-password\" aria-hidden=\"true\" ><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span></div><p id=\"empty-password-feedback\" class=\"strength-text\" role=\"status\" aria-live=\"polite\"></p></div>"
+        },
+        {
+          "title": "Single bar",
+          "description": "The actual strength-bar CSS derives width from the level attribute. The native password field remains the only editable input.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"bar-password\">Bar feedback password</label><input id=\"bar-password\" class=\"form-control\" name=\"password\" type=\"password\" autocomplete=\"new-password\" aria-describedby=\"bar-password-feedback\" value=\"Example123!!\" ><div id=\"bar-password-strength\" class=\"strength-bar\" data-trm-strength data-trm-input=\"#bar-password\" aria-hidden=\"true\" ></div><p id=\"bar-password-feedback\" class=\"strength-text\" role=\"status\" aria-live=\"polite\"></p></div>"
+        },
+        {
+          "title": "Custom local scorer",
+          "description": "The copied demo function uses length only and complete message keys. This is a deliberately simple illustration, not a security recommendation.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"custom-password\">Demo custom score</label><input id=\"custom-password\" class=\"form-control\" name=\"password\" type=\"password\" autocomplete=\"new-password\" aria-describedby=\"custom-password-feedback\" value=\"\" ><div id=\"custom-password-strength\" class=\"strength\" data-trm-strength data-trm-input=\"#custom-password\" aria-hidden=\"true\" data-demo-custom-strength><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span></div><p id=\"custom-password-feedback\" class=\"strength-text\" role=\"status\" aria-live=\"polite\"></p></div>"
+        },
+        {
+          "title": "Static CSS states",
+          "description": "Each bar has authored state and readable context, without a linked password input or an ARIA numeric-meter promise.",
+          "markup": "<div><p>weak</p><div class=\"strength-bar\" data-trm-strength=\"weak\" aria-hidden=\"true\"></div></div><div><p>fair</p><div class=\"strength-bar\" data-trm-strength=\"fair\" aria-hidden=\"true\"></div></div><div><p>good</p><div class=\"strength-bar\" data-trm-strength=\"good\" aria-hidden=\"true\"></div></div><div><p>strong</p><div class=\"strength-bar\" data-trm-strength=\"strong\" aria-hidden=\"true\"></div></div>"
+        },
+        {
+          "title": "Native readonly and disabled inputs",
+          "description": "Native input states control user editing; evaluate() still reads an application-assigned value. Nothing is submitted by this page.",
+          "markup": "<div class=\"form-field\"><label class=\"form-label\" for=\"readonly-password\">Readonly password</label><input id=\"readonly-password\" class=\"form-control\" name=\"password\" type=\"password\" autocomplete=\"new-password\" aria-describedby=\"readonly-password-feedback\" value=\"Example123!!\" readonly><div id=\"readonly-password-strength\" class=\"strength\" data-trm-strength data-trm-input=\"#readonly-password\" aria-hidden=\"true\" ><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span></div><p id=\"readonly-password-feedback\" class=\"strength-text\" role=\"status\" aria-live=\"polite\"></p></div><div class=\"form-field\"><label class=\"form-label\" for=\"disabled-password\">Unavailable password</label><input id=\"disabled-password\" class=\"form-control\" name=\"password\" type=\"password\" autocomplete=\"new-password\" aria-describedby=\"disabled-password-feedback\" value=\"\" disabled><div id=\"disabled-password-strength\" class=\"strength\" data-trm-strength data-trm-input=\"#disabled-password\" aria-hidden=\"true\" ><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span></div><p id=\"disabled-password-feedback\" class=\"strength-text\" role=\"status\" aria-live=\"polite\"></p></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Text status and segment count accompany color; these bars never receive focus.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"form-field\"><label class=\"form-label\" for=\"rtl-password\">Password</label><input id=\"rtl-password\" class=\"form-control\" name=\"password\" type=\"password\" autocomplete=\"new-password\" aria-describedby=\"rtl-password-feedback\" value=\"\" ><div id=\"rtl-password-strength\" class=\"strength\" data-trm-strength data-trm-input=\"#rtl-password\" aria-hidden=\"true\" ><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span></div><p id=\"rtl-password-feedback\" class=\"strength-text\" role=\"status\" aria-live=\"polite\"></p></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-strength-height",
+          "defaultValue": "0.375rem",
+          "purpose": "Default exported through $strength-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-strength-gap",
+          "defaultValue": "0.25rem",
+          "purpose": "Default exported through $strength-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-strength-margin-top",
+          "defaultValue": "0.25rem",
+          "purpose": "Default exported through $strength-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-strength-border-radius",
+          "defaultValue": "var(--trm-radius-pill)",
+          "purpose": "Default exported through $strength-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-strength-bg",
+          "defaultValue": "var(--trm-bg-2)",
+          "purpose": "Default exported through $strength-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-strength-color",
+          "defaultValue": "var(--trm-bg-2)",
+          "purpose": "Default exported through $strength-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-strength-weak-color",
+          "defaultValue": "var(--trm-danger-bg)",
+          "purpose": "Default exported through $strength-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-strength-fair-color",
+          "defaultValue": "var(--trm-warning-bg)",
+          "purpose": "Default exported through $strength-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-strength-good-color",
+          "defaultValue": "var(--trm-info-bg)",
+          "purpose": "Default exported through $strength-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-strength-strong-color",
+          "defaultValue": "var(--trm-success-bg)",
+          "purpose": "Default exported through $strength-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Native password editing",
+          "behavior": "Input/change evaluations follow the real password field. Decorative bars/segments never enter the tab sequence."
+        }
+      ],
+      "guidelines": [
+        "Use explicit data-trm-input or a single password field per parent; the text feedback is the first strength-text in the meter parent, not an arbitrary global target.",
+        "Default scoring uses eight length/category points. Zero maps to null; thresholds [2,4,6] are inclusive ceilings. This heuristic is not authentication policy or a compromised-password check.",
+        "strengthChange is dispatched only when the level changes. Different scores within the same level do not refresh text or dispatch a new plugin event. Event password is redacted as *** or empty.",
+        "Nested messages/weights replace their default objects rather than deep-merging. Supply all keys; missing weight keys can yield NaN and an accidental strong result. Validate custom scorer outputs and thresholds separately.",
+        "A custom scorer is called only for nonempty text. minLength affects scoring, not native minlength or form validity. evaluate() is needed after programmatic value changes.",
+        "There is no numeric ARIA meter. Decorative aria-hidden segments/bar and an associated readable polite status are application markup; dispose removes owned input listeners but leaves the displayed DOM/state."
+      ],
+      "sass": "@use 'tremplin/scss/forms/strength' with ($strength-tokens: (--trm-strength-gap: .5rem));"
+    },
+    "example": "<div class=\"form-field\"><label class=\"form-label\" for=\"password\">Password</label><input id=\"password\" class=\"form-control\" name=\"password\" type=\"password\" autocomplete=\"new-password\" aria-describedby=\"password-feedback\" value=\"\" ><div id=\"password-strength\" class=\"strength\" data-trm-strength data-trm-input=\"#password\" aria-hidden=\"true\" ><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span><span class=\"strength-segment\"></span></div><p id=\"password-feedback\" class=\"strength-text\" role=\"status\" aria-live=\"polite\"></p></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/forms/_strength.scss",
+    "definition": {
+      "name": "strength",
+      "className": "Strength",
+      "options": [
+        {
+          "name": "input",
+          "type": "string | HTMLInputElement | null | undefined",
+          "required": false
+        },
+        {
+          "name": "minLength",
+          "type": "number | undefined",
+          "required": false
+        },
+        {
+          "name": "messages",
+          "type": "Record<string, string> | undefined",
+          "required": false
+        },
+        {
+          "name": "weights",
+          "type": "Record<string, number> | undefined",
+          "required": false
+        },
+        {
+          "name": "thresholds",
+          "type": "number[] | undefined",
+          "required": false
+        },
+        {
+          "name": "scorer",
+          "type": "((password: string) => number) | null | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "getStrength(): string | null",
+        "evaluate(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "strengthChange.trm.strength"
+      ],
+      "dataAttributes": [
+        "data-trm-input",
+        "data-trm-messages",
+        "data-trm-min-length",
+        "data-trm-scorer",
+        "data-trm-strength",
+        "data-trm-thresholds",
+        "data-trm-weights"
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "strengthChange.trm.strength": "Wrapper notification only when the level changes, including nonempty initial evaluation. Direct strength/score and redacted password (*** or empty) are supplied. Not every score change, and not a mutation veto."
+    },
+    "moduleImport": "import Strength from 'tremplin/strength'",
+    "javascript": "import Strength from 'tremplin/strength'\n\nconst strength = Strength.getOrCreateInstance('#password-strength')\nconst level = strength.getStrength() // null, weak, fair, good or strong\n// Call evaluate() after an application-owned input.value change.",
+    "sourceOptions": [
+      {
+        "name": "input",
+        "type": "string | HTMLInputElement | null",
+        "defaultValue": "null",
+        "description": "Selector/element, otherwise the first password input in the parent. Give separate meters separate parents or explicit input selectors."
+      },
+      {
+        "name": "minLength",
+        "type": "number",
+        "defaultValue": "8",
+        "description": "Adds a length scoring point; does not enforce input minlength or reject a password."
+      },
+      {
+        "name": "messages",
+        "type": "Record<string,string>",
+        "defaultValue": "{ weak: Weak, fair: Fair, good: Good, strong: Strong }",
+        "description": "Complete per-level text map. Nested option objects replace defaults rather than merging individual keys."
+      },
+      {
+        "name": "weights",
+        "type": "Record<string,number>",
+        "defaultValue": "{ minLength:1, extraLength:1, lowercase:1, uppercase:1, numbers:1, special:1, multipleSpecial:1, longPassword:1 }",
+        "description": "Supply every key. A partial replacement can add undefined values and produce NaN; custom scoring bypasses this map."
+      },
+      {
+        "name": "thresholds",
+        "type": "number[]",
+        "defaultValue": "[2, 4, 6]",
+        "description": "Inclusive weak/fair/good ceilings; above the third is strong, zero returns null. No length/order validation is supplied."
+      },
+      {
+        "name": "scorer",
+        "type": "((password:string) => number) | null",
+        "defaultValue": "null",
+        "description": "Local custom function for nonempty text; empty text returns zero before calling it. Validate custom return values in your application."
+      }
+    ],
+    "applicationJavascript": "import { Range, Strength } from 'tremplin'\n\ndocument.addEventListener('DOMContentLoaded', () => {\n  document.querySelectorAll('[data-demo-inline-date]').forEach(calendar => {\n    // VCP replaces inline children; keep the successful field outside its render root.\n    calendar.addEventListener('change.trm.datepicker', event => {\n      document.getElementById(calendar.id + '-value').value = event.dates.join(',')\n    })\n  })\n  document.querySelectorAll('[data-demo-percent-range]').forEach(wrapper => {\n    // Deliberately replace any automatically created instance before configuring.\n    Range.getInstance(wrapper)?.dispose()\n    new Range(wrapper, { bubble: true, formatter: value => value + '%' })\n  })\n  document.querySelectorAll('[data-demo-custom-strength]').forEach(meter => {\n    Strength.getInstance(meter)?.dispose()\n    new Strength(meter, {\n      scorer: password => password.length >= 12 ? 7 : 1,\n      messages: { weak: 'Demo: under 12 characters', fair: 'Demo: fair', good: 'Demo: good', strong: 'Demo: 12 or more characters' }\n    })\n  })\n  document.querySelectorAll('[data-demo-range-set]').forEach(button => {\n    button.addEventListener('click', () => {\n      const form = button.closest('form'), wrapper = form.querySelector('.form-range')\n      wrapper.querySelector('input').value = '75'\n      Range.getOrCreateInstance(wrapper).update()\n      form.querySelector('[role=\"status\"]').textContent = 'Demo value set to 75. Native submission is still explicit.'\n    })\n  })\n})"
+  }
+]

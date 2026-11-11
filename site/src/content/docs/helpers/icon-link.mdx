@@ -1,0 +1,55 @@
+---
+{
+  "title": "Icon link",
+  "description": "Align decorative icons with meaningful link text using inline Flexbox.",
+  "group": "Helpers",
+  "lead": "Align decorative icons with meaningful link text using inline Flexbox.",
+  "order": 2
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { helpersExamples as samples } from '../../../data/helpers-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<p><Html source={"The visible text names the destination. This decorative SVG is hidden from assistive technology. The direct icon child needs class bi for the pinned sizing, fill and transition rules. This is a styling hook, not a requirement to load an icon font."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/icon-link"][0].example} /></div>
+
+<Code sample={samples["helpers/icon-link"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Style on hover"}</h2>
+
+<p><Html source={"icon-link-hover transforms direct .bi children on hover and focus-visible. A plain icon-link stays static. Bare SVGs, .icon children and nested icons do not receive these child rules automatically; add the correct hook or application styling deliberately."} /></p>
+
+<p><Html source={"The default transform moves physically right by .25em. It is not mirrored automatically in RTL. Under reduced motion the selected transform remains but its transition is omitted."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/icon-link"][1].example} /></div>
+
+<Code sample={samples["helpers/icon-link"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"CSS"}</h2>
+
+<p><Html source={"Tokens control gap, underline offset, icon size, transition and default transform. The optional icon-link-transform token overrides icon-link-icon-transform. Keep a readable link name, visible keyboard focus and an appropriate underline."} /></p>
+
+<Code sample={samples["helpers/icon-link"][2].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Sass token map"}</h2>
+
+<p><Html source={"Configure the owning module before the full entry. Null removes a token declaration; it can invalidate a consuming declaration that has no fallback. The helper itself does not install a package of icon artwork."} /></p>
+
+<Code sample={samples["helpers/icon-link"][3].code[0]} standalone={true} />
+
+</section>

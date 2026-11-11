@@ -1,0 +1,103 @@
+---
+{
+  "component": "progress",
+  "title": "Progress",
+  "description": "Progress component documentation for Tremplin.",
+  "lead": "Communicate completion for determinate or indeterminate work.",
+  "variants": [
+    {
+      "title": "How it works",
+      "description": "The named progress wrapper owns the value and bounds. Its inner bar is visual; set its width explicitly. There is no Progress JavaScript plugin."
+    },
+    {
+      "title": "Bar sizing",
+      "description": "Set width on the inner bar. Set height on the wrapper, directly or through the real progress height token."
+    },
+    {
+      "title": "Labels and long labels",
+      "description": "Keep short labels inside sufficiently wide bars. Put long labels outside so overflow and mixed-background contrast do not obscure them."
+    },
+    {
+      "title": "Backgrounds and theme contrast",
+      "description": "Background utilities color unlabelled bars. For labels, theme classes supply background and contrast together; retain textual state rather than relying on hue."
+    },
+    {
+      "title": "Multiple bars",
+      "description": "Each segment is a separately named progress wrapper. In a stack set width on each wrapper, not its inner bar; the core makes that bar fill its segment."
+    },
+    {
+      "title": "Striped and animated",
+      "description": "Striping is a gradient; animation is an additional class, not a value updater. With reduced motion enabled, animated stripes stop."
+    },
+    {
+      "title": "Unknown completion",
+      "description": "For unknown totals omit aria-valuenow. This is an authored indeterminate pattern, not a special core class: the full-width striped bar does not mean 100% complete."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Flex layout follows direction while physical width remains the declared percentage. Theme and direction do not supply announcements."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "None",
+      "behavior": "Read-only progress indicators do not enter the tab order."
+    }
+  ],
+  "guidelines": [
+    "Use a named role=progressbar wrapper and a visual progress-bar child, not an interactive control.",
+    "Keep determinate width and aria-valuenow synchronized with the same bounds. Animation alone updates neither.",
+    "In a stack put width and semantics on each progress wrapper; do not collapse distinct values into one invented total.",
+    "Keep long labels outside the bar and supply visible status text. Background-only utilities do not guarantee label contrast.",
+    "For unknown totals omit aria-valuenow and explain the state. A spinner is often simpler.",
+    "The application owns update frequency and live announcements; progressbar is not automatically a live region."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import Contrast from '../../../components/component/Contrast.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Contrast />
+
+<Example markup={componentExample("progress")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="progress" />
+
+{componentDetail("progress").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="progress" />
+</>}
+
+{componentDetail("progress").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("progress").sass} standalone={true} />
+</>}
+
+{componentDetail("progress").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="progress" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="progress" />
+
+{documentedComponents.find(component => component.name === "progress").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="progress" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>This is a CSS component and does not require Tremplin JavaScript.</p>

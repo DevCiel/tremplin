@@ -1,0 +1,12 @@
+---
+import { Code } from 'astro:components'
+import type { CodeSample } from '../../data/guide-docs'
+
+interface Props { sample: CodeSample; standalone?: boolean; label?: string }
+const { sample, standalone = false, label } = Astro.props
+---
+<div class:list={['docs-code', standalone && 'docs-code-standalone']}>
+  <span class="docs-code-label">{sample.label ?? sample.language}</span>
+  <button class="btn btn-sm btn-outline-secondary docs-copy" type="button" aria-label={label}>Copy</button>
+  <Code code={sample.source} lang={sample.language} themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} tabindex="0" />
+</div>

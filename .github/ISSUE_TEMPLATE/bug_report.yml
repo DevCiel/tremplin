@@ -1,0 +1,34 @@
+name: Bug report
+description: Report a reproducible Tremplin problem.
+body:
+  - type: markdown
+    attributes:
+      value: Please search existing issues first. Report suspected vulnerabilities privately using SECURITY.md, not this public form. Do not include credentials or personal data.
+  - type: input
+    id: version
+    attributes:
+      label: Tremplin version or commit
+      description: For this unreleased checkout, provide the Git commit and installation method.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser and OS versions; include Node and build-tool versions when relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Provide minimal markup/code, reproduction steps, or a public example without secrets.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-actual
+    attributes:
+      label: Expected and actual behavior
+      description: Include relevant errors and keyboard or assistive-technology impact.
+    validations:
+      required: true

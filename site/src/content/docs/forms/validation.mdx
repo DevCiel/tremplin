@@ -1,0 +1,137 @@
+---
+{
+  "title": "Validation",
+  "description": "Explain errors in text, associate feedback with fields, and provide a usable recovery path.",
+  "group": "Forms",
+  "lead": "Explain errors in text, associate feedback with fields, and provide a usable recovery path.",
+  "order": 16
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"How it works"}</h2>
+
+<p>{"data-trm-validate opts a subtree into native :user-invalid feedback after interaction. Its valid token additionally opts into :user-valid; scope success feedback to useful constrained fields. Explicit is-invalid/is-valid classes work globally. None of these creates messages, sets ARIA or checks server rules."}</p>
+
+<p>{"novalidate suppresses browser submit-time UI, not the validity API or server requirements. Native user-* timing varies by browser; explicit classes make the custom demo deterministic. The retired was-validated contract is not strict core."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Custom styles"}</h2>
+
+<p>{"This copied application handler prevents submission, focuses an error summary, updates feedback as the user corrects input, and resets custom state. Buttons start disabled until handlers exist. No entered values are sent, stored or logged."}</p>
+
+<div class="docs-example"><Html source={examples["forms/validation"][1].example} /></div>
+
+<Code sample={examples["forms/validation"][1].code[0]} standalone={false} />
+
+<Code sample={examples["forms/validation"][1].code[1]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Custom validity messages"}</h2>
+
+<p>{"This second local form combines required/pattern with setCustomValidity for reserved example code DEMO00. The handler clears its custom message on correction/reset. Implement actual rules independently on the server; never echo untrusted values as HTML."}</p>
+
+<div class="docs-example"><Html source={examples["forms/validation"][2].example} /></div>
+
+<Code sample={examples["forms/validation"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Browser defaults"}</h2>
+
+<p>{"Without novalidate, native invalid submissions are blocked by the browser. The installed handler still prevents valid demo submission. Feedback appearance/text and picker behavior are browser/OS-owned."}</p>
+
+<div class="docs-example"><Html source={examples["forms/validation"][3].example} /></div>
+
+<Code sample={examples["forms/validation"][3].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Server-side"}</h2>
+
+<p>{"This is a static server-state specimen, not a backend. Escape returned values, explain recoverable failures, and associate feedback with fields. CSS does not clear explicit state automatically."}</p>
+
+<div class="docs-example"><Html source={examples["forms/validation"][4].example} /></div>
+
+<Code sample={examples["forms/validation"][4].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Supported elements"}</h2>
+
+<p>{"These explicit static states demonstrate actual sibling/:has() propagation; editing does not recover them automatically. Feedback belongs next to its styled wrapper/control or within form-field for choices/input groups."}</p>
+
+<div class="docs-example"><Html source={examples["forms/validation"][5].example} /></div>
+
+<Code sample={examples["forms/validation"][5].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"Composite validation placement"}</h2>
+
+<p>{"See "}<a href="/forms/range/">{"Range"}</a>{", "}<a href="/forms/chips/">{"Chips"}</a>{", "}<a href="/forms/combobox/">{"Combobox"}</a>{", "}<a href="/forms/otp-input/">{"OTP"}</a>{" and "}<a href="/forms/floating-labels/">{"Floating labels"}</a>{" for complete widgets. Styling does not prove error announcements or native form participation."}</p>
+
+<div class="table-responsive focus-ring" tabindex="0" role="region" aria-labelledby="section-6"><table class="table table-bordered"><thead><tr><th scope="col">{"Control"}</th><th scope="col">{"State and feedback placement"}</th></tr></thead><tbody><tr><td><code>{"Text / textarea / select / file"}</code></td><td><code>{"is-invalid on form-control; following sibling feedback."}</code></td></tr><tr><td><code>{"Check / Radio / Switch"}</code></td><td><code>{"State on actual input; form-field reveals nested feedback. Switch visuals belong to wrapper."}</code></td></tr><tr><td><code>{"Floating"}</code></td><td><code>{"State on inner control; explicit visible feedback or input-group/form-field propagation."}</code></td></tr><tr><td><code>{"Form adorn / Chip input"}</code></td><td><code>{"State on inner form-ghost; :has() styles wrapper and following feedback."}</code></td></tr><tr><td><code>{"Range"}</code></td><td><code>{"State on form-range-input; feedback follows form-range wrapper."}</code></td></tr><tr><td><code>{"Combobox"}</code></td><td><code>{"Class-based state on combobox-toggle; see its API and application validity integration."}</code></td></tr><tr><td><code>{"OTP"}</code></td><td><code>{"State on otp wrapper; slots inherit state. See component API."}</code></td></tr></tbody></table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Tooltips"}</h2>
+
+<p>{"Use tooltip plus invalid-tooltip/valid-tooltip and a positioning context. This is CSS feedback, not a Tooltip instance. Prefer persistent inline messages and summaries, especially for checks/radios/switches. This static specimen also retains a visible inline error."}</p>
+
+<div class="docs-example"><Html source={examples["forms/validation"][7].example} /></div>
+
+<Code sample={examples["forms/validation"][7].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">{"Scoped native validity"}</h2>
+
+<p>{"This example uses the real data-trm-validate=\"valid\" opt-in only around the required field. Enter text and leave the field to reveal native success feedback; clearing it and leaving reveals invalid feedback. The optional sibling is outside that scope, so a merely empty optional value does not get success styling. CSS owns user-* state; the shared application handler only prevents local submission."}</p>
+
+<div class="docs-example"><Html source={examples["forms/validation"][8].example} /></div>
+
+<Code sample={examples["forms/validation"][8].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-9">
+<h2 id="section-9">{"Sass customization"}</h2>
+
+<p>{"The defaults-merged map starts with valid:success and invalid:danger. Adding warning generates explicit is-warning/feedback/tooltip rules, not :user-warning. Only valid/invalid generate native selectors. There is no separate validation-token map: styling uses theme foreground/border/background/contrast/focus-ring properties."}</p>
+
+<Code sample={examples["forms/validation"][9].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-10">
+<h2 id="section-10">{"Sass mixins and loop"}</h2>
+
+<p>{"form-validation-state($state,$theme) generates control and feedback styles, invoked for each map entry in the components layer. form-validation-state-selector($state) generates global classes and scoped native selectors; neither is a runtime validator."}</p>
+
+<Code sample={examples["forms/validation"][10].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-11">
+<h2 id="section-11">{"Explicit demo accessibility CSS"}</h2>
+
+<p>{"Copy this scoped application CSS with the demo wrappers. It strengthens feedback/placeholder/floating-label and tooltip contrast, restores plaintext focus, mirrors the physical select caret in RTL and gives adorned disabled wrappers a visible background. The tooltip is positioned within the example padding. These are demo choices, not new core defaults."}</p>
+
+<Code sample={examples["forms/validation"][11].code[0]} standalone={true} />
+
+</section>

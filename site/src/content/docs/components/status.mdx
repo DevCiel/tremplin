@@ -1,0 +1,102 @@
+---
+{
+  "component": "status",
+  "title": "Status",
+  "description": "Status component documentation for Tremplin.",
+  "lead": "Pair readable state text with optional local status-dot styling and application-owned updates.",
+  "variants": [
+    {
+      "title": "Semantic statuses",
+      "description": "Text conveys the meaning. The CSS-generated dot is decorative, not an independently labelled control."
+    },
+    {
+      "title": "Sizes",
+      "description": "These modifiers change the dot, not text size. Runtime tokens can also customize a subtree."
+    },
+    {
+      "title": "Live service update",
+      "description": "The existing polite live region is updated only by the copied application handler below. These buttons simulate a service state; no service is polled."
+    },
+    {
+      "title": "Pulsing activity",
+      "description": "Pulse is decorative, not a loading-completion signal. Reduced motion removes the animation."
+    },
+    {
+      "title": "Standalone decorative dot",
+      "description": "Do not put status-dot inside status: the latter already generates a dot. A standalone dot needs its own explicit token context and adjacent readable text."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "No automatic translation, update announcements or semantic mirroring is added by CSS."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "None",
+      "behavior": "Static status text/dots are not focusable."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Activates the native demo buttons. The application updates the pre-existing live region; CSS supplies no service controller."
+    }
+  ],
+  "guidelines": [
+    "This is an optional local extension in the custom layer, separate from the core distribution. Import tremplin/css/extensions after the core CSS.",
+    "Use visible text for every state. CSS-generated dots have empty content; motion/color never carries the only meaning.",
+    "Create role=status before updates and use ordinary textContent changes. Initial markup is not a guaranteed announcement.",
+    "Reduced motion disables status pulse; changing its duration does not create a completion or service-update mechanism.",
+    "status-dot has no token initialization of its own; use an appropriate token context. Do not add a second dot inside status.",
+    "The copied handler is a local simulation, not a Status API, server monitor or background polling task."
+  ]
+}
+---
+
+import { localPatternJavascript } from '../../../data/local-pattern-docs'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+<div class="docs-callout docs-callout-info"><strong>Optional local extension.</strong> This optional pattern is separate from the core and has no matching core plugin. This guide explicitly loads the existing optional extension CSS after core; normal core pages do not. Its Sass belongs to the <code>{"custom"}</code> layer. Import optional styling explicitly in your application.</div>
+<Code source={"import 'tremplin/css'\nimport 'tremplin/css/extensions'"} standalone={true} plain={true} label="Copy optional extension CSS imports" />
+
+<Example markup={componentExample("status")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="status" />
+
+{componentDetail("status").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="status" />
+</>}
+
+{componentDetail("status").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("status").sass} standalone={true} />
+</>}
+
+{componentDetail("status").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="status" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="status" />
+
+{documentedComponents.find(component => component.name === "status").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="status" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>This optional CSS extension has no matching core JavaScript plugin. Any demonstrated dynamic action is application-owned and is disclosed below.</p>
+
+<div class="docs-callout"><strong>Explicit application demo.</strong> Copy this handler after the matching markup. It acts only on this example{"'"}s DOM and performs no network requests, persistence or account changes. It is not a new framework plugin. The application owns state, status text and any focus movement.</div>
+<Code source={localPatternJavascript["status"]} standalone={true} plain={true} label="Copy local pattern application handler" />

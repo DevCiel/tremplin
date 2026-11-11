@@ -1,0 +1,127 @@
+@use "../functions" as *;
+@use "../mixins/focus-ring" as *;
+@use "../mixins/tokens" as *;
+@use "../mixins/transition" as *;
+
+// stylelint-disable custom-property-no-missing-var-function
+$switch-tokens: () !default;
+
+// scss-docs-start switch-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$switch-tokens: defaults(
+  (
+    --trm-switch-height: 1.25rem,
+    --trm-switch-width: calc(var(--trm-switch-height) * 1.75),
+    --trm-switch-padding: .0625rem,
+    --trm-switch-margin-block: .125rem,
+    // Share the form-control motion tokens so switch, checkbox, and radio move
+    // in sync; the overshoot ("back") easing makes the thumb bounce as it settles.
+    --trm-switch-transition-duration: var(--trm-control-transition-duration),
+    --trm-switch-transition-timing: var(--trm-control-transition-timing),
+    --trm-switch-bg: var(--trm-bg-3),
+    --trm-switch-border-width: var(--trm-border-width),
+    --trm-switch-border-color: var(--trm-border-color),
+    --trm-switch-indicator-bg: var(--trm-white),
+    --trm-switch-indicator-width: calc(var(--trm-switch-height) - calc(var(--trm-switch-padding) * 2) - var(--trm-switch-border-width) * 2),
+    --trm-switch-indicator-height: calc(var(--trm-switch-height) - calc(var(--trm-switch-padding) * 2) - var(--trm-switch-border-width) * 2),
+    --trm-switch-checked-bg: var(--trm-control-checked-bg),
+    --trm-switch-checked-border-color: var(--trm-switch-checked-bg),
+    --trm-switch-checked-indicator-bg: var(--trm-white),
+    --trm-switch-disabled-bg: var(--trm-control-disabled-bg),
+    --trm-switch-disabled-indicator-bg: var(--trm-fg-3),
+  ),
+  $switch-tokens
+);
+// scss-docs-end switch-tokens
+// stylelint-enable custom-property-no-missing-var-function
+
+@layer forms {
+  .switch {
+    @include tokens($switch-tokens);
+
+    position: relative;
+    flex-shrink: 0;
+    width: var(--trm-switch-width);
+    height: var(--trm-switch-height);
+    padding: var(--trm-switch-padding);
+    margin-block: var(--trm-switch-margin-block);
+    background-color: var(--trm-switch-bg);
+    border: var(--trm-switch-border-width) solid var(--trm-switch-border-color);
+    // stylelint-disable-next-line property-disallowed-list
+    border-radius: 10rem;
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / .05);
+    @include transition(background-color var(--trm-switch-transition-duration) var(--trm-switch-transition-timing));
+
+    &::before {
+      position: absolute;
+      inset-block: var(--trm-switch-padding);
+      inset-inline-start: var(--trm-switch-padding);
+      width: var(--trm-switch-indicator-width);
+      height: var(--trm-switch-indicator-height);
+      content: "";
+      background-color: var(--trm-theme-contrast, var(--trm-switch-indicator-bg));
+      // stylelint-disable-next-line property-disallowed-list
+      border-radius: 10rem;
+      box-shadow: 0 1px 2px rgb(0 0 0 / .1);
+      @include transition(inset-inline-start var(--trm-switch-transition-duration) var(--trm-switch-transition-timing));
+    }
+
+    input {
+      position: absolute;
+      inset: 0;
+      appearance: none;
+      background-color: transparent;
+      outline: 0;
+    }
+
+    &:focus-within {
+      @include focus-ring(true);
+    }
+
+    &:has(input:disabled:not(:checked)) {
+      --trm-switch-bg: var(--trm-switch-disabled-bg);
+      --trm-switch-indicator-bg: var(--trm-switch-disabled-indicator-bg);
+
+      &::before { opacity: .4; }
+
+      ~ label {
+        color: var(--trm-fg-3);
+        cursor: default;
+      }
+    }
+
+    &:has(input:checked) {
+      --trm-switch-indicator-bg: var(--trm-switch-checked-indicator-bg);
+      background-color: var(--trm-theme-bg, var(--trm-switch-checked-bg));
+      border-color: var(--trm-theme-bg, var(--trm-switch-checked-border-color));
+
+      &::before {
+        inset-inline-start: calc(100% - var(--trm-switch-indicator-width) - var(--trm-switch-padding));
+        background-color: var(--trm-theme-contrast, var(--trm-switch-checked-indicator-bg));
+      }
+    }
+
+    &:has(input:checked:disabled) {
+      opacity: .65;
+
+      ~ label {
+        color: var(--trm-fg-3);
+        cursor: default;
+      }
+    }
+  }
+  .switch-sm {
+    --trm-switch-height: 1rem;
+
+    + label {
+      font-size: var(--trm-font-size-sm);
+    }
+  }
+  .switch-lg {
+    --trm-switch-height: 1.5rem;
+
+    + label {
+      font-size: var(--trm-font-size-lg);
+    }
+  }
+}

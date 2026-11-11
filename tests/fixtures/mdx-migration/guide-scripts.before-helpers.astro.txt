@@ -1,0 +1,6 @@
+---
+import { formsRuntimeScripts } from '../data/forms-examples'
+interface Props { slug: string }
+const source = formsRuntimeScripts[Astro.props.slug]
+---
+{source && <script is:inline type="module" set:html={source.replaceAll("from 'tremplin'", "from '/js/tremplin-docs.min.js'")}></script>}

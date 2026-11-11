@@ -1,0 +1,76 @@
+---
+{
+  "title": "Accessibility",
+  "description": "Apply semantic markup, labels, focus, contrast, and assistive-technology checks with Tremplin.",
+  "group": "Getting started",
+  "lead": "Accessible components are a starting point. Your content, customization, and complete workflows still need verification.",
+  "order": 6
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { gettingStartedExamples as samples } from '../../../data/getting-started-examples'
+import { frameworkVersion, installCommand, localPackage, requiredPeers, packageMetadata as pkg } from '../../../data/installation-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">1. Understand the limits</h2>
+
+<p>The project targets WCAG 2.2 AA and uses automated browser and axe checks. Passing them is not a conformance certification. Manual screen-reader and real-device validation is still pending for final release sign-off.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">2. Structure and label your page</h2>
+
+<ol class="docs-steps">
+<li>Use landmarks and a logical heading hierarchy, and provide a skip link where navigation repeats.</li>
+<li>Use visible labels for controls; placeholders are supplementary hints.</li>
+<li>Give informative images useful alt text and hide purely decorative icons.</li>
+<li>Use native buttons for actions and anchors for navigation.</li>
+</ol>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">3. Associate instructions and errors</h2>
+
+<p>After a failed submission, expose a useful error summary and guide focus to it when appropriate. Server-side validation is still required.</p>
+
+<div class="docs-example"><Html source={samples["accessibility#2"].example} /></div>
+
+<Code sample={samples["accessibility#2"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">4. Preserve focus and overlay behavior</h2>
+
+<p>Give Dialog and Drawer a visible title referenced by <code>{"aria-labelledby"}</code>. Test initial focus, Tab and Shift+Tab, Escape, nested surfaces, and restoration to the opener. Never place required form input inside a tooltip.</p>
+
+<Code sample={samples["accessibility#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">5. Check color, motion, and hidden content</h2>
+
+<p>Do not communicate errors, availability, or status by color alone. Verify text and control contrast after customization. Respect reduced motion and avoid removing focus outlines. Use <code>{".visually-hidden"}</code> for supplementary screen-reader text, not for focusable controls that remain invisible.</p>
+
+<Code sample={samples["accessibility#4"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">6. Validate a complete journey</h2>
+
+<p>Read the <a href="https://www.w3.org/WAI/WCAG22/quickref/">{"W3C WCAG quick reference"}</a> for success criteria and testing guidance. Automated checks do not replace these manual steps.</p>
+
+<ol class="docs-steps">
+<li>Complete the task with the keyboard, including error recovery.</li>
+<li>Test at 200% zoom and at a narrow viewport without losing content.</li>
+<li>Review announcements and focus with NVDA on Windows; add VoiceOver and other combinations required by your audience.</li>
+<li>Run automated checks and record browser, assistive technology, result, and remaining issues.</li>
+</ol>
+
+</section>

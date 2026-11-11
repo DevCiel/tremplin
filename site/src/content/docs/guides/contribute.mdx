@@ -1,0 +1,47 @@
+---
+{
+  "title": "Contribute",
+  "description": "Work on this checkout without drifting from the approved reference.",
+  "group": "Guides",
+  "lead": "Work on this checkout without drifting from the approved reference.",
+  "order": 5
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { workflowExamples as samples } from '../../../data/workflow-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Scope and checkout status</h2>
+
+<p>Keep consumer experiments in a separate directory so their build output cannot overwrite the framework distribution. Use the Node version required by your chosen bundler. See <a href="/getting-started/install/">{"installation"}</a> and <a href="/getting-started/bundlers/">{"the detailed bundler reference"}</a>.</p>
+
+<div class="docs-callout docs-callout-info">This is Tremplin-specific setup/adoption guidance, not a verbatim or exhaustive copy of upstream historical documentation. This checkout is unreleased: use a locally packed tarball, not an unverified public npm/CDN package.</div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Prepare the reference and build</h2>
+
+<p>The reference is an explicit fixed revision, not whatever upstream main contains today. Preserve licenses, namespace adaptations and the approved security/accessibility exception registry.</p>
+
+<Code sample={samples["guides/contribute#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Check a change</h2>
+
+<p>Use the relevant browser/site tests after building their assets. See the repository migration plan for remaining site/visual/manual acceptance. The prior serial unit pass does not prove parallel CI timing stability.</p>
+
+<Code sample={samples["guides/contribute#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Review and release discipline</h2>
+
+<p>Never regenerate an API or screenshot baseline merely to hide a failing check. Explain behavioral differences against the pin, keep examples and prose aligned, and preserve independent expected inventories. This checkout remains release-blocked; successful focused checks are not permission to publish.</p>
+
+</section>

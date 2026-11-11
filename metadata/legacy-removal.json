@@ -1,0 +1,45 @@
+{
+  "profile": "bootstrap6-clone-first-legacy-free",
+  "approvedOn": "2026-11-05",
+  "sourceTargets": [
+    "src/compat",
+    "src/runtime/legacy.ts",
+    "scripts/preserve-legacy.mjs",
+    "scripts/build-legacy.mjs",
+    "scripts/check-legacy.mjs",
+    "scripts/inventory-compat.mjs",
+    "scripts/check-migration-api.mjs",
+    "scripts/check-api.mjs",
+    "scripts/check-public-api.mjs",
+    "metadata/compat-legacy-manifest.json",
+    "metadata/compat-legacy-inventory.json",
+    "metadata/api-baseline.json",
+    "metadata/public-api-baseline.json",
+    "tests/legacy-controls.test.ts",
+    "tests/legacy-datepicker.test.ts",
+    "tests/legacy-compat.test.ts",
+    "tests/browser/legacy-compat.spec.ts",
+    "site/src/pages/docs/0.5",
+    "site/src/pages/docs/0.6",
+    "site/src/pages/docs/0.7",
+    "docs/LEGACY_COMPATIBILITY.md"
+  ],
+  "generatedTargets": [
+    "dist/compat",
+    "site/public/legacy",
+    "site/public/dist/compat",
+    "site-dist/legacy",
+    "site-dist/dist/compat",
+    "site-dist/docs/0.5",
+    "site-dist/docs/0.6",
+    "site-dist/docs/0.7",
+    "artifacts/legacy-recovery"
+  ],
+  "retained": {
+    "core": "All 136 pinned Bootstrap-derived modules, including the six approved SEC-001/A11Y-001 patched modules.",
+    "optional": "Non-legacy extensions, adapters, icons, and themes remain isolated from the default core.",
+    "fixtures": "Root examples and remaining hybrid-era tests are test-migration inputs, not a fallback implementation or published documentation examples. Their modernization remains an explicit acceptance task.",
+    "evidence": "Historical non-executable audit reports and upstream reference caches are retained as evidence, not runtime alternatives."
+  },
+  "recovery": "External source archive, outside the project and npm package; see artifacts/legacy-removal-report.json. Generated copies are reproducible rather than separately archived."
+}

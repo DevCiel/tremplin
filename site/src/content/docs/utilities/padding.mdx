@@ -1,0 +1,61 @@
+---
+{
+  "title": "Padding",
+  "description": "Use padding utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use padding utilities from the configured Tremplin utility map.",
+  "order": 26,
+  "utility": {
+    "category": "Spacing",
+    "classes": [
+      "p-0",
+      "p-3",
+      "px-4",
+      "py-2",
+      "ps-3",
+      "pe-3",
+      "md:p-4"
+    ],
+    "notes": "Padding uses the same positive spacer scale as margin. Axes and inline sides are logical; no negative padding is generated. Normal-priority viewport prefixes use md:p-4 rather than infix aliases.",
+    "responsive": true
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/padding"][0].example} /></div>
+
+<Code sample={samples["utilities/padding"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"Padding uses the same positive spacer scale as margin. Axes and inline sides are logical; no negative padding is generated. Normal-priority viewport prefixes use md:p-4 rather than infix aliases."} /></p>
+
+<Code sample={samples["utilities/padding"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Responsive behavior"}</h2>
+
+<p><Html source={"Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

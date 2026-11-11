@@ -1,0 +1,27 @@
+---
+import { getCollection, render } from 'astro:content'
+import DocsLayout from '../layouts/DocsLayout.astro'
+import GuideContent from '../components/GuideContent.astro'
+import GuideHeader from '../components/GuideHeader.astro'
+import GuidePagination from '../components/GuidePagination.astro'
+import GuideScripts from '../components/GuideScripts.astro'
+import { allMdxGuideMetadata } from '../libs/mdx-guides'
+import { documentationPaths } from '../libs/content'
+
+export async function getStaticPaths() {
+  return documentationPaths(await getCollection('docs'), await getCollection('guides'))
+}
+
+const { document, guide, index } = Astro.props
+const Content = document ? (await render(document)).Content : null
+const metadata = document?.data ?? guide
+const authoredGuide = document && allMdxGuideMetadata().find(entry => entry.slug === document.id)
+---
+<DocsLayout title={metadata.title} description={metadata.description}>
+  {Content ? <>
+    {authoredGuide && <GuideHeader guide={authoredGuide} />}
+    <Content />
+    {authoredGuide && <GuideScripts slug={authoredGuide.slug} />}
+    {authoredGuide && <GuidePagination slug={authoredGuide.slug} />}
+  </> : <GuideContent guide={guide} index={index} />}
+</DocsLayout>

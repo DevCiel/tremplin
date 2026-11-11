@@ -1,0 +1,133 @@
+---
+{
+  "component": "popover",
+  "title": "Popover",
+  "description": "Popover component documentation for Tremplin.",
+  "lead": "Show rich contextual content anchored to a trigger.",
+  "variants": [
+    {
+      "title": "Title and content",
+      "description": "Popover extends Tooltip with a header/body and defaults to click. The generated role is tooltip, with aria-describedby; it is not a dialog or expanded-state controller."
+    },
+    {
+      "title": "Preferred placement",
+      "description": "Use top/right/bottom/left or breakpoint-prefixed variants. Unsupported standalone start/end values are not logical aliases in this pinned implementation."
+    },
+    {
+      "title": "Focus dismissal",
+      "description": "A focus trigger dismisses on outside pointer/focus departure. Clicking or focusing inside the popover is not treated as outside. Default click-only popovers do not share that policy."
+    },
+    {
+      "title": "Static specimen",
+      "description": "Static styling specimen includes header/body only; no generated trigger relationship, focus management or dismissal is implied."
+    },
+    {
+      "title": "HTML content",
+      "description": "Text is the default; this example explicitly enables sanitized strong text. Data attributes cannot disable the security allowlist."
+    },
+    {
+      "title": "Disabled control wrapper",
+      "description": "Use a named focusable wrapper and hover/focus triggers rather than pretending a disabled native button can open its own popover."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Explicit container placement retains local theme tokens in generated output; right/left direction resolution follows the document."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Enter / Space",
+      "behavior": "Activate a native button to toggle a click-trigger popover."
+    },
+    {
+      "keys": "Escape",
+      "behavior": "Dismiss a visible popover without moving focus; the first Escape inside a dialog closes only the tip."
+    },
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Use native focus order. Focus-trigger dismissal differs from default click; there is no focus trap or automatic focus transfer into content."
+    }
+  ],
+  "guidelines": [
+    "Keep content concise and supplemental. Complex tasks and critical confirmations belong in a Dialog.",
+    "Default trigger is click and placement right; outside dismissal requires a focus-trigger policy, not an assumed universal handler.",
+    "Generated role=tooltip content is described by aria-describedby, not aria-expanded. The plugin does not manage a modal scope or content focus order.",
+    "The core lazily initializes data hooks; this site explicitly initializes examples before first interaction. Explicit module initialization is available.",
+    "Preserve sanitization and prefer text. sanitize/allowList/sanitizeFn cannot be configured through data attributes.",
+    "The default body container is redirected to an open ancestor dialog; custom containers must remain inside the correct top layer/theme.",
+    "show/hide starts are cancelable; inserted occurs after DOM insertion, and shown/hidden wait for transition callbacks and cleanup."
+  ],
+  "events": {
+    "hidden.trm.popover": "On the trigger after exit cleanup and removal of aria-describedby, unless reactivated.",
+    "hide.trm.popover": "Cancelable start before removing show from generated output.",
+    "inserted.trm.popover": "On the trigger after generated DOM insertion, before positioning and the shown callback.",
+    "show.trm.popover": "Cancelable start on the trigger before generating/inserting the tip.",
+    "shown.trm.popover": "On the trigger after the entry transition callback."
+  }
+}
+---
+
+import { componentApi } from '../../../data/component-api'
+import ApiOptions from '../../../components/component/ApiOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("popover")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="popover" />
+
+{componentDetail("popover").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="popover" />
+</>}
+
+{componentDetail("popover").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("popover").sass} standalone={true} />
+</>}
+
+{componentDetail("popover").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="popover" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="popover" />
+
+{documentedComponents.find(component => component.name === "popover").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="popover" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>The core data API lazily initializes interaction hooks. This documentation explicitly initializes these examples on DOMContentLoaded for first-interaction behavior. The module sample below creates the instance; the configured triggers or an explicit <code>show()</code> call reveal it. Floating UI must be available.</p>
+<Code source={componentApi("popover").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("popover").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<ApiOptions name="popover" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="popover" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="popover" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="popover" />
+<p class="mt-4"><a href="/api/popover/">View the generated {componentApi("popover").definition.className}{" API reference →"}</a></p>

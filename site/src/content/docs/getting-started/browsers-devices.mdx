@@ -1,0 +1,66 @@
+---
+{
+  "title": "Browsers and devices",
+  "description": "Understand Tremplin’s browser targets, test coverage, and device limitations.",
+  "group": "Getting started",
+  "lead": "Target modern browsers and verify the devices your application actually supports.",
+  "order": 5
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { gettingStartedExamples as samples } from '../../../data/getting-started-examples'
+import { frameworkVersion, installCommand, localPackage, requiredPeers, packageMetadata as pkg } from '../../../data/installation-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">1. Read the support target</h2>
+
+<div class="docs-callout docs-callout-info">These are Tremplin project targets, not proof of testing every listed version. Automated tests use the locally installed Playwright Chromium, Firefox, and WebKit engines. WebKit automation does not replace testing Safari on Apple devices.</div>
+
+<div class="table-responsive"><table class="table table-bordered">
+<thead><tr><th scope="col">Platform</th><th scope="col">Project target</th></tr></thead>
+<tbody>
+<tr><td><code>{"Chrome and Edge"}</code></td><td><code>{"Latest two stable major versions."}</code></td></tr>
+<tr><td><code>{"Firefox"}</code></td><td><code>{"Latest two stable major versions."}</code></td></tr>
+<tr><td><code>{"Safari on macOS"}</code></td><td><code>{"Latest two stable major versions."}</code></td></tr>
+<tr><td><code>{"iOS Safari and Android Chrome"}</code></td><td><code>{"Current major version; verify on real devices."}</code></td></tr>
+<tr><td><code>{"Internet Explorer and legacy embedded browsers"}</code></td><td><code>{"Not supported."}</code></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">2. Check platform requirements</h2>
+
+<p>The compiled styles use logical properties, custom properties, container queries, and color-mix(). Plugins use modern JavaScript, native dialog behavior, IntersectionObserver, and pointer events where relevant.</p>
+
+<Code sample={samples["browsers-devices#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">3. Test input and viewport changes</h2>
+
+<ol class="docs-steps">
+<li>Exercise keyboard, mouse, touch, and zoom workflows.</li>
+<li>Check narrow widths, landscape orientation, software keyboards, and safe-area padding.</li>
+<li>Verify reduced-motion and forced-color settings, scrolling overlays, and focus restoration.</li>
+</ol>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">4. Separate build requirements</h2>
+
+<p>A static page using compiled assets does not require Node.js in the browser. Package metadata declares Node.js 20 or newer for the toolchain; check the engine requirements of Vite, Astro, and other tools you choose as well.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">5. Handle older environments</h2>
+
+<p>Do not claim compatibility based only on JavaScript transpilation. CSS features and native dialog behavior also matter. Define your application baseline, feature-test critical paths, and supply an application-specific fallback or an understandable unsupported-browser message.</p>
+
+</section>

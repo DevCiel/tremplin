@@ -1,0 +1,7 @@
+.docs-footer { border-block-start: 1px solid var(--trm-border-color); background: var(--trm-bg-1); color: var(--docs-muted); }
+.docs-footer-inner { display: grid; grid-template-columns: 1.6fr repeat(4, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); inline-size: min(100% - 3rem, 82rem); margin-inline: auto; padding-block: 3.5rem; }
+.docs-footer p { margin: .8rem 0 0; font-size: .9rem; }
+.docs-footer nav { display: flex; flex-direction: column; gap: .55rem; align-content: start; }
+.docs-footer nav strong { margin-block-end: .15rem; color: var(--trm-fg-body); }
+.docs-footer nav a { color: var(--docs-muted); text-decoration: none; font-size: .9rem; }
+.docs-footer nav a:hover { color: var(--docs-accent); text-decoration: underline; text-underline-offset: .2em; }

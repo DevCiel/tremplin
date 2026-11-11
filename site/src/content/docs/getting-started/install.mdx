@@ -1,0 +1,204 @@
+---
+{
+  "title": "Install Tremplin",
+  "description": "Install Tremplin step by step with local assets, an npm tarball, or published packages.",
+  "group": "Getting started",
+  "lead": "Add Tremplin to your project with a package manager, CDN, or local source files.",
+  "order": 0
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import PackageManagers from '../../../components/shortcodes/PackageManagers.astro'
+import { gettingStartedExamples as samples } from '../../../data/getting-started-examples'
+import { frameworkVersion, installCommand, localPackage, requiredPeers, packageMetadata as pkg } from '../../../data/installation-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Install</h2>
+
+<p>Add Tremplin’s <strong>source files</strong> to your application with a package manager. Package installation is separate from developing the framework repository itself.</p>
+
+<p>Install a published release with your preferred package manager. These registry commands are publication templates: this version remains an <strong>unreleased development preview</strong>. Until publication is verified, use <a href="#section-11">Build from source</a> and the local tarball command below.</p>
+
+<PackageManagers />
+
+<p>To select this exact version after publication: <code>npm i {installCommand}</code>. For the local preview: <code>npm i {localPackage} {requiredPeers}</code>.</p>
+
+<p>After installing, follow the <a href="/guides/npm/">npm guide</a> for a complete application setup.</p>
+
+<div class="docs-callout docs-callout-info"><strong>Start with a working application.</strong> Use the <a href="/guides/vite/">Vite guide</a> to import the CSS and JavaScript with both required peers. For this documentation website, follow <a href="#section-11">Build from source</a> instead. Do not install the package into its own checkout.</div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h3 id="section-1">Using npm</h3>
+
+<p>Use root imports for several plugins, or import individual components through their default exports. Your application markup must exist before calling a component method.</p>
+
+<Code sample={samples["install#1"].code[0]} standalone={true} label="Copy Application entry after the target markup exists code" />
+
+<Code sample={samples["install#1"].code[1]} standalone={true} label="Copy Named root imports code" />
+
+<Code sample={samples["install#1"].code[2]} standalone={true} label="Copy Individual component entry (alternative to the root import) code" />
+
+<p>Root imports register the core data APIs; a focused component import registers its own data API. Your bundler resolves package exports and shared chunks; do not copy an individual chunk in isolation. Optional adapters and Tremplin extensions are separate from the core.</p>
+
+<div class="docs-callout docs-callout-info">Use <code>{"@floating-ui/dom"}</code> for positioning and <code>{"vanilla-calendar-pro"}</code> for Datepicker. See <a href="/getting-started/javascript/">{"JavaScript"}</a> for lifecycle and disposal, and <a href="/getting-started/browsers-devices/">{"Browsers and devices"}</a> for support targets. On Windows, use <code>{"npm.cmd"}</code> if PowerShell blocks <code>{"npm.ps1"}</code>.</div>
+
+<div class="table-responsive focus-ring" tabindex="0" role="region" aria-labelledby="section-1"><table class="table">
+<thead><tr><th scope="col">Package metadata</th><th scope="col">Path or purpose</th></tr></thead>
+<tbody>
+<tr><td><span><code>{"sass"}</code></span></td><td><span><code>{pkg.sass}</code></span></td></tr>
+<tr><td><span><code>{"style"}</code></span></td><td><span><code>{pkg.style}</code></span></td></tr>
+<tr><td><span><code>{"exports[\".\"].types"}</code></span></td><td><span><code>{pkg.exports['.'].types}</code></span></td></tr>
+<tr><td><span><code>{"exports"}</code></span></td><td><span>Core CSS, Sass, and native component entry points. Optional adapters and extensions are retained in the repository, not shipped in the core package.</span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h3 id="section-2">Using Yarn</h3>
+
+<p>For a consumer application using Yarn Berry, choose the node-modules linker if your tools do not support Plug’n’Play. Copy the locally packed archive into vendor/ before installing. Run the application’s own development script afterward; do not assume every project has a yarn start command.</p>
+
+<div class="docs-callout docs-callout-info">Keep the framework repository’s npm lockfile and use <code>{"npm install"}</code> when building Tremplin itself. After a release has actually been published and verified, registry installation becomes <code>npm install {installCommand} {requiredPeers}</code>.</div>
+
+<Code sample={samples["install#2"].code[0]} standalone={true} label="Copy shell code" />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">More packages</h2>
+
+<p>Tremplin currently supports a local npm-compatible tarball and compiled local assets. This project does not provide official RubyGems, Composer, or NuGet packages. Do not assume a similarly named registry package belongs to Tremplin.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h3 id="section-4">Using RubyGems</h3>
+
+<p>There is no official Tremplin gem. In a Rails or other Ruby application, use your JavaScript asset pipeline or copy the compiled distribution into public assets. Preserve the relative CSS, JavaScript, and icon paths shown in the local HTML workflow below.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h3 id="section-5">Using NuGet</h3>
+
+<p>There is no official Tremplin NuGet package. In ASP.NET, place the compiled distribution under wwwroot and reference it from your layout, or use an npm-based frontend build. PHP applications can also serve those assets directly; there is no official Tremplin Composer package.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">CDN</h2>
+
+<p>The following version-pinned jsDelivr example is a publication template, not the recommended installation for this unreleased checkout. Use it only after verifying that the exact package version exists and its files match the trusted local integrity manifest.</p>
+
+<p>All browser downloads are ES modules, using Tremplin’s module loading contract. Floating UI and Vanilla Calendar Pro are included in the bundle. The standard build leaves those dependencies external and requires a bundler or import map. Load one runtime owner; no browser build creates a window global.</p>
+
+<Code sample={samples["install#6"].code[0]} standalone={true} label="Copy After verified publication only code" />
+
+<div class="table-responsive focus-ring" tabindex="0" role="region" aria-labelledby="section-6"><table class="table">
+<thead><tr><th scope="col">File</th><th scope="col">Local alternative that works now</th></tr></thead>
+<tbody>
+<tr><td><span>Stylesheet</span></td><td><span><a href="/dist/css/tremplin.min.css" download>{"tremplin.min.css"}</a></span></td></tr>
+<tr><td><span>Browser bundle (positioning and calendar included)</span></td><td><span><a href="/dist/js/tremplin.bundle.min.js" download>{"tremplin.bundle.min.js"}</a></span></td></tr>
+<tr><td><span>Calendar mask asset</span></td><td><span><a href="/dist/icons/datepicker-chevron.svg" download>{"datepicker-chevron.svg"}</a></span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h3 id="section-7">Using CDNs</h3>
+
+<p>Pin the complete version instead of latest. Keep integrity and crossorigin={'"anonymous"'} on cross-origin stylesheet and script requests. When an asset changes, update its URL and matching SHA-384 value together.</p>
+
+<p>The stylesheet references a calendar icon relative to its CSS directory. Preserve the distribution’s <code>{"css/"}</code>, <code>{"js/"}</code>, and <code>{"icons/"}</code> layout when self-hosting. A Content Security Policy must permit the stylesheet, script, and image origins you actually use; do not disable CSP to fix a path error. Focused builds are listed in <a href="/getting-started/contents/">{"Package contents"}</a>.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h3 id="section-8">Alternative CDNs</h3>
+
+<p>After npm publication, an npm-backed provider such as unpkg may offer the same versioned files. No cdnjs listing is currently provided by this project. Check the version and bytes against a trusted release manifest; a CDN hostname is not proof that a package is official.</p>
+
+<div class="docs-callout docs-callout-info">Security warning: compare the same algorithm, version, and file. If its SHA-384 differs from the trusted manifest, do not load it or disable integrity checks. See the <a href="/getting-started/download/">{"Download guide"}</a> for a cross-platform Node.js verification example.</div>
+
+<Code sample={samples["install#8"].code[0]} standalone={true} label="Copy Compute the SHA-384 value locally code" />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-9">
+<h2 id="section-9">Download</h2>
+
+<p>Use compiled assets for a no-build HTML page, or build and pack the repository for a separate bundler application. Local downloads work without registry publication. The consumer tarball is not a complete documentation-site checkout; use this repository to develop the framework or website.</p>
+
+<div class="table-responsive focus-ring" tabindex="0" role="region" aria-labelledby="section-9"><table class="table">
+<thead><tr><th scope="col">Type</th><th scope="col">Contents and workflow</th></tr></thead>
+<tbody>
+<tr><td><span>Compiled distribution</span></td><td><span>Use the stylesheet, browser bundle, and calendar icon linked above. Keep their directory layout. No Node.js is needed for the plain HTML page.</span></td></tr>
+<tr><td><span>Source checkout</span></td><td><span>Sass, TypeScript, tests, and documentation live in the framework repository. Install development dependencies, build, and pack locally as below.</span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-10">
+<h3 id="section-10">Use local assets</h3>
+
+<p>For the standard ESM alternative, bundle the installed peer dependencies yourself, or download the documentation-only <a href="/dist/vendor/floating-ui.js" download>{"Floating UI"}</a> and <a href="/dist/vendor/vanilla-calendar-pro.js" download>{"Calendar Pro"}</a> modules into a separate <code>{"vendor/"}</code> directory. These demo-support files are not core package exports. Preserve their notices. Add the import map before any module script.</p>
+
+<ol class="docs-steps">
+<li>Copy <code>{"dist/css/"}</code>, <code>{"dist/js/"}</code>, and <code>{"dist/icons/"}</code> into a <code>{"dist/"}</code> folder beside your application’s <code>{"index.html"}</code>. For the self-contained bundle, the three linked assets suffice. Separate dependency modules are not part of core dist. Preserve <code>{"dist/LICENSE"}</code>, and <code>{"dist/THIRD_PARTY_NOTICES.txt"}</code> with redistributed assets.</li>
+<li>Copy the complete document below into <code>{"index.html"}</code>. Serve the folder over HTTP through XAMPP or another local server.</li>
+<li>Select “Show details”. The panel should expand and the trigger should expose its expanded state. Select it again to close the panel. Check keyboard focus and the browser console.</li>
+</ol>
+
+<div class="docs-callout docs-callout-info">Load one complete framework stylesheet and one ES module runtime. The bundle is self-contained; <code>{"tremplin.min.js"}</code> requires the import map below. Never mix independently built standard, minified, bundled, or optional-extension runtimes. Root and component entries from the same unminified graph share instances.</div>
+
+<Code sample={samples["install#10"].code[0]} standalone={true} label="Copy html code" />
+
+<Code sample={samples["install#10"].code[1]} standalone={true} label="Copy Standard ESM alternative with separately supplied dependency modules code" />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-11">
+<h3 id="section-11">Build from source</h3>
+
+<p>Use the Node version required by this checkout and its installed tools. In the framework repository, install the lockfile dependencies, build the framework, and create a local package tarball. Publishing remains blocked; npm pack creates a local archive and is not a release approval.</p>
+
+<div class="docs-callout docs-callout-info">Keep the server terminal open and visit its printed URL, normally <a href="http://127.0.0.1:4321/">{"http://127.0.0.1:4321/"}</a>. Use <code>{"npm.cmd"}</code> and <code>{"npx.cmd"}</code> in Windows PowerShell if execution policy blocks the .ps1 launchers. Do not run a second development server on the same port.</div>
+
+<Code sample={samples["install#11"].code[0]} standalone={true} label="Copy Framework repository code" />
+
+<Code sample={samples["install#11"].code[1]} standalone={true} label="Copy Separate consumer application (adjust the path) code" />
+
+<Code sample={samples["install#11"].code[2]} standalone={true} label="Copy Documentation website, from the framework checkout after building code" />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-12">
+<h3 id="section-12">Troubleshooting</h3>
+
+<div class="table-responsive focus-ring" tabindex="0" role="region" aria-labelledby="section-12"><table class="table">
+<thead><tr><th scope="col">Symptom</th><th scope="col">Check</th></tr></thead>
+<tbody>
+<tr><td><span>npm E404 or CDN 404</span></td><td><span>Use local downloads or a locally packed tarball until the exact public release is verified.</span></td></tr>
+<tr><td><span>Missing local tarball</span></td><td><span>Build and pack the framework first, copy the archive into the consumer vendor/ folder, and check its versioned filename.</span></td></tr>
+<tr><td><span>Unstyled page or missing calendar arrows</span></td><td><span>Check Network requests. Preserve dist/css and dist/icons, including the relative SVG URL.</span></td></tr>
+<tr><td><span>Button does nothing</span></td><td><span>Check the browser script request, unique target ID, data-trm-target, and console. Use btn-solid or btn-outline rather than retired button classes.</span></td></tr>
+<tr><td><span>Duplicate runtime error</span></td><td><span>Use only one runtime owner. Remove independently built module copies. Reuse one exact module URL and its shared graph.</span></td></tr>
+<tr><td><span>localhost refuses connection</span></td><td><span>Start the server in the right folder; keep its terminal running and use the printed host and port.</span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-13">
+<h2 id="section-13">For AI tools &amp; LLMs</h2>
+
+<p>Give coding assistants the <a href="/llms.txt">{"machine-readable documentation index"}</a>, <a href="/api/">{"API reference"}</a>, and relevant component guides. The <a href="/getting-started/ai/">{"AI guide"}</a> explains project conventions. Tremplin does not currently distribute an agent-skills package or llms-full.txt; do not use an unrelated installer as a Tremplin installer.</p>
+
+</section>

@@ -1,0 +1,116 @@
+---
+{
+  "component": "bottom-sheet",
+  "title": "Bottom Sheet",
+  "description": "Bottom Sheet component documentation for Tremplin.",
+  "lead": "Compose a bottom-placed sheet from the core native Drawer, without a separate BottomSheet plugin.",
+  "variants": [
+    {
+      "title": "Content-height sheet",
+      "description": "An explicit --trm-drawer-height:auto override uses content height. The separate drawer-fit-content class only resets inset-block-end; it is not a sheet height preset."
+    },
+    {
+      "title": "Scrollable body",
+      "description": "The actual drawer-body owns vertical scrolling. This explicit height token is an application choice; headers and final actions remain outside the scroller."
+    },
+    {
+      "title": "Static backdrop",
+      "description": "Set options on the dialog before construction. Backdrop clicks and Escape do not dismiss this example; use the close button. hidePrevented reports rejected attempts."
+    },
+    {
+      "title": "Explicit width and instant presentation",
+      "description": "drawer-sheet uses a 760px width fallback at lg and above. Override its runtime width property and the real Drawer height/inset tokens; there are no small/large Bottom Sheet aliases."
+    },
+    {
+      "title": "Dark RTL sheet",
+      "description": "Theme and direction belong on the dialog itself because it enters the native top layer. Bottom placement still swipes downward on supported touch/pointer devices."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Native modal focus navigation; only backdrop=false plus scroll=true opens a non-modal Drawer."
+    },
+    {
+      "keys": "Escape",
+      "behavior": "Requests hide when keyboard=true. With keyboard=false the modal attempt reports hidePrevented; explicit dismiss buttons still work."
+    }
+  ],
+  "guidelines": [
+    "Reuse drawer drawer-bottom drawer-sheet on a native dialog. There is no BottomSheet export, separate Sass map, bottom-sheet class or bottom-sheet size/handle API.",
+    "drawer-sheet sets physical left/right/bottom to zero and a desktop width fallback; other Drawer size constraints still apply. It supplies no automatic safe-area padding or Bottom Sheet height API. The first example explicitly raises the height token for its mobile action links.",
+    "Default options are backdrop=true, keyboard=true and scroll=false. Modal state is backdrop || !scroll; scroll=false locks the root with dialog-open.",
+    "Keep the close control available. Swipe-down dismissal is capability-dependent and has no drag animation or snap-point API.",
+    "show/hide starts can be canceled; shown/hidden follow the transition. Calls during transitions are ignored. resize is an internal listener, not a dispatched lifecycle event.",
+    "For programmatic opening, supply the opener to show(opener), choose initial focus and implement any required focus-return policy; visible data-API triggers register their own return handler."
+  ]
+}
+---
+
+import { sheetDemoJavascript } from '../../../data/sheet-command-docs'
+import { componentApi } from '../../../data/component-api'
+import ApiOptions from '../../../components/component/ApiOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+<p>Use the pinned Drawer sheet composition, not retired <code>bottom-sheet-*</code> aliases. Drawer supplies this page{"'"}s JavaScript options, methods and events below; its complete API lives on the shared Drawer route.</p><p>These examples explicitly focus the authored close button after shown, including WebKit where native autofocus can occur before the animated control is visible. Copy this application policy with the markup; it does not modify core.</p>
+<Code source={sheetDemoJavascript} standalone={true} plain={true} label="Copy Bottom Sheet initial focus handler" />
+
+<Example markup={componentExample("bottom-sheet")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="bottom-sheet" />
+
+{componentDetail("bottom-sheet").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="bottom-sheet" />
+</>}
+
+{componentDetail("bottom-sheet").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("bottom-sheet").sass} standalone={true} />
+</>}
+
+{componentDetail("bottom-sheet").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="bottom-sheet" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="bottom-sheet" />
+
+{documentedComponents.find(component => component.name === "bottom-sheet").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="bottom-sheet" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("bottom-sheet").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("bottom-sheet").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<ApiOptions name="bottom-sheet" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="bottom-sheet" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="bottom-sheet" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="bottom-sheet" />
+<p class="mt-4"><a href="/api/drawer/">View the generated {componentApi("bottom-sheet").definition.className}{" API reference →"}</a></p>

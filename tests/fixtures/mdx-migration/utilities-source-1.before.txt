@@ -1,0 +1,68 @@
+import { gettingStartedGuides } from './getting-started-guides'
+import { workflowGuides } from './workflow-guides'
+import { customizeGuides } from './customize-guides'
+import { layoutGuides } from './layout-guides'
+import { contentGuides } from './content-guides'
+import { formsGuides } from './forms-guides'
+import { helpersGuides } from './helpers-guides'
+import { utilitiesGuides } from './utilities-guides'
+import { contrastGuideSlugs, contrastExample, demoContrastCss } from './contrast-examples'
+
+export interface CodeSample {
+  label?: string
+  language: string
+  source: string
+}
+
+export interface GuideSection {
+  heading: string
+  level?: 2 | 3
+  steps?: string[]
+  paragraphs?: string[]
+  code?: CodeSample[]
+  table?: { headings: string[]; rows: string[][]; keyboardScroll?: boolean }
+  callout?: string
+  example?: string
+}
+
+export interface Guide {
+  /** MDX entries expose navigation metadata here; their bodies are in content/docs. */
+  source?: 'mdx'
+  slug: string
+  group: string
+  title: string
+  description: string
+  lead: string
+  sections: GuideSection[]
+  reference?: { title: string; url: string }
+  clientScript?: string
+}
+
+export const guides: Guide[] = [
+  ...gettingStartedGuides,
+  ...workflowGuides,
+  ...customizeGuides,
+  ...layoutGuides,
+  ...contentGuides,
+  ...formsGuides,
+  ...helpersGuides,
+  ...utilitiesGuides
+].map(guide => guide.source === 'mdx' || !contrastGuideSlugs.has(guide.slug) ? guide : ({
+  ...guide,
+  sections: [
+    { heading: 'Explicit demo contrast customization', paragraphs: ['These examples opt into application CSS with darker solid backgrounds and emphasized foregrounds. This is not a change to framework defaults. Copy this CSS and the demo-contrast wrapper together. Calendar examples also pass a styles option to the dependency.'], code: [{ language: 'css', source: demoContrastCss }] },
+    ...guide.sections.map(section => ({ ...section,
+      example: section.example ? contrastExample(section.example) : undefined,
+      code: section.code?.map(sample => sample.language === 'html' ? { ...sample, source: contrastExample(sample.source) } : sample)
+    }))
+  ],
+  clientScript: `${guide.clientScript ?? ''}\nconst demoStyle = document.createElement('style'); demoStyle.textContent = ${JSON.stringify(demoContrastCss)}; document.head.append(demoStyle);`
+}))
+
+export const guideGroups = Object.entries(
+  guides.reduce<Record<string, Guide[]>>((groups, guide) => {
+    ;(groups[guide.group] ??= []).push(guide)
+    return groups
+  }, {})
+)
+

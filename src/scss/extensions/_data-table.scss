@@ -1,0 +1,32 @@
+// Tremplin extension: application-level controls around semantic tables.
+@use '../config' as *;
+@use '../mixins/focus-ring' as *;
+@use '../mixins/tokens' as *;
+
+$data-table-tokens: () !default;
+$data-table-tokens: defaults((
+  --trm-data-table-gap: .75rem,
+  --trm-data-table-toolbar-margin: .75rem,
+  --trm-data-table-sort-gap: .35rem,
+  --trm-data-table-selected-bg: color-mix(in srgb, var(--trm-primary-base) 10%, transparent),
+  --trm-data-table-sticky-bg: var(--trm-bg-body),
+  --trm-data-table-empty-color: var(--trm-fg-2),
+), $data-table-tokens);
+
+@layer custom {
+  .data-table { @include tokens($data-table-tokens); position: relative; }
+  .data-table-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--trm-data-table-gap); margin-block-end: var(--trm-data-table-toolbar-margin); }
+  .data-table-title { margin: 0; font-size: 1.125rem; }
+  .data-table-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--trm-data-table-gap); }
+  .data-table-scroll { overflow: auto; }
+  .data-table-sort { display: inline-flex; align-items: center; gap: var(--trm-data-table-sort-gap); padding: .25rem; border: 0; background: transparent; color: inherit; font: inherit; font-weight: inherit; cursor: pointer; }
+  .data-table-sort:focus-visible { @include focus-ring(true); }
+  th[aria-sort='ascending'] .data-table-sort::after, .data-table-sort[aria-sort='ascending']::after { content: '\2191'; }
+  th[aria-sort='descending'] .data-table-sort::after, .data-table-sort[aria-sort='descending']::after { content: '\2193'; }
+  th[aria-sort='none'] .data-table-sort::after { content: '\2195'; color: var(--trm-fg-2); }
+  .data-table-select { inline-size: 1rem; block-size: 1rem; }
+  .data-table tr[aria-selected='true'] > * { --trm-table-bg: var(--trm-data-table-selected-bg); }
+  .data-table-sticky thead > tr > * { position: sticky; z-index: 1; inset-block-start: 0; background-color: var(--trm-data-table-sticky-bg); }
+  .data-table-empty { padding: 2rem !important; color: var(--trm-data-table-empty-color) !important; text-align: center !important; }
+  .data-table-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--trm-data-table-gap); margin-block-start: var(--trm-data-table-toolbar-margin); }
+}

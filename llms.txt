@@ -1,0 +1,51 @@
+# Tremplin
+
+Tremplin is Devciel's unreleased frontend framework.
+Current package version: 0.8.0-beta.0. Use metadata/api.json and
+metadata/public-api.json for the current public contracts. Contributor source
+verification and provenance are documented in docs/SOURCE_STRUCTURE.md.
+Original code and documentation credits are retained in THIRD_PARTY_NOTICES.txt.
+Do not claim support for unverified versions or dependencies.
+
+Use current local dist assets or a locally packed tarball until publication is
+approved and the exact release is verified. All public browser JavaScript files
+are native ES modules: load them with type="module". They do not create a public
+global. Import named exports from tremplin, or the default plugin export from a
+component subpath. The bundle includes Floating UI and Vanilla Calendar Pro;
+standard builds require those peers to be resolved.
+
+Getting started routes (relative to the documentation origin):
+- /getting-started/: first working HTML page and learning path
+- /getting-started/install/: local assets, tarball, package and CDN caveats
+- /getting-started/ai/: coding-assistant context and verification
+- /getting-started/approach/: current markup and conventions
+- /getting-started/css-variables/: runtime component tokens
+- /getting-started/javascript/: imports, data API, events, cleanup and CSP
+- /getting-started/browsers-devices/: targets and testing limitations
+- /getting-started/accessibility/: author responsibilities and manual checks
+- /getting-started/download/: built assets and integrity verification
+- /getting-started/contents/: formats, exports, declarations and source files
+- /getting-started/bundlers/: application build and Sass integration
+- /getting-started/rtl/: direction, logical properties and mixed text
+
+No Tremplin agent-skills package or llms-full.txt is provided.
+No retired documentation version or compatibility runtime is maintained.
+
+- Current migration guidance: docs/MIGRATION.md
+- Product plan: docs/PRODUCT_PLAN.md
+- Feature status: docs/FEATURES.md
+- Strict API policy: docs/API_STABILITY.md
+- Actual component options and methods: metadata/api.json
+- Public package/CSS/Sass contract: metadata/public-api.json
+- Documentation source: site/src/pages and site/src/data
+- Documentation build: site-dist (generated with npm run build:site)
+- Repository tooling: build/
+- JavaScript source: src/js/
+- Sass source: src/scss/
+- Distribution: dist/ (tracked and rebuilt)
+- CSS classes: container, grid, md:col-6, btn-solid, theme-primary, card
+- CSS custom-property prefix: --trm-
+- JavaScript data-hook prefix: data-trm-
+- Starters: starters/ (broader qualification remains pending)
+- Icons: icons/tremplin-icons.svg
+- Optional themes: themes/

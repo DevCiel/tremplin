@@ -1,0 +1,633 @@
+[
+  {
+    "name": "popover",
+    "implementation": "popover",
+    "title": "Popover",
+    "description": "Popover component documentation for Tremplin.",
+    "lead": "Show rich contextual content anchored to a trigger.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Title and content",
+          "description": "Popover extends Tooltip with a header/body and defaults to click. The generated role is tooltip, with aria-describedby; it is not a dialog or expanded-state controller.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"popover\" data-trm-title=\"Project status\" data-trm-content=\"Ready for review by the design team.\" >Show project status</button>"
+        },
+        {
+          "title": "Preferred placement",
+          "description": "Use top/right/bottom/left or breakpoint-prefixed variants. Unsupported standalone start/end values are not logical aliases in this pinned implementation.",
+          "markup": "<div class=\"hstack flex-wrap gap-2\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"popover\" data-trm-title=\"Left detail\" data-trm-content=\"Supporting information.\" data-trm-placement=\"left\">Left detail</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"popover\" data-trm-title=\"Bottom detail\" data-trm-content=\"Supporting information.\" data-trm-placement=\"bottom\">Bottom detail</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"popover\" data-trm-title=\"Responsive detail\" data-trm-content=\"Supporting information.\" data-trm-placement=\"top md:right lg:bottom\">Responsive detail</button></div>"
+        },
+        {
+          "title": "Focus dismissal",
+          "description": "A focus trigger dismisses on outside pointer/focus departure. Clicking or focusing inside the popover is not treated as outside. Default click-only popovers do not share that policy.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"popover\" data-trm-title=\"Context\" data-trm-content=\"Focus-based supporting information.\" id=\"focus-popover\" data-trm-trigger=\"focus\">Focus for details</button>"
+        },
+        {
+          "title": "Static specimen",
+          "description": "Static styling specimen includes header/body only; no generated trigger relationship, focus management or dismissal is implied.",
+          "markup": "<div class=\"popover popover-instant show position-static\" role=\"tooltip\"><h3 class=\"popover-header\">Deployment</h3><div class=\"popover-body\">Production was updated recently.</div></div>"
+        },
+        {
+          "title": "HTML content",
+          "description": "Text is the default; this example explicitly enables sanitized strong text. Data attributes cannot disable the security allowlist.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"popover\" data-trm-title=\"Release\" data-trm-content=\"&lt;strong&gt;v0.8&lt;/strong&gt; is ready\" data-trm-html=\"true\">Show release</button>"
+        },
+        {
+          "title": "Disabled control wrapper",
+          "description": "Use a named focusable wrapper and hover/focus triggers rather than pretending a disabled native button can open its own popover.",
+          "markup": "<span class=\"d-inline-block\" tabindex=\"0\" role=\"button\" aria-disabled=\"true\" aria-label=\"Publish unavailable\" data-trm-toggle=\"popover\" data-trm-trigger=\"hover focus\" data-trm-title=\"Unavailable\" data-trm-content=\"Review is required first.\"><button class=\"btn-outline theme-inverse\" type=\"button\" disabled style=\"pointer-events: none\">Publish</button></span>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Explicit container placement retains local theme tokens in generated output; right/left direction resolution follows the document.",
+          "markup": "<div id=\"popover-dark-container\" data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"popover\" data-trm-title=\"Status\" data-trm-content=\"Project ready for review.\" data-trm-container=\"#popover-dark-container\" data-trm-placement=\"bottom\">Dark popover</button></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-popover-zindex",
+          "defaultValue": "var(--trm-z-popover)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-max-width",
+          "defaultValue": "280px",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-font-size",
+          "defaultValue": "var(--trm-font-size-sm)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-border-color",
+          "defaultValue": "var(--trm-border-color-translucent)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-border-radius",
+          "defaultValue": "var(--trm-radius-7)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-inner-border-radius",
+          "defaultValue": "calc(var(--trm-radius-7) - var(--trm-border-width))",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-box-shadow",
+          "defaultValue": "var(--trm-box-shadow)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-header-padding-x",
+          "defaultValue": "var(--trm-spacer)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-header-padding-y",
+          "defaultValue": "var(--trm-spacer-3)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-header-font-size",
+          "defaultValue": "var(--trm-font-size-sm)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-header-color",
+          "defaultValue": "inherit",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-header-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-body-padding-x",
+          "defaultValue": "var(--trm-spacer)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-body-padding-y",
+          "defaultValue": "var(--trm-spacer-3)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-body-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-arrow-width",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-arrow-height",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-arrow-border",
+          "defaultValue": "var(--trm-popover-border-color)",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-transition-property",
+          "defaultValue": "opacity",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-popover-transition-timing",
+          "defaultValue": "linear",
+          "purpose": "Default exported through $popover-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Enter / Space",
+          "behavior": "Activate a native button to toggle a click-trigger popover."
+        },
+        {
+          "keys": "Escape",
+          "behavior": "Dismiss a visible popover without moving focus; the first Escape inside a dialog closes only the tip."
+        },
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Use native focus order. Focus-trigger dismissal differs from default click; there is no focus trap or automatic focus transfer into content."
+        }
+      ],
+      "guidelines": [
+        "Keep content concise and supplemental. Complex tasks and critical confirmations belong in a Dialog.",
+        "Default trigger is click and placement right; outside dismissal requires a focus-trigger policy, not an assumed universal handler.",
+        "Generated role=tooltip content is described by aria-describedby, not aria-expanded. The plugin does not manage a modal scope or content focus order.",
+        "The core lazily initializes data hooks; this site explicitly initializes examples before first interaction. Explicit module initialization is available.",
+        "Preserve sanitization and prefer text. sanitize/allowList/sanitizeFn cannot be configured through data attributes.",
+        "The default body container is redirected to an open ancestor dialog; custom containers must remain inside the correct top layer/theme.",
+        "show/hide starts are cancelable; inserted occurs after DOM insertion, and shown/hidden wait for transition callbacks and cleanup."
+      ],
+      "sass": "@use 'tremplin/scss/popover' with (\n  $popover-tokens: (--trm-popover-max-width: 20rem, --trm-popover-body-padding-x: 1rem)\n);"
+    },
+    "example": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"popover\" data-trm-title=\"Project status\" data-trm-content=\"This project is ready for review.\" id=\"example-popover\">Show popover</button>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_popover.scss",
+    "definition": {
+      "name": "popover",
+      "className": "Popover",
+      "options": [
+        {
+          "name": "allowList",
+          "type": "import(\"./util/sanitizer.js\").SanitizerAllowList | undefined",
+          "required": false
+        },
+        {
+          "name": "animation",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "boundary",
+          "type": "string | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "container",
+          "type": "string | boolean | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "customClass",
+          "type": "string | ((...args: any[]) => string) | undefined",
+          "required": false
+        },
+        {
+          "name": "delay",
+          "type": "number | { show: number; hide: number; } | undefined",
+          "required": false
+        },
+        {
+          "name": "fallbackPlacements",
+          "type": "string[] | undefined",
+          "required": false
+        },
+        {
+          "name": "html",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "offset",
+          "type": "import(\"./util/floating-ui.js\").FloatingOffsetOption | undefined",
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "string | ((this: Tooltip, tip: HTMLElement, trigger: HTMLElement) => string) | undefined",
+          "required": false
+        },
+        {
+          "name": "floatingConfig",
+          "type": "import(\"./util/floating-ui.js\").FloatingConfigOption | undefined",
+          "required": false
+        },
+        {
+          "name": "sanitize",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "sanitizeFn",
+          "type": "((unsafeHtml: string) => string) | null | undefined",
+          "required": false
+        },
+        {
+          "name": "selector",
+          "type": "string | boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "template",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "title",
+          "type": "string | Element | ((...args: any[]) => string | Element) | undefined",
+          "required": false
+        },
+        {
+          "name": "trigger",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "content",
+          "type": "string | Element | ((...args: any[]) => string | Element) | null | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "enable(): void",
+        "disable(): void",
+        "toggleEnabled(): void",
+        "toggle(): Promise<void>",
+        "dispose(): void",
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "update(): void",
+        "setContent(content: Record<string, TemplateContentEntry>): void"
+      ],
+      "events": [
+        "hidden.trm.popover",
+        "hide.trm.popover",
+        "inserted.trm.popover",
+        "show.trm.popover",
+        "shown.trm.popover"
+      ],
+      "dataAttributes": [
+        "data-trm-allow-list",
+        "data-trm-animation",
+        "data-trm-boundary",
+        "data-trm-container",
+        "data-trm-content",
+        "data-trm-custom-class",
+        "data-trm-delay",
+        "data-trm-fallback-placements",
+        "data-trm-floating-config",
+        "data-trm-html",
+        "data-trm-offset",
+        "data-trm-placement",
+        "data-trm-sanitize",
+        "data-trm-sanitize-fn",
+        "data-trm-selector",
+        "data-trm-template",
+        "data-trm-title",
+        "data-trm-toggle",
+        "data-trm-toggle=\"popover\"",
+        "data-trm-trigger"
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "hidden.trm.popover": "On the trigger after exit cleanup and removal of aria-describedby, unless reactivated.",
+      "hide.trm.popover": "Cancelable start before removing show from generated output.",
+      "inserted.trm.popover": "On the trigger after generated DOM insertion, before positioning and the shown callback.",
+      "show.trm.popover": "Cancelable start on the trigger before generating/inserting the tip.",
+      "shown.trm.popover": "On the trigger after the entry transition callback."
+    },
+    "moduleImport": "import Popover from 'tremplin/popover'",
+    "javascript": "import Popover from 'tremplin/popover'\n\nconst element = document.querySelector('[data-trm-toggle=\"popover\"]')\nconst instance = Popover.getOrCreateInstance(element)",
+    "primer": "<p>The core data API lazily initializes interaction hooks. This documentation explicitly initializes these examples on DOMContentLoaded for first-interaction behavior. The module sample below creates the instance; the configured triggers or an explicit <code>show()</code> call reveal it. Floating UI must be available.</p>"
+  },
+  {
+    "name": "tooltip",
+    "implementation": "tooltip",
+    "title": "Tooltip",
+    "description": "Tooltip component documentation for Tremplin.",
+    "lead": "Provide short supporting descriptions on hover and keyboard focus.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Preferred trigger",
+          "description": "Default hover and focus triggers provide pointer/keyboard access. The documentation explicitly initializes examples on DOMContentLoaded; construction alone does not show a tip.",
+          "markup": "<div class=\"hstack flex-wrap gap-2\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"tooltip\" data-trm-title=\"Copy project link\" >Copy</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"tooltip\" data-trm-title=\"Download report\" >Download</button></div>"
+        },
+        {
+          "title": "Placement",
+          "description": "Use top/right/bottom/left, not standalone start/end. This pin mirrors right/left through its document-direction attachment map; Floating UI may flip or shift the result.",
+          "markup": "<div class=\"hstack flex-wrap gap-2\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"tooltip\" data-trm-title=\"top supplemental text\" data-trm-placement=\"top\">top tooltip</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"tooltip\" data-trm-title=\"right supplemental text\" data-trm-placement=\"right\">right tooltip</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"tooltip\" data-trm-title=\"bottom supplemental text\" data-trm-placement=\"bottom\">bottom tooltip</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"tooltip\" data-trm-title=\"left supplemental text\" data-trm-placement=\"left\">left tooltip</button></div>"
+        },
+        {
+          "title": "Responsive placement",
+          "description": "Viewport breakpoint prefixes use the actual Floating UI helper. Resizing updates a visible tip; preferred placement is not a guarantee when the viewport clips it.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"tooltip\" data-trm-title=\"Responsive positioning\" data-trm-placement=\"top md:right lg:bottom\">Responsive tooltip</button>"
+        },
+        {
+          "title": "Static specimen",
+          "description": "Styling only: no generated ID, trigger relationship or controller is implied by a static specimen. Essential instructions remain visible elsewhere.",
+          "markup": "<div class=\"tooltip tooltip-instant show position-static\" role=\"tooltip\"><div class=\"tooltip-inner\">Keyboard shortcut: Ctrl + K</div></div>"
+        },
+        {
+          "title": "Disabled control wrapper",
+          "description": "The wrapper is named and keyboard focusable because a native disabled control cannot receive focus. This is a deliberate extra focus stop, not a substitute for visible permission guidance.",
+          "markup": "<span class=\"d-inline-block\" tabindex=\"0\" role=\"button\" aria-disabled=\"true\" aria-label=\"Delete project unavailable\" data-trm-toggle=\"tooltip\" data-trm-title=\"Permission required\"><button class=\"btn-outline theme-inverse\" type=\"button\" disabled style=\"pointer-events: none\">Delete project</button></span>"
+        },
+        {
+          "title": "Sanitized HTML",
+          "description": "html=true allows a limited allowlist; default remains text. Security options cannot be disabled by data attributes. Keep templates/content trusted and sanitization enabled.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"tooltip\" data-trm-title=\"&lt;strong&gt;Review&lt;/strong&gt; before publishing\" data-trm-html=\"true\">Formatted help</button>"
+        },
+        {
+          "title": "Instant animation",
+          "description": "animation=false adds the actual tooltip-instant class to generated output; it does not introduce a fade class.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"tooltip\" data-trm-title=\"Immediate supplemental help\" data-trm-animation=\"false\">Instant help</button>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "An explicit container keeps the generated tip inside this local theme. Placement uses document direction, not merely this wrapper direction.",
+          "markup": "<div id=\"tooltip-dark-container\" data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"tooltip\" data-trm-title=\"Supplemental dark help\" data-trm-container=\"#tooltip-dark-container\" data-trm-placement=\"bottom\">Dark tooltip</button></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-tooltip-zindex",
+          "defaultValue": "var(--trm-z-tooltip)",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tooltip-max-width",
+          "defaultValue": "200px",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tooltip-padding-x",
+          "defaultValue": "var(--trm-spacer-3)",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tooltip-padding-y",
+          "defaultValue": "calc(var(--trm-spacer) * 0.375)",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tooltip-font-size",
+          "defaultValue": "var(--trm-font-size-sm)",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tooltip-color",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tooltip-bg",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tooltip-border-radius",
+          "defaultValue": "var(--trm-radius-5)",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tooltip-opacity",
+          "defaultValue": "0.95",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tooltip-arrow-width",
+          "defaultValue": "0.8rem",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tooltip-arrow-height",
+          "defaultValue": "0.4rem",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tooltip-transition-property",
+          "defaultValue": "opacity",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tooltip-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tooltip-transition-timing",
+          "defaultValue": "linear",
+          "purpose": "Default exported through $tooltip-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Focus enters/leaves default focus triggers; hovering the tip can keep it open."
+        },
+        {
+          "keys": "Escape",
+          "behavior": "Dismiss the visible tip without moving focus. Inside a dialog, the tip consumes the first Escape."
+        }
+      ],
+      "guidelines": [
+        "Use concise supplemental information on a named native focusable trigger; never make a tip the only source of essential instructions.",
+        "The core has lazy data-API initialization. For deterministic first-interaction behavior, explicitly initialize triggers, as this site does.",
+        "Floating UI is required; use the bundle or resolve the dependency in a module build.",
+        "Generated output gets a unique ID and aria-describedby. The pin replaces/removes this attribute; do not assume it merges an existing description list.",
+        "Default hover/focus behavior keeps the tip accessible while pointer/focus remains relevant; Escape dismisses without moving focus.",
+        "Plain text is the default. HTML/template input uses the approved sanitizer; sanitize/allowList/sanitizeFn cannot come from data attributes.",
+        "Interactive content may be technically supported, but a role=tooltip is not a modal task or a focus-managed dialog. Prefer visible help or a Dialog for complex controls."
+      ],
+      "sass": "@use 'tremplin/scss/tooltip' with (\n  $tooltip-tokens: (--trm-tooltip-max-width: 16rem, --trm-tooltip-padding-x: .75rem)\n);"
+    },
+    "example": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"tooltip\" data-trm-title=\"Copy project link\" id=\"example-tooltip\">Hover or focus</button>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_tooltip.scss",
+    "definition": {
+      "name": "tooltip",
+      "className": "Tooltip",
+      "options": [
+        {
+          "name": "allowList",
+          "type": "SanitizerAllowList | undefined",
+          "required": false
+        },
+        {
+          "name": "animation",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "boundary",
+          "type": "string | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "container",
+          "type": "string | boolean | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "customClass",
+          "type": "string | ((...args: any[]) => string) | undefined",
+          "required": false
+        },
+        {
+          "name": "delay",
+          "type": "number | { show: number; hide: number; } | undefined",
+          "required": false
+        },
+        {
+          "name": "fallbackPlacements",
+          "type": "string[] | undefined",
+          "required": false
+        },
+        {
+          "name": "html",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "offset",
+          "type": "FloatingOffsetOption | undefined",
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "string | ((this: Tooltip, tip: HTMLElement, trigger: HTMLElement) => string) | undefined",
+          "required": false
+        },
+        {
+          "name": "floatingConfig",
+          "type": "FloatingConfigOption | undefined",
+          "required": false
+        },
+        {
+          "name": "sanitize",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "sanitizeFn",
+          "type": "((unsafeHtml: string) => string) | null | undefined",
+          "required": false
+        },
+        {
+          "name": "selector",
+          "type": "string | boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "template",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "title",
+          "type": "string | Element | ((...args: any[]) => string | Element) | undefined",
+          "required": false
+        },
+        {
+          "name": "trigger",
+          "type": "string | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "enable(): void",
+        "disable(): void",
+        "toggleEnabled(): void",
+        "toggle(): Promise<void>",
+        "dispose(): void",
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "update(): void",
+        "setContent(content: Record<string, TemplateContentEntry>): void"
+      ],
+      "events": [
+        "hidden.trm.tooltip",
+        "hide.trm.tooltip",
+        "inserted.trm.tooltip",
+        "show.trm.tooltip",
+        "shown.trm.tooltip"
+      ],
+      "dataAttributes": [
+        "data-trm-allow-list",
+        "data-trm-animation",
+        "data-trm-boundary",
+        "data-trm-container",
+        "data-trm-content",
+        "data-trm-custom-class",
+        "data-trm-delay",
+        "data-trm-fallback-placements",
+        "data-trm-floating-config",
+        "data-trm-html",
+        "data-trm-offset",
+        "data-trm-original-title",
+        "data-trm-placement",
+        "data-trm-sanitize",
+        "data-trm-sanitize-fn",
+        "data-trm-selector",
+        "data-trm-template",
+        "data-trm-title",
+        "data-trm-toggle",
+        "data-trm-trigger"
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "hidden.trm.tooltip": "On the trigger after exit cleanup and removal of aria-describedby, unless reactivated.",
+      "hide.trm.tooltip": "Cancelable start before removing show from generated output.",
+      "inserted.trm.tooltip": "On the trigger after generated DOM insertion, before positioning and the shown callback.",
+      "show.trm.tooltip": "Cancelable start on the trigger before generating/inserting the tip.",
+      "shown.trm.tooltip": "On the trigger after the entry transition callback."
+    },
+    "moduleImport": "import Tooltip from 'tremplin/tooltip'",
+    "javascript": "import Tooltip from 'tremplin/tooltip'\n\nconst element = document.querySelector('[data-trm-toggle=\"tooltip\"]')\nconst instance = Tooltip.getOrCreateInstance(element)",
+    "primer": "<p>The core data API lazily initializes interaction hooks. This documentation explicitly initializes these examples on DOMContentLoaded for first-interaction behavior. The module sample below creates the instance; the configured triggers or an explicit <code>show()</code> call reveal it. Floating UI must be available.</p>"
+  }
+]

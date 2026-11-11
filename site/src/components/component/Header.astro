@@ -1,0 +1,22 @@
+---
+import { groupFor, displayName } from '../../data/component-docs'
+import { componentIntro, componentSource } from '../../data/component-reference'
+import { isLocalPattern, localPatternLayer } from '../../data/local-pattern-docs'
+interface Props { component: { name: string; status: string; accessibility: string }; title: string; localName: string; reference: string; authored: boolean }
+const { component, title, localName, reference, authored } = Astro.props
+---
+  <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/components/">Components</a></li><li class="breadcrumb-item active" aria-current="page">{title}</li></ol>
+  </nav>
+  <p class="docs-eyebrow">{groupFor(component.name)}</p>
+  <div class="docs-cluster docs-page-heading">
+    <div><h1>{title}</h1><p class="lead">{componentIntro(component.name) ?? component.accessibility}</p></div>
+    <span class="badge">{component.status}</span>
+  </div>
+  <div class="docs-page-tools"><span class="docs-layer"><span aria-hidden="true">{component.name === 'toggler' ? 'JS' : 'CSS'}</span>{component.name === 'toggler' ? <>Behavior: <strong>class/attribute primitive</strong></> : <>Layer: <strong>{localName === 'forms' ? 'forms + components (Input group)' : localName === 'command-palette' ? 'custom' : isLocalPattern(localName) ? localPatternLayer : component.name === 'table' ? 'content' : ['chips','range','strength'].includes(localName) ? 'forms' : 'components'}</strong></>}</span><a href={`https://github.com/DevCiel/tremplin/blob/main/${authored ? `site/src/content/docs/components/${component.name}.mdx` : componentSource(component.name)}`}><svg class="docs-edit-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><use href="/docs-icons.svg#github"></use></svg> View &amp; edit</a>{reference && <a href={reference}>Tremplin source <span aria-hidden="true">↗</span></a>}</div>
+
+  {localName !== component.name && <p>This page documents the shared <a href={`/components/${localName}/`}>{displayName(localName)}</a> implementation. The existing URL remains supported; this is not a second plugin.</p>}
+
+  <div class="docs-callout docs-callout-a11y">
+    <strong>Accessibility:</strong> {component.accessibility}
+  </div>

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", "module": "NodeNext", "moduleResolution": "NodeNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"], "types": [],
+    "strict": true, "skipLibCheck": true,
+    "verbatimModuleSyntax": true, "erasableSyntaxOnly": true,
+    "useDefineForClassFields": true, "forceConsistentCasingInFileNames": true,
+    "declaration": true, "declarationMap": true, "sourceMap": true,
+    "rootDir": "src", "outDir": "dist/types"
+  },
+  "include": ["src/js/**/*.ts", "src/adapters/**/*.ts", "src/integrations/**/*.ts", "src/runtime/strict.ts", "src/runtime/registry.ts"]
+}

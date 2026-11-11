@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gettremplin.com/schema/public-api.json",
+  "type": "object",
+  "required": ["framework", "version", "packageExports", "javascriptModules", "css", "sass"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "framework": { "const": "Tremplin" },
+    "version": { "type": "string" },
+    "packageExports": { "type": "array", "items": { "type": "object", "required": ["specifier", "target"], "properties": { "specifier": { "type": "string" }, "target": {} }, "additionalProperties": false } },
+    "javascriptModules": { "type": "array", "items": { "type": "object", "required": ["specifier", "runtimeExports", "typeExports", "declarations"], "properties": { "specifier": { "type": "string" }, "runtimeExports": { "$ref": "#/$defs/stringArray" }, "typeExports": { "$ref": "#/$defs/stringArray" }, "declarations": { "$ref": "#/$defs/stringArray" } }, "additionalProperties": false } },
+    "css": { "type": "object", "required": ["componentClasses", "customProperties"], "properties": { "componentClasses": { "$ref": "#/$defs/stringArray" }, "customProperties": { "$ref": "#/$defs/stringArray" } }, "additionalProperties": false },
+    "sass": { "type": "object", "required": ["entrypoints", "variables", "functions", "mixins"], "properties": { "entrypoints": { "$ref": "#/$defs/stringArray" }, "variables": { "$ref": "#/$defs/stringArray" }, "functions": { "$ref": "#/$defs/stringArray" }, "mixins": { "$ref": "#/$defs/stringArray" } }, "additionalProperties": false }
+  },
+  "$defs": { "stringArray": { "type": "array", "items": { "type": "string" }, "uniqueItems": true } },
+  "additionalProperties": false
+}

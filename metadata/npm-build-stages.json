@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "phase": "npm-build-stages-and-example-tools",
+  "date": "2026-11-10",
+  "reference": "9062790fdb2379593a2973416dc5a3bfb203e4e3",
+  "moves": {
+    "build/clean.mjs": "tests/tooling/clean-distribution.mjs",
+    "build/build-documentation-assets.mjs": "site/build/documentation-assets.mjs",
+    "build/build-site-runtime.mjs": "site/build/runtime.mjs"
+  },
+  "retiredTools": [
+    "build/compile-core.mjs",
+    "build/build-css-assets.mjs"
+  ],
+  "restoredBuildTools": [
+    "build/screenshot-examples.mjs",
+    "build/zip-examples.mjs"
+  ],
+  "scriptReplacements": {
+    "clean": {
+      "before": "node build/clean.mjs",
+      "after": "node tests/tooling/clean-distribution.mjs"
+    },
+    "build:css": {
+      "before": "node build/compile-core.mjs --css",
+      "after": "npm run css-compile && npm run css-prefix && npm run css-minify && npm run css-docs && npm run build:css:assets"
+    },
+    "build:css:assets": {
+      "before": "node build/build-css-assets.mjs",
+      "after": "node build/generate-sri.mjs --assets-only"
+    },
+    "build:js": {
+      "before": "node build/compile-core.mjs --js && npm run js-compile-plugins && npm run js-emit-types",
+      "after": "npm run js-build && npm run js-compile-plugins && npm run js-emit-types"
+    },
+    "build:js:browser": {
+      "before": "node build/compile-core.mjs --js",
+      "after": "npm run js-build"
+    },
+    "build:core-preview": {
+      "before": "node build/compile-core.mjs --preview",
+      "after": "node tests/tooling/compile-preview.mjs"
+    },
+    "build:manifest": {
+      "before": "node build/generate-sri.mjs && node tests/tooling/check-core-output.mjs",
+      "after": "node build/generate-sri.mjs && node tests/tooling/check-compiled-core.mjs && node tests/tooling/check-core-output.mjs"
+    },
+    "site:prepare": {
+      "before": "node build/build-documentation-assets.mjs && node build/build-site-runtime.mjs && node build/copy-site.mjs",
+      "after": "node site/build/documentation-assets.mjs && node site/build/runtime.mjs && node build/copy-site.mjs"
+    }
+  },
+  "scriptAdditions": {
+    "css": "npm run build:css",
+    "css-compile": "sass --style=expanded --source-map --embed-sources --no-error-css src/scss/tremplin.scss:dist/css/tremplin.css src/scss/tremplin-grid.scss:dist/css/tremplin-grid.css src/scss/tremplin-reboot.scss:dist/css/tremplin-reboot.css src/scss/tremplin-utilities.scss:dist/css/tremplin-utilities.css",
+    "css-prefix": "node build/postcss.config.mjs --prefix",
+    "css-minify": "node build/css-minify.mjs",
+    "css-docs": "node build/generate-utilities-json.mjs --verify-reference",
+    "js": "npm run build:js",
+    "js-build": "npm run js-compile && npm run js-minify",
+    "js-compile": "npm run js-compile-standalone && npm run js-compile-bundle",
+    "js-compile-standalone": "rolldown --environment BUNDLE:false --config build/rolldown.config.mjs --sourcemap",
+    "js-compile-bundle": "rolldown --environment BUNDLE:true --config build/rolldown.config.mjs --sourcemap",
+    "js-minify": "npm run js-minify-standalone && npm run js-minify-bundle",
+    "js-minify-standalone": "terser --compress passes=2 --mangle --comments \"/^!/\" --source-map \"content=dist/js/tremplin.js.map,includeSources,filename=tremplin.min.js,url=tremplin.min.js.map\" --output dist/js/tremplin.min.js dist/js/tremplin.js",
+    "js-minify-bundle": "terser --compress passes=2 --mangle --comments \"/^!/\" --source-map \"content=dist/js/tremplin.bundle.js.map,includeSources,filename=tremplin.bundle.min.js,url=tremplin.bundle.min.js.map\" --output dist/js/tremplin.bundle.min.js dist/js/tremplin.bundle.js",
+    "dist": "npm run build",
+    "screenshots": "node build/screenshot-examples.mjs",
+    "release-zip-examples": "node build/zip-examples.mjs"
+  },
+  "dependencyAdditions": {
+    "sharp": "0.35.5",
+    "fflate": "0.8.3"
+  },
+  "compilerPolicy": "Actual Sass, Rolldown and Terser CLI stages, qualified PostCSS prefix stage and Lightning CSS minifier. Graph/security checks retained independently. Preview runs identical stages in isolated QA output; no replacement production monolith.",
+  "examplesPolicy": "Restore the two optional maintainer tools. Screenshot the maintained self-contained examples in light/dark at 1x/2x; produce a local runnable source/asset ZIP with required licenses and loopback-only server. Older demos and optional discovery stay excluded. No example assets enter core dist or package.",
+  "historicalEvidence": "Previous tooling/cutover/maintenance records remain immutable; this explicit successor advances commands and path inventories only.",
+  "publicExportsChanged": false,
+  "coreSourceChanged": false,
+  "versionChanged": false,
+  "localOnly": true,
+  "releaseBlocked": true
+}

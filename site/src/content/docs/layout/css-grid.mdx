@@ -1,0 +1,128 @@
+---
+{
+  "title": "CSS Grid",
+  "description": "Use explicit column spans and native gaps for two-dimensional layouts.",
+  "group": "Layout",
+  "lead": "Use explicit column spans and native gaps for two-dimensional layouts.",
+  "order": 7
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { layoutExamples as samples } from '../../../data/layout-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">How it works</h2>
+
+<p>CSS Grid is enabled by default in the Tremplin core. The grid class creates twelve 1fr tracks, one explicit 1fr row, a 1.5rem gap and an inline-size query container. These rules participate in the layout layer.</p>
+
+<p>Use g-col-N for a literal column span and g-start-N for a start line. Prefixes such as md:g-col-6 query the nearest eligible container, normally the grid, rather than the viewport. Native gap replaces Flexbox gutters and negative margins. Unclassified children use normal Grid auto-placement; there is no full-row child reset.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Examples</h2>
+
+<div class="docs-example"><Html source={samples["layout/css-grid#1"].example} /></div>
+
+<Code sample={samples["layout/css-grid#1"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Container-responsive spans</h2>
+
+<p>Resize the grid: these items become half-width at the default sm container minimum of 576px. md uses 768px. Only prefix-style responsive classes are generated. Changing the viewport alone does not cross a container threshold when the grid width stays fixed.</p>
+
+<p>A responsive-only item such as md:g-col-6 auto-places in one track below md. Add g-col-12 if it must start full-width. A nearer nested query container changes which ancestor is measured.</p>
+
+<div class="docs-example"><Html source={samples["layout/css-grid#2"].example} /></div>
+
+<Code sample={samples["layout/css-grid#2"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Starts and wrapping</h2>
+
+<p>With the default twelve columns, spans range from 1 through 12 and starts from 1 through 11. A start-only item has auto end placement. The grid-column shorthand used by g-col resets an earlier start to auto; repeat the start at the same responsive tier when it must persist. Generated CSS order, not HTML class order, determines conflicts.</p>
+
+<p>Items wrap when the remaining tracks cannot fit their span. A start plus span beyond the configured count can create implicit tracks. Runtime column tokens change track count but do not regenerate or clamp literal placement classes.</p>
+
+<div class="docs-example"><Html source={samples["layout/css-grid#3"].example} /></div>
+
+<Code sample={samples["layout/css-grid#3"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Containment and intrinsic sizing</h2>
+
+<p>Each grid establishes inline-size containment. Give shrink-to-fit or auto-track layouts an appropriate inline size or minimum, and test long content, zoom, RTL and overflow. Plain 1fr tracks retain their automatic minimum; constrain or wrap oversized content deliberately.</p>
+
+<p>There are no legacy child-span classes or alternate fallback tokens in the strict core. For a nested layout, each grid redeclares its own column, row and gap defaults, and its descendants query that nested container. A container cannot query itself.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Nesting</h2>
+
+<Code sample={samples["layout/css-grid#5"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">Customizing</h2>
+
+<p>Set tokens on the grid itself, in inline styles or an application rule after the framework. A token inherited from an ancestor does not replace the local declaration. Sass grid-columns changes generated Flexbox fractions and literal Grid span/start ranges; runtime tokens change only the track layout.</p>
+
+<p>enable-cssgrid: false omits the grid container and its placement classes without disabling Flexbox or mapped Grid/gap utilities. enable-grid-classes controls the Flexbox row/column generator independently.</p>
+
+<Code sample={samples["layout/css-grid#6"].code[0]} standalone={true} />
+
+<Code sample={samples["layout/css-grid#6"].code[1]} standalone={true} />
+
+<div class="table-responsive"><table class="table">
+<thead><tr><th scope="col">Token</th><th scope="col">Default</th></tr></thead>
+<tbody>
+<tr><td><span>{"--trm-columns"}</span></td><td><span>Sass grid-columns (12)</span></td></tr>
+<tr><td><span>{"--trm-rows"}</span></td><td><span>1 explicit fractional row</span></td></tr>
+<tr><td><span>{"--trm-gap"}</span></td><td><span>Sass grid-gutter-x (1.5rem)</span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">Adding rows</h2>
+
+<p>rows sets the count of explicit equal 1fr rows. Additional rows are implicit and follow normal CSS Grid sizing; it does not generate row-span/start classes. Positive integer counts are expected. Check overflow in fixed-height layouts rather than assuming every row has unlimited space.</p>
+
+<div class="docs-example"><Html source={samples["layout/css-grid#7"].example} /></div>
+
+<Code sample={samples["layout/css-grid#7"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">Focused Grid bundle</h2>
+
+<p>Import tremplin/css/grid for precompiled containers, Flexbox/Grid layouts and selected display, order, alignment, spacing and gap utilities. This entry does not include Reboot, components, color palettes or general helpers. Supply application-wide reset and theme styles separately when required.</p>
+
+<p>For Sass, configure tremplin/scss/config before loading tremplin/scss/tremplin-grid. The focused entry forwards the utilities map, not shared configuration options. Do not combine full and focused Sass entries in one compilation: loading Grid first filters shared utilities, while loading the full entry first causes a banner configuration error. This is a pinned upstream limitation; choose one entry per stylesheet.</p>
+
+<Code sample={samples["layout/css-grid#8"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-9">
+<h2 id="section-9">Sass generator</h2>
+
+<p>make-cssgrid accepts a column count and an ordered breakpoint map. It generates placement classes and container queries; callers provide containment and track layout. Scope custom generators to avoid collisions with default classes.</p>
+
+<p>Pinned limitation: make-cssgrid(1) emits a g-start-0 class because its Sass loop counts down through zero. The core preserves that upstream output. Prefer a coherent multi-column generator until a separately reviewed upstream update changes it.</p>
+
+<Code sample={samples["layout/css-grid#9"].code[0]} standalone={true} />
+
+</section>

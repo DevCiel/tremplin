@@ -1,0 +1,99 @@
+---
+{
+  "title": "Theme",
+  "description": "Use theme utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use theme utilities from the configured Tremplin utility map.",
+  "order": 4,
+  "utility": {
+    "category": "Color",
+    "classes": [
+      "theme-primary",
+      "theme-secondary",
+      "theme-success",
+      "theme-danger",
+      "theme-warning",
+      "theme-info",
+      "theme-accent",
+      "theme-inverse",
+      "theme-reset",
+      "theme-contrast",
+      "theme-subtle",
+      "theme-muted",
+      "theme-border"
+    ],
+    "notes": "theme-{name} supplies inheriting contextual references from --trm-{name}-{role}. Add theme-contrast, theme-subtle, theme-muted or theme-border for paint. These normal-priority utilities are distinct from helper foreground reminting. No theme-color compatibility alias or light/dark color modifier is generated.",
+    "responsive": false
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Explicit demo contrast customization"}</h2>
+
+<p><Html source={"These examples opt into application CSS with darker solid backgrounds and emphasized foregrounds. This is not a change to framework defaults. Copy this CSS and the demo-contrast wrapper together. Calendar examples also pass a styles option to the dependency."} /></p>
+
+<Code sample={samples["utilities/theme"][0].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/theme"][1].example} /></div>
+
+<Code sample={samples["utilities/theme"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Supported classes"}</h2>
+
+<p><Html source={"theme-{name} supplies inheriting contextual references from --trm-{name}-{role}. Add theme-contrast, theme-subtle, theme-muted or theme-border for paint. These normal-priority utilities are distinct from helper foreground reminting. No theme-color compatibility alias or light/dark color modifier is generated."} /></p>
+
+<Code sample={samples["utilities/theme"][2].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Configuration and limits"}</h2>
+
+<p><Html source={"Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Reset and contextual links"}</h2>
+
+<p><Html source={"theme-reset sets the union of configured context keys to initial, not unset. It removes inherited context rather than repainting a surface. theme-contrast and theme-muted also remint inheriting foreground tokens in the helpers layer; removing a paint utility does not remove that helper rule. Native Reboot links use the contextual foreground when present."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Custom theme classes"}</h2>
+
+<Code sample={samples["utilities/theme"][5].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"Configure surface utilities"}</h2>
+
+<p><Html source={"Color modifier names and surface roles do not establish accessibility conformance. The pin primary solid background with white normal-size text can be below 4.5:1; this live example uses inverse. Existing disclosed application contrast customization remains separate from core defaults."} /></p>
+
+<Code sample={samples["utilities/theme"][6].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

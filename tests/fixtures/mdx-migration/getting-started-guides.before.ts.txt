@@ -1,0 +1,192 @@
+import type { Guide } from './guide-docs'
+import pkg from '../../../package.json' with { type: 'json' }
+import integrity from '../../../dist/integrity.json' with { type: 'json' }
+import { installationGuide, starterHtml } from './installation-guide'
+
+export const frameworkVersion = pkg.version
+export const installCommand = `${pkg.name}@${frameworkVersion}`
+const group = 'Getting started'
+const reference = (_path: string) => ({title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/getting-started-guides.ts'})
+const cssPath = 'css/tremplin.min.css'
+const jsPath = 'js/tremplin.bundle.min.js'
+const cdn = `https://cdn.jsdelivr.net/npm/${installCommand}/dist`
+
+export { starterHtml } from './installation-guide'
+
+export const gettingStartedGuides: Guide[] = [
+  installationGuide,
+  {
+    slug: 'getting-started/ai', group, title: 'AI guidance',
+    description: 'Give coding assistants accurate Tremplin documentation and component contracts.',
+    lead: 'Ground generated interfaces in this framework’s actual version, markup, and source contracts.',
+    reference: reference('getting-started/ai'),
+    sections: [
+      { heading: '1. Supply project context', paragraphs: ['Point your coding tool at the repository README, <a href="/llms.txt">llms.txt</a>, <a href="/components/">component guides</a>, and <a href="/api/">generated API reference</a>. In a local checkout, include <code>metadata/components.json</code> and the relevant <code>src/js/</code> module.'] },
+      { heading: '2. State the framework contract', code: [{ label: 'Example prompt', language: 'text', source: `Build a responsive settings form using Tremplin ${frameworkVersion}.
+Use unprefixed CSS classes and data-trm-* behavior hooks.
+Follow the local Forms, Collapse, and Dialog guides.
+Use visible labels, keyboard-operable controls, and explicit error text.
+Use local dist assets until registry publication is verified.
+Do not introduce another framework or invent Tremplin APIs.` }] },
+      { heading: '3. Review generated markup', steps: ['Check every class against the component guide and every method against the generated API.', 'Keep IDs unique, associate labels and errors, and verify target selectors.', 'Prefer native controls. Treat generated HTML and suggested dependencies as unverified until reviewed.'] },
+      { heading: '4. Run the relevant checks', paragraphs: ['Use your application’s build and browser checks. Framework contributors should run the repository checks below. A generated page still needs a keyboard and screen-reader review.'], code: [{ language: 'shell', source: 'npm run typecheck\nnpm test\nnpm run test:csp\nnpm run check' }], callout: "Tremplin currently provides llms.txt, source metadata, and documentation. This project does not publish an agent-skills package or llms-full.txt; do not use an unrelated installer as a Tremplin installer." }
+    ]
+  },
+  {
+    slug: 'getting-started/approach', group, title: 'Approach',
+    description: 'Understand Tremplin’s HTML, CSS, Sass, and JavaScript conventions.',
+    lead: 'Build from semantic HTML, add responsive classes, and introduce JavaScript where interaction requires it.',
+    reference: reference('getting-started/approach'),
+    sections: [
+      { heading: '1. Start with the document', paragraphs: ['Include a doctype, document language, UTF-8 encoding, and viewport metadata. Reboot sets predictable base styles, including border-box sizing; review existing application CSS before adopting it.'], code: [{ language: 'html', source: '<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <title>My project</title>\n</head>\n<body>...</body>\n</html>' }] },
+      { heading: '2. Build mobile first', paragraphs: ['Unqualified classes define the small-screen layout. Breakpoint variants add changes at larger widths; they do not require a second mobile stylesheet.'], example: '<div class="row g-3"><div class="col-12 col-md-6"><div class="border rounded p-3">First column</div></div><div class="col-12 col-md-6"><div class="border rounded p-3">Second column</div></div></div>', code: [{ language: 'html', source: '<div class="row g-3">\n  <div class="col-12 col-md-6">First column</div>\n  <div class="col-12 col-md-6">Second column</div>\n</div>' }] },
+      { heading: '3. Separate appearance and behavior', paragraphs: ["Public classes such as <code>btn</code>, <code>card</code>, and <code>row</code> define appearance. <code>data-trm-*</code> attributes configure behavior. Framework events use names such as <code>shown.trm.collapse</code>. Avoid loading frameworks with overlapping unprefixed selectors together."] },
+      { heading: '4. Choose CSS variables or Sass', table: { headings: ['Use', 'For'], rows: [
+        ['CSS variables', 'Runtime colors, font stacks, component tokens, and subtree themes.'],
+        ['Sass configuration', 'Generated scales, breakpoints, utilities, feature switches, and compiled customization.'],
+        ['Application CSS', 'Project-specific composition; load it after the framework and keep selectors deliberate.']
+      ] } },
+      { heading: '5. Prefer native semantics', paragraphs: ['Use buttons for actions, anchors for navigation, labels for inputs, and native dialog elements for Dialog and Drawer. Add CSS-only components without JavaScript. Use the typed plugins when state, focus, positioning, or lifecycle behavior is needed.'] },
+      { heading: '6. Extend deliberately', paragraphs: ['Keep optional extensions separate from core imports, use logical start/end directions, and check dark mode, reduced motion, keyboard access, and reflow. Read <a href="/getting-started/contents/">Package contents</a> before selecting a focused build.'] }
+    ]
+  },
+  {
+    slug: 'getting-started/css-variables', group, title: 'CSS variables',
+    description: 'Apply Tremplin runtime tokens globally, per component, and in light or dark themes.',
+    lead: 'Change visual tokens in ordinary CSS without rebuilding the framework.',
+    reference: reference('getting-started/css-variables'),
+    sections: [
+      { heading: '1. Load your overrides last', paragraphs: ['Link your application stylesheet after Tremplin. Inspect the computed variables in browser developer tools before changing a token.'], code: [{ language: 'html', source: '<link rel="stylesheet" href="./assets/tremplin.min.css">\n<link rel="stylesheet" href="./app.css">' }] },
+      { heading: '2. Override root variables', paragraphs: ['Set a foreground color alongside its background token. Existing explicit light/dark theme selectors can override root values, so include your selected theme in global brand overrides.'], code: [{ language: 'css', source: ':root, [data-trm-theme="light"], [data-trm-theme="dark"] {\n  --trm-primary: #075985;\n  --trm-primary-contrast: #fff;\n  --trm-radius: .75rem;\n  --trm-font-sans: system-ui, sans-serif;\n}' }] },
+      { heading: '3. Tune an individual component', paragraphs: ['Set component variables on a custom class rather than changing every button.'], example: '<button class="btn docs-token-demo" type="button">A custom button</button>', code: [{ language: 'css', source: '.brand-button {\n  --trm-btn-bg: #075985;\n  --trm-btn-border: #075985;\n  --trm-btn-color: #fff;\n}' }, { language: 'html', source: '<button class="btn brand-button" type="button">A custom button</button>' }] },
+      { heading: '4. Select a color mode', paragraphs: ['Use <code>data-trm-theme="light"</code>, <code>dark</code>, or <code>auto</code>. Automatic mode follows the operating system. A theme switcher should offer an understandable choice and preserve the user’s selection.'], code: [{ language: 'js', source: "document.documentElement.dataset.trmTheme = 'dark'" }] },
+      { heading: '5. Know the boundary', paragraphs: ['CSS variables cannot be substituted directly into media-query conditions. Change generated breakpoint values and spacing maps through Sass instead. Some components define their own local variables, so consult that component’s variables table when a root override has no effect.'], table: { headings: ['Token', 'Purpose'], rows: [
+        ['--trm-body-bg / --trm-body-color', 'Document background and text.'], ['--trm-primary / --trm-primary-contrast', 'Primary semantic color and contrasting text.'], ['--trm-focus-color', 'Focus indicator color.'], ['--trm-btn-bg / --trm-btn-color', 'Local button appearance.'], ['--trm-radius', 'Base border radius.']
+      ] } },
+      { heading: '6. Verify the result', steps: ['Test text and control contrast in every theme you expose.', 'Keep a visible keyboard focus indicator.', 'Check components inside themed subtrees as well as at document level.'], paragraphs: ['Continue to the detailed <a href="/customize/css-variables/">customization reference</a> and <a href="/customize/color-modes/">color modes guide</a>.'] }
+    ]
+  },
+  {
+    slug: 'getting-started/javascript', group, title: 'JavaScript',
+    description: 'Use Tremplin’s browser bundle, ESM imports, data APIs, lifecycle events, and cleanup.',
+    lead: 'Add interaction with declarative attributes or typed component instances. CSS-only pages do not need a script.',
+    reference: reference('getting-started/javascript'),
+    sections: [
+      { heading: '1. Choose a distribution', table: { headings: ['Distribution', 'Usage'], rows: [
+        ['tremplin.min.js / tremplin.bundle.min.js', 'ES modules: standard minified build requires peers; bundle includes them. Neither creates a global.'],
+        ['tremplin / tremplin/&lt;component&gt;', 'ESM package imports for bundlers; declarations are included.'],
+        ['CommonJS package exports', 'Available for tooling, but interactive components require a browser DOM.']
+      ] }, callout: "Browser builds use the Tremplin ES-module contract. Use type=\"module\". The standard build needs Floating UI and Vanilla Calendar Pro resolved by your bundler or import map; the bundle includes both. See Install for a complete local import map." },
+      { heading: '2. Use the data API', example: '<button class="btn btn-primary" type="button" data-trm-toggle="collapse" data-trm-target="#guide-disclosure" aria-controls="guide-disclosure" aria-expanded="false">Toggle details</button><div class="collapse mt-3" id="guide-disclosure"><div class="card card-body">This example uses the installed browser bundle.</div></div>', code: [{ language: 'html', source: '<button class="btn btn-primary" type="button"\n  data-trm-toggle="collapse" data-trm-target="#details"\n  aria-expanded="false" aria-controls="details">Toggle details</button>\n<div class="collapse" id="details">Project details</div>' }], paragraphs: ['Use unique target IDs and one behavior toggle per trigger. Component modules register their own data handlers when loaded. Plain text attributes are not a safe way to configure sanitizer callbacks.'] },
+      { heading: '3. Create or reuse an instance', code: [{ label: 'Bundler application after the target exists', language: 'js', source: "import 'tremplin/css'\nimport Collapse from 'tremplin/collapse'\n\nconst panel = document.querySelector('#details')\nif (panel) {\n  const instance = Collapse.getOrCreateInstance(panel)\n  await instance.show()\n  // Await transitions before the next dependent state change.\n  await instance.hide()\n}" }, { label: 'Browser module: use instead of another runtime script', language: 'js', source: "import { Collapse } from './dist/js/tremplin.bundle.min.js'\n\nconst panel = document.querySelector('#details')\nconst instance = Collapse.getOrCreateInstance(panel)\ninstance.show()" }] },
+      { heading: '4. Handle lifecycle events', paragraphs: ['Register listeners before changing state. Pre-change events can be canceled with <code>preventDefault()</code>; completion events indicate the finished transition. A canceled or overlapping operation may not emit a completion event.'], code: [{ language: 'js', source: "import { Collapse } from './dist/js/tremplin.bundle.min.js'\n\nconst panel = document.querySelector('#details')\npanel.addEventListener('show.trm.collapse', event => {\n  if (panel.dataset.locked === 'true') event.preventDefault()\n})\npanel.addEventListener('shown.trm.collapse', () => {\n  console.log('Details are now open')\n})" }] },
+      { heading: '5. Dependencies and frameworks', paragraphs: ['Install <code>@floating-ui/dom</code> for package-based positioning components such as Menu, Tooltip, and Popover. The browser build includes it. Tremplin Datepicker is implemented locally and does not require Vanilla Calendar Pro.'] },
+      { heading: '6. Dispose when removing DOM', paragraphs: ['In React, Vue, or another renderer, initialize core plugins after mount and dispose before removing their elements. Avoid having both a renderer and a plugin independently own the same state. Experimental adapters remain in the repository but are not exported or installed by the core package; use the core lifecycle directly.'], code: [{ language: 'js', source: "// Run during application teardown, before removing #details.\nCollapse.getInstance('#details')?.dispose()" }] },
+      { heading: '7. HTML safety and CSP', paragraphs: ['Tooltip and Popover sanitize HTML by default. Keep sanitization enabled; supplying DOM elements or custom sanitizers makes the caller responsible for their safety. Under Trusted Types enforcement, permit the private <code>tremplin</code> policy.'], code: [{ language: 'text', source: "require-trusted-types-for 'script'; trusted-types tremplin" }], callout: 'These two directives cover Trusted Types only, not a full CSP. See SECURITY.md in the source package for the complete tested baseline. Provide external application scripts or a deliberate nonce strategy under a strict script policy.' },
+      { heading: '8. Without JavaScript', paragraphs: ['Typography, grid, tables, cards, and other presentational styles continue to work. Script-driven disclosures and overlays need a usable fallback: keep essential content reachable and do not make critical tasks depend on a hidden, uninitialized panel.'] }
+    ]
+  },
+  {
+    slug: 'getting-started/browsers-devices', group, title: 'Browsers and devices',
+    description: 'Understand Tremplin’s browser targets, test coverage, and device limitations.',
+    lead: 'Target modern browsers and verify the devices your application actually supports.',
+    reference: reference('getting-started/browsers-devices'),
+    sections: [
+      { heading: '1. Read the support target', table: { headings: ['Platform', 'Project target'], rows: [
+        ['Chrome and Edge', 'Latest two stable major versions.'], ['Firefox', 'Latest two stable major versions.'], ['Safari on macOS', 'Latest two stable major versions.'], ['iOS Safari and Android Chrome', 'Current major version; verify on real devices.'], ['Internet Explorer and legacy embedded browsers', 'Not supported.']
+      ] }, callout: "These are Tremplin project targets, not proof of testing every listed version. Automated tests use the locally installed Playwright Chromium, Firefox, and WebKit engines. WebKit automation does not replace testing Safari on Apple devices." },
+      { heading: '2. Check platform requirements', paragraphs: ['The compiled styles use logical properties, custom properties, container queries, and color-mix(). Plugins use modern JavaScript, native dialog behavior, IntersectionObserver, and pointer events where relevant.'], code: [{ language: 'js', source: "const features = {\n  dialog: typeof HTMLDialogElement !== 'undefined' &&\n    typeof HTMLDialogElement.prototype.showModal === 'function',\n  observer: 'IntersectionObserver' in window,\n  containers: CSS.supports('container-type', 'inline-size'),\n  colorMix: CSS.supports('color', 'color-mix(in srgb, red, blue)')\n}\nconsole.table(features)" }] },
+      { heading: '3. Test input and viewport changes', steps: ['Exercise keyboard, mouse, touch, and zoom workflows.', 'Check narrow widths, landscape orientation, software keyboards, and safe-area padding.', 'Verify reduced-motion and forced-color settings, scrolling overlays, and focus restoration.'] },
+      { heading: '4. Separate build requirements', paragraphs: ['A static page using compiled assets does not require Node.js in the browser. Package metadata declares Node.js 20 or newer for the toolchain; check the engine requirements of Vite, Astro, and other tools you choose as well.'] },
+      { heading: '5. Handle older environments', paragraphs: ['Do not claim compatibility based only on JavaScript transpilation. CSS features and native dialog behavior also matter. Define your application baseline, feature-test critical paths, and supply an application-specific fallback or an understandable unsupported-browser message.'] }
+    ]
+  },
+  {
+    slug: 'getting-started/accessibility', group, title: 'Accessibility',
+    description: 'Apply semantic markup, labels, focus, contrast, and assistive-technology checks with Tremplin.',
+    lead: 'Accessible components are a starting point. Your content, customization, and complete workflows still need verification.',
+    reference: reference('getting-started/accessibility'),
+    sections: [
+      { heading: '1. Understand the limits', paragraphs: ['The project targets WCAG 2.2 AA and uses automated browser and axe checks. Passing them is not a conformance certification. Manual screen-reader and real-device validation is still pending for final release sign-off.'] },
+      { heading: '2. Structure and label your page', steps: ['Use landmarks and a logical heading hierarchy, and provide a skip link where navigation repeats.', 'Use visible labels for controls; placeholders are supplementary hints.', 'Give informative images useful alt text and hide purely decorative icons.', 'Use native buttons for actions and anchors for navigation.'] },
+      { heading: '3. Associate instructions and errors', example: '<label class="form-label" for="getting-started-email">Email address</label><input class="form-control" type="email" id="getting-started-email" aria-describedby="getting-started-email-help"><p class="form-text" id="getting-started-email-help">Use an address you can access.</p>', code: [{ language: 'html', source: '<label class="form-label" for="email">Email address</label>\n<input class="form-control is-invalid" type="email" id="email"\n  aria-invalid="true" aria-describedby="email-help email-error">\n<p class="form-text" id="email-help">Use an address you can access.</p>\n<p class="invalid-feedback" id="email-error">Enter a valid email address.</p>' }], paragraphs: ['After a failed submission, expose a useful error summary and guide focus to it when appropriate. Server-side validation is still required.'] },
+      { heading: '4. Preserve focus and overlay behavior', paragraphs: ['Give Dialog and Drawer a visible title referenced by <code>aria-labelledby</code>. Test initial focus, Tab and Shift+Tab, Escape, nested surfaces, and restoration to the opener. Never place required form input inside a tooltip.'], code: [{ language: 'html', source: '<button class="btn btn-primary" type="button" data-trm-toggle="dialog"\n  data-trm-target="#help-dialog">Open help</button>\n<dialog class="dialog" id="help-dialog" aria-labelledby="help-title">\n  <div class="dialog-header"><h2 id="help-title">Help</h2></div>\n  <div class="dialog-body">Use the form labels to complete each field.</div>\n  <div class="dialog-footer">\n    <button class="btn btn-primary" type="button" data-trm-dismiss="dialog">Close</button>\n  </div>\n</dialog>' }] },
+      { heading: '5. Check color, motion, and hidden content', paragraphs: ['Do not communicate errors, availability, or status by color alone. Verify text and control contrast after customization. Respect reduced motion and avoid removing focus outlines. Use <code>.visually-hidden</code> for supplementary screen-reader text, not for focusable controls that remain invisible.'], code: [{ language: 'html', source: '<span class="spinner-border" aria-hidden="true"></span>\n<span role="status">Loading results…</span>' }] },
+      { heading: '6. Validate a complete journey', steps: ['Complete the task with the keyboard, including error recovery.', 'Test at 200% zoom and at a narrow viewport without losing content.', 'Review announcements and focus with NVDA on Windows; add VoiceOver and other combinations required by your audience.', 'Run automated checks and record browser, assistive technology, result, and remaining issues.'], paragraphs: ['Read the <a href="https://www.w3.org/WAI/WCAG22/quickref/">W3C WCAG quick reference</a> for success criteria and testing guidance. Automated checks do not replace these manual steps.'] }
+    ]
+  },
+  {
+    slug: 'getting-started/download', group, title: 'Download',
+    description: 'Download built Tremplin assets, source packages, and integrity metadata.',
+    lead: 'Choose ready-to-use browser files or build from source; verify that the version and bytes match.',
+    reference: reference('getting-started/install'),
+    sections: [
+      { heading: '1. Choose compiled assets or source', table: { headings: ['Option', 'Choose it when'], rows: [
+        ['Compiled CSS and browser JavaScript', 'You want a plain HTML setup without a build process.'], ['npm tarball', 'You need declared package exports, Sass sources, types, or bundler imports.'], ['Repository checkout', 'You are developing Tremplin or building its documentation and release assets.']
+      ] } },
+      { heading: '2. Download compiled files', paragraphs: ['Use the Release assets table below. For most pages, download <code>tremplin.min.css</code> and <code>tremplin.bundle.min.js</code>. CSS-only pages can omit JavaScript. Focused CSS bundles are alternatives for narrower use cases; avoid importing both full and focused builds unnecessarily.'] },
+      { heading: '3. Build a source checkout', code: [{ language: 'shell', source: 'npm ci\nnpm run build\nnpm run check\nnpm pack' }], paragraphs: ['These commands run from the framework repository. Keep the lockfile. <code>npm pack</code> creates a local package without publishing it. The website build and contributor scripts are not part of the consumer package contract.'] },
+      { heading: '4. Verify integrity', paragraphs: ['Download <a href="/dist/integrity.json" download>integrity.json</a> alongside the files. Compare its version and SHA-384 digest with your downloaded bytes. A digest served from the same compromised location is not an independent trust guarantee; retain a trusted manifest for release verification.'], code: [{ label: 'Save as verify.mjs; run node verify.mjs next to integrity.json', language: 'js', source: "import { createHash } from 'node:crypto'\nimport { readFileSync } from 'node:fs'\n\nconst manifest = JSON.parse(readFileSync('integrity.json', 'utf8'))\nconst actual = 'sha384-' + createHash('sha384')\n  .update(readFileSync('tremplin.min.css'))\n  .digest('base64')\nif (actual !== manifest.assets['css/tremplin.min.css'].integrity) {\n  throw new Error('Integrity mismatch: do not use this file')\n}\nconsole.log('Verified Tremplin', manifest.version)" }] },
+      { heading: '5. Install and verify in the browser', paragraphs: ['Follow the complete <a href="/getting-started/install/">Installation</a> document example, inspect Network requests, and toggle the sample disclosure. The generated downloads below are available from this local documentation build; they do not imply that a public registry release has been published.'] }
+    ]
+  },
+  {
+    slug: 'getting-started/contents', group, title: 'Package contents',
+    description: 'Choose Tremplin CSS builds, JavaScript formats, types, and source entry points.',
+    lead: 'Understand which files to ship, which files need a bundler, and which files are source-only.',
+    reference: reference('getting-started/install'),
+    sections: [
+      { heading: '1. Inspect the distribution', code: [{ language: 'text', source: `tremplin/
+  dist/
+    css/          full, grid, reboot, and utilities CSS; minified variants
+    js/           ESM, CommonJS facades, chunks, declarations, source maps
+    integrity.json
+  src/scss/       Sass modules and optional extensions
+  src/js/         TypeScript components and utilities
+  icons/          sprite and icon CSS
+  themes/         runtime theme presets
+  starters/       HTML, Vite, React, and Vue starting points
+  metadata/       component and API contracts
+  docs/           project and migration documentation` }] },
+      { heading: '2. Select CSS', table: { headings: ['Package export', 'Purpose'], rows: [
+        ['tremplin/css', 'Complete compiled framework.'], ['tremplin/css/min', 'Minified complete stylesheet.'], ['tremplin/css/grid', 'Focused layout build.'], ['tremplin/css/reboot', 'Normalization and base content styles.'], ['tremplin/css/utilities', 'Generated utilities.'], ['tremplin/scss', 'Configurable Sass entry; must be compiled.']
+      ] } },
+      { heading: '3. Select JavaScript', table: { headings: ['File or export', 'Environment'], rows: [
+        ['dist/js/tremplin.min.js', 'Standard ES module; positioning and calendar peers remain external.'], ['dist/js/tremplin.bundle.min.js', 'Self-contained ES module including both peers; no window global.'], ['tremplin', 'Canonical native ES modules; Node 24 also supports require(ESM) interop, not a separate CommonJS build.'], ['tremplin/collapse', 'Individual core component package entry.'], ['tremplin/js/dist/collapse.js', 'Explicit canonical module path in the same graph.']
+      ] }, callout: 'The standard browser ES module has bare package dependencies, not split browser chunks. Use the self-contained bundle in plain HTML, or provide a bundler/import map for the standard build. Individual js/dist modules intentionally retain their sibling module imports.' },
+      { heading: '4. Keep declarations and maps straight', paragraphs: ['TypeScript declarations describe the API and are resolved through package exports; they are not browser scripts. Source maps support debugging and can be deployed or withheld according to your application policy. Source TypeScript and Sass are inputs, not compiled browser assets.'] },
+      { heading: '5. Verify package contents locally', code: [{ language: 'shell', source: 'npm pack --dry-run\nnpm run test:package' }], paragraphs: ['Run these in the repository. The tarball consumer check verifies installation and exports. Prefer declared package subpaths instead of internal chunks, which may change between builds.'] }
+    ]
+  },
+  {
+    slug: 'getting-started/bundlers', group, title: 'Bundlers',
+    description: 'Set up Tremplin with Vite and understand Sass, package imports, and peer dependencies.',
+    lead: 'Use Vite for a small working application, or adapt the same package exports to your existing build system.',
+    reference: reference('guides/vite'),
+    sections: [
+      { heading: '1. Create an application folder', code: [{ language: 'shell', source: 'mkdir my-tremplin-app\ncd my-tremplin-app\nnpm init -y\nnpm install --save-dev vite' }], paragraphs: ['Use a Node.js version supported by your chosen Vite release. Run these in a separate application folder, not in the framework repository.'] },
+      { heading: '2. Install Tremplin', paragraphs: ['For the current checkout, build and pack Tremplin first, then install its tarball with the path adjusted for your directories. After a registry release is verified, the package name can replace the tarball path.'], code: [{ language: 'shell', source: `npm install ../tremplin/tremplin-${frameworkVersion}.tgz @floating-ui/dom` }] },
+      { heading: '3. Add the HTML entry', code: [{ label: 'index.html', language: 'html', source: '<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <title>Tremplin with Vite</title>\n</head>\n<body>\n  <main class="container py-5">\n    <h1>Tremplin with Vite</h1>\n    <button class="btn btn-primary" type="button" data-trm-toggle="collapse"\n      data-trm-target="#details" aria-controls="details" aria-expanded="false">Details</button>\n    <div class="collapse" id="details">It works.</div>\n  </main>\n  <script type="module" src="/main.js"></script>\n</body>\n</html>' }] },
+      { heading: '4. Import CSS and the plugin', code: [{ label: 'main.js', language: 'js', source: "import 'tremplin/css'\nimport Collapse from 'tremplin/collapse'\n\n// Retain a concrete component reference and initialize the target.\nCollapse.getOrCreateInstance('#details')" }] },
+      { heading: '5. Add scripts and run', paragraphs: ['Merge these scripts into the application package.json. Open the URL printed by Vite and test the Details button; then build and preview the production output.'], code: [{ label: 'package.json scripts', language: 'json', source: '{\n  "scripts": {\n    "dev": "vite",\n    "build": "vite build",\n    "preview": "vite preview"\n  }\n}' }, { language: 'shell', source: 'npm run dev\n# Stop the development server before continuing if needed.\nnpm run build\nnpm run preview' }] },
+      { heading: '6. Optional Sass customization', paragraphs: ['Install Dart Sass, create app.scss, and import that file from main.js instead of importing the compiled CSS.'], code: [{ language: 'shell', source: 'npm install --save-dev sass' }, { label: 'app.scss', language: 'scss', source: "@use 'tremplin/scss' with (\n  $primary: #075985,\n  $enable-shadows: false\n);" }, { label: 'main.js CSS replacement', language: 'js', source: "import './app.scss'" }] },
+      { heading: '7. Webpack and other bundlers', paragraphs: ['Use the same declared package imports. Configure your existing tool’s CSS and Sass processing and install the Floating UI peer. Browser-native ESM cannot resolve bare package specifiers without additional resolution; plain HTML can use the self-contained ESM bundle with type="module", or a standard build with the Install guide’s import map. This guide provides a complete Vite recipe, not a tested configuration for every bundler.'] },
+      { heading: '8. Production review', steps: ['Confirm emitted CSS and JavaScript requests succeed from the deployed base path.', 'Check only the components and optional adapters you use are imported.', 'Test interactions after minification, keyboard access, and content without JavaScript.', 'Run your application tests; use Tremplin’s contributor check only when developing the framework itself.'] }
+    ]
+  },
+  {
+    slug: 'getting-started/rtl', group, title: 'RTL',
+    description: 'Enable right-to-left interfaces with Tremplin logical properties and one stylesheet.',
+    lead: 'Use the document direction and language to adapt layout without a separate RTL build.',
+    reference: reference('customize/rtl'),
+    sections: [
+      { heading: '1. Set language and direction', code: [{ language: 'html', source: '<!doctype html>\n<html lang="ar" dir="rtl">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <link rel="stylesheet" href="./assets/tremplin.min.css">\n  <title>مثال Tremplin</title>\n</head>\n<body>...</body>\n</html>' }] },
+      { heading: '2. Prefer logical utilities', table: { headings: ['Use', 'Meaning'], rows: [
+        ['ms-* / me-*', 'Margin at inline start / end.'], ['ps-* / pe-*', 'Padding at inline start / end.'], ['text-start / text-end', 'Alignment relative to writing direction.'], ['drawer-start / drawer-end', 'Drawer placement relative to writing direction.']
+      ] }, example: '<div dir="rtl" lang="ar" class="border rounded p-3"><p class="text-start mb-2">واجهة تدعم اتجاه الكتابة</p><button class="btn btn-primary" type="button">متابعة</button><span dir="ltr" class="ms-3">hello@example.com</span></div>' },
+      { heading: '3. Author logical CSS', code: [{ language: 'css', source: '.notice {\n  padding-inline: 1rem;\n  margin-inline-start: .5rem;\n  border-inline-start: .25rem solid var(--trm-primary);\n  text-align: start;\n}' }] },
+      { heading: '4. Isolate mixed-direction content', paragraphs: ['Wrap addresses, identifiers, and code in an appropriate <code>dir="ltr"</code> container, or use <code>&lt;bdi&gt;</code> for an unknown-direction value. Preserve logical DOM reading order; do not reverse elements merely to imitate visual RTL.'], code: [{ language: 'html', source: '<p dir="rtl" lang="ar">البريد: <bdi dir="ltr">hello@example.com</bdi></p>' }] },
+      { heading: '5. Test directional interactions', steps: ['Verify drawer placement, menu positioning, horizontal navigation, and Datepicker arrow keys.', 'Check nested mixed-direction regions, focus order, and reading order.', 'If an application changes language at runtime, retest or recreate affected plugin instances so cached positioning and direction state are refreshed.'], callout: 'The same stylesheet supports both directions. RTL styling does not translate your text, labels, date locale, or icon meaning; those remain application responsibilities.' }
+    ]
+  }
+]

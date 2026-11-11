@@ -1,0 +1,149 @@
+{
+  "profile": "bootstrap6-clone-first-legacy-free",
+  "commit": "9062790fdb2379593a2973416dc5a3bfb203e4e3",
+  "establishedOn": "2026-11-05",
+  "decision": "Explicit initial strict contract established under the user-approved clone-first legacy removal. Deliberate breaking migration; not backward compatibility with the retired hybrid contract or permission to release.",
+  "canonicalization": "SHA-256 of JSON.stringify(JSON.parse(file)); ordered arrays and all API fields are significant.",
+  "apiSha256": "8e8a1ecc056456673a1c3d3141e325650e1fa05bdc3553d628cf026ecc2f95c2",
+  "publicApiSha256": "d212b16a32edc9b87c7ec581f081920ffc40975ea388528fe0e8be92d985e503",
+  "components": [
+    "alert",
+    "button",
+    "carousel",
+    "chips",
+    "collapse",
+    "combobox",
+    "datepicker",
+    "dialog",
+    "drawer",
+    "command-palette",
+    "menu",
+    "nav-overflow",
+    "otp-input",
+    "popover",
+    "range",
+    "scrollspy",
+    "strength",
+    "tab",
+    "toast",
+    "toggler",
+    "tooltip"
+  ],
+  "packageExports": [
+    {
+      "specifier": ".",
+      "target": {
+        "types": "./dist/js/tremplin.d.ts",
+        "import": "./dist/js/tremplin.js",
+        "require": "./dist/js/tremplin.cjs"
+      }
+    },
+    {
+      "specifier": "./*",
+      "target": {
+        "types": "./dist/js/components/*.d.ts",
+        "import": "./dist/js/components/*.js",
+        "require": "./dist/js/components/*.cjs"
+      }
+    },
+    {
+      "specifier": "./bundle",
+      "target": "./dist/js/tremplin.bundle.min.js"
+    },
+    {
+      "specifier": "./css",
+      "target": "./dist/css/tremplin.css"
+    },
+    {
+      "specifier": "./css/extensions",
+      "target": "./dist/css/tremplin-extensions.css"
+    },
+    {
+      "specifier": "./css/extensions/min",
+      "target": "./dist/css/tremplin-extensions.min.css"
+    },
+    {
+      "specifier": "./css/grid",
+      "target": "./dist/css/tremplin-grid.css"
+    },
+    {
+      "specifier": "./css/min",
+      "target": "./dist/css/tremplin.min.css"
+    },
+    {
+      "specifier": "./css/reboot",
+      "target": "./dist/css/tremplin-reboot.css"
+    },
+    {
+      "specifier": "./css/utilities",
+      "target": "./dist/css/tremplin-utilities.css"
+    },
+    {
+      "specifier": "./extensions/*",
+      "target": {
+        "types": "./dist/js/extensions/*.d.ts",
+        "import": "./dist/js/extensions/*.js",
+        "require": "./dist/js/extensions/*.cjs"
+      }
+    },
+    {
+      "specifier": "./icons",
+      "target": "./icons/tremplin-icons.css"
+    },
+    {
+      "specifier": "./icons/sprite",
+      "target": "./icons/tremplin-icons.svg"
+    },
+    {
+      "specifier": "./react",
+      "target": {
+        "types": "./dist/js/adapters/react.d.ts",
+        "import": "./dist/js/adapters/react.js",
+        "require": "./dist/js/adapters/react.cjs"
+      }
+    },
+    {
+      "specifier": "./scss",
+      "target": "./src/scss/tremplin.scss"
+    },
+    {
+      "specifier": "./scss/*",
+      "target": "./src/scss/*"
+    },
+    {
+      "specifier": "./themes/*",
+      "target": "./themes/*"
+    },
+    {
+      "specifier": "./vue",
+      "target": {
+        "types": "./dist/js/adapters/vue.d.ts",
+        "import": "./dist/js/adapters/vue.js",
+        "require": "./dist/js/adapters/vue.cjs"
+      }
+    }
+  ],
+  "counts": {
+    "coreComponents": 20,
+    "optionalComponents": 1,
+    "javascriptModules": 24,
+    "cssClasses": 3570,
+    "cssCustomProperties": 1217,
+    "sassSymbols": 168
+  },
+  "explicitCssRetirement": "metadata/retired-css-contract.json",
+  "previousCommit": "3b7f32318876bbd3c9cc14d3f891d744f39cd538",
+  "updatedOn": "2026-11-09",
+  "upstreamUpdate": {
+    "review": "User requested port of the 12 reviewed Bootstrap-main core changes",
+    "componentApiChanged": false,
+    "packageExportsChanged": false,
+    "sassApiChanged": false,
+    "cssPropertyNamesChanged": false,
+    "addedCssClasses": [
+      "dialog-2xl"
+    ],
+    "removedCssClasses": [],
+    "existingSecurityEditsChanged": false
+  }
+}

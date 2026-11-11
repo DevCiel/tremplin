@@ -1,0 +1,16 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro'
+import { displayName } from '../../data/component-docs'
+import { strictControlExamples } from '../../data/strict-control-docs'
+const controls = ['chips', 'otp-input', 'range', 'strength', 'datepicker', 'nav-overflow']
+---
+<DocsLayout title="Strict control examples" description="Runnable examples of Tremplin input and navigation controls.">
+  <h1>Strict control examples</h1>
+  <p class="lead">These examples use the current strict core, its component-owned data APIs, and the same browser bundle shipped in the package.</p>
+  <p>The migration is unreleased. Code entry, date selection and strength feedback still require application validation; these demos do not submit information.</p>
+  {controls.map(name => <section aria-labelledby={`demo-${name}`}>
+    <h2 id={`demo-${name}`}>{displayName(name)}</h2>
+    <div class="docs-example" data-control={name} set:html={strictControlExamples[name]}></div>
+    <p><a href={`/components/${name}/`}>Read the {displayName(name)} guide</a></p>
+  </section>)}
+</DocsLayout>

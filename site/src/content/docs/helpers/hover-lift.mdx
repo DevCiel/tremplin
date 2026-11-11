@@ -1,0 +1,58 @@
+---
+{
+  "title": "Hover lift",
+  "description": "Give interactive elements a small elevation cue on hover and visible keyboard focus.",
+  "group": "Helpers",
+  "lead": "Give interactive elements a small elevation cue on hover and visible keyboard focus.",
+  "order": 1
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { helpersExamples as samples } from '../../../data/helpers-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"How it works"}</h2>
+
+<p><Html source={"The pinned helper applies translateY(-.25rem) and a shadow on hover and focus-visible. It owns four tokens: transition duration (.2s), timing (ease), transform and shadow. Its default shadow references --trm-box-shadow-lg. Use a native link or button; the class supplies no activation behavior."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Example"}</h2>
+
+<p><Html source={"Hover or keyboard-focus the link. Its destination and focus boundary remain understandable without movement. The helper is included in the full and utilities-only entries."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/hover-lift"][1].example} /></div>
+
+<Code sample={samples["helpers/hover-lift"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"CSS"}</h2>
+
+<p><Html source={"Set tokens on the element or in an application rule after the framework. Helper-owned declarations supersede values inherited from a parent. The shared transition, reduced-motion and shadow Sass switches control generated effects; disabling transitions or shadows does not remove the transform."} /></p>
+
+<Code sample={samples["helpers/hover-lift"][2].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Sass token map"}</h2>
+
+<p><Html source={"Configure the owning helper before loading the full entry. Map values merge with defaults; null removes a token declaration, not the declaration consuming that token. Configure the shared config module first if you also change its options."} /></p>
+
+<Code sample={samples["helpers/hover-lift"][3].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Reduced motion"}</h2>
+
+<p><Html source={"With a reduced-motion preference, the helper keeps its raised state but omits its transition. An application that wants no translation can override the transform token in that media query. Setting enable-reduced-motion to false explicitly opts out of the conditional transition."} /></p>
+
+<Code sample={samples["helpers/hover-lift"][4].code[0]} standalone={true} />
+
+</section>

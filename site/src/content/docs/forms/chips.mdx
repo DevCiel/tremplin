@@ -1,0 +1,75 @@
+---
+{
+  "title": "Chips",
+  "description": "Edit a collection with keyboard selection and cancelable add/remove behavior.",
+  "group": "Forms",
+  "lead": "Edit values with a labelled chip collection and explicit application submission.",
+  "order": 10
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Explicit demo contrast customization"}</h2>
+
+<p>{"These examples opt into application CSS with darker solid backgrounds and emphasized foregrounds. This is not a change to framework defaults. Copy this CSS and the demo-contrast wrapper together. Calendar examples also pass a styles option to the dependency."}</p>
+
+<Code sample={examples["forms/chips"][0].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Overview"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/chips"][1].example} /></div>
+
+<Code sample={examples["forms/chips"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Explicit demo accessibility CSS"}</h2>
+
+<p>{"These guides add an individual chip focus outline and readable Combobox placeholder/no-results text as explicit application styling. Copy this CSS with the markup; the pinned core remains unchanged."}</p>
+
+<Code sample={examples["forms/chips"][2].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Keyboard and cancellation"}</h2>
+
+<p>{"clear() removes all chips directly and emits change, bypassing per-chip remove cancellation. removeSelected() uses remove() and respects each veto."}</p>
+
+<p>{"Duplicate matching is case-sensitive. Initial seeded chips are initialized rather than revalidated against duplicates/maxChips; rejected Enter/blur attempts can discard the attempted text."}</p>
+
+<p>{"Generated dismiss buttons use aria-label=Remove and tabindex=-1; authored controls keep their own labels and tab order. The chip itself handles keyboard removal."}</p>
+
+<p>{"Native disabled input styling does not freeze existing-chip keyboard handlers or programmatic add/remove. dismissible=false is not read-only mode."}</p>
+
+<p>{"RTL changes layout but not physical ArrowLeft/Right DOM-index navigation. Do not advertise a roving ARIA listbox or automatic selection announcements."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Explicit form submission"}</h2>
+
+<p>{"Chip spans do not become successful form controls. The following application handler serializes a copied change-event array into one hidden JSON field and updates an existing status; it makes no network request. Validate the collection on the server."}</p>
+
+<div class="docs-example"><Html source={examples["forms/chips"][4].example} /></div>
+
+<Code sample={examples["forms/chips"][4].code[0]} standalone={false} />
+
+<Code sample={examples["forms/chips"][4].code[1]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Options, methods and cleanup"}</h2>
+
+<p>{"All seven source options and public methods are documented on "}<a href="/components/chips/">{"Chips"}</a>{". clear() bypasses removal vetoes; disabling the input and dismissible=false are not full read-only controls. Dispose does not restore original markup/tabindex. Preserve the approved icon sanitizer and duplicate-order exception."}</p>
+
+</section>

@@ -1,0 +1,37 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro'
+import { frameworkVersion, registryInstallCommand } from '../data/installation-examples'
+---
+<DocsLayout title="Build faster. Launch further." description="Tremplin is an accessible, token-first frontend framework by Devciel.">
+  <section class="docs-hero">
+    <a class="badge docs-announcement" href="/getting-started/install/">Tremplin {frameworkVersion} · Development preview <span aria-hidden="true">→</span></a>
+    <h1>Tremplin is the open source<br class="docs-hero-break"> framework for everyone</h1>
+    <p class="lead">Build responsive, accessible interfaces with a framework-agnostic toolkit. Familiar markup, CSS-first theming, reusable components, and typed JavaScript interactions help you turn your next idea into a working interface.</p>
+    <p class="docs-hero-learn"><a href="/components/">Explore Tremplin components.</a></p>
+    <div class="docs-hero-actions mt-4"><div class="docs-install-command"><code>{registryInstallCommand}</code><button class="docs-copy" type="button" aria-label="Copy package installation command">Copy</button></div><a class="btn-solid theme-inverse btn-lg" href="/getting-started/ai/"><svg viewBox="0 0 16 16" aria-hidden="true"><use href="/docs-icons.svg#tools"></use></svg>For AI tools</a><a class="btn-solid theme-accent btn-lg" href="/getting-started/install/"><svg viewBox="0 0 16 16" aria-hidden="true"><use href="/docs-icons.svg#book-half"></use></svg>Read the docs</a></div>
+    <p class="docs-version-links">Registry command for the planned release. Until publication is verified, use <a href="/getting-started/install/#section-11">the local package</a>.</p>
+    <p class="docs-version-links">Unreleased preview · <a href="/getting-started/install/">Local installation</a> · <a href="/getting-started/download/">Downloads &amp; integrity</a></p>
+  </section>
+  <section class="docs-home-features" aria-label="Framework highlights">
+    <article class="docs-home-feature"><span>01</span><h2>Familiar by design</h2><p>Compose interfaces with concise classes such as <code>.container</code>, <code>.grid</code>, <code>.btn-solid</code>, and <code>.card</code>.</p></article>
+    <article class="docs-home-feature"><span>02</span><h2>Modern underneath</h2><p>Logical properties, container queries, CSS variables, ESM, strict TypeScript, and tree-shakable plugins.</p></article>
+    <article class="docs-home-feature"><span>03</span><h2>Accessible from the start</h2><p>Keyboard behavior, focus management, reduced motion, RTL, and browser-tested interaction contracts.</p></article>
+  </section>
+  <section class="docs-home-showcase" aria-labelledby="showcase-title">
+    <div class="docs-showcase-intro">
+      <p class="docs-eyebrow">From markup to momentum</p>
+      <h2 id="showcase-title">Your next interface<br>starts here.</h2>
+      <p>Start with familiar HTML. Add responsive layout, accessible components, and your own design tokens as you go.</p>
+      <a class="docs-text-link" href="/components/">Explore the components <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="docs-showcase-panel">
+      <div class="docs-showcase-label"><span class="docs-preview-dot" aria-hidden="true"></span> Live component preview <span>HTML + Tremplin</span></div>
+      <div class="docs-showcase-preview">
+        <span class="docs-showcase-symbol" aria-hidden="true">↗</span>
+        <div><span class="docs-showcase-tag">READY WHEN YOU ARE</span><h3>A little idea. A big beginning.</h3><p>Everything you need to take the first step.</p></div>
+        <a class="btn-solid theme-accent" href="/getting-started/install/">Start building <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="docs-showcase-source"><span>HTML</span><pre tabindex="0" aria-label="Preview HTML source"><code>{'<a class="btn-solid theme-accent" href="/getting-started/install/">\n  Start building &rarr;\n</a>'}</code></pre></div>
+    </div>
+  </section>
+</DocsLayout>

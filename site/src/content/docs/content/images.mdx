@@ -1,0 +1,75 @@
+---
+{
+  "title": "Images",
+  "description": "Keep images responsive, dimensioned, and meaningful alongside captions and alternative text.",
+  "group": "Content",
+  "lead": "Keep images responsive, dimensioned, and meaningful alongside captions and alternative text.",
+  "order": 2
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { contentExamples as samples } from '../../../data/content-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Responsive images</h2>
+
+<p>{"img-fluid sets physical max-width:100% and height:auto. It is opt-in, not a global reset. Intrinsic width/height reserve aspect-ratio space. Supply meaningful alternative text or alt=\"\" for decorative images."}</p>
+
+<div class="docs-example"><Html source={samples["content/images#0"].example} /></div>
+
+<Code sample={samples["content/images#0"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Image thumbnails</h2>
+
+<p>img-thumbnail adds padding, a border, and a themed background. It is an appearance class, not an image-loading or cropping feature.</p>
+
+<div class="docs-example"><Html source={samples["content/images#1"].example} /></div>
+
+<Code sample={samples["content/images#1"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Aligning images</h2>
+
+<p>Images remain inline by default. Add d-block and constrain width before mx-auto; text-center can center an inline image. Use layout utilities for image groups.</p>
+
+<div class="docs-example"><Html source={samples["content/images#2"].example} /></div>
+
+<Code sample={samples["content/images#2"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Figures</h2>
+
+<p>Use figure with figcaption when the caption belongs to the image. A visible caption does not automatically replace an image’s alternative text; decide how the two complement each other.</p>
+
+<div class="docs-example"><Html source={samples["content/images#3"].example} /></div>
+
+<Code sample={samples["content/images#3"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Picture</h2>
+
+<p>Put responsive sizing on the img fallback inside picture. This example uses the same local SVG in both branches; production art direction can supply genuinely different crops or resolutions. Do not advertise an image format you have not actually provided.</p>
+
+<Code sample={samples["content/images#4"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">CSS and loading</h2>
+
+<p>{"Thumbnail and figure maps expose their consumed --trm-* tokens. Figure uses a column flex layout and gap; no figure-img alias is required. Focused modules do not include the complete root/reset. Lazy-load suitable off-screen images, not the primary above-the-fold image."}</p>
+
+<Code sample={samples["content/images#5"].code[0]} standalone={true} />
+
+</section>

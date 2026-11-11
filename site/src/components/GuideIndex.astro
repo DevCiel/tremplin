@@ -1,0 +1,7 @@
+---
+import { mdxGuideMetadata } from '../libs/mdx-metadata'
+interface Props { group: string }
+const { group } = Astro.props
+const guides = mdxGuideMetadata(group)
+---
+<ul>{guides.map(guide => <li><a href={`/${guide.slug}/`}>{guide.title}</a> — {guide.description}</li>)}</ul>

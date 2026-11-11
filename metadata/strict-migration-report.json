@@ -1,0 +1,13 @@
+{
+  "commit": "9062790fdb2379593a2973416dc5a3bfb203e4e3",
+  "profile": "bootstrap6-clone-first-legacy-free",
+  "breakingChanges": true,
+  "releaseReady": false,
+  "baseline": "metadata/strict-api-baseline.json",
+  "coreModules": 137,
+  "coreComponents": 20,
+  "deliveryTransition": "metadata/core-entrypoint-transition.json",
+  "packageScope": "metadata/core-package-scope.json",
+  "securityExceptions": "metadata/bootstrap6-security-patches.json",
+  "explanation": "Approved clone-first contract replaces the retired hybrid baseline. No compatibility fallback is shipped. Exact source parity and six documented SEC-001/A11Y-001 patches constrain the core; optional APIs remain separate. Publishing is still blocked pending remaining acceptance gates."
+}

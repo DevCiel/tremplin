@@ -1,0 +1,108 @@
+---
+{
+  "component": "nav",
+  "title": "Nav",
+  "description": "Nav component documentation for Tremplin.",
+  "lead": "Style ordinary navigation separately from panel-switching Tab behavior.",
+  "variants": [
+    {
+      "title": "List markup and disabled destinations",
+      "description": "Keep the list inside a named navigation landmark. aria-current identifies the current page; the disabled example has no href and is removed from the tab order."
+    },
+    {
+      "title": "Tabs appearance",
+      "description": "nav-tabs changes appearance only. These are navigation links, not a tablist or a panel-switching widget; use the Tab plugin for that behavior."
+    },
+    {
+      "title": "Pills",
+      "description": "Pills compose a real theme for the selected background and contrast foreground. The inverse theme avoids relying on an untested semantic color pair."
+    },
+    {
+      "title": "Vertical pills and underline",
+      "description": "Use the dedicated vertical-pill modifier, or compose a flex direction on an underline navigation."
+    },
+    {
+      "title": "Fill and justify",
+      "description": "Fill grows items in proportion to their contents; justified links have equal flex bases. Neither class supplies a navigation controller."
+    },
+    {
+      "title": "Responsive alignment",
+      "description": "Responsive prefix utilities switch the column to a row at sm. Nav already wraps; logical alignment follows document direction."
+    },
+    {
+      "title": "Navigation with a Menu",
+      "description": "An ordinary navigation can contain a named Menu trigger. Menu JavaScript supplies opening, keyboard behavior and dismissal; no tab roles are added to navigation links."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Logical layout and inherited tokens adapt to the local theme and direction."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Follow enabled native links and controls; ordinary navigation is not a roving-focus tab widget."
+    },
+    {
+      "keys": "Enter",
+      "behavior": "Follow a focused link. Native buttons retain their own activation semantics."
+    },
+    {
+      "keys": "Arrow keys / Escape",
+      "behavior": "Only an initialized Menu or Tab widget supplies its corresponding keyboard policy; nav CSS does not."
+    }
+  ],
+  "guidelines": [
+    "Name navigation landmarks and identify current destinations with aria-current.",
+    "Do not put navigation roles on the list itself or ARIA tab roles on ordinary links, even when styled as tabs.",
+    "A disabled class or aria-disabled is not an activation guard; deliberately remove or guard a disabled destination.",
+    "Use the actual Tab plugin and its selected/panel semantics for dynamic tabbed regions.",
+    "Menus require Menu JavaScript. Keep their owning trigger and menu names explicit.",
+    "Verify long links at narrow widths. Wrapping does not break a single nowrap link into words."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("nav")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="nav" />
+
+{componentDetail("nav").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="nav" />
+</>}
+
+{componentDetail("nav").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("nav").sass} standalone={true} />
+</>}
+
+{componentDetail("nav").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="nav" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="nav" />
+
+{documentedComponents.find(component => component.name === "nav").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="nav" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Nav styles and ordinary navigation links are CSS-only. The Menu example requires Menu JavaScript; dynamic tab panels require the separate Tab plugin.</p>

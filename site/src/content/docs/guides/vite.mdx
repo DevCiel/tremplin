@@ -1,0 +1,69 @@
+---
+{
+  "title": "Vite",
+  "description": "Bundle the local package with Vite using standard CSS and ESM imports.",
+  "group": "Guides",
+  "lead": "Bundle the local package with Vite using standard CSS and ESM imports.",
+  "order": 2
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { workflowExamples as samples } from '../../../data/workflow-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Scope and checkout status</h2>
+
+<p>Keep consumer experiments in a separate directory so their build output cannot overwrite the framework distribution. Use the Node version required by your chosen bundler. See <a href="/getting-started/install/">{"installation"}</a> and <a href="/getting-started/bundlers/">{"the detailed bundler reference"}</a>.</p>
+
+<div class="docs-callout docs-callout-info">This is Tremplin-specific setup/adoption guidance, not a verbatim or exhaustive copy of upstream historical documentation. This checkout is unreleased: use a locally packed tarball, not an unverified public npm/CDN package.</div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Install the local package</h2>
+
+<p>In the framework checkout, run npm pack and copy the generated archive into your separate consumer project. Then install that exact archive and required positioning/calendar peers.</p>
+
+<Code sample={samples["guides/vite#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Prepare the consumer</h2>
+
+<p>Use a root index.html pointing to src/main.js with a module script. Run commands in the separate consumer, not the framework checkout.</p>
+
+<Code sample={samples["guides/vite#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Import CSS and JavaScript</h2>
+
+<p>Save this as src/main.js. Root imports register the data APIs; individual subpaths export a default component for targeted programmatic use. Optional Tremplin extensions are separate. See <a href="/getting-started/javascript/">{"JavaScript"}</a> and <a href="/customize/optimize/">{"optimization and distribution formats"}</a>.</p>
+
+<Code sample={samples["guides/vite#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Add accessible markup</h2>
+
+<p>Put this body in a complete HTML document with lang, charset, viewport and title. Keep names, labels and the native dialog element. Test opening, Escape and focus return; await shown/hidden events before dependent overlay actions.</p>
+
+<Code sample={samples["guides/vite#4"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Entry and production build</h2>
+
+<p>Inspect the emitted CSS, JavaScript and SVG requests. Check the built preview, not only the dev server. Do not hardcode source import URLs into your production HTML.</p>
+
+<Code sample={samples["guides/vite#5"].code[0]} standalone={true} />
+
+<Code sample={samples["guides/vite#5"].code[1]} standalone={true} />
+
+</section>

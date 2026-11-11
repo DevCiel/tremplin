@@ -1,0 +1,21 @@
+// Tremplin extension: labeled content divider.
+@use '../config' as *;
+@use '../mixins/tokens' as *;
+
+$divider-tokens: () !default;
+$divider-tokens: defaults((
+  --trm-divider-gap: .75rem,
+  --trm-divider-color: var(--trm-fg-2),
+  --trm-divider-border-color: var(--trm-border-color),
+  --trm-divider-border-width: 1px,
+  --trm-divider-margin-y: 1rem,
+), $divider-tokens);
+
+@layer custom {
+  .divider { @include tokens($divider-tokens); display: flex; align-items: center; gap: var(--trm-divider-gap); margin-block: var(--trm-divider-margin-y); color: var(--trm-divider-color); text-align: center; }
+  .divider::before, .divider::after { flex: 1; border-block-start: var(--trm-divider-border-width) solid var(--trm-divider-border-color); content: ''; }
+  .divider-start::before, .divider-end::after { display: none; }
+  .divider-vertical { align-self: stretch; flex-direction: column; min-block-size: 3rem; margin-block: 0; margin-inline: var(--trm-divider-margin-y); }
+  .divider-vertical::before, .divider-vertical::after { border-block-start: 0; border-inline-start: var(--trm-divider-border-width) solid var(--trm-divider-border-color); }
+  .divider-strong { --trm-divider-border-width: 2px; --trm-divider-border-color: currentcolor; }
+}

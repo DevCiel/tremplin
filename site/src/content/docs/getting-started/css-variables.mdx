@@ -1,0 +1,85 @@
+---
+{
+  "title": "CSS variables",
+  "description": "Apply Tremplin runtime tokens globally, per component, and in light or dark themes.",
+  "group": "Getting started",
+  "lead": "Change visual tokens in ordinary CSS without rebuilding the framework.",
+  "order": 3
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { gettingStartedExamples as samples } from '../../../data/getting-started-examples'
+import { frameworkVersion, installCommand, localPackage, requiredPeers, packageMetadata as pkg } from '../../../data/installation-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">1. Load your overrides last</h2>
+
+<p>Link your application stylesheet after Tremplin. Inspect the computed variables in browser developer tools before changing a token.</p>
+
+<Code sample={samples["css-variables#0"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">2. Override root variables</h2>
+
+<p>Set a foreground color alongside its background token. Existing explicit light/dark theme selectors can override root values, so include your selected theme in global brand overrides.</p>
+
+<Code sample={samples["css-variables#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">3. Tune an individual component</h2>
+
+<p>Set component variables on a custom class rather than changing every button.</p>
+
+<div class="docs-example"><Html source={samples["css-variables#2"].example} /></div>
+
+<Code sample={samples["css-variables#2"].code[0]} standalone={false} />
+
+<Code sample={samples["css-variables#2"].code[1]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">4. Select a color mode</h2>
+
+<p>Use <code>{"data-trm-theme=\"light\""}</code>, <code>{"dark"}</code>, or <code>{"auto"}</code>. Automatic mode follows the operating system. A theme switcher should offer an understandable choice and preserve the user’s selection.</p>
+
+<Code sample={samples["css-variables#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">5. Know the boundary</h2>
+
+<p>CSS variables cannot be substituted directly into media-query conditions. Change generated breakpoint values and spacing maps through Sass instead. Some components define their own local variables, so consult that component’s variables table when a root override has no effect.</p>
+
+<div class="table-responsive"><table class="table table-bordered">
+<thead><tr><th scope="col">Token</th><th scope="col">Purpose</th></tr></thead>
+<tbody>
+<tr><td><code>{"--trm-body-bg / --trm-body-color"}</code></td><td><code>{"Document background and text."}</code></td></tr>
+<tr><td><code>{"--trm-primary / --trm-primary-contrast"}</code></td><td><code>{"Primary semantic color and contrasting text."}</code></td></tr>
+<tr><td><code>{"--trm-focus-color"}</code></td><td><code>{"Focus indicator color."}</code></td></tr>
+<tr><td><code>{"--trm-btn-bg / --trm-btn-color"}</code></td><td><code>{"Local button appearance."}</code></td></tr>
+<tr><td><code>{"--trm-radius"}</code></td><td><code>{"Base border radius."}</code></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">6. Verify the result</h2>
+
+<p>Continue to the detailed <a href="/customize/css-variables/">{"customization reference"}</a> and <a href="/customize/color-modes/">{"color modes guide"}</a>.</p>
+
+<ol class="docs-steps">
+<li>Test text and control contrast in every theme you expose.</li>
+<li>Keep a visible keyboard focus indicator.</li>
+<li>Check components inside themed subtrees as well as at document level.</li>
+</ol>
+
+</section>

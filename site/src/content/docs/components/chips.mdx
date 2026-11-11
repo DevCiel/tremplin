@@ -1,0 +1,162 @@
+---
+{
+  "component": "chips",
+  "title": "Chips",
+  "description": "Chips component documentation for Tremplin.",
+  "lead": "Edit a collection of values with keyboard selection, cancellation and dismiss controls.",
+  "variants": [
+    {
+      "title": "Editable collection",
+      "description": "Enter adds a trimmed value. Generated dismiss controls are named Remove; existing authored controls may have value-specific labels."
+    },
+    {
+      "title": "Maximum values",
+      "description": "The maximum includes the initial Design chip. Rejected Enter/blur attempts still clear input text; provide application feedback when rejection matters."
+    },
+    {
+      "title": "Duplicate values",
+      "description": "Repeated values are allowed explicitly; string equality is case-sensitive. The approved removal fix preserves remaining DOM/value order."
+    },
+    {
+      "title": "Validation state",
+      "description": "This authored error is an application state, not automatic Chips validation. Put invalid state and descriptions on the actual editable input."
+    },
+    {
+      "title": "Literal values and no blur creation",
+      "description": "null disables separator splitting, and false prevents blur creation. Neither option disables Enter or keyboard removal."
+    },
+    {
+      "title": "Themed collection",
+      "description": "Theme inheritance and actual chip-input tokens customize presentation. The explicit demo contrast CSS is not a changed core default."
+    },
+    {
+      "title": "Custom dismiss icon",
+      "description": "This authored SVG option is sanitized when new dismiss buttons are created. Existing authored controls are not replaced."
+    },
+    {
+      "title": "Disabled empty input",
+      "description": "An empty native disabled input cannot receive user typing. Disabling it does not freeze the programmatic API or provide a complete existing-chip keyboard lock."
+    },
+    {
+      "title": "Explicit submitted array",
+      "description": "The copied application handler updates this hidden JSON field from change events. Chip spans and the unnamed ghost input do not serialize themselves."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Layout follows direction, but chip ArrowLeft/Right navigation follows DOM indices and is not reversed for RTL."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Enter / separator / paste",
+      "behavior": "Enter attempts one value; a configured separator splits typed/pasted input. Rejected Enter/blur attempts clear nonempty input."
+    },
+    {
+      "keys": "Backspace / Delete on empty input",
+      "behavior": "Selects and focuses the last chip first; a subsequent delete removes selected chips unless a remove event is canceled."
+    },
+    {
+      "keys": "ArrowLeft / ArrowRight / Home / End on chips",
+      "behavior": "Moves real focus/selection through DOM order; Right past the last chip or End returns to the input. Shift extends a range."
+    },
+    {
+      "keys": "Ctrl/Cmd+A on a chip",
+      "behavior": "Selects all chips; this is not an input-level select-all override."
+    },
+    {
+      "keys": "Escape",
+      "behavior": "From a chip: clears selection and focuses input. From input: clears input/selection and blurs it."
+    }
+  ],
+  "guidelines": [
+    "Use getValues() for a copied array, not a .values property. A supplied ghost input needs a real label and a deliberate placeholder.",
+    "Chips has no automatic submitted array, live region, role=option or aria-selected synchronization. The JSON example and focus/contrast CSS are explicitly application-owned.",
+    "clear() removes all chips directly and emits change, bypassing per-chip remove cancellation. removeSelected() uses remove() and respects each veto.",
+    "Duplicate matching is case-sensitive. Initial seeded chips are initialized rather than revalidated against duplicates/maxChips; rejected Enter/blur attempts can discard the attempted text.",
+    "Generated dismiss buttons use aria-label=Remove and tabindex=-1; authored controls keep their own labels and tab order. The chip itself handles keyboard removal.",
+    "Native disabled input styling does not freeze existing-chip keyboard handlers or programmatic add/remove. dismissible=false is not read-only mode.",
+    "RTL changes layout but not physical ArrowLeft/Right DOM-index navigation. Do not advertise a roving ARIA listbox or automatic selection announcements.",
+    "Preserve approved icon sanitization and the duplicate-order removal fix. Dispose removes input listeners/base instance state, not generated markup or tabindex; callers own DOM cleanup."
+  ],
+  "events": {
+    "add.trm.chips": "Cancelable wrapper event after trimming/duplicate/limit checks, before insertion. value and relatedTarget are direct event properties.",
+    "change.trm.chips": "Wrapper notification after accepted add/remove or clear(), with a copied values array. Not a cancelable mutation gate or automatic form serialization.",
+    "remove.trm.chips": "Cancelable wrapper event before remove(), with value, chip and relatedTarget. clear() bypasses this gate.",
+    "select.trm.chips": "Wrapper selection notification with selected values. Clear/focus paths can emit an empty selection first; DOM mutation is not implied."
+  }
+}
+---
+
+import { choiceDemoCss, chipsSubmissionJavascript } from '../../../data/choice-input-docs'
+import Contrast from '../../../components/component/Contrast.astro'
+import { componentApi } from '../../../data/component-api'
+import ChoiceOptions from '../../../components/component/ChoiceOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+<div class="docs-callout"><strong>Explicit demo accessibility CSS.</strong> These guides give focused chips an individual outline and emphasize Combobox placeholder/no-results text. Copy this application CSS with the markup; pinned core styles remain unchanged.</div>
+<Code source={choiceDemoCss} standalone={true} plain={true} label="Copy choice input accessibility CSS" />
+<Contrast />
+
+
+<Example markup={componentExample("chips")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="chips" />
+
+{componentDetail("chips").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="chips" />
+</>}
+
+{componentDetail("chips").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("chips").sass} standalone={true} />
+</>}
+
+{componentDetail("chips").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="chips" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="chips" />
+
+{documentedComponents.find(component => component.name === "chips").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="chips" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("chips").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("chips").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<p>Configure these optional values before construction; getOrCreateInstance does not reconfigure an existing instance.</p>
+<ChoiceOptions name="chips" />
+<div class="docs-callout"><strong>Explicit application submission.</strong> The example{"'"}s hidden JSON value and status text are maintained by this handler, not by Chips. It does not send a request.</div>
+<Code source={chipsSubmissionJavascript} standalone={true} plain={true} label="Copy Chips submission handler" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="chips" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="chips" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="chips" />
+<p class="mt-4"><a href="/api/chips/">View the generated {componentApi("chips").definition.className}{" API reference →"}</a></p>

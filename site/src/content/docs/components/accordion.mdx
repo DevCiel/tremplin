@@ -1,0 +1,101 @@
+---
+{
+  "component": "accordion",
+  "title": "Accordion",
+  "description": "Accordion component documentation for Tremplin.",
+  "lead": "Build exclusive or independent disclosure groups with native details and summary elements.",
+  "variants": [
+    {
+      "title": "Exclusive native groups",
+      "description": "Matching name attributes create native exclusivity. No Collapse classes, controls or JavaScript are required; names must be distinct between separate examples."
+    },
+    {
+      "title": "Compact accordion",
+      "description": "accordion-sm supplies actual compact padding, radius and font tokens."
+    },
+    {
+      "title": "Flush accordion",
+      "description": "Flush removes the outer inline borders and edge rounding for a parent surface."
+    },
+    {
+      "title": "Gapped accordion",
+      "description": "The gap lives on the flex-column accordion. Each item retains its own border and rounded clipping while the panel changes size."
+    },
+    {
+      "title": "Independent panels",
+      "description": "Omit name to keep multiple panels open. Native details supports this directly, rather than through a separate always-open plugin."
+    },
+    {
+      "title": "Nested native groups",
+      "description": "Use a different name for each level so parent and child exclusivity remain independent."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "The decorative chevron uses actual accordion-icon styling and rotates with open. It is excluded from the accessible summary name."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Focus native summaries and enabled interactive panel content in DOM order."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Toggle the focused native summary; the browser exposes its expanded state."
+    }
+  ],
+  "guidelines": [
+    "Use native details with a first-child summary, a visible label and an optional aria-hidden decorative chevron.",
+    "Matching name values provide exclusivity; omit name for independent panels and use distinct values for nested groups and separate examples.",
+    "Do not add redundant button roles, aria-expanded, Collapse data attributes or accordion-button/accordion-collapse compatibility classes.",
+    "Listen for the native toggle event or set the details open property in application code. There is no Accordion JavaScript plugin.",
+    "Expand-all application code must remove exclusive name grouping before opening every panel; close panels before restoring their shared name.",
+    "Panel interpolation is a progressive enhancement. Unsupported browsers toggle immediately; reduced-motion behavior remains native/CSS-driven.",
+    "Keep critical instructions available and test native keyboard and assistive-technology behavior."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("accordion")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="accordion" />
+
+{componentDetail("accordion").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="accordion" />
+</>}
+
+{componentDetail("accordion").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("accordion").sass} standalone={true} />
+</>}
+
+{componentDetail("accordion").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="accordion" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="accordion" />
+
+{documentedComponents.find(component => component.name === "accordion").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="accordion" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Accordion uses native details and summary elements, the open property and the native toggle event. There is no Accordion JavaScript plugin and no Collapse dependency.</p>

@@ -1,0 +1,87 @@
+---
+{
+  "component": "card",
+  "title": "Card",
+  "description": "Card component documentation for Tremplin.",
+  "lead": "Group related content and actions in a flexible content container.",
+  "variants": [
+    {
+      "title": "Header, body, and footer",
+      "description": "Optional regions provide their own padding and separators. Card bodies are flex columns with a consistent child gap."
+    },
+    {
+      "title": "Card groups",
+      "description": "A query container makes the group a joined Flexbox row at sm. Without that container, or below the threshold, cards remain stacked; this is not an auto-fit Grid."
+    },
+    {
+      "title": "List content",
+      "description": "A direct flush list can sit between header/body/footer regions. The card supplies seams and edge rounding."
+    },
+    {
+      "title": "Image cap and subtle header",
+      "description": "The decorative local image uses the top-edge class and img-fluid to preserve its aspect ratio. Subtle cards compose the theme roles for contextual headers and borders."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Body, cap and border tokens adapt to the local color mode while logical spacing follows direction."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Follow native links and controls in DOM order; Card adds no focus or navigation controller."
+    }
+  ],
+  "guidelines": [
+    "Use article for independently meaningful content, or choose an appropriately named section/div.",
+    "Use card-body for padding and its child gap. card-title and card-text are documented structural hooks, not separate typography styles.",
+    "Do not create an entire clickable card around nested controls. Keep real action targets clear.",
+    "Images need useful alt text unless decorative; card width and image dimensions are application choices.",
+    "Wrap responsive card groups in a query container, preserve DOM order and verify both stacked and joined layouts."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("card")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="card" />
+
+{componentDetail("card").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="card" />
+</>}
+
+{componentDetail("card").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("card").sass} standalone={true} />
+</>}
+
+{componentDetail("card").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="card" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="card" />
+
+{documentedComponents.find(component => component.name === "card").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="card" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>This is a CSS component and does not require Tremplin JavaScript.</p>

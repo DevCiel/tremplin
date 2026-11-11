@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gettremplin.com/schema/deprecations.json",
+  "type": "object",
+  "required": ["framework", "deprecations"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "framework": { "const": "Tremplin" },
+    "deprecations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "name", "deprecatedIn", "removeIn", "replacement", "migration"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9.-]+$" },
+          "kind": { "enum": ["package-export", "javascript-module", "css-class", "css-custom-property", "sass-entrypoint", "sass-variable", "sass-function", "sass-mixin", "component-method", "component-option", "component-event", "data-attribute"] },
+          "component": { "type": "string" },
+          "name": { "type": "string" },
+          "deprecatedIn": { "type": "string" },
+          "removeIn": { "type": "string" },
+          "replacement": { "type": ["string", "null"] },
+          "migration": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

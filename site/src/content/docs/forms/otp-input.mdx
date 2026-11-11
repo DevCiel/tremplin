@@ -1,0 +1,57 @@
+---
+{
+  "title": "OTP input",
+  "description": "Use one native verification-code input with decorative visual slots.",
+  "group": "Forms",
+  "lead": "Use one native verification-code input with decorative visual slots.",
+  "order": 13
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Single input"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/otp-input"][0].example} /></div>
+
+<Code sample={examples["forms/otp-input"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Additional example"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/otp-input"][1].example} /></div>
+
+<Code sample={examples["forms/otp-input"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Behavior, submission and cleanup"}</h2>
+
+<p>{"Put data-trm-otp on a wrapper with one labelled named input. Slots/separators are generated and aria-hidden; no slot-by-slot ARIA or custom arrow roving contract is supplied."}</p>
+
+<p>{"Runtime event suffix is .trm.otpInput. The frozen scanner uses the filename otp-input; these pages correct presentation only, not core or baseline metadata."}</p>
+
+<p>{"setValue() sanitizes and can emit complete repeatedly, but not plugin input. clear() clears and focuses without plugin input/complete. User changes emit plugin input then completion checks."}</p>
+
+<p>{"Masking is visual only; no hashing, server verification, transport, expiry or attempt-limit policy is supplied. Do not log codes or automatically submit on a completion notification."}</p>
+
+<p>{"Readonly/disabled guard user handlers, not programmatic value methods. dispose removes generated slots/listeners/rendered class, but does not restore type, maxlength, inputmode, pattern or otp-input class."}</p>
+
+<p>{"The RTL pointer algorithm is not direction-aware. Confirm real-device tap positions, SMS/password-manager autofill and assistive technology behavior separately from automated desktop checks."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Source-verified usage"}</h2>
+
+<p>{"See the "}<a href="/components/otp-input/">{"component guide"}</a>{" for all options/defaults, actual events, tokens and additional examples. Client interaction is not server validation."}</p>
+
+<Code sample={examples["forms/otp-input"][3].code[0]} standalone={true} />
+
+</section>

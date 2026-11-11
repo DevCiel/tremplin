@@ -1,0 +1,96 @@
+---
+{
+  "component": "skeleton",
+  "title": "Skeleton",
+  "description": "Skeleton component documentation for Tremplin.",
+  "lead": "Reserve layout space while content is loading.",
+  "variants": [
+    {
+      "title": "Width and sizing",
+      "description": "Set width with columns, width utilities or inline styles. Typographic sizing changes minimum height; empty spans stay decorative."
+    },
+    {
+      "title": "Color",
+      "description": "A placeholder uses currentColor with reduced opacity. These are decorative blocks, not readable text or status messages."
+    },
+    {
+      "title": "Wave and pulse",
+      "description": "Wave masks its element; pulse animates descendant placeholders. The pin also exports placeholder-glow as an upstream alias for pulse; new examples use pulse."
+    },
+    {
+      "title": "Animated text",
+      "description": "Wave can animate text directly. Keep duplicate copy decorative when adjacent status explains loading."
+    },
+    {
+      "title": "Loading card and loaded content",
+      "description": "A static before/after comparison, not a working request. The busy region contains decorative placeholders and native disabled controls; the status message is outside it."
+    },
+    {
+      "title": "Busy content region",
+      "description": "The application replaces shapes, clears aria-busy and updates the separate status. aria-hidden alone does not announce loading or prevent focus."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Use core placeholder classes in either theme or direction. Skeleton is only a documentation URL alias; no skeleton CSS class or shimmer token is added."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "None",
+      "behavior": "Decorative shapes must not receive focus. Native disabled replacement controls stay out of the tab order."
+    }
+  ],
+  "guidelines": [
+    "Use placeholder, placeholder-wave and placeholder-pulse; the Skeleton route shares the implementation without a skeleton class.",
+    "Hide decorative shapes with aria-hidden=true. This does not disable interactive descendants; never leave focusable links inside hidden content.",
+    "Keep a loading/status message outside the aria-busy region so it is not withheld with pending content.",
+    "The application owns replacement, clearing aria-busy and completion announcements. There is no Placeholder JavaScript plugin.",
+    "Wave and pulse stop under reduced motion when enabled. The glow alias is exported by the pin, not invented compatibility CSS.",
+    "Configure placeholder-tokens for opacity and placeholder-wave-tokens for mask opacity. There are no placeholder-border-radius or skeleton-duration tokens."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("skeleton")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="skeleton" />
+
+{componentDetail("skeleton").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="skeleton" />
+</>}
+
+{componentDetail("skeleton").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("skeleton").sass} standalone={true} />
+</>}
+
+{componentDetail("skeleton").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="skeleton" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="skeleton" />
+
+{documentedComponents.find(component => component.name === "skeleton").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="skeleton" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>This is a CSS component and does not require Tremplin JavaScript.</p>

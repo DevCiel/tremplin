@@ -1,0 +1,5 @@
+---
+interface Props { source: string; standalone?: boolean; plain?: boolean; label?: string }
+const { source, standalone = false, plain = false, label } = Astro.props
+---
+<div class:list={['docs-code', standalone && 'docs-code-standalone']}><button class={plain ? 'docs-copy' : 'btn btn-sm btn-outline-secondary docs-copy'} type="button" aria-label={label}>Copy</button><pre tabindex="0"><code>{source}</code></pre></div>

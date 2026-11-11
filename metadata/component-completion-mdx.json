@@ -1,0 +1,82 @@
+{
+  "phase": "component-completion-authored-mdx",
+  "names": [
+    "chip",
+    "command-palette",
+    "data-table",
+    "divider",
+    "empty-state",
+    "forms",
+    "status",
+    "table",
+    "timeline"
+  ],
+  "canonical": [],
+  "extensions": [
+    "command-palette"
+  ],
+  "remaining": 0,
+  "previousPolicy": {
+    "file": "metadata/component-advanced-mdx.json",
+    "sha256": "98bedebace4d2aa152cdc5f705c786a1bdd741b410b0ac67f184b75efc38cbcd"
+  },
+  "historicalSources": {
+    "site/src/data/component-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-docs.before-completion.ts.txt",
+      "sha256": "dcd7acb7c43cd0e0c97083867019e5711451d9a5551c49ab8955040dbca8525c"
+    },
+    "site/src/data/chip-table-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/chip-table-docs.before-completion.ts.txt",
+      "sha256": "9be864cc767b921c98f9c9c4f459c885b14123589747a6d435529e29db4077d8"
+    },
+    "site/src/data/local-pattern-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/local-pattern-docs.before-completion.ts.txt",
+      "sha256": "c7beef43b42e71580fc5e02912d7c70162b37d557312074d581667cff39cd184"
+    },
+    "site/src/data/forms-overview-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/forms-overview-docs.before-completion.ts.txt",
+      "sha256": "18968667518c877bf19a06c79f6ca11c4f005d425ad21254ce6ed4b597c741c8"
+    },
+    "site/src/data/sheet-command-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/sheet-command-docs.before-completion.ts.txt",
+      "sha256": "d043d518360cc89b586c6d8df3c7bb4d2c5013bdcb4eb3c7de4410d11c739bf4"
+    },
+    "site/src/data/component-api.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-api.before-completion.ts.txt",
+      "sha256": "a47a4eb2db767b825d6070e46dd1f8890c20508a682f546ed5978b9be3de7724"
+    },
+    "site/src/libs/component-mdx.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-mdx.before-completion.ts.txt",
+      "sha256": "2dc1d3e121b3b6badedd0bc02e50e0ff46de31741a819a6e5cfc08eac59cc2aa"
+    },
+    "site/src/pages/components/[slug].astro": {
+      "snapshot": "tests/fixtures/mdx-migration/component-page.before-completion.astro.txt",
+      "sha256": "fee46ad63ee3c61235c20aceebde06d06fcc2a0aa91db635f324198254141db0"
+    }
+  },
+  "expectation": {
+    "snapshot": "tests/fixtures/mdx-migration/component-completion.before.json",
+    "sha256": "19966b33876a1dd1c5fe259fc75344157aed484a578e43773e42a30cd184da63"
+  },
+  "sources": {
+    "site/src/components/component/PaletteOptions.astro": "509bb92df5fce2ce167453b9dff8e90d79947ccc7a3ca5b871edb7fbf9aa8926",
+    "site/src/components/component/Style.astro": "c9e7a3c8055b0841068aed89bece42e6b0a12ed3e6b57e4852f4c1862c2a031d",
+    "site/src/content/docs/components/chip.mdx": "fa82ac2740e269c45423bf36ef604db8badd5305536a89780946e38ae1bd3beb",
+    "site/src/content/docs/components/command-palette.mdx": "e4b2ff371bbb2dc9462e5fba835f46fe23b60057c8ee73313398aa7e576ebf9c",
+    "site/src/content/docs/components/data-table.mdx": "db2f38981ec6ce999eb6dbb08a9661dfa9fc2261ae584f81dc956adc2622c23d",
+    "site/src/content/docs/components/divider.mdx": "2aad7dafa2d623db64a1d487bf1fb6f4d59cab95e8cd65646be94ef7f212cb6e",
+    "site/src/content/docs/components/empty-state.mdx": "89f0dbb3fffe8607d1a52ba9decac87fb5bdec1560fdca172d9057b64e48fd24",
+    "site/src/content/docs/components/forms.mdx": "fb53e53deb99aa872f0a1519b0d99934876a4d9a2b0913d8d24db327d665274c",
+    "site/src/content/docs/components/status.mdx": "3ac16aa6fa27a04824dd968b3ca3cfae1e0e1c02f115dbd89b382968d59e47b8",
+    "site/src/content/docs/components/table.mdx": "c675e93e01f904e1e7b7cfe445e8524464dbe6b2987923c56be0265bcbffef40",
+    "site/src/content/docs/components/timeline.mdx": "d1390e5cca1234bed499bf4f7f2ab2fe8efe996ae8d0498852b55d031a71eb97",
+    "site/src/data/chip-table-docs.ts": "8d11460087efe67bfc967299b25ca6ff9b480b51caa9810cae8d3639a6b61ce4",
+    "site/src/data/component-api.ts": "06bdbacef4487383c62a77d0db14c7afea5d5aba87c78d860d4591ed2e30b48d",
+    "site/src/data/component-docs.ts": "013778f56c2d9cf70860bd1336837f8f26a799af8c8847f379a6e10efa945444",
+    "site/src/data/forms-overview-docs.ts": "c9f28d6539a0b3402e12e35f19c95a06978d549b7b4cb0d9f732d7f66411e77c",
+    "site/src/data/local-pattern-docs.ts": "a94b99b48fee36462eea67c71691746527e53891b4ec343a9b041189dfc1ee7f",
+    "site/src/data/sheet-command-docs.ts": "46337f936907e965f4f23d2b6b2ca1ea4245726ca1985cb79bd832ac87b056a6",
+    "site/src/libs/component-mdx.ts": "9a9b2a313eefef788c96832caf5a8722bedf1ba808f0830c283e735b6dee51d7",
+    "site/src/pages/components/[slug].astro": "5d4696fea5d9c2fe017f35501e3b4e7b70450938ea4f01ecef5ef480d315a489"
+  }
+}

@@ -1,0 +1,65 @@
+---
+{
+  "title": "Gutters",
+  "description": "Control horizontal and vertical column spacing with row gutter variables.",
+  "group": "Layout",
+  "lead": "Control horizontal and vertical column spacing with row gutter variables.",
+  "order": 4
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { layoutExamples as samples } from '../../../data/layout-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">How they work</h2>
+
+<p>Horizontal gutters are column padding balanced by negative row margins. Vertical gutters use child block-start margins balanced by a negative row margin. This differs from native CSS Grid gap. Use an enclosing padded container and check wide content for overflow.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Horizontal gutters</h2>
+
+<div class="docs-example"><Html source={samples["layout/gutters#1"].example} /></div>
+
+<Code sample={samples["layout/gutters#1"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Vertical gutters</h2>
+
+<Code sample={samples["layout/gutters#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Horizontal and vertical gutters</h2>
+
+<p>{"g-* sets both axes, gx-* horizontal and gy-* vertical; responsive names use md:g-4/md:gx-4/md:gy-3. Gutters defaults to the spacer map: keys 0–12, g-3=.5rem, gx-4=.75rem. Base row gutters remain 1.5rem horizontal and 0 vertical."}</p>
+
+<div class="docs-example"><Html source={samples["layout/gutters#3"].example} /></div>
+
+<Code sample={samples["layout/gutters#3"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">No gutters</h2>
+
+<p>{"g-0 removes row gutters, not padding inside a card or the surrounding container. Do not replace it with gap-* on a fixed-width twelve-column Flexbox row: native gap adds space beyond column percentages and can force wrapping."}</p>
+
+<Code sample={samples["layout/gutters#4"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Change the gutters</h2>
+
+<p>{"Override --trm-gutter-x/y on rows locally. An explicit gutters map replaces the whole map; use valid lengths and omit unwanted keys. It does not change spacing utilities. Native CSS Grid gap uses --trm-gap with no legacy grid-gap fallback. Container padding, Flexbox gutters and Grid gap remain separate controls."}</p>
+
+<Code sample={samples["layout/gutters#5"].code[0]} standalone={true} />
+
+</section>

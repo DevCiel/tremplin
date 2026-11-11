@@ -1,0 +1,142 @@
+---
+{
+  "component": "dialog",
+  "title": "Dialog",
+  "description": "Dialog component documentation for Tremplin.",
+  "lead": "Present modal tasks with native dialog semantics and managed focus.",
+  "variants": [
+    {
+      "title": "Structured modal",
+      "description": "A real native modal with header/body/footer, an authored initial-focus close button and a named dismissal action. Data-API opening registers return to the visible opener."
+    },
+    {
+      "title": "Scrollable content",
+      "description": "The constrained body scrolls while the header/footer stay available. Scrollability is demonstrated with enough real content, not an open non-modal imitation."
+    },
+    {
+      "title": "Sizes and responsive fullscreen",
+      "description": "Use actual dialog size classes and breakpoint-down fullscreen syntax. Fullscreen is layout, not a separate JavaScript controller."
+    },
+    {
+      "title": "Non-modal dialog",
+      "description": "modal=false uses native show(), without top-layer inertness or root scroll locking. Escape works while focus remains inside; the application owns background interaction and focus policy."
+    },
+    {
+      "title": "Static backdrop",
+      "description": "Static backdrop and keyboard=false reject outside/Escape dismissal via hidePrevented. The visible close action still works; cancel.trm.dialog is a notification, not the cancelable hide gate."
+    },
+    {
+      "title": "Dialog swap",
+      "description": "A trigger inside one dialog swaps to another only after both show/hide gates accept. This is a swap, not support for arbitrarily stacked modal workflows."
+    },
+    {
+      "title": "Nested tooltip and popover",
+      "description": "Default body containers are redirected into the open dialog for top-layer rendering. First Escape closes the shown tip; the next can close the dialog. Modal tasks still belong in the dialog, not in a tooltip."
+    },
+    {
+      "title": "Instant and slide transitions",
+      "description": "Use actual instant/slide classes. show/hide return completion promises; calls during an active transition are ignored, not queued."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Put the theme/direction on the actual native dialog as well as its trigger region. Logical alignment is separate from focus policy."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Native showModal contains focus. Non-modal show does not make the rest of the document inert."
+    },
+    {
+      "keys": "Escape",
+      "behavior": "Requests hide when keyboard=true; disabled modal keyboard dismissal emits hidePrevented. A visible child tip handles the first Escape."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Activate a native button; a dismissal hook requests the cancelable hide operation."
+    }
+  ],
+  "guidelines": [
+    "Use a native dialog, a visible labelled heading, and an explicit dismissal control. Author autofocus on the safest useful control.",
+    "Default modal=true uses showModal and locks the root with dialog-open. Non-modal mode does neither.",
+    "Data-API triggers register focus restoration when visible. Direct programmatic callers must deliberately arrange their focus policy.",
+    "show/hide are cancelable starts; shown/hidden notify after the transition callback. cancel is not the same as cancelable hide.",
+    "Backdrop=false changes outside-click handling, not modal focus semantics. Use modal=false for non-modal behavior.",
+    "Do not bypass framework hide with raw close/form method=dialog when lifecycle/scroll cleanup is required; coordinate native/application actions explicitly.",
+    "Nested tips use the open dialog container by default and are hidden during framework close. handleUpdate is an API-consistency no-op in this implementation."
+  ],
+  "events": {
+    "cancel.trm.dialog": "Escape notification when keyboard dismissal is enabled; prevent hide.trm.dialog to veto closing. This is not the cancelable hide gate.",
+    "hidden.trm.dialog": "After native close and scroll cleanup; a data-API opener registers visible-trigger focus return.",
+    "hide.trm.dialog": "Cancelable start before hiding. Calls during an active transition are ignored.",
+    "hidePrevented.trm.dialog": "Rejected static-backdrop or disabled modal Escape attempt. Canceling this notification suppresses the bounce, not a pending hide.",
+    "show.trm.dialog": "Cancelable start on the native dialog, before opening; relatedTarget identifies the opener when supplied.",
+    "shown.trm.dialog": "After the entry callback; the controller no longer considers the panel transitioning."
+  }
+}
+---
+
+import { componentApi } from '../../../data/component-api'
+import ApiOptions from '../../../components/component/ApiOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("dialog")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="dialog" />
+
+{componentDetail("dialog").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="dialog" />
+</>}
+
+{componentDetail("dialog").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("dialog").sass} standalone={true} />
+</>}
+
+{componentDetail("dialog").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="dialog" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="dialog" />
+
+{documentedComponents.find(component => component.name === "dialog").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="dialog" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("dialog").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("dialog").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<ApiOptions name="dialog" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="dialog" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="dialog" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="dialog" />
+<p class="mt-4"><a href="/api/dialog/">View the generated {componentApi("dialog").definition.className}{" API reference →"}</a></p>

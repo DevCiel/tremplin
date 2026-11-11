@@ -1,0 +1,862 @@
+[
+  {
+    "name": "avatar",
+    "title": "Avatar",
+    "description": "Avatar component documentation for Tremplin.",
+    "lead": "Represent a person or organization with an image, initials, or grouped identities.",
+    "component": {
+      "name": "avatar",
+      "kind": "css",
+      "status": "stable-alpha",
+      "classes": [
+        "avatar",
+        "avatar-img",
+        "avatar-subtle",
+        "avatar-xs",
+        "avatar-sm",
+        "avatar-lg",
+        "avatar-xl",
+        "avatar-status",
+        "status-online",
+        "status-offline",
+        "status-busy",
+        "status-away",
+        "avatar-stack",
+        "avatar-stack-xs",
+        "avatar-stack-sm",
+        "avatar-stack-lg",
+        "avatar-stack-xl"
+      ],
+      "accessibility": "Give images meaningful alt text and initials a full accessible identity. Name presence indicators independently; do not communicate status only through color. Stacks are presentation, not focus managers; use native links/buttons for actual actions."
+    },
+    "example": "<div class=\"demo-contrast\">\n<div class=\"hstack gap-2\" role=\"group\" aria-label=\"Project members\"><span class=\"avatar \" role=\"img\" aria-label=\"Alex Brooks\">AB</span><span class=\"avatar \" role=\"img\" aria-label=\"Casey Davis\">CD</span><span class=\"avatar \" role=\"img\" aria-label=\"Ellis Ford\">EF</span></div>\n</div>",
+    "detail": {
+      "variants": [
+        {
+          "title": "Image avatars",
+          "description": "Inside avatar, avatar-img fills the wrapper with object-fit:cover. Standalone avatar-img needs dimensions. This local SVG is an original illustration, not a remote photo.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap gap-3\"><span class=\"avatar \"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Alex Brooks\" width=\"80\" height=\"80\"></span><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Casey Davis\" width=\"50\" height=\"50\"></div>\n</div>"
+        },
+        {
+          "title": "Initials and themes",
+          "description": "Give initials a full accessible identity. Solid theme supplies contrast; subtle uses theme foreground and subtle background.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap gap-3\"><span class=\"avatar \" role=\"img\" aria-label=\"Alex Brooks\">AB</span><span class=\"avatar theme-primary\" role=\"img\" aria-label=\"Casey Davis\">CD</span><span class=\"avatar avatar-subtle theme-primary\" role=\"img\" aria-label=\"Ellis Ford\">EF</span><span class=\"avatar theme-inverse\" role=\"img\" aria-label=\"Morgan North\">MN</span></div>\n</div>"
+        },
+        {
+          "title": "Sizes and custom size",
+          "description": "Core sizes are xs, sm, default, lg and xl. Use the real size token for custom values, not square/link/wrapper aliases.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap gap-3\"><span class=\"avatar avatar-xs\"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Alex Brooks\" width=\"80\" height=\"80\"></span><span class=\"avatar avatar-sm\"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Alex Brooks\" width=\"80\" height=\"80\"></span><span class=\"avatar \"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Alex Brooks\" width=\"80\" height=\"80\"></span><span class=\"avatar avatar-lg\"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Alex Brooks\" width=\"80\" height=\"80\"></span><span class=\"avatar avatar-xl\"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Alex Brooks\" width=\"80\" height=\"80\"></span><span class=\"avatar \" role=\"img\" aria-label=\"Large identity\" style=\"--trm-avatar-size: 5rem\">LI</span></div>\n</div>"
+        },
+        {
+          "title": "Status indicators",
+          "description": "A named status has a distinct shape and color. Identity remains on the image; status has its own role=img and complete label.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap gap-3\"><span class=\"avatar \"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Alex Brooks\" width=\"80\" height=\"80\"><span class=\"avatar-status status-online\" role=\"img\" aria-label=\"Alex Brooks: online\"></span></span><span class=\"avatar \"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Casey Davis\" width=\"80\" height=\"80\"><span class=\"avatar-status status-offline\" role=\"img\" aria-label=\"Casey Davis: offline\"></span></span><span class=\"avatar \"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Ellis Ford\" width=\"80\" height=\"80\"><span class=\"avatar-status status-busy\" role=\"img\" aria-label=\"Ellis Ford: busy\"></span></span><span class=\"avatar \"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Morgan North\" width=\"80\" height=\"80\"><span class=\"avatar-status status-away\" role=\"img\" aria-label=\"Morgan North: away\"></span></span></div>\n</div>"
+        },
+        {
+          "title": "Status with sizes",
+          "description": "The size map changes status at xs/lg/xl and border width at lg/xl. Small inherits default status size; not every property scales proportionally.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap gap-3\"><span class=\"avatar avatar-xs\"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Alex Brooks\" width=\"80\" height=\"80\"><span class=\"avatar-status status-online\" role=\"img\" aria-label=\"Alex Brooks: online\"></span></span><span class=\"avatar avatar-sm\"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Alex Brooks\" width=\"80\" height=\"80\"><span class=\"avatar-status status-online\" role=\"img\" aria-label=\"Alex Brooks: online\"></span></span><span class=\"avatar \"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Alex Brooks\" width=\"80\" height=\"80\"><span class=\"avatar-status status-online\" role=\"img\" aria-label=\"Alex Brooks: online\"></span></span><span class=\"avatar avatar-lg\"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Alex Brooks\" width=\"80\" height=\"80\"><span class=\"avatar-status status-online\" role=\"img\" aria-label=\"Alex Brooks: online\"></span></span><span class=\"avatar avatar-xl\"><img class=\"avatar-img\" src=\"/img/avatar-demo.svg\" alt=\"Illustration of Alex Brooks\" width=\"80\" height=\"80\"><span class=\"avatar-status status-online\" role=\"img\" aria-label=\"Alex Brooks: online\"></span></span></div>\n</div>"
+        },
+        {
+          "title": "Avatar stack",
+          "description": "Use avatar-stack, not avatar-group. The pin uses row-reverse, physical margin-left overlap and hover lift; it does not synchronize reading order or add keyboard behavior.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"avatar-stack\" role=\"group\" aria-label=\"Project team\"><span class=\"avatar \" role=\"img\" aria-label=\"Alex Brooks\">AB</span><span class=\"avatar \" role=\"img\" aria-label=\"Casey Davis\">CD</span><span class=\"avatar \" role=\"img\" aria-label=\"Ellis Ford\">EF</span></div>\n</div>"
+        },
+        {
+          "title": "Stack sizes and additional count",
+          "description": "Stack size modifiers apply to direct avatar children. A named count is presentation, not an automatically expandable control.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"vstack align-items-start gap-3\"><div class=\"avatar-stack avatar-stack-xs\" role=\"group\" aria-label=\"xs project team\"><span class=\"avatar \" role=\"img\" aria-label=\"Alex Brooks\">AB</span><span class=\"avatar \" role=\"img\" aria-label=\"Casey Davis\">CD</span><span class=\"avatar \" role=\"img\" aria-label=\"Ellis Ford\">EF</span><span class=\"avatar theme-inverse\" role=\"img\" aria-label=\"Five additional members\">+5</span></div><div class=\"avatar-stack avatar-stack-sm\" role=\"group\" aria-label=\"sm project team\"><span class=\"avatar \" role=\"img\" aria-label=\"Alex Brooks\">AB</span><span class=\"avatar \" role=\"img\" aria-label=\"Casey Davis\">CD</span><span class=\"avatar \" role=\"img\" aria-label=\"Ellis Ford\">EF</span><span class=\"avatar theme-inverse\" role=\"img\" aria-label=\"Five additional members\">+5</span></div><div class=\"avatar-stack avatar-stack-lg\" role=\"group\" aria-label=\"lg project team\"><span class=\"avatar \" role=\"img\" aria-label=\"Alex Brooks\">AB</span><span class=\"avatar \" role=\"img\" aria-label=\"Casey Davis\">CD</span><span class=\"avatar \" role=\"img\" aria-label=\"Ellis Ford\">EF</span><span class=\"avatar theme-inverse\" role=\"img\" aria-label=\"Five additional members\">+5</span></div><div class=\"avatar-stack avatar-stack-xl\" role=\"group\" aria-label=\"xl project team\"><span class=\"avatar \" role=\"img\" aria-label=\"Alex Brooks\">AB</span><span class=\"avatar \" role=\"img\" aria-label=\"Casey Davis\">CD</span><span class=\"avatar \" role=\"img\" aria-label=\"Ellis Ford\">EF</span><span class=\"avatar theme-inverse\" role=\"img\" aria-label=\"Five additional members\">+5</span></div></div>\n</div>"
+        },
+        {
+          "title": "Native linked identity",
+          "description": "Use a native link for navigation. Visible text names it, so duplicate initials are hidden. There is no avatar-link controller or class.",
+          "markup": "<div class=\"demo-contrast\">\n<a class=\"d-inline-flex align-items-center gap-2 fg-body\" href=\"/components/\"><span class=\"avatar\" aria-hidden=\"true\">AB</span><span>Alex Brooks: browse components</span></a>\n</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Theme follows inherited tokens. Status right/bottom and stack margin-left stay physical in this pin; RTL does not imply fully mirrored stack geometry.",
+          "markup": "<div class=\"demo-contrast\">\n<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"avatar-stack\" role=\"group\" aria-label=\"Dark project team\"><span class=\"avatar \" role=\"img\" aria-label=\"Alex Brooks\">AB</span><span class=\"avatar \" role=\"img\" aria-label=\"Casey Davis\">CD</span><span class=\"avatar \" role=\"img\" aria-label=\"Ellis Ford\">EF</span></div></div>\n</div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-avatar-size",
+          "defaultValue": "2.5rem",
+          "purpose": "Default exported through $avatar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-avatar-border-radius",
+          "defaultValue": "50%",
+          "purpose": "Default exported through $avatar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-avatar-border-width",
+          "defaultValue": "2px",
+          "purpose": "Default exported through $avatar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-avatar-border-color",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $avatar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-avatar-bg",
+          "defaultValue": "var(--trm-bg-2)",
+          "purpose": "Default exported through $avatar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-avatar-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $avatar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-avatar-status-size",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $avatar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-avatar-status-border-width",
+          "defaultValue": "2px",
+          "purpose": "Default exported through $avatar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-avatar-status-border-color",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $avatar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-avatar-stack-spacing",
+          "defaultValue": "-0.3",
+          "purpose": "Default exported through $avatar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-avatar-stack-transition",
+          "defaultValue": "transform .2s ease-in-out",
+          "purpose": "Default exported through $avatar-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Enter",
+          "behavior": "Only authored native links/buttons are interactive. Plain avatars and stacks are not in the tab order."
+        }
+      ],
+      "guidelines": [
+        "Use avatar plus avatar-img for wrapped images, or dimensions for standalone images. Give useful alt text; use empty alt only when nearby text duplicates identity.",
+        "Initials need a full identity through a named image role, not an unexplained abbreviation.",
+        "Give avatar-status its own named role=img; it is not a live region or presence service.",
+        "Use avatar-stack and its direct-child sizes. There are no avatar-group, avatar-square, avatar-link or avatar-wrapper classes.",
+        "A stack uses row-reverse and physical margin-left. Verify visual order/overlap in the actual document direction; do not infer semantic reordering.",
+        "Use native controls for actions. The core adds no avatar focus manager, data API or image-error fallback.",
+        "Configure avatar-tokens and avatar-sizes for size/status/border behavior. Hover lift is visual, not keyboard handling."
+      ],
+      "sass": "@use 'tremplin/scss/avatar' with (\n  $avatar-tokens: (--trm-avatar-border-radius: .75rem),\n  $avatar-sizes: (lg: (size: 3.25rem, status-size: 1rem, border-width: 3px))\n);"
+    },
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_avatar.scss"
+  },
+  {
+    "name": "badge",
+    "title": "Badge",
+    "description": "Badge component documentation for Tremplin.",
+    "lead": "Add a compact count, label, or status indicator to nearby content.",
+    "component": {
+      "name": "badge",
+      "kind": "css",
+      "status": "stable-alpha",
+      "classes": [
+        "badge",
+        "badge-subtle",
+        "badge-outline",
+        "badge-lg"
+      ],
+      "accessibility": "Static labels and counts need readable context and sufficient contrast. A badge does not supply independent toggle or removal behavior; use native controls for actions."
+    },
+    "example": "<div class=\"demo-contrast\">\n<span class=\"badge theme-primary\">New</span>\n</div>",
+    "detail": {
+      "variants": [
+        {
+          "title": "Labels and counts",
+          "description": "Provide readable context for a count; a badge remains static content even inside a button.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap align-items-center gap-3\"><h3 class=\"h5 mb-0\">Inbox <span class=\"badge\">12</span></h3><button class=\"btn-solid theme-primary\" type=\"button\">Notifications <span class=\"badge theme-inverse\">4<span class=\"visually-hidden\"> unread</span></span></button><span class=\"badge\">New</span></div>\n</div>"
+        },
+        {
+          "title": "Theme variants",
+          "description": "The base badge is solid; badge-subtle and badge-outline use semantic foreground, background and border roles.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap align-items-center gap-3\"><span class=\"badge theme-success\">Approved</span><span class=\"badge badge-subtle theme-primary\">Pending</span><span class=\"badge badge-outline theme-danger\">Rejected</span></div>\n</div>"
+        },
+        {
+          "title": "Larger badge",
+          "description": "badge-lg changes padding. Font sizing stays relative to its surrounding text, with the real minimum size defined by the token map.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap align-items-center gap-3\"><span class=\"badge theme-inverse\">Standard</span><span class=\"badge badge-lg theme-inverse\">Large</span></div>\n</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Counts retain visible context, and theme roles adapt without directional CSS aliases.",
+          "markup": "<div class=\"demo-contrast\">\n<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"hstack flex-wrap align-items-center gap-3\"><span>Messages <span class=\"badge\">8</span></span><span class=\"badge badge-outline theme-inverse\">Complete</span></div></div>\n</div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-badge-gap",
+          "defaultValue": "0.375em",
+          "purpose": "Default exported through $badge-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-badge-padding-x",
+          "defaultValue": "0.625em",
+          "purpose": "Default exported through $badge-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-badge-padding-y",
+          "defaultValue": "0.25em",
+          "purpose": "Default exported through $badge-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-badge-font-size",
+          "defaultValue": "clamp(12px, 0.75em, 0.75em)",
+          "purpose": "Default exported through $badge-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-badge-font-weight",
+          "defaultValue": "var(--trm-font-weight-semibold)",
+          "purpose": "Default exported through $badge-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-badge-color",
+          "defaultValue": "inherit",
+          "purpose": "Default exported through $badge-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-badge-bg",
+          "defaultValue": "var(--trm-bg-2)",
+          "purpose": "Default exported through $badge-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-badge-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $badge-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-badge-border-color",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $badge-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-badge-border-radius",
+          "defaultValue": "var(--trm-radius-7)",
+          "purpose": "Default exported through $badge-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [],
+      "guidelines": [
+        "A badge supplies static context, not an independent toggle or removal API.",
+        "Give numeric counts visible or visually hidden context and avoid redundant announcements.",
+        "Do not communicate status through color alone; use understandable labels.",
+        "The theme and structural variant must be composed deliberately. Verify contrast when overriding tokens or adding utilities."
+      ],
+      "sass": "@use 'tremplin/scss/badge' with (\n  $badge-tokens: (\n    --trm-badge-padding-x: .75em,\n    --trm-badge-border-radius: .5rem\n  )\n);"
+    },
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_badge.scss"
+  },
+  {
+    "name": "card",
+    "title": "Card",
+    "description": "Card component documentation for Tremplin.",
+    "lead": "Group related content and actions in a flexible content container.",
+    "component": {
+      "name": "card",
+      "kind": "css",
+      "status": "stable-alpha",
+      "classes": [
+        "card",
+        "card-header",
+        "card-body",
+        "card-title",
+        "card-text",
+        "card-subtitle",
+        "card-footer",
+        "card-img",
+        "card-img-top",
+        "card-img-bottom",
+        "card-img-overlay",
+        "card-row",
+        "card-img-start",
+        "card-img-end",
+        "card-subtle",
+        "card-translucent",
+        "card-header-tabs",
+        "card-group"
+      ],
+      "accessibility": "Use meaningful headings and semantic regions, appropriate image alternatives and native action links. Card bodies use flex gaps; joined groups require a query container. No focus or navigation controller is provided."
+    },
+    "example": "<article class=\"card\" style=\"max-inline-size: 28rem\"><div class=\"card-body\"><h3 class=\"card-title h5\">Project launch</h3><p>Everything needed for the next milestone.</p><a class=\"btn-outline theme-inverse\" href=\"/getting-started/install/\">Open project</a></div></article>",
+    "detail": {
+      "variants": [
+        {
+          "title": "Header, body, and footer",
+          "description": "Optional regions provide their own padding and separators. Card bodies are flex columns with a consistent child gap.",
+          "markup": "<article class=\"card\" style=\"max-inline-size: 28rem\"><header class=\"card-header\">Featured project</header><div class=\"card-body\"><h3 class=\"card-title h5\">Tremplin documentation</h3><p class=\"card-subtitle\">Design system</p><p>Component guidance, live examples, and generated APIs.</p></div><footer class=\"card-footer\"><a class=\"btn-outline theme-inverse\" href=\"/getting-started/install/\">Open project</a></footer></article>"
+        },
+        {
+          "title": "Card groups",
+          "description": "A query container makes the group a joined Flexbox row at sm. Without that container, or below the threshold, cards remain stacked; this is not an auto-fit Grid.",
+          "markup": "<div class=\"contains-inline\"><div class=\"card-group\"><article class=\"card\"><div class=\"card-body\"><h3 class=\"card-title h5\">Design</h3><p>Tokens and component styles.</p></div><footer class=\"card-footer\">First phase</footer></article><article class=\"card\"><div class=\"card-body\"><h3 class=\"card-title h5\">Build</h3><p>Typed interactions.</p></div><footer class=\"card-footer\">Second phase</footer></article><article class=\"card\"><div class=\"card-body\"><h3 class=\"card-title h5\">Ship</h3><p>Verified distributions.</p></div><footer class=\"card-footer\">Third phase</footer></article></div></div>"
+        },
+        {
+          "title": "List content",
+          "description": "A direct flush list can sit between header/body/footer regions. The card supplies seams and edge rounding.",
+          "markup": "<section class=\"card\" style=\"max-inline-size: 28rem\" aria-labelledby=\"card-files\"><header class=\"card-header\"><h3 class=\"h5 mb-0\" id=\"card-files\">Project files</h3></header><ul class=\"list-group list-group-flush\"><li class=\"list-group-item\">README.md</li><li class=\"list-group-item\">package.json</li></ul><footer class=\"card-footer\">2 files</footer></section>"
+        },
+        {
+          "title": "Image cap and subtle header",
+          "description": "The decorative local image uses the top-edge class and img-fluid to preserve its aspect ratio. Subtle cards compose the theme roles for contextual headers and borders.",
+          "markup": "<article class=\"card card-subtle theme-primary\" style=\"max-inline-size: 28rem\"><img class=\"card-img-top img-fluid\" src=\"/content-sample.svg\" width=\"800\" height=\"400\" alt=\"\"><header class=\"card-header\">Design preview</header><div class=\"card-body\"><h3 class=\"card-title h5\">Interface patterns</h3><p>Decorative media supplements the text.</p></div></article>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Body, cap and border tokens adapt to the local color mode while logical spacing follows direction.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><article class=\"card\" style=\"max-inline-size: 28rem\"><div class=\"card-body\"><h3 class=\"card-title h5\">Project launch</h3><p>Everything needed for the next milestone.</p><a class=\"btn-outline theme-inverse\" href=\"/getting-started/install/\">Open project</a></div></article></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-card-spacer-y",
+          "defaultValue": "var(--trm-spacer-6)",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-spacer-x",
+          "defaultValue": "var(--trm-spacer-6)",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-subtitle-color",
+          "defaultValue": "inherit",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-border-radius",
+          "defaultValue": "var(--trm-radius-7)",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-box-shadow",
+          "defaultValue": "none",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-inner-border-radius",
+          "defaultValue": "calc(var(--trm-card-border-radius) - var(--trm-border-width))",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-cap-padding-y",
+          "defaultValue": "var(--trm-spacer-3)",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-cap-padding-x",
+          "defaultValue": "var(--trm-spacer-5)",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-cap-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-cap-color",
+          "defaultValue": "inherit",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-height",
+          "defaultValue": "auto",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-color",
+          "defaultValue": "inherit",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-img-overlay-padding",
+          "defaultValue": "var(--trm-card-spacer-y)",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-group-margin",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-card-body-gap",
+          "defaultValue": "calc(var(--trm-card-spacer-y) * 0.5)",
+          "purpose": "Default exported through $card-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Follow native links and controls in DOM order; Card adds no focus or navigation controller."
+        }
+      ],
+      "guidelines": [
+        "Use article for independently meaningful content, or choose an appropriately named section/div.",
+        "Use card-body for padding and its child gap. card-title and card-text are documented structural hooks, not separate typography styles.",
+        "Do not create an entire clickable card around nested controls. Keep real action targets clear.",
+        "Images need useful alt text unless decorative; card width and image dimensions are application choices.",
+        "Wrap responsive card groups in a query container, preserve DOM order and verify both stacked and joined layouts."
+      ],
+      "sass": "@use 'tremplin/scss/card' with (\n  $card-tokens: (\n    --trm-card-spacer-x: 1.5rem,\n    --trm-card-body-gap: .75rem\n  )\n);"
+    },
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_card.scss"
+  },
+  {
+    "name": "placeholder",
+    "title": "Placeholder",
+    "description": "Placeholder component documentation for Tremplin.",
+    "lead": "Reserve layout space while content is loading.",
+    "component": {
+      "name": "placeholder",
+      "kind": "css",
+      "status": "stable-alpha",
+      "classes": [
+        "placeholder",
+        "placeholder-xs",
+        "placeholder-sm",
+        "placeholder-lg",
+        "placeholder-wave",
+        "placeholder-pulse",
+        "placeholder-glow"
+      ],
+      "accessibility": "Use real placeholder classes, hide decorative shapes and keep one meaningful loading message outside the busy region. The application replaces content and clears aria-busy. Skeleton is a documentation route alias, not a core CSS class or JavaScript loader."
+    },
+    "example": "<p role=\"status\">Loading profile...</p><div aria-label=\"Profile content\" role=\"region\" aria-busy=\"true\"><div class=\"placeholder-wave\" aria-hidden=\"true\"><span class=\"placeholder col-8\"></span><br><span class=\"placeholder col-6\"></span></div></div>",
+    "detail": {
+      "variants": [
+        {
+          "title": "Width and sizing",
+          "description": "Set width with columns, width utilities or inline styles. Typographic sizing changes minimum height; empty spans stay decorative.",
+          "markup": "<div class=\"\" aria-hidden=\"true\"><div class=\"vstack gap-3\"><span class=\"placeholder col-6\"></span><span class=\"placeholder w-75\"></span><span class=\"placeholder \" style=\"width: 25%\"></span><span class=\"placeholder col-12 placeholder-lg\"></span><span class=\"placeholder col-12 placeholder-sm\"></span><span class=\"placeholder col-12 placeholder-xs\"></span></div></div>"
+        },
+        {
+          "title": "Color",
+          "description": "A placeholder uses currentColor with reduced opacity. These are decorative blocks, not readable text or status messages.",
+          "markup": "<div class=\"\" aria-hidden=\"true\"><div class=\"vstack gap-3\"><span class=\"placeholder col-9\"></span><span class=\"placeholder col-6 bg-success\"></span><span class=\"placeholder col-6 bg-info\"></span></div></div>"
+        },
+        {
+          "title": "Wave and pulse",
+          "description": "Wave masks its element; pulse animates descendant placeholders. The pin also exports placeholder-glow as an upstream alias for pulse; new examples use pulse.",
+          "markup": "<div class=\"\" aria-hidden=\"true\"><div class=\"vstack gap-3\"><div class=\"placeholder-wave\"><span class=\"placeholder col-12\"></span></div><div class=\"placeholder-pulse\"><span class=\"placeholder col-8\"></span></div></div></div>"
+        },
+        {
+          "title": "Animated text",
+          "description": "Wave can animate text directly. Keep duplicate copy decorative when adjacent status explains loading.",
+          "markup": "<p role=\"status\">Preparing your report...</p><span class=\"placeholder-wave fg-3\" aria-hidden=\"true\">Working on it...</span>"
+        },
+        {
+          "title": "Loading card and loaded content",
+          "description": "A static before/after comparison, not a working request. The busy region contains decorative placeholders and native disabled controls; the status message is outside it.",
+          "markup": "<div class=\"d-flex flex-wrap gap-3\"><article class=\"card flex-grow-1\" style=\"flex-basis: 16rem\"><div class=\"card-body\"><h3 class=\"h5\">Project ready</h3><p>The project details are available.</p><a class=\"btn-outline theme-inverse\" href=\"/components/\">Browse components</a></div></article><div class=\"flex-grow-1\" style=\"flex-basis: 16rem\"><p role=\"status\">Loading another project...</p><div class=\"card\" role=\"region\" aria-label=\"Pending project\" aria-busy=\"true\"><div class=\"card-body\" aria-hidden=\"true\"><div class=\"placeholder-wave\"><span class=\"placeholder col-6\"></span><br><span class=\"placeholder col-12\"></span><br><span class=\"placeholder col-8\"></span></div><button class=\"btn btn-outline theme-inverse placeholder col-6 mt-3\" type=\"button\" disabled tabindex=\"-1\" aria-label=\"Project action unavailable\"></button></div></div></div></div>"
+        },
+        {
+          "title": "Busy content region",
+          "description": "The application replaces shapes, clears aria-busy and updates the separate status. aria-hidden alone does not announce loading or prevent focus.",
+          "markup": "<p role=\"status\" id=\"feed-loading-status\">Loading activity feed...</p><section aria-label=\"Activity feed\" aria-busy=\"true\" id=\"feed-placeholder\"><div class=\"placeholder-pulse\" aria-hidden=\"true\"><div class=\"vstack gap-3\"><span class=\"placeholder col-4 placeholder-lg\"></span><span class=\"placeholder col-12\"></span><span class=\"placeholder col-9\"></span></div></div></section>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Use core placeholder classes in either theme or direction. Skeleton is only a documentation URL alias; no skeleton CSS class or shimmer token is added.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><p role=\"status\">Loading article...</p><div role=\"region\" aria-label=\"Article content\" aria-busy=\"true\"><div class=\"placeholder-wave\" aria-hidden=\"true\"><span class=\"placeholder col-10\"></span></div></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-placeholder-opacity-max",
+          "defaultValue": "0.18",
+          "purpose": "Default exported through $placeholder-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-placeholder-opacity-min",
+          "defaultValue": "0.1",
+          "purpose": "Default exported through $placeholder-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-placeholder-wave-opacity-max",
+          "defaultValue": "1",
+          "purpose": "Default exported through $placeholder-wave-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-placeholder-wave-opacity-min",
+          "defaultValue": "0.4",
+          "purpose": "Default exported through $placeholder-wave-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "None",
+          "behavior": "Decorative shapes must not receive focus. Native disabled replacement controls stay out of the tab order."
+        }
+      ],
+      "guidelines": [
+        "Use placeholder, placeholder-wave and placeholder-pulse; the Skeleton route shares the implementation without a skeleton class.",
+        "Hide decorative shapes with aria-hidden=true. This does not disable interactive descendants; never leave focusable links inside hidden content.",
+        "Keep a loading/status message outside the aria-busy region so it is not withheld with pending content.",
+        "The application owns replacement, clearing aria-busy and completion announcements. There is no Placeholder JavaScript plugin.",
+        "Wave and pulse stop under reduced motion when enabled. The glow alias is exported by the pin, not invented compatibility CSS.",
+        "Configure placeholder-tokens for opacity and placeholder-wave-tokens for mask opacity. There are no placeholder-border-radius or skeleton-duration tokens."
+      ],
+      "sass": "@use 'tremplin/scss/placeholder' with (\n  $placeholder-tokens: (--trm-placeholder-opacity-max: .25, --trm-placeholder-opacity-min: .12),\n  $placeholder-wave-tokens: (--trm-placeholder-wave-opacity-max: .9, --trm-placeholder-wave-opacity-min: .3)\n);"
+    },
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_placeholder.scss"
+  },
+  {
+    "name": "progress",
+    "title": "Progress",
+    "description": "Progress component documentation for Tremplin.",
+    "lead": "Communicate completion for determinate or indeterminate work.",
+    "component": {
+      "name": "progress",
+      "kind": "css",
+      "status": "stable-alpha",
+      "classes": [
+        "progress",
+        "progress-stacked",
+        "progress-bar",
+        "progress-bar-striped",
+        "progress-bar-animated"
+      ],
+      "accessibility": "Name each progress wrapper and keep aria-valuenow/min/max synchronized with its visual value. Stacked segments have their own named progressbar wrappers. Animation does not make a determinate value indeterminate or announce updates automatically."
+    },
+    "example": "<div class=\"demo-contrast\">\n<div class=\"progress\" role=\"progressbar\" aria-label=\"Upload progress\" aria-valuenow=\"65\" aria-valuemin=\"0\" aria-valuemax=\"100\" ><div class=\"progress-bar \" style=\"width: 65%\">65%</div></div>\n</div>",
+    "detail": {
+      "variants": [
+        {
+          "title": "How it works",
+          "description": "The named progress wrapper owns the value and bounds. Its inner bar is visual; set its width explicitly. There is no Progress JavaScript plugin.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"vstack gap-3\"><div class=\"progress\" role=\"progressbar\" aria-label=\"Example 0 percent\" aria-valuenow=\"0\" aria-valuemin=\"0\" aria-valuemax=\"100\" ><div class=\"progress-bar \" style=\"width: 0%\"></div></div><div class=\"progress\" role=\"progressbar\" aria-label=\"Example 25 percent\" aria-valuenow=\"25\" aria-valuemin=\"0\" aria-valuemax=\"100\" ><div class=\"progress-bar \" style=\"width: 25%\"></div></div><div class=\"progress\" role=\"progressbar\" aria-label=\"Example 50 percent\" aria-valuenow=\"50\" aria-valuemin=\"0\" aria-valuemax=\"100\" ><div class=\"progress-bar \" style=\"width: 50%\"></div></div><div class=\"progress\" role=\"progressbar\" aria-label=\"Example 75 percent\" aria-valuenow=\"75\" aria-valuemin=\"0\" aria-valuemax=\"100\" ><div class=\"progress-bar \" style=\"width: 75%\"></div></div><div class=\"progress\" role=\"progressbar\" aria-label=\"Example 100 percent\" aria-valuenow=\"100\" aria-valuemin=\"0\" aria-valuemax=\"100\" ><div class=\"progress-bar \" style=\"width: 100%\"></div></div></div>\n</div>"
+        },
+        {
+          "title": "Bar sizing",
+          "description": "Set width on the inner bar. Set height on the wrapper, directly or through the real progress height token.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"vstack gap-3\"><div class=\"progress\" role=\"progressbar\" aria-label=\"Width utility example\" aria-valuenow=\"75\" aria-valuemin=\"0\" aria-valuemax=\"100\"><div class=\"progress-bar w-75\"></div></div><div class=\"progress\" role=\"progressbar\" aria-label=\"Thin track\" aria-valuenow=\"25\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"height: 2px\"><div class=\"progress-bar \" style=\"width: 25%\"></div></div><div class=\"progress\" role=\"progressbar\" aria-label=\"Tall track\" aria-valuenow=\"25\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"--trm-progress-height: 1.5rem\"><div class=\"progress-bar \" style=\"width: 25%\"></div></div></div>\n</div>"
+        },
+        {
+          "title": "Labels and long labels",
+          "description": "Keep short labels inside sufficiently wide bars. Put long labels outside so overflow and mixed-background contrast do not obscure them.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"vstack gap-3\"><div class=\"progress\" role=\"progressbar\" aria-label=\"Completed upload\" aria-valuenow=\"75\" aria-valuemin=\"0\" aria-valuemax=\"100\" ><div class=\"progress-bar \" style=\"width: 75%\">75%</div></div><div><p id=\"progress-long-label\">Uploading project assets: 5% complete</p><div class=\"progress\" role=\"progressbar\" aria-labelledby=\"progress-long-label\" aria-valuenow=\"5\" aria-valuemin=\"0\" aria-valuemax=\"100\"><div class=\"progress-bar\" style=\"width: 5%\"></div></div></div></div>\n</div>"
+        },
+        {
+          "title": "Backgrounds and theme contrast",
+          "description": "Background utilities color unlabelled bars. For labels, theme classes supply background and contrast together; retain textual state rather than relying on hue.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"vstack gap-3\"><div class=\"progress\" role=\"progressbar\" aria-label=\"Successful build\" aria-valuenow=\"100\" aria-valuemin=\"0\" aria-valuemax=\"100\" ><div class=\"progress-bar bg-success\" style=\"width: 100%\"></div></div><div class=\"progress\" role=\"progressbar\" aria-label=\"Storage used\" aria-valuenow=\"75\" aria-valuemin=\"0\" aria-valuemax=\"100\" ><div class=\"progress-bar theme-warning\" style=\"width: 75%\">75%</div></div><div class=\"progress\" role=\"progressbar\" aria-label=\"Files reviewed\" aria-valuenow=\"50\" aria-valuemin=\"0\" aria-valuemax=\"100\" ><div class=\"progress-bar theme-info\" style=\"width: 50%\">50%</div></div></div>\n</div>"
+        },
+        {
+          "title": "Multiple bars",
+          "description": "Each segment is a separately named progress wrapper. In a stack set width on each wrapper, not its inner bar; the core makes that bar fill its segment.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"progress-stacked\" id=\"allocation-progress\"><div class=\"progress\" role=\"progressbar\" aria-label=\"Documents allocation\" aria-valuenow=\"30\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 30%\"><div class=\"progress-bar\"></div></div><div class=\"progress\" role=\"progressbar\" aria-label=\"Media allocation\" aria-valuenow=\"20\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 20%\"><div class=\"progress-bar bg-info\"></div></div></div><p class=\"mt-2 mb-0\">Documents 30%; media 20%; free 50%.</p>\n</div>"
+        },
+        {
+          "title": "Striped and animated",
+          "description": "Striping is a gradient; animation is an additional class, not a value updater. With reduced motion enabled, animated stripes stop.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"vstack gap-3\"><div class=\"progress\" role=\"progressbar\" aria-label=\"Striped deployment\" aria-valuenow=\"45\" aria-valuemin=\"0\" aria-valuemax=\"100\" ><div class=\"progress-bar progress-bar-striped\" style=\"width: 45%\"></div></div><div class=\"progress\" role=\"progressbar\" aria-label=\"Animated deployment\" aria-valuenow=\"75\" aria-valuemin=\"0\" aria-valuemax=\"100\" ><div class=\"progress-bar progress-bar-striped progress-bar-animated\" style=\"width: 75%\">75%</div></div></div>\n</div>"
+        },
+        {
+          "title": "Unknown completion",
+          "description": "For unknown totals omit aria-valuenow. This is an authored indeterminate pattern, not a special core class: the full-width striped bar does not mean 100% complete.",
+          "markup": "<div class=\"demo-contrast\">\n<p id=\"progress-unknown-label\">Preparing the export; completion is not yet known.</p><div class=\"progress\" role=\"progressbar\" aria-labelledby=\"progress-unknown-label\"><div class=\"progress-bar progress-bar-striped progress-bar-animated\" style=\"width: 100%\"></div></div>\n</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Flex layout follows direction while physical width remains the declared percentage. Theme and direction do not supply announcements.",
+          "markup": "<div class=\"demo-contrast\">\n<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"progress\" role=\"progressbar\" aria-label=\"Download progress\" aria-valuenow=\"72\" aria-valuemin=\"0\" aria-valuemax=\"100\" ><div class=\"progress-bar \" style=\"width: 72%\">72%</div></div></div>\n</div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-progress-height",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $progress-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-progress-font-size",
+          "defaultValue": "var(--trm-font-size-sm)",
+          "purpose": "Default exported through $progress-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-progress-bg",
+          "defaultValue": "var(--trm-bg-2)",
+          "purpose": "Default exported through $progress-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-progress-border-radius",
+          "defaultValue": "var(--trm-radius-5)",
+          "purpose": "Default exported through $progress-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-progress-box-shadow",
+          "defaultValue": "var(--trm-box-shadow-inset)",
+          "purpose": "Default exported through $progress-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-progress-bar-color",
+          "defaultValue": "var(--trm-white)",
+          "purpose": "Default exported through $progress-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-progress-bar-bg",
+          "defaultValue": "var(--trm-primary-bg)",
+          "purpose": "Default exported through $progress-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-progress-bar-transition",
+          "defaultValue": "width 0.6s ease",
+          "purpose": "Default exported through $progress-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-progress-bar-animation",
+          "defaultValue": "progress-bar-stripes 1s linear infinite",
+          "purpose": "Default exported through $progress-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "None",
+          "behavior": "Read-only progress indicators do not enter the tab order."
+        }
+      ],
+      "guidelines": [
+        "Use a named role=progressbar wrapper and a visual progress-bar child, not an interactive control.",
+        "Keep determinate width and aria-valuenow synchronized with the same bounds. Animation alone updates neither.",
+        "In a stack put width and semantics on each progress wrapper; do not collapse distinct values into one invented total.",
+        "Keep long labels outside the bar and supply visible status text. Background-only utilities do not guarantee label contrast.",
+        "For unknown totals omit aria-valuenow and explain the state. A spinner is often simpler.",
+        "The application owns update frequency and live announcements; progressbar is not automatically a live region."
+      ],
+      "sass": "@use 'tremplin/scss/progress' with (\n  $progress-tokens: (--trm-progress-height: 1.25rem, --trm-progress-border-radius: .5rem)\n);"
+    },
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_progress.scss"
+  },
+  {
+    "name": "skeleton",
+    "title": "Skeleton",
+    "description": "Skeleton component documentation for Tremplin.",
+    "lead": "Reserve layout space while content is loading.",
+    "component": {
+      "name": "skeleton",
+      "kind": "css",
+      "status": "stable-alpha",
+      "classes": [
+        "placeholder",
+        "placeholder-xs",
+        "placeholder-sm",
+        "placeholder-lg",
+        "placeholder-wave",
+        "placeholder-pulse",
+        "placeholder-glow"
+      ],
+      "accessibility": "Use real placeholder classes, hide decorative shapes and keep one meaningful loading message outside the busy region. The application replaces content and clears aria-busy. Skeleton is a documentation route alias, not a core CSS class or JavaScript loader."
+    },
+    "example": "<p role=\"status\">Loading profile...</p><div aria-label=\"Profile content\" role=\"region\" aria-busy=\"true\"><div class=\"placeholder-wave\" aria-hidden=\"true\"><span class=\"placeholder col-8\"></span><br><span class=\"placeholder col-6\"></span></div></div>",
+    "detail": {
+      "variants": [
+        {
+          "title": "Width and sizing",
+          "description": "Set width with columns, width utilities or inline styles. Typographic sizing changes minimum height; empty spans stay decorative.",
+          "markup": "<div class=\"\" aria-hidden=\"true\"><div class=\"vstack gap-3\"><span class=\"placeholder col-6\"></span><span class=\"placeholder w-75\"></span><span class=\"placeholder \" style=\"width: 25%\"></span><span class=\"placeholder col-12 placeholder-lg\"></span><span class=\"placeholder col-12 placeholder-sm\"></span><span class=\"placeholder col-12 placeholder-xs\"></span></div></div>"
+        },
+        {
+          "title": "Color",
+          "description": "A placeholder uses currentColor with reduced opacity. These are decorative blocks, not readable text or status messages.",
+          "markup": "<div class=\"\" aria-hidden=\"true\"><div class=\"vstack gap-3\"><span class=\"placeholder col-9\"></span><span class=\"placeholder col-6 bg-success\"></span><span class=\"placeholder col-6 bg-info\"></span></div></div>"
+        },
+        {
+          "title": "Wave and pulse",
+          "description": "Wave masks its element; pulse animates descendant placeholders. The pin also exports placeholder-glow as an upstream alias for pulse; new examples use pulse.",
+          "markup": "<div class=\"\" aria-hidden=\"true\"><div class=\"vstack gap-3\"><div class=\"placeholder-wave\"><span class=\"placeholder col-12\"></span></div><div class=\"placeholder-pulse\"><span class=\"placeholder col-8\"></span></div></div></div>"
+        },
+        {
+          "title": "Animated text",
+          "description": "Wave can animate text directly. Keep duplicate copy decorative when adjacent status explains loading.",
+          "markup": "<p role=\"status\">Preparing your report...</p><span class=\"placeholder-wave fg-3\" aria-hidden=\"true\">Working on it...</span>"
+        },
+        {
+          "title": "Loading card and loaded content",
+          "description": "A static before/after comparison, not a working request. The busy region contains decorative placeholders and native disabled controls; the status message is outside it.",
+          "markup": "<div class=\"d-flex flex-wrap gap-3\"><article class=\"card flex-grow-1\" style=\"flex-basis: 16rem\"><div class=\"card-body\"><h3 class=\"h5\">Project ready</h3><p>The project details are available.</p><a class=\"btn-outline theme-inverse\" href=\"/components/\">Browse components</a></div></article><div class=\"flex-grow-1\" style=\"flex-basis: 16rem\"><p role=\"status\">Loading another project...</p><div class=\"card\" role=\"region\" aria-label=\"Pending project\" aria-busy=\"true\"><div class=\"card-body\" aria-hidden=\"true\"><div class=\"placeholder-wave\"><span class=\"placeholder col-6\"></span><br><span class=\"placeholder col-12\"></span><br><span class=\"placeholder col-8\"></span></div><button class=\"btn btn-outline theme-inverse placeholder col-6 mt-3\" type=\"button\" disabled tabindex=\"-1\" aria-label=\"Project action unavailable\"></button></div></div></div></div>"
+        },
+        {
+          "title": "Busy content region",
+          "description": "The application replaces shapes, clears aria-busy and updates the separate status. aria-hidden alone does not announce loading or prevent focus.",
+          "markup": "<p role=\"status\" id=\"feed-loading-status\">Loading activity feed...</p><section aria-label=\"Activity feed\" aria-busy=\"true\" id=\"feed-placeholder\"><div class=\"placeholder-pulse\" aria-hidden=\"true\"><div class=\"vstack gap-3\"><span class=\"placeholder col-4 placeholder-lg\"></span><span class=\"placeholder col-12\"></span><span class=\"placeholder col-9\"></span></div></div></section>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Use core placeholder classes in either theme or direction. Skeleton is only a documentation URL alias; no skeleton CSS class or shimmer token is added.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><p role=\"status\">Loading article...</p><div role=\"region\" aria-label=\"Article content\" aria-busy=\"true\"><div class=\"placeholder-wave\" aria-hidden=\"true\"><span class=\"placeholder col-10\"></span></div></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-placeholder-opacity-max",
+          "defaultValue": "0.18",
+          "purpose": "Default exported through $placeholder-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-placeholder-opacity-min",
+          "defaultValue": "0.1",
+          "purpose": "Default exported through $placeholder-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-placeholder-wave-opacity-max",
+          "defaultValue": "1",
+          "purpose": "Default exported through $placeholder-wave-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-placeholder-wave-opacity-min",
+          "defaultValue": "0.4",
+          "purpose": "Default exported through $placeholder-wave-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "None",
+          "behavior": "Decorative shapes must not receive focus. Native disabled replacement controls stay out of the tab order."
+        }
+      ],
+      "guidelines": [
+        "Use placeholder, placeholder-wave and placeholder-pulse; the Skeleton route shares the implementation without a skeleton class.",
+        "Hide decorative shapes with aria-hidden=true. This does not disable interactive descendants; never leave focusable links inside hidden content.",
+        "Keep a loading/status message outside the aria-busy region so it is not withheld with pending content.",
+        "The application owns replacement, clearing aria-busy and completion announcements. There is no Placeholder JavaScript plugin.",
+        "Wave and pulse stop under reduced motion when enabled. The glow alias is exported by the pin, not invented compatibility CSS.",
+        "Configure placeholder-tokens for opacity and placeholder-wave-tokens for mask opacity. There are no placeholder-border-radius or skeleton-duration tokens."
+      ],
+      "sass": "@use 'tremplin/scss/placeholder' with (\n  $placeholder-tokens: (--trm-placeholder-opacity-max: .25, --trm-placeholder-opacity-min: .12),\n  $placeholder-wave-tokens: (--trm-placeholder-wave-opacity-max: .9, --trm-placeholder-wave-opacity-min: .3)\n);"
+    },
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_placeholder.scss"
+  },
+  {
+    "name": "spinner",
+    "title": "Spinner",
+    "description": "Spinner component documentation for Tremplin.",
+    "lead": "Indicate that an operation is currently in progress.",
+    "component": {
+      "name": "spinner",
+      "kind": "css",
+      "status": "stable-alpha",
+      "classes": [
+        "spinner-border",
+        "spinner-grow",
+        "spinner-sm",
+        "spinner-rotate"
+      ],
+      "accessibility": "Give a standalone spinner role=status and hidden loading text, or hide decorative spinners when adjacent status text already explains the operation. Native disabled buttons cannot be activated. Reduced motion slows border/grow; custom rotation has no automatic reduction."
+    },
+    "example": "<span class=\"spinner-border \" role=\"status\"><span class=\"visually-hidden\">Loading results</span></span>",
+    "detail": {
+      "variants": [
+        {
+          "title": "Border and growing spinners",
+          "description": "Both are HTML/CSS loading indicators. Border rotates; grow pulses. Each standalone indicator includes meaningful status text.",
+          "markup": "<div class=\"hstack flex-wrap gap-3\"><span class=\"spinner-border \" role=\"status\"><span class=\"visually-hidden\">Loading account</span></span><span class=\"spinner-grow \" role=\"status\"><span class=\"visually-hidden\">Loading activity</span></span></div>"
+        },
+        {
+          "title": "Current-color variants",
+          "description": "Use foreground utilities; border utilities can override the transparent edge that makes the spinner visible.",
+          "markup": "<div class=\"hstack flex-wrap gap-3\"><span class=\"spinner-border fg-primary\" role=\"status\"><span class=\"visually-hidden\">Loading primary results</span></span><span class=\"spinner-grow fg-accent\" role=\"status\"><span class=\"visually-hidden\">Loading additional results</span></span></div>"
+        },
+        {
+          "title": "Size",
+          "description": "Both variants are 1em by default. The shared spinner-sm class is .75em; old spinner-border-sm and spinner-grow-sm aliases are not supported.",
+          "markup": "<div class=\"hstack flex-wrap gap-3\"><span class=\"spinner-border spinner-sm\" role=\"status\"><span class=\"visually-hidden\">Small border loader</span></span><span class=\"spinner-grow spinner-sm\" role=\"status\"><span class=\"visually-hidden\">Small grow loader</span></span><span class=\"spinner-border\" style=\"--trm-spinner-width: 3rem; --trm-spinner-height: 3rem\" role=\"status\"><span class=\"visually-hidden\">Large loader</span></span></div>"
+        },
+        {
+          "title": "Loading buttons and badges",
+          "description": "Use native disabled controls and one status label. Hide decorative spinners so the operation is not announced twice.",
+          "markup": "<div class=\"hstack flex-wrap gap-3\"><button class=\"btn-subtle theme-inverse\" type=\"button\" disabled aria-label=\"Saving project...\"><span class=\"spinner-border spinner-sm\" aria-hidden=\"true\"></span><span role=\"status\">Saving project...</span></button><span class=\"badge theme-inverse\"><span class=\"spinner-grow spinner-sm\" aria-hidden=\"true\"></span><span role=\"status\">Syncing</span></span></div>"
+        },
+        {
+          "title": "Alignment",
+          "description": "Spinners assume a flex parent. Use layout utilities rather than floats or an overlay blocking unrelated content.",
+          "markup": "<div class=\"d-flex justify-content-center align-items-center gap-2\"><span class=\"spinner-border\" aria-hidden=\"true\"></span><span role=\"status\">Fetching results...</span></div>"
+        },
+        {
+          "title": "Custom rotation",
+          "description": "spinner-rotate rotates an authored SVG. Unlike border/grow, it has no reduced-motion rule in this pin; the application must provide its own pause/replacement policy.",
+          "markup": "<div class=\"hstack gap-2\"><svg class=\"spinner-rotate\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M12 3a9 9 0 1 1-9 9\"/></svg><span role=\"status\">Loading custom view...</span></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "The spinner inherits currentColor. Direction changes surrounding layout, not a new controller or completed state.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"hstack flex-wrap gap-3\"><span class=\"spinner-border \" role=\"status\"><span class=\"visually-hidden\">Loading dark view</span></span><span class=\"spinner-grow \" role=\"status\"><span class=\"visually-hidden\">Loading dark activity</span></span></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-spinner-width",
+          "defaultValue": "1em",
+          "purpose": "Default exported through $spinner-border-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-spinner-height",
+          "defaultValue": "1em",
+          "purpose": "Default exported through $spinner-border-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-spinner-border-width",
+          "defaultValue": "0.125em",
+          "purpose": "Default exported through $spinner-border-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-spinner-animation-speed",
+          "defaultValue": "1s",
+          "purpose": "Default exported through $spinner-border-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-spinner-animation-timing-function",
+          "defaultValue": "linear",
+          "purpose": "Default exported through $spinner-border-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-spinner-animation-name",
+          "defaultValue": "spinner-border",
+          "purpose": "Default exported through $spinner-border-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "None",
+          "behavior": "Loading indicators are not controls. A native disabled loading button cannot be activated."
+        }
+      ],
+      "guidelines": [
+        "No JavaScript plugin is needed to draw a spinner. The application starts/stops work and updates visibility.",
+        "Use role=status plus hidden text for a standalone loader; hide decoration when adjacent text provides the status.",
+        "Use spinner-sm for either variant; there is no standalone spinner class or variant-specific small alias.",
+        "Reduced motion slows border/grow to 1.5s; it does not stop them. spinner-rotate has no automatic reduced-motion handling.",
+        "Spinner uses currentColor. Prefer foreground utilities to border utilities, which can erase the transparent edge.",
+        "The spinner-border-tokens and spinner-grow-tokens maps are separate. The table shows border defaults; grow uses ease-in-out and spinner-grow for timing/name.",
+        "Use Progress for meaningful numeric completion; neither component automatically announces application updates."
+      ],
+      "sass": "@use 'tremplin/scss/spinner' with (\n  $spinner-border-tokens: (--trm-spinner-width: 1.5em, --trm-spinner-height: 1.5em),\n  $spinner-grow-tokens: (--trm-spinner-width: 1.5em, --trm-spinner-height: 1.5em)\n);"
+    },
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_spinner.scss"
+  }
+]

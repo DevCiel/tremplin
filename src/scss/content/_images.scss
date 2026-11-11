@@ -1,0 +1,74 @@
+@use "../functions" as *;
+@use "../mixins/image" as *;
+@use "../mixins/border-radius" as *;
+@use "../mixins/box-shadow" as *;
+@use "../mixins/tokens" as *;
+
+$thumbnail-tokens: () !default;
+
+// scss-docs-start thumbnail-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$thumbnail-tokens: defaults(
+  (
+    --trm-thumbnail-padding: .25rem,
+    --trm-thumbnail-bg: var(--trm-bg-body),
+    --trm-thumbnail-border-width: var(--trm-border-width),
+    --trm-thumbnail-border-color: var(--trm-border-color),
+    --trm-thumbnail-border-radius: var(--trm-radius-5),
+    --trm-thumbnail-box-shadow: var(--trm-box-shadow-sm),
+  ),
+  $thumbnail-tokens
+);
+// scss-docs-end thumbnail-tokens
+
+$figure-tokens: () !default;
+
+// scss-docs-start figure-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$figure-tokens: defaults(
+  (
+    --trm-figure-gap: calc(var(--trm-spacer) * .5),
+    --trm-figure-caption-font-size: var(--trm-font-size-sm),
+    --trm-figure-caption-color: var(--trm-fg-3),
+  ),
+  $figure-tokens
+);
+// scss-docs-end figure-tokens
+
+@layer content {
+  // Responsive images (ensure images don't scale beyond their parents)
+  //
+  // This is purposefully opt-in via an explicit class rather than being the default for all `<img>`s.
+  // We previously tried the "images are responsive by default" approach in Tremplin v2,
+  // and abandoned it in Tremplin v3 because it breaks lots of third-party widgets (including Google Maps)
+  // which weren't expecting the images within themselves to be involuntarily resized.
+  // See also https://github.com/twbs/bootstrap/issues/18178
+  .img-fluid {
+    @include img-fluid();
+  }
+
+  .img-thumbnail {
+    @include tokens($thumbnail-tokens);
+    padding: var(--trm-thumbnail-padding);
+    background-color: var(--trm-thumbnail-bg);
+    border: var(--trm-thumbnail-border-width) solid var(--trm-thumbnail-border-color);
+    @include border-radius(var(--trm-thumbnail-border-radius));
+    @include box-shadow(var(--trm-thumbnail-box-shadow));
+
+    // Keep them at most 100% wide
+    @include img-fluid();
+  }
+
+  .figure {
+    @include tokens($figure-tokens);
+    // Ensures the caption's text aligns with the image.
+    display: flex;
+    flex-direction: column;
+    gap: var(--trm-figure-gap);
+  }
+
+  .figure-caption {
+    font-size: var(--trm-figure-caption-font-size);
+    color: var(--trm-figure-caption-color);
+  }
+}

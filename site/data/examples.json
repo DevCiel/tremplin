@@ -1,0 +1,5 @@
+[
+  { "slug": "interactions", "title": "Interaction components", "file": "examples/interactions.html" },
+  { "slug": "advanced-interactions", "title": "Advanced interactions", "file": "examples/advanced-interactions.html", "assets": ["examples/examples.css"], "behaviorHooks": ["carousel-control-prev", "carousel-control-next"] },
+  { "slug": "kitchen-sink", "title": "Component kitchen sink", "file": "examples/kitchen-sink.html" }
+]

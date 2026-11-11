@@ -1,0 +1,81 @@
+{
+  "phase": "forms-authored-mdx",
+  "guides": 17,
+  "historicalSources": {
+    "site/src/data/forms-guides.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/forms-guides.before.ts.txt",
+      "sha256": "a6e29c8a266b05d120d44a170b531014ae9c3a2fd8a712b08a6c75c32cc26797"
+    },
+    "site/src/data/form-composition-guides.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/form-composition-guides.before.ts.txt",
+      "sha256": "f1057147a5518e732112595e4cfb49c4bcb9293e6e9a35fe9cd7d6c47b3d03cd"
+    },
+    "site/src/data/native-form-guides.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/native-form-guides.before.ts.txt",
+      "sha256": "8cc447079c7fe03df8714addd7bb0bd64dc3c71ad3a0a2fbf0e49e34cd094a40"
+    },
+    "site/src/data/forms-overview-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/forms-overview-docs.before.ts.txt",
+      "sha256": "03067a5253c2f28cb2666fd9fe642b2d64b628ddf7c34f0959563d2faec7702d"
+    },
+    "site/src/data/choice-input-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/choice-input-docs.before.ts.txt",
+      "sha256": "d769ee8183cdd0aee093c384eab60c4a4851e96e9e2e15bd0c1bcafcabe5ab18"
+    },
+    "site/src/data/advanced-input-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/advanced-input-docs.before.ts.txt",
+      "sha256": "f914d5c0818686e60da54443ee43724e7564061b6c8bafe18a79c24e7f500ac5"
+    },
+    "site/src/data/strict-control-guides.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/strict-control-guides.before.ts.txt",
+      "sha256": "830bccc2b787f6e205ee7079165cc3b0929e35470bf0c6115aa8d07536d713a6"
+    },
+    "site/src/data/guide-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/guide-docs.before.ts.txt",
+      "sha256": "3f7e157a021a75f90ac3d27f54a4374a059dbf3d7b7ab62a724dc7267cd40fc1"
+    },
+    "site/src/libs/mdx-guides.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/mdx-guides.before-forms.ts.txt",
+      "sha256": "411c56bc706e4d30326a911d44138244515cda20b0e5bbb639af6aad421d5929"
+    }
+  },
+  "removed": [
+    "site/src/data/strict-control-guides.ts"
+  ],
+  "expectation": {
+    "snapshot": "tests/fixtures/mdx-migration/forms.before.json",
+    "sha256": "4bd1841f1c250c8237a89c2508385dec8cabed7f888ab167be1b1f4c38da277c"
+  },
+  "sources": {
+    "site/src/components/GuideScripts.astro": "b0e8a6ba66b635d77db28f66b17557f8f5c23d65a6fb8fc452d2c8c3e3987f06",
+    "site/src/components/shortcodes/GuideTable.astro": "78f7679991c7ab686c431da67452c142329ec5e425b3627f544641a9974778ed",
+    "site/src/content/docs/forms/checkbox.mdx": "f9209d8af8754eab96b357f943885dbd7f38125cfda3c1bfb5c56bb3b83a4a47",
+    "site/src/content/docs/forms/chips.mdx": "2f8148c96b36c2a0521881608ddd142d890ddddf782500260f8e8453269e05ff",
+    "site/src/content/docs/forms/combobox.mdx": "d506acf8857decf9901327b3efce40e6a26be6dd563807bf2b023d90177f00ab",
+    "site/src/content/docs/forms/datepicker.mdx": "bd40368283986ee713e627ec567af657c888d3de319e92f1c602c0d82d86cc5e",
+    "site/src/content/docs/forms/field.mdx": "4486fd7383bf4cea9ced9bc20a0cb3dfa54d5861db4b88e3a4dff0959bd41d18",
+    "site/src/content/docs/forms/floating-labels.mdx": "da8f858287c645428d2f578069b17d92c1c3eb7ea12d76b6be3903a1f03ad7cd",
+    "site/src/content/docs/forms/form-adorn.mdx": "e3edbe1d0e5b103ec72499e1ea457ebc272fbdcfef67e73dcee41989ab3bafef",
+    "site/src/content/docs/forms/form-control.mdx": "4db7e8334aafd9ef32aa82f5019cd228d26b62999620ea2bf9c246e726e61e07",
+    "site/src/content/docs/forms/input-group.mdx": "d2860b134617f58bac399d0f8524d3f7599c42b4532b25f1e9d9407d7042df67",
+    "site/src/content/docs/forms/layout.mdx": "e6e584e8f1eed10ca844df25bc1e590e4944648840e3f82cbdf343dbf25d214e",
+    "site/src/content/docs/forms/otp-input.mdx": "0340378b71d5505a52e9d64d9f3c27ac38e24fd991b6bc1db322febf7d08bdb1",
+    "site/src/content/docs/forms/overview.mdx": "1a984c7bcee36818577640d76293859e31c9f2b3e7551e01349dcfd2c8e8afdc",
+    "site/src/content/docs/forms/password-strength.mdx": "8b2cbf7fb63acdad1fc5b43a190b1a3899d58ac21c4e329a493144062c1422a3",
+    "site/src/content/docs/forms/radio.mdx": "e431368231f628b1647e563eee9e76a8fea227af3d4a38b1784be62bddcd0148",
+    "site/src/content/docs/forms/range.mdx": "e18f5c2fbb8cf2ed5662e77b05cd9a485d672aa30c4b99b6fa1f239e9567fb02",
+    "site/src/content/docs/forms/switch.mdx": "bb981f2a183ef85bcc94a286017f6cd0f751c10c819b4ef83776a2d45a851525",
+    "site/src/content/docs/forms/validation.mdx": "3adfc87855b825da1262c5f949637bcc54b096eab253732849385734fbfd6bec",
+    "site/src/data/advanced-input-docs.ts": "ddecc42a869b316cae64e2777c75f3ce8a7cae432f1e12efca0817eae0020f3e",
+    "site/src/data/choice-input-docs.ts": "e348241b0dc2ce2c57a37b57aae1d20c0a8874aecfb79157324ced0338fbe3f8",
+    "site/src/data/form-composition-guides.ts": "e1aca1b023a5e186fed0dcb282962b15281b918f17c16a4adc7fe58e3c2eaf4e",
+    "site/src/data/forms-examples.ts": "6ec3d85932be0726f21d0d7b3a9f4309a843f824075123da62ae630e7304eccb",
+    "site/src/data/forms-guides.ts": "a888192d435c8c23f216ad104b745b7e9d81acea8e8cb0399bafcfdd8228a4ea",
+    "site/src/data/forms-overview-docs.ts": "18968667518c877bf19a06c79f6ca11c4f005d425ad21254ce6ed4b597c741c8",
+    "site/src/data/forms-tables.ts": "c88db716e1de8ce0360bcf2109d76226f710091f94809ab02e4cd8f2c8a4ec53",
+    "site/src/data/guide-docs.ts": "2a771490860889e822c222a17f47cec1290e397bb4fdf0ee20aa3be808fe0c23",
+    "site/src/data/native-form-guides.ts": "0453fe37fc1f8a9a766f03e5ddff937f4e302b6f4cd61ca3861d3e5eced46e50",
+    "site/src/libs/mdx-guides.ts": "abdcdcf0a6cb7e3cdbad447edb79a788c4e4b93b8600184f8e79b284d35c674c",
+    "site/src/pages/[...guide].astro": "cc9eee5826fe37ea07258e82c56860aa76cb938432bca5cb50dd2c62b9bd58c0"
+  }
+}

@@ -1,0 +1,50 @@
+﻿<!doctype html>
+<html lang="en" data-trm-theme="light">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tremplin component example</title><link rel="stylesheet" href="../dist/css/tremplin.css">
+  <!-- Explicit application palette for readable demo buttons, not a core override. -->
+  <style>:root { --trm-primary-bg: var(--trm-blue-700); --trm-primary-fg: var(--trm-primary-fg-emphasis); --trm-success-fg: var(--trm-success-fg-emphasis); }</style>
+</head>
+<body>
+  <main class="container py-5 vstack" style="gap:2rem">
+    <header><span class="badge">Example</span><h1>Tremplin components</h1><p class="fg-2">A compact verification page for the current design and interaction APIs.</p></header>
+
+    <section><h2>Grid and cards</h2><div class="row g-3">
+      <div class="md:col-4"><article class="card"><div class="card-body"><h3>Tokens</h3><p>Runtime theming through semantic custom properties.</p><button class="btn btn-solid theme-primary">Primary</button></div></article></div>
+      <div class="md:col-4"><article class="card"><div class="card-body"><h3>Layout</h3><p>A mobile-first twelve-column responsive grid.</p><button class="btn btn-outline theme-success">Success</button></div></article></div>
+      <div class="md:col-4"><article class="card"><div class="card-body"><h3>Plugins</h3><p>Typed, cancelable and disposable interactions.</p><button class="btn btn-outline theme-primary" data-trm-toggle="dialog" data-trm-target="#demo-dialog">Open dialog</button></div></article></div>
+    </div></section>
+
+    <section><h2>Alert and collapse</h2>
+      <div class="alert theme-info theme-muted" role="status"><button class="btn-close" data-trm-dismiss="alert" aria-label="Dismiss"></button><p><strong>Heads up.</strong> Tremplin's data API is active.</p></div>
+      <button class="btn btn-solid theme-secondary" data-trm-toggle="collapse" data-trm-target="#details" aria-expanded="false">Toggle details</button>
+      <div id="details" class="collapse mt-3"><div class="card"><div class="card-body">This region is controlled by the Collapse plugin.</div></div></div>
+    </section>
+
+    <section><h2>Tabs</h2>
+      <div class="nav nav-tabs"><button id="tab-css-trigger" class="nav-link active" data-trm-toggle="tab" data-trm-target="#tab-css">CSS</button><button id="tab-js-trigger" class="nav-link" data-trm-toggle="tab" data-trm-target="#tab-js">JavaScript</button></div>
+      <div class="tab-content">
+        <div id="tab-css" class="tab-pane active show card mt-3"><div class="card-body">Sass configuration plus runtime CSS variables.</div></div>
+        <div id="tab-js" class="tab-pane card mt-3"><div class="card-body">Strict TypeScript modules with data and programmatic APIs.</div></div>
+      </div>
+    </section>
+
+    <section><h2>Forms</h2><form class="card"><div class="card-body">
+      <div class="form-field"><label class="form-label" for="email">Email</label><input class="form-control" id="email" type="email" placeholder="you@example.com"><div class="form-text">We will never share your address.</div></div>
+      <div class="hstack gap-2"><input class="check" id="updates" type="checkbox"><label for="updates">Send framework updates</label></div>
+      <button class="btn btn-solid theme-primary" type="submit">Submit</button>
+    </div></form></section>
+
+    <section><h2>Progress and loading</h2><div class="progress" role="progressbar" aria-label="Upload progress" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar" style="inline-size:65%"></div></div><div class="hstack flex-wrap gap-2 mt-3"><span class="spinner-border" aria-hidden="true"></span><span>Loading...</span></div></section>
+  </main>
+
+  <dialog id="demo-dialog" class="dialog" aria-labelledby="dialog-title">
+    <div class="dialog-header"><h2 id="dialog-title">Accessible dialog</h2><button class="btn-close" data-trm-toggle="dialog" data-trm-target="#demo-dialog" aria-label="Close">&times;</button></div>
+    <div class="dialog-body"><p>Focus is trapped while this dialog is open and returns to its trigger afterward.</p></div>
+    <div class="dialog-footer"><button class="btn btn-solid theme-primary" data-trm-toggle="dialog" data-trm-target="#demo-dialog">Done</button></div>
+  </dialog>
+  <script type="module" src="../dist/js/tremplin.bundle.min.js"></script>
+</body>
+</html>
+

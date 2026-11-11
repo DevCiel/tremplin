@@ -1,0 +1,242 @@
+@use "config" as *;
+@use "functions" as *;
+@use "mixins/border-radius" as *;
+@use "mixins/box-shadow" as *;
+@use "mixins/reset-text" as *;
+@use "mixins/tokens" as *;
+@use "mixins/transition" as *;
+
+$popover-tokens: () !default;
+
+// scss-docs-start popover-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$popover-tokens: defaults(
+  (
+    --trm-popover-zindex: var(--trm-z-popover),
+    --trm-popover-max-width: 280px,
+    --trm-popover-font-size: var(--trm-font-size-sm),
+    --trm-popover-bg: var(--trm-bg-body),
+    --trm-popover-border-width: var(--trm-border-width),
+    --trm-popover-border-color: var(--trm-border-color-translucent),
+    --trm-popover-border-radius: var(--trm-radius-7),
+    --trm-popover-inner-border-radius: calc(var(--trm-radius-7) - var(--trm-border-width)),
+    --trm-popover-box-shadow: var(--trm-box-shadow),
+    --trm-popover-header-padding-x: var(--trm-spacer),
+    --trm-popover-header-padding-y: var(--trm-spacer-3),
+    --trm-popover-header-font-size: var(--trm-font-size-sm),
+    --trm-popover-header-color: inherit,
+    --trm-popover-header-bg: var(--trm-bg-1),
+    --trm-popover-body-padding-x: var(--trm-spacer),
+    --trm-popover-body-padding-y: var(--trm-spacer-3),
+    --trm-popover-body-color: var(--trm-fg-body),
+    --trm-popover-arrow-width: 1rem,
+    --trm-popover-arrow-height: .5rem,
+    --trm-popover-arrow-border: var(--trm-popover-border-color),
+    --trm-popover-transition-property: "opacity",
+    --trm-popover-transition-duration: .15s,
+    --trm-popover-transition-timing: linear,
+  ),
+  $popover-tokens
+);
+// scss-docs-end popover-tokens
+
+@layer components {
+  .popover {
+    // scss-docs-start popover-css-vars
+    @include tokens($popover-tokens);
+    // scss-docs-end popover-css-vars
+
+    z-index: var(--trm-popover-zindex);
+    display: block;
+    max-width: var(--trm-popover-max-width);
+    // Our parent element can be arbitrary since tooltips are by default inserted as a sibling of their target element.
+    // So reset our font and text properties to avoid inheriting weird values.
+    @include reset-text();
+    font-size: var(--trm-popover-font-size);
+    // Allow breaking very long words so they don't overflow the popover's bounds
+    word-wrap: break-word;
+    background-color: var(--trm-popover-bg);
+    background-clip: padding-box;
+    border: var(--trm-popover-border-width) solid var(--trm-popover-border-color);
+    @include border-radius(var(--trm-popover-border-radius));
+    @include box-shadow(var(--trm-popover-box-shadow));
+    opacity: 0;
+
+    // The JS inserts the popover, so the fade needs a starting state below. Add
+    // .popover-instant, or pass `animation: false`, to skip it.
+    &:not(.popover-instant) {
+      @include transition-props(
+        var(--trm-popover-transition-property),
+        var(--trm-popover-transition-duration),
+        var(--trm-popover-transition-timing)
+      );
+    }
+
+    &.show {
+      opacity: 1;
+    }
+
+    .popover-arrow {
+      display: block;
+      width: var(--trm-popover-arrow-width);
+      height: var(--trm-popover-arrow-height);
+
+      &::before,
+      &::after {
+        position: absolute;
+        display: block;
+        content: "";
+        border-color: transparent;
+        border-style: solid;
+        border-width: 0;
+      }
+    }
+  }
+
+  @starting-style {
+    .popover:not(.popover-instant).show {
+      opacity: 0;
+    }
+  }
+
+  .bs-popover-top {
+    > .popover-arrow {
+      bottom: calc(-1 * (var(--trm-popover-arrow-height)) - var(--trm-popover-border-width));
+
+      &::before,
+      &::after {
+        border-width: var(--trm-popover-arrow-height) calc(var(--trm-popover-arrow-width) * .5) 0;
+      }
+
+      &::before {
+        bottom: 0;
+        border-block-start-color: var(--trm-popover-arrow-border);
+      }
+
+      &::after {
+        bottom: var(--trm-popover-border-width);
+        border-block-start-color: var(--trm-popover-bg);
+      }
+    }
+  }
+
+  .bs-popover-end {
+    > .popover-arrow {
+      left: calc(-1 * (var(--trm-popover-arrow-height)) - var(--trm-popover-border-width));
+      width: var(--trm-popover-arrow-height);
+      height: var(--trm-popover-arrow-width);
+
+      &::before,
+      &::after {
+        border-width: calc(var(--trm-popover-arrow-width) * .5) var(--trm-popover-arrow-height) calc(var(--trm-popover-arrow-width) * .5) 0;
+      }
+
+      &::before {
+        left: 0;
+        border-inline-end-color: var(--trm-popover-arrow-border);
+      }
+
+      &::after {
+        left: var(--trm-popover-border-width);
+        border-inline-end-color: var(--trm-popover-bg);
+      }
+    }
+  }
+
+  .bs-popover-bottom {
+    > .popover-arrow {
+      top: calc(-1 * (var(--trm-popover-arrow-height)) - var(--trm-popover-border-width));
+
+      &::before,
+      &::after {
+        border-width: 0 calc(var(--trm-popover-arrow-width) * .5) var(--trm-popover-arrow-height);
+      }
+
+      &::before {
+        top: 0;
+        border-block-end-color: var(--trm-popover-arrow-border);
+      }
+
+      &::after {
+        top: var(--trm-popover-border-width);
+        border-block-end-color: var(--trm-popover-bg);
+      }
+
+      // When the popover has a header, the bottom arrow points into the header,
+      // so its fill should match the header background, not the body background.
+      &:has(+ .popover-header)::after {
+        border-block-end-color: var(--trm-popover-header-bg);
+      }
+    }
+
+    // This will remove the popover-header's border just below the arrow
+    .popover-header::before {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      display: block;
+      width: var(--trm-popover-arrow-width);
+      margin-inline-start: calc(-.5 * var(--trm-popover-arrow-width));
+      content: "";
+      border-block-end: var(--trm-popover-border-width) solid var(--trm-popover-header-bg);
+    }
+  }
+
+  .bs-popover-start {
+    > .popover-arrow {
+      right: calc(-1 * (var(--trm-popover-arrow-height)) - var(--trm-popover-border-width));
+      width: var(--trm-popover-arrow-height);
+      height: var(--trm-popover-arrow-width);
+
+      &::before,
+      &::after {
+        border-width: calc(var(--trm-popover-arrow-width) * .5) 0 calc(var(--trm-popover-arrow-width) * .5) var(--trm-popover-arrow-height);
+      }
+
+      &::before {
+        right: 0;
+        border-inline-start-color: var(--trm-popover-arrow-border);
+      }
+
+      &::after {
+        right: var(--trm-popover-border-width);
+        border-inline-start-color: var(--trm-popover-bg);
+      }
+    }
+  }
+
+  .bs-popover-auto {
+    &[data-trm-placement^="top"] {
+      @extend .bs-popover-top;
+    }
+    &[data-trm-placement^="right"] {
+      @extend .bs-popover-end;
+    }
+    &[data-trm-placement^="bottom"] {
+      @extend .bs-popover-bottom;
+    }
+    &[data-trm-placement^="left"] {
+      @extend .bs-popover-start;
+    }
+  }
+
+  // Offset the popover to account for the popover arrow
+  .popover-header {
+    padding: var(--trm-popover-header-padding-y) var(--trm-popover-header-padding-x);
+    margin-bottom: 0; // Reset the default from Reboot
+    font-size: var(--trm-popover-header-font-size);
+    color: var(--trm-popover-header-color);
+    background-color: var(--trm-popover-header-bg);
+    border-block-end: var(--trm-popover-border-width) solid var(--trm-popover-border-color);
+    @include border-top-radius(var(--trm-popover-inner-border-radius));
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .popover-body {
+    padding: var(--trm-popover-body-padding-y) var(--trm-popover-body-padding-x);
+    color: var(--trm-popover-body-color);
+  }
+}

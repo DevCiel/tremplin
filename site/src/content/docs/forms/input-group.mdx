@@ -1,0 +1,159 @@
+---
+{
+  "title": "Input group",
+  "description": "Combine fields with contextual text and buttons without losing labels or reflow.",
+  "group": "Forms",
+  "lead": "Combine fields with contextual text and buttons without losing labels or reflow.",
+  "order": 7
+}
+---
+
+import GuideTable from '../../../components/shortcodes/GuideTable.astro'
+import { formsTables } from '../../../data/forms-tables'
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Examples"}</h2>
+
+<p>{"Input group is CSS in the components layer, not a standalone plugin. Put persistent labels outside the group and associate meaningful addons with aria-describedby. Inputs share width; addons are nowrap, so keep them short or choose an application wrapping policy."}</p>
+
+<div class="docs-example"><Html source={examples["forms/input-group"][0].example} /></div>
+
+<Code sample={examples["forms/input-group"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"With form field"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/input-group"][1].example} /></div>
+
+<Code sample={examples["forms/input-group"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Buttons"}</h2>
+
+<p>{"Use input-group-btn with current btn-outline/theme classes. These presentation-only actions do not implement a search or account service; the Menu buttons below operate normally."}</p>
+
+<div class="docs-example"><Html source={examples["forms/input-group"][2].example} /></div>
+
+<Code sample={examples["forms/input-group"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Textarea and select"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/input-group"][3].example} /></div>
+
+<Code sample={examples["forms/input-group"][3].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"File input"}</h2>
+
+<p>{"Native chooser controls remain browser-owned. Selecting a file here does not upload it; validate files on the server in production."}</p>
+
+<div class="docs-example"><Html source={examples["forms/input-group"][4].example} /></div>
+
+<Code sample={examples["forms/input-group"][4].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Checkboxes and radios"}</h2>
+
+<p>{"Checked addon state stays native; it does not enable or otherwise control the following field. Name the choice and text field independently."}</p>
+
+<div class="docs-example"><Html source={examples["forms/input-group"][5].example} /></div>
+
+<Code sample={examples["forms/input-group"][5].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"Multiple inputs and addons"}</h2>
+
+<p>{"Use fieldset/legend for the question and distinct input names. The reference limits group-level validation guidance to a single input; visual grouping is not a combined validation engine."}</p>
+
+<div class="docs-example"><Html source={examples["forms/input-group"][6].example} /></div>
+
+<Code sample={examples["forms/input-group"][6].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Buttons with menus"}</h2>
+
+<p>{"Menu uses the regular data-trm-toggle API and Floating UI. The menu is a sibling of its toggle; input-group does not initialize it. Links navigate to real guide pages. End placement is requested on the trailing toggle."}</p>
+
+<div class="docs-example"><Html source={examples["forms/input-group"][7].example} /></div>
+
+<Code sample={examples["forms/input-group"][7].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">{"Segmented buttons"}</h2>
+
+<p>{"Name the split toggle separately from its action button. The action is presentation-only; Menu owns its keyboard, cancellation and focus behavior."}</p>
+
+<div class="docs-example"><Html source={examples["forms/input-group"][8].example} /></div>
+
+<Code sample={examples["forms/input-group"][8].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-9">
+<h2 id="section-9">{"Border radius"}</h2>
+
+<p>{"input-group-ignore removes an extra element from edge-rounding logic, but does not hide it. This example uses a native hidden input. Do not restore legacy rounding aliases."}</p>
+
+<div class="docs-example"><Html source={examples["forms/input-group"][9].example} /></div>
+
+<Code sample={examples["forms/input-group"][9].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-10">
+<h2 id="section-10">{"Sizing"}</h2>
+
+<p>{"Put input-group-sm/lg on the group. Mixed individual sizing is not supported. The loop targets direct form-control, input-group-text and .btn children; these button variants explicitly include the real btn base class so the size selector applies. Floating wrappers are not direct size targets."}</p>
+
+<div class="docs-example"><Html source={examples["forms/input-group"][10].example} /></div>
+
+<Code sample={examples["forms/input-group"][10].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-11">
+<h2 id="section-11">{"CSS variables"}</h2>
+
+<p>{"These defaults come from the actual component token map. Configure the map before first Sass load or override its CSS property on the component itself. Shared root sizing and form-control properties are documented separately."}</p>
+
+<GuideTable table={{ headings: ["Property","Default"], rows: formsTables["forms/input-group#11"], keyboardScroll: true }} labelledby="section-11" />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-12">
+<h2 id="section-12">{"Sass customization"}</h2>
+
+<p>{"$input-group-sizes is a defaults-merged map seeded from sm/lg, despite older prose calling it a list. Null removes a key; false is still iterated. New sizes need matching root properties. This custom-build sample removes lg."}</p>
+
+<Code sample={examples["forms/input-group"][12].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-13">
+<h2 id="section-13">{"Explicit demo accessibility CSS"}</h2>
+
+<p>{"Copy this scoped application CSS with the demo wrappers. It strengthens feedback/placeholder/floating-label and tooltip contrast, restores plaintext focus, mirrors the physical select caret in RTL and gives adorned disabled wrappers a visible background. The tooltip is positioned within the example padding. These are demo choices, not new core defaults."}</p>
+
+<Code sample={examples["forms/input-group"][13].code[0]} standalone={true} />
+
+</section>

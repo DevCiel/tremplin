@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" data-trm-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tremplin layout example</title>
+  <link rel="stylesheet" href="../dist/css/tremplin.css">
+</head>
+<body>
+  <main class="container py-5 stack" style="--trm-stack-gap:2rem">
+    <header><span class="badge">v0.2 layout</span><h1>Responsive by viewport and component</h1></header>
+
+    <section>
+      <h2>Responsive flex grid</h2>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
+        <div class="col"><article class="card"><div class="card-body">One</div></article></div>
+        <div class="col"><article class="card"><div class="card-body">Two</div></article></div>
+        <div class="col"><article class="card"><div class="card-body">Three</div></article></div>
+        <div class="col"><article class="card"><div class="card-body">Four</div></article></div>
+      </div>
+    </section>
+
+    <section class="cq border rounded p-3">
+      <h2>Container-query cards</h2>
+      <p class="text-muted">Resize this container to change the cards independently of the viewport.</p>
+      <div class="grid">
+        <article class="card cq-span-sm-12 cq-span-md-6 cq-span-lg-4"><div class="card-body">Alpha</div></article>
+        <article class="card cq-span-sm-12 cq-span-md-6 cq-span-lg-4"><div class="card-body">Beta</div></article>
+        <article class="card cq-span-sm-12 cq-span-md-6 cq-span-lg-4"><div class="card-body">Gamma</div></article>
+      </div>
+    </section>
+
+    <section class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+      <p class="m-0">Generated responsive utilities compose directly in markup.</p>
+      <button class="btn btn-primary hover-opacity-75">Launch</button>
+    </section>
+  </main>
+</body>
+</html>

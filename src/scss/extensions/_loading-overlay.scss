@@ -1,0 +1,6 @@
+
+
+@layer custom {
+  // Tremplin extension: blocking loading surface.
+  .loading-overlay { position: absolute; z-index: 1080; inset: 0; display: grid; place-items: center; background: color-mix(in srgb, var(--trm-bg-body) 78%, transparent); backdrop-filter: blur(2px); }
+}

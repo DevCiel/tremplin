@@ -1,0 +1,131 @@
+---
+{
+  "component": "scrollspy",
+  "title": "Scrollspy",
+  "description": "Scrollspy component documentation for Tremplin.",
+  "lead": "Update navigation state as the corresponding document sections enter the viewport.",
+  "variants": [
+    {
+      "title": "Scrollable container",
+      "description": "A real named, focusable region with visible sections. The last short section activates at the bottom even if it never reaches the activation line."
+    },
+    {
+      "title": "Smooth navigation",
+      "description": "After optional smooth navigation settles, the plugin replaces the URL hash and focuses the destination. Reduced-motion users settle immediately; ordinary scroll activation does not move focus."
+    },
+    {
+      "title": "Nested navigation",
+      "description": "Visible nested sections and Nav ancestors demonstrate actual parent active styling, not hidden dummy targets. The plugin does not add aria-current to these links."
+    },
+    {
+      "title": "List-group navigation",
+      "description": "The same observer can style actual list-group anchors; it does not turn them into tab widgets. The copyable active-color tokens explicitly compose body/inverse colors for readable contrast."
+    },
+    {
+      "title": "Pixel activation line",
+      "description": "topMargin accepts pixels as well as percentages. The observer rebuilds on resize for pixel lines. Explicit rootMargin takes precedence over topMargin."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Real fragment links and visible sections retain direction-independent detection while Nav styling follows logical layout."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Follow native navigation links and the authored focus stop on the scrolling region."
+    },
+    {
+      "keys": "Enter",
+      "behavior": "Navigate to a real fragment; smooth mode also settles the URL and destination focus."
+    },
+    {
+      "keys": "Arrow keys / Page Up / Page Down",
+      "behavior": "Scroll the focused region using native browser behavior, not a custom Scrollspy keyboard controller."
+    }
+  ],
+  "guidelines": [
+    "Use unique IDs and real fragment links scoped to visible sections inside the observed element.",
+    "The activation line defaults to topMargin=12%; gaps retain the last active section and the bottom sentinel selects the last section.",
+    "rootMargin overrides topMargin; topMargin pixel values trigger a debounced observer rebuild on resize.",
+    "Call refresh after inserting/reordering sections or revealing an initially hidden container. Hidden targets are ignored at initialization.",
+    "Only active classes are managed; aria-current is not automatically added or updated. If your application supplies it, keep it synchronized yourself.",
+    "Smooth navigation replaces the hash without adding a history entry and focuses the section after settling; passive scroll activation does not move focus.",
+    "Scrollspy has no dedicated Sass partial or component token map. Configure the Nav/List group presentation instead."
+  ],
+  "events": {
+    "activate.trm.scrollspy": "On the observed scrolling element after changing active classes; relatedTarget is the active link. No aria-current update is supplied.",
+    "click.trm.scrollspy": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+    "resize.trm.scrollspy": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+    "scroll.trm.scrollspy": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+    "scrollend.trm.scrollspy": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event."
+  }
+}
+---
+
+import { componentApi } from '../../../data/component-api'
+import ApiOptions from '../../../components/component/ApiOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("scrollspy")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="scrollspy" />
+
+{componentDetail("scrollspy").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<p>These variables belong to the reused Nav presentation, not to a Scrollspy Sass partial or token map.</p>
+<Tokens name="scrollspy" />
+</>}
+
+{componentDetail("scrollspy").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("scrollspy").sass} standalone={true} />
+</>}
+
+{componentDetail("scrollspy").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="scrollspy" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="scrollspy" />
+
+{documentedComponents.find(component => component.name === "scrollspy").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="scrollspy" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("scrollspy").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("scrollspy").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<ApiOptions name="scrollspy" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="scrollspy" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="scrollspy" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<p>Initialize with <code>{'data-trm-spy="scroll"'}</code> and a matching <code>data-trm-target</code>. The frozen scanner also lists <code>data-trm-toggle</code> from Menu integration; it is not a Scrollspy initialization hook.</p>
+<ApiAttributes name="scrollspy" />
+<p class="mt-4"><a href="/api/scrollspy/">View the generated {componentApi("scrollspy").definition.className}{" API reference →"}</a></p>

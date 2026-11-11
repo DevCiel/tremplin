@@ -1,0 +1,112 @@
+---
+{
+  "title": "Forms",
+  "description": "Build accessible forms from native controls, explicit labels, and deliberate layouts.",
+  "group": "Forms",
+  "lead": "Build forms from native controls, visible labels, shared CSS tokens and deliberate application validation.",
+  "order": 0
+}
+---
+
+import GuideTable from '../../../components/shortcodes/GuideTable.astro'
+import { formsTables } from '../../../data/forms-tables'
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Overview"}</h2>
+
+<p>{"Form classes opt into styling on top of "}<a href="/content/reboot/">{"Reboot"}</a>{". Use a real input type, visible label, submitted name, autocomplete and appropriate constraints; styling does not supply those semantics. This local project example follows the reference structure without creating an account or sending values."}</p>
+
+<div class="docs-example"><Html source={examples["forms/overview"][0].example} /></div>
+
+<Code sample={examples["forms/overview"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Disabled forms"}</h2>
+
+<p>{"Use disabled on an individual native control or fieldset. Native controls in a disabled fieldset cannot normally be edited, focused or submitted; descendants of its first legend are the native exception. That does not disable links or custom widgets. For non-native actions, prefer a disabled native button or remove navigation/activation and expose aria-disabled=\"true\" deliberately; ARIA alone does not block behavior."}</p>
+
+<div class="docs-example"><Html source={examples["forms/overview"][1].example} /></div>
+
+<Code sample={examples["forms/overview"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Readonly and submitted values"}</h2>
+
+<p>{"Readonly text controls remain focusable and successful form fields; disabled values are omitted. Readonly is not a checkbox/radio/select state. This local inspector lists only field names from native FormData, not entered values."}</p>
+
+<div class="docs-example"><Html source={examples["forms/overview"][2].example} /></div>
+
+<Code sample={examples["forms/overview"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Accessibility"}</h2>
+
+<p>{"Visible labels are the default. Use for/id, fieldset/legend for questions, aria-describedby for help and errors, and required in both markup and understandable text. A placeholder is not a durable label. A visually-hidden label is an alternative only when the visual context still makes the purpose clear."}</p>
+
+<p>{"Native controls own keyboard behavior; CSS does not implement submission, persistence, error announcements or summary focus. Prefer persistent feedback and a recovery path. See "}<a href="/getting-started/accessibility/">{"Accessibility"}</a>{" and "}<a href="/forms/validation/">{"Validation"}</a>{"."}</p>
+
+<div class="docs-example"><Html source={examples["forms/overview"][3].example} /></div>
+
+<Code sample={examples["forms/overview"][3].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Validation and recovery"}</h2>
+
+<p>{"The following is an explicit application example, not automatic framework validation. It intercepts submission, uses native validity, sets aria-invalid, shows associated feedback and focuses a summary. Its summary uses standard layout helpers, not a core error-summary component. The error links return to their fields; reset clears application state. Always validate production requests on the server."}</p>
+
+<div class="docs-example"><Html source={examples["forms/overview"][4].example} /></div>
+
+<Code sample={examples["forms/overview"][4].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"CSS"}</h2>
+
+<p>{"The shared root-form-variables group is listed below exactly as exported through $root-tokens. Control-level maps reuse selected root values and also declare their own defaults. Most form partials emit the forms layer; the Input group partial emits components. Follow the individual topics for all component-specific token maps."}</p>
+
+<GuideTable table={{ headings: ["Shared root property","Default"], rows: formsTables["forms/overview#5"], keyboardScroll: true }} labelledby="section-5" />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"Sass customization"}</h2>
+
+<p>{"Configure a map before its first load. This example changes shared horizontal padding and the text-control radius separately; it does not invent a global Forms token map or change framework defaults."}</p>
+
+<Code sample={examples["forms/overview"][6].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Choose a form topic"}</h2>
+
+<p>{"Native text/select/check/radio/switch and layout need no Forms plugin. The strict-core enhanced Chips, Combobox, Datepicker, OTP, Range decoration and Strength components have their own JavaScript APIs; native controls can still retain basic browser behavior without those enhancements."}</p>
+
+<p>{"Browse the complete local reference: "}<a href="/forms/field/">{"Field"}</a>{" · "}<a href="/forms/form-control/">{"Form control"}</a>{" · "}<a href="/forms/checkbox/">{"Checkbox"}</a>{" · "}<a href="/forms/radio/">{"Radio"}</a>{" · "}<a href="/forms/switch/">{"Switch"}</a>{" · "}<a href="/forms/range/">{"Range"}</a>{" · "}<a href="/forms/input-group/">{"Input group"}</a>{" · "}<a href="/forms/floating-labels/">{"Floating labels"}</a>{" · "}<a href="/forms/form-adorn/">{"Form adorn"}</a>{" · "}<a href="/forms/chips/">{"Chips"}</a>{" · "}<a href="/forms/combobox/">{"Combobox"}</a>{" · "}<a href="/forms/datepicker/">{"Datepicker"}</a>{" · "}<a href="/forms/otp-input/">{"OTP input"}</a>{" · "}<a href="/forms/password-strength/">{"Password strength"}</a>{" · "}<a href="/forms/layout/">{"Layout"}</a>{" · "}<a href="/forms/validation/">{"Validation"}</a>{". Also see the "}<a href="/components/forms/">{"Forms composition guide"}</a>{"."}</p>
+
+<Code sample={examples["forms/overview"][7].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">{"Explicit local demo setup"}</h2>
+
+<p>{"Copy this CSS and application handler with the live demo markup. Focus/feedback contrast is an explicit demo choice, not a core override. Submission/inspection buttons are enabled only after handlers are attached. These previews make no requests, store no data, and never print entered values; the inspector reports field names only. No framework Forms plugin or error-summary class is added."}</p>
+
+<Code sample={examples["forms/overview"][8].code[0]} standalone={true} />
+
+<Code sample={examples["forms/overview"][8].code[1]} standalone={true} />
+
+</section>

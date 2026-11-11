@@ -1,0 +1,159 @@
+---
+{
+  "component": "combobox",
+  "title": "Combobox",
+  "description": "Combobox component documentation for Tremplin.",
+  "lead": "Search and select values with a Menu-backed trigger, focused options and optional submitted values.",
+  "variants": [
+    {
+      "title": "Search and select",
+      "description": "The adjacent Menu contains a separately labelled search input and listbox. Options receive real focus, not aria-activedescendant tracking."
+    },
+    {
+      "title": "Multiple selections",
+      "description": "Selections stay open and the display counts two or more values. The named hidden input contains a comma-separated string, not repeated form fields."
+    },
+    {
+      "title": "Disabled option",
+      "description": "A disabled native option is skipped by keyboard selection. It can still count as a text filter match, so matching only unavailable options is not the same as no results."
+    },
+    {
+      "title": "No results",
+      "description": "Use an absent query to reveal the authored status. The demo opts into emphasized message/placeholder text; core styling is unchanged."
+    },
+    {
+      "title": "Preselected value and no search",
+      "description": "selected and aria-selected=true seed the initial display and hidden value. No search input is authored in this variant."
+    },
+    {
+      "title": "Accent-normalized search",
+      "description": "With normalization enabled, Sao matches São Paulo. Filtering is local textContent matching, not remote search."
+    },
+    {
+      "title": "Grouped descriptions and checks",
+      "description": "Semantic groups and visible headers are authored. The first label span becomes the display text; descriptions remain in searchable textContent. Group headers do not automatically disappear when their options are filtered."
+    },
+    {
+      "title": "Native sizes",
+      "description": "Use actual form-control sizing on each trigger. There is no Combobox size option or generated input shim."
+    },
+    {
+      "title": "Disabled trigger",
+      "description": "A native disabled button prevents opening. A separately generated hidden input is not disabled automatically; your form policy must handle submission deliberately."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Keep authored names/roles and actual Menu focus semantics. Localization and application value validation remain separate concerns."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Enter / Space on trigger",
+      "behavior": "Opens the Menu. Search focus is deferred to an animation frame when a search field exists."
+    },
+    {
+      "keys": "ArrowDown / ArrowUp",
+      "behavior": "Navigates enabled visible options with real focus. From a searchable trigger, deferred search focus can supersede the initial option focus; use ArrowDown from search."
+    },
+    {
+      "keys": "Home / End",
+      "behavior": "Moves to first/last visible enabled option, including when pressed in search; not ordinary text-caret behavior."
+    },
+    {
+      "keys": "Enter / Space on option",
+      "behavior": "Selects; single mode hides and focuses trigger, multiple mode keeps the Menu open."
+    },
+    {
+      "keys": "Escape / Tab",
+      "behavior": "Escape requests hide and focuses the trigger; Tab requests hide and follows native focus order. Cancellation can keep the Menu open."
+    }
+  ],
+  "guidelines": [
+    "Put data-trm-toggle=combobox on a named native trigger, include combobox-value, and follow it with the actual Menu. The wrapper form-field is a layout helper, not an invented combobox CSS class.",
+    "Author labelled listbox/options and a separate labelled search input. Options receive real focus, not aria-activedescendant tracking. The pin binds any supplied search input even if search=false, and does not generate one from search=true.",
+    "Set data-trm-name for a generated hidden input. Single mode stores an identifier; multiple mode joins identifiers with commas. Validate delimiter-sensitive values and native form reset/disabled policies in your application.",
+    "There is no getValue/setValue API or free-text display/input contract. Initial selected items seed display and hidden value; labels/descriptions are not the submitted identifier.",
+    "The known owned-Menu registry notice is preserved. Combobox shown/hidden and returned promises do not await Menu transitions; observe shown.trm.menu/hidden.trm.menu for settled state.",
+    "Events expose value/item directly, not event.detail. change is post-mutation; only show/hide are read as cancellation gates. Outside dismissal may occur through Menu without Combobox hide/hidden notifications.",
+    "Use native disabled options; filtering can count their text while keyboard navigation excludes them. Group labels/no-results elements are authored, not generated or automatically regrouped.",
+    "Combobox has no own configurable Sass token map. It reuses form-control and Menu tokens; the sibling Menu rule sets max height 300px. The copied focus/contrast CSS is a demo choice, not a core patch."
+  ],
+  "events": {
+    "change.trm.combobox": "Trigger notification after updating selected classes, aria-selected, display and hidden input. value and item are direct event properties, not event.detail; preventing this event does not undo selection.",
+    "hidden.trm.combobox": "Trigger notification after calling Menu hide(), not after its async transition. Observe Menu completion for settled visibility.",
+    "hide.trm.combobox": "Cancelable trigger event before calling the owned Menu hide(). Outside dismissal may run through Menu directly.",
+    "show.trm.combobox": "Cancelable trigger event before calling the owned Menu show().",
+    "shown.trm.combobox": "Trigger notification immediately after calling Menu show(), before its transition or deferred search focus necessarily completes. Not proof a canceled Menu opened."
+  }
+}
+---
+
+import { choiceDemoCss } from '../../../data/choice-input-docs'
+import { componentApi } from '../../../data/component-api'
+import ChoiceOptions from '../../../components/component/ChoiceOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+<div class="docs-callout"><strong>Explicit demo accessibility CSS.</strong> These guides give focused chips an individual outline and emphasize Combobox placeholder/no-results text. Copy this application CSS with the markup; pinned core styles remain unchanged.</div>
+<Code source={choiceDemoCss} standalone={true} plain={true} label="Copy choice input accessibility CSS" />
+
+
+<Example markup={componentExample("combobox")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="combobox" />
+
+{componentDetail("combobox").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="combobox" />
+</>}
+
+{componentDetail("combobox").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("combobox").sass} standalone={true} />
+</>}
+
+{componentDetail("combobox").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="combobox" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="combobox" />
+
+{documentedComponents.find(component => component.name === "combobox").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="combobox" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("combobox").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("combobox").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<p>Configure these optional values before construction; getOrCreateInstance does not reconfigure an existing instance.</p>
+<ChoiceOptions name="combobox" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="combobox" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="combobox" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="combobox" />
+<p class="mt-4"><a href="/api/combobox/">View the generated {componentApi("combobox").definition.className}{" API reference →"}</a></p>

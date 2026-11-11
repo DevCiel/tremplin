@@ -1,0 +1,8 @@
+
+
+@layer custom {
+  // Tremplin extension: aspect-ratio helper classes.
+  .ratio { position: relative; inline-size: 100%; }
+  .ratio::before { display: block; padding-block-start: var(--trm-aspect-ratio, 56.25%); content: ''; }
+  .ratio > * { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; }
+}

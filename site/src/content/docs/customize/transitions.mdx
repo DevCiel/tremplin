@@ -1,0 +1,52 @@
+---
+{
+  "title": "Transitions",
+  "description": "Customize motion without breaking component lifecycle and reduced-motion behavior.",
+  "group": "Customize",
+  "lead": "Customize motion without breaking component lifecycle and reduced-motion behavior.",
+  "order": 7
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { customizeExamples as samples } from '../../../data/customize-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">How it works</h2>
+
+<p>Explicit transition mixins emit animated declarations inside prefers-reduced-motion: no-preference by default. Collapse uses block-size/display, allow-discrete and interpolate-size where supported; other components own their tokens rather than relying on generic fade. Unsupported browsers change final state immediately.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">State classes</h2>
+
+<p>The fade and collapse styles expose show and component-specific state rules. Let the component control its own state rather than changing classes concurrently with an in-flight operation.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Customize the motion</h2>
+
+<Code sample={samples["customize/transitions#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Remove the motion</h2>
+
+<p>Test the operating-system reduced-motion preference, not only a global duration override. Removing motion must not hide content or suppress the final component state.</p>
+
+<Code sample={samples["customize/transitions#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Events and promises</h2>
+
+<p>{"Check each method's return type. Dialog, Drawer, Toast, Tooltip, Menu and several other components return promises from show/hide; their completion callbacks run before those promises settle. Button.toggle and Toggler.toggle are synchronous. Use the documented lifecycle events or supported promises rather than assuming one return contract for every plugin."}</p>
+
+<p>Combobox.show/hide return promises but do not await the internal Menu transition in this pin: Combobox shown/hidden events and its promise can precede Menu completion. When layout depends on the settled menu, observe shown.trm.menu or hidden.trm.menu on the trigger. Do not concurrently force state classes during an operation.</p>
+
+</section>

@@ -1,0 +1,202 @@
+import type { ComponentDetail } from './component-docs'
+import type { Guide } from './guide-docs'
+import { documentedTokens } from './documented-tokens'
+
+export const advancedTopics=['datepicker','otp-input','range','strength'] as const
+export type AdvancedTopic=typeof advancedTopics[number]
+export const isAdvancedTopic=(name:string):name is AdvancedTopic=>(advancedTopics as readonly string[]).includes(name)
+export const advancedFormsTopic=(name:AdvancedTopic)=>name==='strength'?'password-strength':name
+const escape=(s:string)=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+const variant=(title:string,description:string,markup:string)=>({title,description,markup})
+const dark=(markup:string)=>`<div data-trm-theme="dark" dir="rtl" class="p-3 rounded-5 bg-body fg-body">${markup}</div>`
+const compact='style="--trm-otp-size: clamp(2rem, 6vw, 2.5rem); --trm-otp-gap: .25rem"'
+
+export const otpInput=(id:string,label:string,length=4,attrs='',inputAttrs='')=>`<div class="form-field"><label class="form-label" for="${escape(id)}-code">${escape(label)}</label><div id="${escape(id)}" class="otp" data-trm-otp ${attrs}><input id="${escape(id)}-code" type="text" name="code" maxlength="${length}" autocomplete="one-time-code" ${inputAttrs}></div></div>`
+export function rangeInput(id:string,label:string,attrs='',inputAttrs='',settings:{min?:number;max?:number;step?:number;value?:number;bubble?:boolean}={}){
+  return `<div class="form-field"><label class="form-label" for="${escape(id)}">${escape(label)}</label><div id="${escape(id)}-range" class="form-range" data-trm-bubble="${settings.bubble??true}" ${attrs}><input id="${escape(id)}" class="form-range-input" name="volume" type="range" min="${settings.min??0}" max="${settings.max??100}" step="${settings.step??5}" value="${settings.value??40}" ${inputAttrs}></div></div>`
+}
+export function strengthInput(id:string,label:string,value='',attrs='',settings:{bar?:boolean;inputAttrs?:string}={}){
+  return `<div class="form-field"><label class="form-label" for="${escape(id)}">${escape(label)}</label><input id="${escape(id)}" class="form-control" name="password" type="password" autocomplete="new-password" aria-describedby="${escape(id)}-feedback" value="${escape(value)}" ${settings.inputAttrs??''}><div id="${escape(id)}-strength" class="${settings.bar?'strength-bar':'strength'}" data-trm-strength data-trm-input="#${escape(id)}" aria-hidden="true" ${attrs}>${settings.bar?'':'<span class="strength-segment"></span>'.repeat(4)}</div><p id="${escape(id)}-feedback" class="strength-text" role="status" aria-live="polite"></p></div>`
+}
+export const dateInput=(id:string,label:string,attrs='')=>`<div class="form-field"><label class="form-label" for="${escape(id)}">${escape(label)}</label><input id="${escape(id)}" type="text" class="form-control" name="deadline" data-trm-toggle="datepicker" data-trm-selected-dates='["2026-10-15"]' autocomplete="off" ${attrs}></div>`
+// Explicit application layout choice: closed, offscreen popups should not cause resize overflow.
+export const advancedDemoCss='.demo-calendar-contrast[data-vc-calendar-hidden] { display: none; }'
+const inlineDate=(id:string,months=1)=>`<div class="table-responsive focus-ring" role="region" tabindex="0" aria-label="${months===1?'Inline date calendar':'Two-month calendar'}"><div id="${id}" data-trm-toggle="datepicker" data-trm-inline="true" data-demo-inline-date data-trm-selected-dates='["2026-10-15"]' data-trm-display-months-count="${months}"${months>1?' style="--trm-datepicker-min-width: 36rem"':''}></div></div><input id="${id}-value" type="hidden" name="selected-date" value="2026-10-15">`
+export const advancedClasses:Record<AdvancedTopic,string[]>={
+  datepicker:[],
+  'otp-input':['otp','otp-input','otp-rendered','otp-slots','otp-slot','otp-slot-filled','otp-slot-active','otp-connected','otp-separator','otp-sm','otp-lg'],
+  range:['form-range','form-range-input','form-range-bubble','form-range-ticks','form-range-tick','form-range-tick-label'],
+  strength:['strength','strength-segment','strength-text','strength-bar','active']
+}
+export const advancedAccessibility:Record<AdvancedTopic,string>={
+  datepicker:'Name the native text input or button and offer a suitable text-entry/native-date alternative. Calendar Pro owns generated grid/button semantics. Typed edits do not automatically resync the adapter selection array; locale display is not an ISO submission guarantee. Keep approved sanitization, same-origin arrow assets and explicit demo contrast styling.',
+  'otp-input':'Label the one real text input, retain one-time-code autocomplete, and put errors/help on that input. Generated slots and separators are aria-hidden decoration. Visual masking does not secure or remove the real value. Runtime events use otpInput, not the frozen scanner filename suffix. Test physical RTL tapping and real-device autofill separately.',
+  range:'Label the native slider and retain native bounds, step and name. Bubble/tick markup is decorative. Use descriptive units or application-owned aria-valuetext when needed; a formatter alone changes only the bubble. The pinned fill and bubble position remain physical left-to-right even in RTL.',
+  strength:'Pair decorative segments or bar with readable sibling status text and a labelled password input. The plugin does not supply a numeric ARIA meter, authentication policy or breach check. Feedback/events change only when the level changes, not for every different score; the event redacts password text.'
+}
+export const advancedRuntimeEvent=(event:string)=>event.replace('.trm.otp-input','.trm.otpInput')
+export const advancedEvents:Record<string,string>={
+  'complete.trm.otpInput':'Wrapper notification each time the completion check sees a full value, including repeated setValue calls. value is direct and sensitive; never log it. Not a validation result or cancellation gate.',
+  'input.trm.otpInput':'Wrapper notification after a user input/paste/overwrite/delete path, with direct value. setValue and clear do not emit this plugin notification; a bubbling native input is a separate event.',
+  'changed.trm.range':'Notification on the native input after construction, update(), input or change, even if the numeric value is unchanged. Direct value is numeric; canceling does not roll back the slider.',
+  'strengthChange.trm.strength':'Wrapper notification only when the level changes, including nonempty initial evaluation. Direct strength/score and redacted password (*** or empty) are supplied. Not every score change, and not a mutation veto.',
+  'show.trm.datepicker':'Cancelable trigger event before adapter show(); disabled/already-open and inline cases return without it.',
+  'shown.trm.datepicker':'Trigger notification immediately after Calendar Pro show() is called; no focus-restoration or transition-completion promise is supplied.',
+  'hide.trm.datepicker':'Cancelable trigger event before adapter hide(); inline mode does not hide. Outside focus/pointer paths also request adapter hide.',
+  'hidden.trm.datepicker':'Trigger notification after Calendar Pro hide() is called, not a guaranteed delayed animation completion or focus-return event.',
+  'change.trm.datepicker':'Trigger notification from a calendar date click, with direct copied dates and originating event. setSelectedDates and typed text edits do not dispatch it; prevention does not undo selection.',
+  'click.trm.datepicker':'Internal namespaced trigger listener, not a dispatched Datepicker lifecycle event.',
+  'focusin.trm.datepicker':'Internal namespaced outside-focus listener, not a dispatched Datepicker lifecycle event.',
+  'pointerdown.trm.datepicker':'Internal namespaced outside-pointer listener, not a dispatched Datepicker lifecycle event.'
+}
+type OptionRow={name:string;type:string;defaultValue:string;description:string}
+const option=(name:string,type:string,defaultValue:string,description:string):OptionRow=>({name,type,defaultValue,description})
+export const advancedOptionRows:Record<AdvancedTopic,OptionRow[]>={
+  datepicker:[
+    option('datepickerTheme','string | null','null','Explicit popup theme overrides the cached nearest theme ancestor; auto maps to Calendar Pro system.'),
+    option('dateMin','DateAny | null','null','Forwarded date bound; use a supported date such as YYYY-MM-DD, not text-input min.'),
+    option('dateMax','DateAny | null','null','Forwarded maximum date; not a server scheduling/validation policy.'),
+    option('dateFormat','Intl.DateTimeFormatOptions | function | null','null','Formatting object/function for display. Default is locale date formatting, not ISO submission.'),
+    option('displayElement','string | HTMLElement | boolean | null','null','Separate display; non-input triggers prefer a data-trm-datepicker-display child. false suppresses extra display, not input updates.'),
+    option('displayMonthsCount','MonthsCount','1','Supported months extension; more than one selects multiple calendar layout.'),
+    option('firstWeekday','WeekDayID','1','Monday by default; 0 is Sunday.'),
+    option('inline','boolean','false','Always-visible inline mode; show/hide/toggle are no-ops. Calendar Pro replaces children in this pin; the shown application handler maintains a separate sibling hidden field instead.'),
+    option('locale','string',"'default'",'Calendar locale and display formatting locale; default uses the environment.'),
+    option('positionElement','string | HTMLElement | null','null','Position relative to this element, otherwise an input form-adorn ancestor or the trigger.'),
+    option('selectedDates','string[]','[]','Initial selected date array; dates also choose the opening month/year.'),
+    option('selectionMode','DateMode',"'single'",'single, multiple or multiple-ranged. Single/nonempty and completed ranged clicks request hide after 100 ms.'),
+    option('placement','PositionToInput',"'left'",'Calendar Pro left/center/right/auto placement, not Floating UI placements.'),
+    option('vcpOptions','Options','{}','Spread first, then adapter-owned callbacks, sanitizer and months extension/config overwrite collisions. Other extension-only features are not enabled.')
+  ],
+  'otp-input':[
+    option('groups','number[] | null','null','Decorative group lengths. The final configured size repeats for remaining groups; separators never enter the input value.'),
+    option('length','number | null','null','Truthy configured length, otherwise valid maxlength or six. Use a positive sensible length; no integer/range validation is supplied.'),
+    option('mask','boolean','false','Dots replace only decorative slot text. The real input stays text and still submits the value.'),
+    option('separator','string',"'\u00b7'",'Plain text between configured groups, not HTML.'),
+    option('type','string',"'numeric'",'numeric, alpha or alphanumeric use ASCII filters and matching inputmode/pattern; unknown strings fall back to numeric.')
+  ],
+  range:[option('bubble','boolean | null','false','Show a tooltip-shaped decorative output. A bare data-trm-bubble normalizes to enabled.'),option('formatter','((value: number) => string) | null','null','Formats bubble text with textContent. In this pin tick labels use datalist option.label directly; they are not passed through formatter.')],
+  strength:[
+    option('input','string | HTMLInputElement | null','null','Selector/element, otherwise the first password input in the parent. Give separate meters separate parents or explicit input selectors.'),
+    option('minLength','number','8','Adds a length scoring point; does not enforce input minlength or reject a password.'),
+    option('messages','Record<string,string>','{ weak: Weak, fair: Fair, good: Good, strong: Strong }','Complete per-level text map. Nested option objects replace defaults rather than merging individual keys.'),
+    option('weights','Record<string,number>','{ minLength:1, extraLength:1, lowercase:1, uppercase:1, numbers:1, special:1, multipleSpecial:1, longPassword:1 }','Supply every key. A partial replacement can add undefined values and produce NaN; custom scoring bypasses this map.'),
+    option('thresholds','number[]','[2, 4, 6]','Inclusive weak/fair/good ceilings; above the third is strong, zero returns null. No length/order validation is supplied.'),
+    option('scorer','((password:string) => number) | null','null','Local custom function for nonempty text; empty text returns zero before calling it. Validate custom return values in your application.')
+  ]
+}
+
+// Explicit browser-bundle demo setup, shown verbatim beside the examples.
+export const advancedDemoJavascript=`import { Range, Strength } from 'tremplin'
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-demo-inline-date]').forEach(calendar => {
+    // VCP replaces inline children; keep the successful field outside its render root.
+    calendar.addEventListener('change.trm.datepicker', event => {
+      document.getElementById(calendar.id + '-value').value = event.dates.join(',')
+    })
+  })
+  document.querySelectorAll('[data-demo-percent-range]').forEach(wrapper => {
+    // Deliberately replace any automatically created instance before configuring.
+    Range.getInstance(wrapper)?.dispose()
+    new Range(wrapper, { bubble: true, formatter: value => value + '%' })
+  })
+  document.querySelectorAll('[data-demo-custom-strength]').forEach(meter => {
+    Strength.getInstance(meter)?.dispose()
+    new Strength(meter, {
+      scorer: password => password.length >= 12 ? 7 : 1,
+      messages: { weak: 'Demo: under 12 characters', fair: 'Demo: fair', good: 'Demo: good', strong: 'Demo: 12 or more characters' }
+    })
+  })
+  document.querySelectorAll('[data-demo-range-set]').forEach(button => {
+    button.addEventListener('click', () => {
+      const form = button.closest('form'), wrapper = form.querySelector('.form-range')
+      wrapper.querySelector('input').value = '75'
+      Range.getOrCreateInstance(wrapper).update()
+      form.querySelector('[role="status"]').textContent = 'Demo value set to 75. Native submission is still explicit.'
+    })
+  })
+})`
+export const advancedApiJavascript:Record<AdvancedTopic,string>={
+  datepicker:"import Datepicker from 'tremplin/datepicker'\n\nconst picker = Datepicker.getOrCreateInstance('#deadline')\nconst dates = picker.getSelectedDates() // copied ISO-date array\n// setSelectedDates([...]) updates display, but does not emit change.trm.datepicker.",
+  'otp-input':"import OtpInput from 'tremplin/otp-input'\n\nconst otp = OtpInput.getOrCreateInstance('#otp-example')\n// The named native input submits the complete value; do not log codes.\n// Runtime events: input.trm.otpInput and complete.trm.otpInput.",
+  range:"import Range from 'tremplin/range'\n\nconst range = Range.getOrCreateInstance('#volume-range')\n// After changing the native input value in application code:\nrange.update() // emits changed.trm.range on the native input, even if unchanged",
+  strength:"import Strength from 'tremplin/strength'\n\nconst strength = Strength.getOrCreateInstance('#password-strength')\nconst level = strength.getStrength() // null, weak, fair, good or strong\n// Call evaluate() after an application-owned input.value change."
+}
+export const advancedExamples:Record<AdvancedTopic,string>={datepicker:dateInput('deadline','Deadline'),'otp-input':otpInput('otp-example','Verification code'),range:rangeInput('volume','Volume'),strength:strengthInput('password','Password')}
+const rangeForm=(id:string)=>`<form id="${id}-form" class="d-grid gap-4">${rangeInput(id,'Submitted volume')}<button class="btn-outline theme-primary" type="button" data-demo-range-set>Set demo value to 75</button><p role="status">Demo value is 40. This page does not submit data.</p></form>`
+const staticStrength=['weak','fair','good','strong'].map(level=>`<div><p>${level}</p><div class="strength-bar" data-trm-strength="${level}" aria-hidden="true"></div></div>`).join('')
+export const advancedDetails:Record<AdvancedTopic,ComponentDetail>={
+  datepicker:{
+    variants:[
+      variant('Declarative date field','The displayed date is locale formatted. Calendar click selection is different from manually editing the text.',dateInput('guide-deadline','Deadline')),
+      variant('Bounded dates','dateMin/dateMax configure the calendar; native text-input min/max do not. The sample starts in the bounded month.',dateInput('guide-window','Deployment date','data-trm-date-min="2026-10-10" data-trm-date-max="2026-10-20"')),
+      variant('Inline calendar and explicit ISO field','Calendar Pro replaces inline children in this pin. The copied application handler maintains a sibling hidden ISO field instead; the named region contains calendar width.',`<form id="inline-date-form">${inlineDate('inline-calendar')}</form>`),
+      variant('Multiple months','The enabled months extension shows two columns. This example explicitly sets the supported minimum-width token to 36rem so they remain side-by-side; the named region owns horizontal scrolling on mobile.',inlineDate('multiple-calendar',2)),
+      variant('Dark mode and RTL','The adapter copies the nearest cached theme ancestor to its generated calendar. RTL layout does not imply an adapter-owned keyboard policy.',dark(dateInput('rtl-deadline','Review date'))),
+      variant('Multiple dates and range','Multiple selection stays open; a completed range requests hide after 100 ms. Displayed separators are not a server serialization contract.',dateInput('multiple-dates','Meeting dates',`data-trm-selection-mode="multiple"`)+dateInput('ranged-dates','Leave dates',`data-trm-selection-mode="multiple-ranged"`)),
+      variant('Named button trigger','Use a display child so the purpose text survives date updates. A button alone is not a successful submitted date field.',`<button id="button-date" type="button" class="btn-outline theme-primary" data-trm-toggle="datepicker" data-trm-selected-dates='["2026-10-15"]'><span>Meeting date: </span><span data-trm-datepicker-display>Choose date</span></button>`),
+      variant('Formatting, first weekday and popup theme','This example uses an Intl format object, Sunday first and an explicit dark popup theme. This changes presentation, not ISO validation.',dateInput('formatted-date','Formatted date',`data-trm-locale="en-GB" data-trm-first-weekday="0" data-trm-datepicker-theme="dark" data-trm-date-format='{"year":"numeric","month":"short","day":"2-digit"}'`))
+    ],variables:documentedTokens('datepicker'),
+    keyboard:[{keys:'Focus input / click button',behavior:'Uses the adapter data API. Button toggles; inline show/hide/toggle are no-ops.'},{keys:'Arrow keys / Enter / Space in calendar',behavior:'Calendar Pro owns native date/month/year button focus and activation; test the generated control, not a former local-calendar API.'},{keys:'Outside focus / pointer',behavior:'Requests hide through the adapter. No automatic focus restoration is promised.'}],
+    guidelines:['Use a labelled type=text field, not a second native type=date popup. ISO preselection is an array, while named text-input submission is formatted display text.', 'getSelectedDates() returns a copy. setSelectedDates() updates display but does not dispatch adapter change or native input/change. Calendar Pro replaces an inline child field; the example uses a sibling field and a disclosed click-change handler instead. Sync that field explicitly after API calls.', 'Manual text edits after initialization do not automatically resync the selection array. Supply an explicit application parse/validation policy or use a native date input where appropriate.', 'Popup visibility callbacks and promises do not establish focus restoration or async animation completion. Inline mode remains visible; disposal destroys the calendar, observer and owned outside handlers.', 'vcpOptions is spread before adapter-owned configuration: only the months extension is enabled, callbacks/settings can be overwritten, and sanitizer enforcement stays mandatory.', 'Keep the approved Calendar HTML sanitizer and same-origin dist/icons/datepicker-chevron.svg relative to dist/css. Never weaken Trusted Types/CSP to make a sample render.', 'The explicit contrast wrapper styles are application choices, including a Calendar Pro styles class for body-appended popups. Parent CSS inheritance alone cannot reach those popups. An explicit demo-only hidden-popup display rule prevents stale desktop coordinates from creating mobile resize overflow.'],
+    sass:"@use 'tremplin/scss/datepicker' with ($datepicker-tokens: (--trm-datepicker-border-radius: 1rem));"
+  },
+  'otp-input':{
+    variants:[
+      variant('Verification code','One named real input backs all slots; no code is transmitted by this page.',otpInput('guide-otp','Verification code')),
+      variant('Six-digit code','The six-slot example explicitly uses responsive size/gap tokens; copy them with the markup. Core defaults remain unchanged.',otpInput('authenticator','Authenticator code',6,compact)),
+      variant('Masked display','Masking affects visual dots only. The real type=text input, accessible value and FormData still contain the synthetic sample code.',otpInput('masked-code','Security code',4,'data-trm-mask="true"','value="1234"')),
+      variant('Invalid code','The authored description/aria-invalid mark an application error, not a result from complete events.',otpInput('expired-code','Expired code',4,'','aria-invalid="true" aria-describedby="otp-error"')+'<p id="otp-error" class="form-text">Request a new code.</p>'),
+      variant('Connected and grouped letters','Actual connected slots and decorative groups. ASCII filters keep one value; group separators do not become submitted characters.',otpInput('connected-code','Connected PIN',4).replace('class="otp"','class="otp otp-connected"')+otpInput('grouped-code','Alphanumeric code',6,`data-trm-type="alphanumeric" data-trm-groups="[3,3]" ${compact}`)+otpInput('alpha-code','Alphabetic code',4,'data-trm-type="alpha"')),
+      variant('Native sizes','Use otp-sm/lg on the wrapper. These are still one field each, not independent per-slot inputs.',otpInput('small-code','Small code').replace('class="otp"','class="otp otp-sm"')+otpInput('large-code','Large code').replace('class="otp"','class="otp otp-lg"')),
+      variant('Readonly and disabled','Native attributes block user edits. Programmatic setValue/clear are not gated by readonly/disabled; disposal does not restore all mutated input attributes.',otpInput('readonly-code','Readonly code',4,'','readonly value="1234"')+otpInput('disabled-code','Unavailable code',4,'','disabled')),
+      variant('Dark mode and RTL','Slots follow direction visually. The pinned pointer hit-test still scans physical right edges in DOM order; do not claim complete RTL tapping support.',dark(otpInput('rtl-code','Verification code')))
+    ],variables:documentedTokens('otp-input'),
+    keyboard:[{keys:'Typing / Backspace / Delete',behavior:'Uses one real input with overwrite/deletion interception, not independent digit fields.'},{keys:'Arrow keys / selection / Tab',behavior:'Native caret/selection drives one decorative active slot. Keyboard focus targets the first empty or last full slot.'},{keys:'Paste / autofill',behavior:'ASCII sanitize before truncating. A full sanitized paste replaces the whole value; shorter pastes use the selection.'}],
+    guidelines:['Put data-trm-otp on a wrapper with one labelled named input. Slots/separators are generated and aria-hidden; no slot-by-slot ARIA or custom arrow roving contract is supplied.', 'Runtime event suffix is .trm.otpInput. The frozen scanner uses the filename otp-input; these pages correct presentation only, not core or baseline metadata.', 'setValue() sanitizes and can emit complete repeatedly, but not plugin input. clear() clears and focuses without plugin input/complete. User changes emit plugin input then completion checks.', 'Masking is visual only; no hashing, server verification, transport, expiry or attempt-limit policy is supplied. Do not log codes or automatically submit on a completion notification.', 'Readonly/disabled guard user handlers, not programmatic value methods. dispose removes generated slots/listeners/rendered class, but does not restore type, maxlength, inputmode, pattern or otp-input class.', 'The RTL pointer algorithm is not direction-aware. Confirm real-device tap positions, SMS/password-manager autofill and assistive technology behavior separately from automated desktop checks.'],
+    sass:"@use 'tremplin/scss/forms/otp-input' with ($otp-tokens: (--trm-otp-gap: .75rem));"
+  },
+  range:{
+    variants:[
+      variant('Value bubble','Range belongs to the wrapper. A bare bubble attribute enables the generated decorative output.',rangeInput('range-volume','Volume')),
+      variant('Datalist ticks','Option labels are literal text. The pin sorts/clamps numeric positions; formatter does not format these labels.',rangeInput('range-rating','Rating','','list="range-marks"')+'<datalist id="range-marks"><option value="0" label="Low"></option><option value="50" label="Middle"></option><option value="100" label="High"></option></datalist>'),
+      variant('Disabled slider','Native disabled prevents user focus/edits; the API can still recompute a programmatic value.',rangeInput('range-disabled','Unavailable volume','','disabled')),
+      variant('Dark mode and RTL','Native keyboard behavior follows the browser, but pinned gradient and bubble use physical left/to-right coordinates. No RTL correction is applied to core.',dark(rangeInput('rtl-volume','Volume'))),
+      variant('Bounds, fractional steps and no bubble','Actual native constraints and a wrapper without a bubble; the fill still needs Range JavaScript.',rangeInput('fractional-range','Rating from one to five','','',{min:1,max:5,step:.5,value:2.5,bubble:false})),
+      variant('Theme colors','A supported theme class on the token-owning wrapper colors the fill and thumb.',rangeInput('themed-range','Approved volume').replace('class="form-range"','class="form-range theme-success"')),
+      variant('Custom bubble formatter','The copied browser-bundle setup deliberately replaces any auto-created instance before configuring a percent bubble. It does not change native value/submission or tick labels.',rangeInput('formatted-range','Percentage','data-demo-percent-range')),
+      variant('Programmatic update and native submission','This explicit application button sets the native value and calls update(); it does not submit or synthesize input/change.',rangeForm('submitted-range'))
+    ],variables:documentedTokens('range'),
+    keyboard:[{keys:'Arrows / Home / End',behavior:'Native range keyboard rules and min/max/step constraints remain browser-owned. A bubble is not an interactive Tooltip plugin.'}],
+    guidelines:['Use form-range around one labelled form-range-input; every matching wrapper auto-initializes on document ready.', 'The wrapper receives --trm-range-fill as a ratio, not a percentage. Native bounds supply 0/100 when absent; min>=max makes the adapter ratio zero.', 'After assigning input.value, call update(). Construction/update and native input/change paths emit changed on the actual input, even when unchanged; it is not a cancelable mutation gate.', 'Formatter text uses textContent for the bubble only. Tick labels read option.label without formatter; datalist points are snapshotted once, sorted and clamped to positions.', 'The bubble and ticks are aria-hidden. Native name/value submit the numeric value; formatter does not create aria-valuetext or convert submitted units.', 'Pinned track gradient is to right and bubble uses left even in RTL; test native thumb versus decoration rather than claiming direction-aware fill. dispose removes generated bubble/ticks/listeners but retains the wrapper fill property.'],
+    sass:"@use 'tremplin/scss/forms/form-range' with ($range-tokens: (--trm-range-track-height: .75rem));"
+  },
+  strength:{
+    variants:[
+      variant('Segmented feedback','Synthetic prefilled text is evaluated on initialization. This score is illustrative feedback, not evidence that a real password is safe.',strengthInput('strength-password','New password','LongExample123!!')),
+      variant('Empty password','Default zero score yields no level. Text/segment updates happen on transitions; do not pre-author misleading feedback in an initially empty meter.',strengthInput('empty-password','Password')),
+      variant('Single bar','The actual strength-bar CSS derives width from the level attribute. The native password field remains the only editable input.',strengthInput('bar-password','Bar feedback password','Example123!!','',{bar:true})),
+      variant('Custom local scorer','The copied demo function uses length only and complete message keys. This is a deliberately simple illustration, not a security recommendation.',strengthInput('custom-password','Demo custom score','','data-demo-custom-strength')),
+      variant('Static CSS states','Each bar has authored state and readable context, without a linked password input or an ARIA numeric-meter promise.',staticStrength),
+      variant('Native readonly and disabled inputs','Native input states control user editing; evaluate() still reads an application-assigned value. Nothing is submitted by this page.',strengthInput('readonly-password','Readonly password','Example123!!','',{inputAttrs:'readonly'})+strengthInput('disabled-password','Unavailable password','','',{inputAttrs:'disabled'})),
+      variant('Dark mode and RTL','Text status and segment count accompany color; these bars never receive focus.',dark(strengthInput('rtl-password','Password')))
+    ],variables:documentedTokens('strength'),
+    keyboard:[{keys:'Native password editing',behavior:'Input/change evaluations follow the real password field. Decorative bars/segments never enter the tab sequence.'}],
+    guidelines:['Use explicit data-trm-input or a single password field per parent; the text feedback is the first strength-text in the meter parent, not an arbitrary global target.', 'Default scoring uses eight length/category points. Zero maps to null; thresholds [2,4,6] are inclusive ceilings. This heuristic is not authentication policy or a compromised-password check.', 'strengthChange is dispatched only when the level changes. Different scores within the same level do not refresh text or dispatch a new plugin event. Event password is redacted as *** or empty.', 'Nested messages/weights replace their default objects rather than deep-merging. Supply all keys; missing weight keys can yield NaN and an accidental strong result. Validate custom scorer outputs and thresholds separately.', 'A custom scorer is called only for nonempty text. minLength affects scoring, not native minlength or form validity. evaluate() is needed after programmatic value changes.', 'There is no numeric ARIA meter. Decorative aria-hidden segments/bar and an associated readable polite status are application markup; dispose removes owned input listeners but leaves the displayed DOM/state.'],
+    sass:"@use 'tremplin/scss/forms/strength' with ($strength-tokens: (--trm-strength-gap: .5rem));"
+  }
+}
+const html=(example:string)=>({example,code:[{language:'html',source:example}]})
+const descriptions:Record<AdvancedTopic,string>={datepicker:"Choose dates with the Vanilla Calendar Pro adapter.",'otp-input':'Use one native verification-code input with decorative visual slots.',range:'Wrap a native slider with synchronized fill, optional bubble and datalist ticks.',strength:'Give advisory segmented feedback without claiming to measure real-world security.'}
+export const advancedFormsGuides:Record<AdvancedTopic,Guide>=Object.fromEntries(advancedTopics.map(topic=>[topic,{
+  slug:'forms/'+advancedFormsTopic(topic),group:'Forms',title:topic==='otp-input'?'OTP input':topic==='strength'?'Password strength':topic==='range'?'Range':'Datepicker',description:descriptions[topic],lead:descriptions[topic],reference:{title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/advanced-input-docs.ts'},
+  sections:[
+    {heading:topic==='otp-input'?'Single input':'Overview',...html(topic==='datepicker'?dateInput('forms-date','Project deadline'):topic==='otp-input'?otpInput('forms-otp','Verification code'):topic==='range'?rangeInput('forms-range-volume','Volume'):strengthInput('forms-strength-password','New password'))},
+    {heading:'Additional example',...html(topic==='datepicker'?inlineDate('forms-inline-date'):topic==='otp-input'?otpInput('forms-grouped-otp','Grouped verification code',6,`data-trm-groups="[3,3]" ${compact}`):topic==='range'?rangeForm('forms-submitted-range'):strengthInput('forms-bar-password','Bar password','','',{bar:true}))},
+    ...(topic==='datepicker'?[{heading:'Explicit calendar layout CSS',paragraphs:['This application-only rule removes hidden body-appended popups from layout so stale desktop coordinates do not cause overflow after resize. It is not a core default or new CSP exception. Copy this CSS and the sibling-field handler with the examples.'],code:[{language:'css',source:advancedDemoCss}]}]:[]),
+    {heading:'Behavior, submission and cleanup',paragraphs:advancedDetails[topic].guidelines},
+    {heading:'Source-verified usage',code:[{language:'js',source:advancedApiJavascript[topic].replaceAll('#deadline','#forms-date').replaceAll('#otp-example','#forms-otp').replaceAll('#volume-range','#forms-range-volume-range').replaceAll('#password-strength','#forms-strength-password-strength')}],paragraphs:['See the <a href="/components/'+topic+'/">component guide</a> for all options/defaults, actual events, tokens and additional examples. Client interaction is not server validation.']},
+    ...(topic==='datepicker'||topic==='range'||topic==='strength'?[{heading:'Explicit browser-bundle demo setup',paragraphs:['The following copied application code configures only marked demo nodes and keeps changes local. It intentionally replaces an existing instance when needed; getOrCreateInstance alone does not reconfigure it. No network request or automatic form submission is made.'],code:[{language:'js',source:advancedDemoJavascript}]}]:[])
+  ],clientScript:topic==='datepicker'||topic==='range'||topic==='strength'?advancedDemoJavascript:undefined
+}])) as Record<AdvancedTopic,Guide>

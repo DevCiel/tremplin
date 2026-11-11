@@ -1,0 +1,63 @@
+---
+{
+  "title": "Download",
+  "description": "Download built Tremplin assets, source packages, and integrity metadata.",
+  "group": "Getting started",
+  "lead": "Choose ready-to-use browser files or build from source; verify that the version and bytes match.",
+  "order": 7
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import ReleaseAssets from '../../../components/ReleaseAssets.astro'
+import { gettingStartedExamples as samples } from '../../../data/getting-started-examples'
+import { frameworkVersion, installCommand, localPackage, requiredPeers, packageMetadata as pkg } from '../../../data/installation-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">1. Choose compiled assets or source</h2>
+
+<div class="table-responsive"><table class="table table-bordered">
+<thead><tr><th scope="col">Option</th><th scope="col">Choose it when</th></tr></thead>
+<tbody>
+<tr><td><code>{"Compiled CSS and browser JavaScript"}</code></td><td><code>{"You want a plain HTML setup without a build process."}</code></td></tr>
+<tr><td><code>{"npm tarball"}</code></td><td><code>{"You need declared package exports, Sass sources, types, or bundler imports."}</code></td></tr>
+<tr><td><code>{"Repository checkout"}</code></td><td><code>{"You are developing Tremplin or building its documentation and release assets."}</code></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">2. Download compiled files</h2>
+
+<p>Use the Release assets table below. For most pages, download <code>{"tremplin.min.css"}</code> and <code>{"tremplin.bundle.min.js"}</code>. CSS-only pages can omit JavaScript. Focused CSS bundles are alternatives for narrower use cases; avoid importing both full and focused builds unnecessarily.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">3. Build a source checkout</h2>
+
+<p>These commands run from the framework repository. Keep the lockfile. <code>{"npm pack"}</code> creates a local package without publishing it. The website build and contributor scripts are not part of the consumer package contract.</p>
+
+<Code sample={samples["download#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">4. Verify integrity</h2>
+
+<p>Download <a href="/dist/integrity.json" download>{"integrity.json"}</a> alongside the files. Compare its version and SHA-384 digest with your downloaded bytes. A digest served from the same compromised location is not an independent trust guarantee; retain a trusted manifest for release verification.</p>
+
+<Code sample={samples["download#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">5. Install and verify in the browser</h2>
+
+<p>Follow the complete <a href="/getting-started/install/">{"Installation"}</a> document example, inspect Network requests, and toggle the sample disclosure. The generated downloads below are available from this local documentation build; they do not imply that a public registry release has been published.</p>
+
+</section>
+
+<ReleaseAssets />

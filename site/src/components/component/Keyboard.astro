@@ -1,0 +1,10 @@
+---
+import { componentDetail } from '../../data/component-reference'
+interface Props { name: string }
+const rows = componentDetail(Astro.props.name)?.keyboard
+if (!rows) throw new Error('Missing keyboard guidance')
+---
+<div class="table-responsive" tabindex="0" role="region" aria-label="Scrollable keyboard interactions"><table class="table">
+  <thead><tr><th scope="col">Keys</th><th scope="col">Behavior</th></tr></thead>
+  <tbody>{rows.map(row => <tr><td><kbd>{row.keys}</kbd></td><td>{row.behavior}</td></tr>)}</tbody>
+</table></div>

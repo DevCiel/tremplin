@@ -1,0 +1,42 @@
+{
+  "phase": "guides-customize-authored-mdx",
+  "groups": {
+    "guides": 7,
+    "customize": 11
+  },
+  "historicalSources": {
+    "site/src/data/workflow-guides.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/workflow-guides.before.ts.txt",
+      "sha256": "c51314f03dcb3716eab37917a283fd5eb7c2cd5765809d2973fe80499bbea47e"
+    },
+    "site/src/data/customize-guides.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/customize-guides.before.ts.txt",
+      "sha256": "1d302cffa0a683fcda369b5a54202dd76c0a72247eb2936fc68e2180e8e67f54"
+    }
+  },
+  "sources": {
+    "site/src/content/docs/customize/color-modes.mdx": "23703aa1840ca6d9613c5e607b9bc5f430945a63f4c31552bc0fef1f5a7eb343",
+    "site/src/content/docs/customize/color.mdx": "08d38d6bf6b18ee5da4ce8ee7fc3ed103f50d0bbdc9372a1878648d1268a51b4",
+    "site/src/content/docs/customize/components.mdx": "37e826ca218bf9cc694c81de79304ea69a3f175173a188ad94b4f27fdb040248",
+    "site/src/content/docs/customize/css-variables.mdx": "fa6f04a2d888facb842228c2b028e3f74a5b2a53c659b39aa379ebec1f76c917",
+    "site/src/content/docs/customize/optimize.mdx": "eda2297159795de4a949879a17b8e8441fb0798f6ac93906122dc8969befaebf",
+    "site/src/content/docs/customize/options.mdx": "a218475f5a5c425e10d363f4f73bb6de8c9314715e4563f7ec4c5ea01024ab06",
+    "site/src/content/docs/customize/overview.mdx": "0020216da20a8af658f20cca383deade4d6adcea8870e24bae99eb672deeb03c",
+    "site/src/content/docs/customize/rtl.mdx": "59d0dbad10982697a83397e6dac3d6ececb37c74711c1d9253518164c80b2b27",
+    "site/src/content/docs/customize/sass.mdx": "69b3ecbe134174f55598f3ff8d6b7ec3bf21df12a5e5de346ad4d62273d82d66",
+    "site/src/content/docs/customize/theme.mdx": "5eec9acba6f73c1e7f224d9f843e724c7c6681a77695a9bd9218ccbea0f22d3f",
+    "site/src/content/docs/customize/transitions.mdx": "707e1bac280447f9f5eefbc0c1bd8529f78750a5b774bc296332622f0a265918",
+    "site/src/content/docs/guides/contribute.mdx": "b34a3a2cd0fb0e6ca5e162ab61a16812dd7751976ee5b7fb0e59f16ba91d3ba5",
+    "site/src/content/docs/guides/migration.mdx": "35c634da134e4e21982377d758eaff4ffa46dca8eaef5e3ac6b5aa6b0911f15b",
+    "site/src/content/docs/guides/npm.mdx": "426ebbc895a77e336c16040b34effc05c7a0fbb0491fc51b573a57acb6351b89",
+    "site/src/content/docs/guides/parcel.mdx": "74e7b52ddcb8589c0e8c1caf16518628e79019f467b8290836e59b6dca7be6cd",
+    "site/src/content/docs/guides/quickstart.mdx": "c2b0d179f2dee8b927d37b45afaf45c1e41dd90442013731be110b96dedf4657",
+    "site/src/content/docs/guides/vite.mdx": "d3321e727acec9b84fd494399a123c571a9f8482f2956ca072167867b098ef64",
+    "site/src/content/docs/guides/webpack.mdx": "9b9bf9864d164e65c3224f484e57bc658b6879b8ea1b913e0adc658f42727b22",
+    "site/src/data/customize-examples.ts": "12024e1cf11696e711708d32a06a95c0b09533cb38573b0a168190d5c0925655",
+    "site/src/data/customize-guides.ts": "2be038022837d43b70756d0df816e4b1c9c2d6a85410de2a84d682d2a432b64a",
+    "site/src/data/workflow-examples.ts": "9c99dd4bdbb8348177490a938865e25476451f6d03fd683e68c3b5c5b23129b1",
+    "site/src/data/workflow-guides.ts": "3174ab7387258846198b6a28b7d60cea0ee8b02b3d5c93b47c517970234c163f",
+    "site/src/libs/mdx-guides.ts": "4164d021dbb04589de419dcfc91e51999ebe91aadb804d1df1ce941bf3e2a41d"
+  }
+}

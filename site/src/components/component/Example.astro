@@ -1,0 +1,7 @@
+---
+import Code from './Code.astro'
+interface Props { markup: string }
+const { markup } = Astro.props
+---
+<div class="docs-example" set:html={markup}></div>
+<Code source={markup} />

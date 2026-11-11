@@ -1,0 +1,101 @@
+import type { ComponentDetail } from './component-docs'
+import { documentedTokens } from './documented-tokens'
+
+export type ChipTableTopic = 'chip' | 'table'
+// Documentation prose tables have unlayered cell rules. Locally return live
+// examples to the framework layers instead of overriding any core token/value.
+export const tableDemoIsolationCss = `.docs-main .docs-example .table > :not(caption) > * > * {
+  padding: revert-layer;
+  border-block-end: revert-layer;
+  text-align: revert-layer;
+}`
+const variant = (title: string, description: string, markup: string) => ({ title, description, markup })
+const group = (markup: string) => `<div class="d-flex flex-wrap align-items-center gap-2">${markup}</div>`
+const dark = (markup: string) => `<div data-trm-theme="dark" dir="rtl" class="p-3 rounded-5 bg-body fg-body">${markup}</div>`
+const closeIcon = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="m4 4 8 8m0-8-8 8"/></svg>'
+const personIcon = '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/></svg>'
+
+// Explicit application behavior for standalone chips; not a Chip plugin or Chips data API.
+export const standaloneChipJavascript = `document.querySelectorAll('[data-demo-chip-toggle]').forEach(button => {
+  button.addEventListener('click', () => {
+    const selected = button.getAttribute('aria-pressed') !== 'true'
+    button.setAttribute('aria-pressed', String(selected))
+    button.classList.toggle('active', selected)
+  })
+})
+document.querySelectorAll('[data-demo-chip-dismiss]').forEach(button => {
+  button.addEventListener('click', () => {
+    const chip = button.closest('.chip')
+    const next = document.querySelector('#chip-removal-next')
+    if (!chip || !next) return
+    chip.remove()
+    document.querySelector('#chip-removal-status').textContent = 'Design filter removed.'
+    next.focus()
+  })
+})`
+
+export const chipTableClasses: Record<ChipTableTopic, string[]> = {
+  chip: ['chip', 'chip-img', 'chip-icon', 'chip-dismiss', 'active', 'disabled'],
+  table: ['table', 'table-sm', 'table-striped', 'table-striped-columns', 'table-hover', 'table-active', 'table-bordered', 'table-borderless', 'table-group-divider', 'caption-top', 'table-card', 'table-responsive', 'sm:table-responsive', 'md:table-responsive', 'lg:table-responsive', 'xl:table-responsive', '2xl:table-responsive', 'table-stacked', 'sm:table-stacked', 'md:table-stacked', 'lg:table-stacked', 'xl:table-stacked', '2xl:table-stacked']
+}
+export const chipTableAccessibility: Record<ChipTableTopic, string> = {
+  chip: 'Standalone Chip styling supplies no selection, dismissal or keyboard controller. Use native buttons/links for actions, explicitly synchronize aria-pressed and active, name removal targets and arrange focus after removal. The shown application handler is separate from the editable Chips plugin.',
+  table: 'Use captions and scoped headers with explicit status text. Name keyboard-focusable horizontal scroll regions. Stacked data-cell labels are visual generated content, not a replacement for real headers. CSS does not implement sorting, selection or grid keyboard navigation.'
+}
+
+const rows = '<tr><th scope="row">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope="row">#1043</th><td>Northstar</td><td>$560</td></tr>'
+const headers = '<thead><tr><th scope="col">Invoice</th><th scope="col">Customer</th><th scope="col">Total</th></tr></thead>'
+const table = (classes = '', caption = 'Recent invoices', body = rows, attrs = '') => `<table class="table ${classes}" ${attrs}><caption>${caption}</caption>${headers}<tbody>${body}</tbody></table>`
+const scroll = (markup: string, label: string, classes = 'table-responsive', attrs = '') => `<div class="${classes} focus-ring" role="region" aria-label="${label}" tabindex="0" ${attrs}>${markup}</div>`
+const wide = (caption: string) => `<table class="table table-striped" style="min-inline-size: 58rem"><caption>${caption}</caption><thead><tr><th scope="col">Product</th>${['Q1','Q2','Q3','Q4','Forecast','Owner'].map(label=>`<th scope="col">${label}</th>`).join('')}</tr></thead><tbody><tr><th scope="row">Platform</th><td>$24k</td><td>$27k</td><td>$31k</td><td>$36k</td><td>$40k</td><td>Ana Brooks</td></tr><tr><th scope="row">Services</th><td>$8k</td><td>$11k</td><td>$12k</td><td>$14k</td><td>$18k</td><td>Lee Martin</td></tr></tbody></table>`
+const stacked = (classes: string, caption: string) => `<table class="table ${classes}" role="table"><caption>${caption}</caption><thead role="rowgroup"><tr role="row"><th role="columnheader" scope="col">Name</th><th role="columnheader" scope="col">Role</th><th role="columnheader" scope="col">Status</th></tr></thead><tbody role="rowgroup"><tr role="row"><td role="cell" data-cell="Name">Ana</td><td role="cell" data-cell="Role">Designer</td><td role="cell" data-cell="Status">Available</td></tr><tr role="row"><td role="cell" data-cell="Name">Lee</td><td role="cell" data-cell="Role">Developer</td><td role="cell" data-cell="Status">Reviewing</td></tr></tbody></table>`
+
+export const chipTableExamples: Record<ChipTableTopic, string> = {
+  chip: '<span class="chip">Design</span>',
+  table: table()
+}
+export const chipTableDetails: Record<ChipTableTopic, ComponentDetail> = {
+  chip: {
+    variants: [
+      variant('Static labels', 'CSS-only chips do not register dismiss behavior. Prefer Badge for purely informational labels; these spans demonstrate the primitive without making them controls.', group('<span class="chip">Design</span><span class="chip">Engineering</span>')),
+      variant('Images and icons', 'Use the real chip-img and chip-icon classes. An adjacent visible identity makes these local illustrations decorative.', group(`<span class="chip"><img class="chip-img" src="/img/avatar-demo.svg" width="20" height="20" alt="">Alex Brooks</span><span class="chip"><span class="chip-icon">${personIcon}</span>Project team</span>`)),
+      variant('Theme inheritance', 'Themes can belong to the group or an individual chip. This demonstration retains the disclosed contrast customization, not changed core defaults.', group(['primary','success','danger','warning','info','inverse'].map(color=>`<span class="chip theme-${color}">${color}</span>`).join('')) + '<div class="theme-success mt-3"><span class="chip">Inherited success theme</span></div>'),
+      variant('Active presentation', 'active changes presentation only. These text samples are not toggle controls and have no pressed or selection API.', group('<span class="chip theme-primary">Default</span><span class="chip theme-primary active">Active appearance</span>')),
+      variant('Application-owned filter', 'Native buttons provide Enter/Space activation. Copy the application handler below to synchronize aria-pressed and active; focus-ring explicitly restores a visible keyboard outline omitted by bare Chip styling.', '<div role="group" aria-label="Project filters" class="d-flex flex-wrap gap-2"><button class="chip theme-primary focus-ring" type="button" aria-pressed="false" data-demo-chip-toggle>Design filter</button><button class="chip theme-primary active focus-ring" type="button" aria-pressed="true" data-demo-chip-toggle>Engineering filter</button></div>'),
+      variant('Application-owned removal', 'The nested dismiss control belongs inside a non-interactive span, never inside another button or link. The supplied application handler removes the chip, updates status text and moves focus to a surviving native link.', `<div id="chip-removal-example"><span class="chip" id="removable-design-chip">Design<button class="chip-dismiss" type="button" aria-label="Remove Design filter" data-demo-chip-dismiss>${closeIcon}</button></span><a class="chip focus-ring ms-2" id="chip-removal-next" href="/components/">Browse components</a><p id="chip-removal-status" role="status" class="mt-2">One removable filter.</p></div>`),
+      variant('Disabled native control', 'A real disabled button is not focusable or activatable. The disabled class is visual/pointer styling only and cannot disable an anchor or remove its keyboard destination.', '<button class="chip theme-primary" type="button" disabled aria-pressed="false">Unavailable filter</button>'),
+      variant('Custom dimensions', 'Chip has one built-in size. Override its actual tokens rather than inventing chip-sm, chip-lg or chip-avatar classes.', '<span class="chip" style="--trm-chip-height: 2.25rem; --trm-chip-padding-x: .875rem; --trm-chip-img-size: 1.5rem"><img class="chip-img" src="/img/avatar-demo.svg" width="24" height="24" alt="">Alex Brooks</span>'),
+      variant('Dark mode and RTL', 'Logical image margins and gaps follow direction; the native link keeps meaningful navigation without claiming a Chip controller.', dark(group('<span class="chip"><img class="chip-img" src="/img/avatar-demo.svg" width="20" height="20" alt="">Alex Brooks</span><a class="chip focus-ring" href="/forms/chips/">Editable Chips guide</a>')))
+    ],
+    variables: documentedTokens('chip'),
+    keyboard: [{keys:'Enter / Space',behavior:'Native buttons activate the explicitly supplied application handler. Standalone spans have no keyboard behavior.'},{keys:'Tab / Shift+Tab',behavior:'Visits enabled native controls and links. Add focus-ring to actionable chips; the primitive removes its own focus-visible outline.'},{keys:'Escape / Arrows / Delete',behavior:'No standalone Chip behavior. Editable chip-input collections use the separate Chips plugin.'}],
+    guidelines: ['The upstream standalone Chip primitive is documented in forms/chips, not a separate components/chip page. This retained URL does not create a Chip plugin.', 'Chip CSS sets a pointer cursor and hover appearance even on a span; that alone does not make text interactive. Prefer Badge for plain status labels.', 'Keep aria-pressed and active synchronized in your application; CSS active alone exposes no selected state.', 'Use named native dismiss controls with SVGs hidden from assistive technology. Do not nest interactive controls.', 'The supplied removal example owns its status message and focus return; neither is automatically supplied by standalone Chip CSS.', 'Use the existing focus-ring helper for visible keyboard focus on native actionable chips. disabled class is not a substitute for native disabled.', 'Chip has one size; customize $chip-tokens or runtime tokens. There is no chip-remove, chip-avatar, chip-group, chip-sm or chip-lg class.', 'Use Chips for editable collections and built-in add/remove/selection events; standalone examples do not initialize data-trm-chips.'],
+    sass: "@use 'tremplin/scss/chip' with (\n  $chip-tokens: (\n    --trm-chip-height: 2rem,\n    --trm-chip-gap: .5rem,\n    --trm-chip-img-size: 1.5rem\n  )\n);"
+  },
+  table: {
+    variants: [
+      variant('Striped rows', 'Odd tbody rows receive an inset accent layer; headers and any nested table are independently styled.', table('table-striped')),
+      variant('Striped columns', 'Even columns receive the accent, including column headers. This is independent from row striping.', table('table-striped-columns', 'Column striping')),
+      variant('Themes on tables, rows and cells', 'Use theme-* rather than removed table-success aliases. Visible status labels carry meaning independently of color.', table('theme-success','Themed invoice table') + table('', 'Row and cell themes', '<tr class="theme-warning"><th scope="row">#1044</th><td>Review pending</td><td>$380</td></tr><tr><th scope="row">#1045</th><td class="theme-danger">Payment failed</td><td>$120</td></tr><tr class="theme-info"><th scope="row">#1046</th><td>Processing</td><td>$90</td></tr>')),
+      variant('Hover and active accents', 'Hover only styles tbody cells; table-active can highlight a row or a cell. Neither makes a row clickable or selected.', table('table-striped table-hover','Invoice accent states','<tr class="table-active"><th scope="row">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope="row">#1043</th><td>Northstar</td><td class="table-active">$560</td></tr>')),
+      variant('Borders and border colors', 'table-bordered adds row/cell borders; a border color utility can supply a consistent custom border.', table('table-bordered border-primary','Bordered invoices')),
+      variant('Borderless tables', 'table-borderless removes the cell and group boundaries without removing native table semantics.', table('table-borderless','Borderless invoices')),
+      variant('Compact tables', 'table-sm halves cell padding from .5rem to .25rem; the scoped table remains independently named.', table('table-sm table-bordered','Compact invoices')),
+      variant('Group dividers and footer', 'Apply table-group-divider to the actual row group. A real tfoot contains totals, not unrelated page controls.', `<table class="table"><caption>Invoice totals</caption>${headers}<tbody class="table-group-divider">${rows}</tbody><tfoot class="table-group-divider"><tr><th scope="row" colspan="2">Total billed</th><td>$800</td></tr></tfoot></table>`),
+      variant('Captions on top', 'caption-top changes caption placement without hiding the table name.', table('caption-top','Invoice register (top caption)')),
+      variant('Vertical alignment', 'thead stays bottom-aligned; tbody inherits from the table. Override a row or cell with real alignment utilities.', `<table class="table align-middle"><caption>Cell alignment</caption><thead><tr><th scope="col">Service</th><th scope="col">Notes</th></tr></thead><tbody><tr><th scope="row">API</th><td>Middle alignment inherited from the table.<br>Additional detail keeps this row tall.</td></tr><tr class="align-bottom"><th scope="row">Web</th><td>Bottom alignment from the row.<br>Deployment review in progress.</td></tr><tr><th scope="row" class="align-top">Queue</th><td>Top alignment on this row header.<br>Background work is ready.</td></tr></tbody></table>`),
+      variant('Independent nested tables', 'Direct-child selectors isolate outer accents and borders. The inner table resets accent state; inherited theme custom properties still cascade unless explicitly overridden.', scroll(`<table class="table table-striped table-bordered" id="outer-invoice-table"><caption>Invoice batches</caption><thead><tr><th scope="col">Batch</th><th scope="col">Contents</th></tr></thead><tbody><tr><th scope="row">November</th><td>${table('mb-0','Nested batch invoices')}</td></tr></tbody></table>`, 'Nested invoice tables')),
+      variant('Card-like tables', 'table-card belongs on a wrapper, clips corners and removes the final row border. The utility composition below uses the actual radius class rounded-7.', `<div class="table-card">${table('table-striped','Invoice card')}</div><div class="border rounded-7 overflow-hidden">${table('table-striped mb-0','Utility-composed invoice card')}</div>`),
+      variant('Always horizontally scrollable', 'The named focusable wrapper retains all columns. Scroll with a keyboard or pointer; clipping can hide menus and other overflowing widgets.', scroll(wide('Quarterly revenue by product'),'Quarterly revenue table','table-responsive','id="table-scroll-demo"')),
+      ...['sm','md','lg','xl','2xl'].map(prefix=>variant(`${prefix}:table-responsive`, 'The prefix controls overflow using a viewport media query in the pinned implementation. It always establishes an inline-size query container; this is not a container-width overflow switch.', scroll(table('',`${prefix} responsive invoices`),`${prefix} responsive invoice region`,`${prefix}:table-responsive`))),
+      variant('Responsive card wrapper', 'Combine table-responsive and table-card on the same wrapper, with a keyboard name when overflow is possible.', scroll(wide('Revenue card'),'Scrollable revenue card','table-responsive table-card')),
+      variant('Always stacked rows', 'table-stacked always displays row cells as blocks. Real headers remain in a visually hidden thead; data-cell supplies visual labels. Explicit matching table roles help preserve semantics when CSS changes display, but are not manual assistive-technology certification.', scroll(stacked('table-stacked','Always stacked team'),'Always stacked team region')),
+      variant('Container-responsive stacking', 'md:table-stacked activates below the wrapper container width of 768px, independent of the viewport. The first td becomes the title; later td elements display their data-cell labels.', scroll(stacked('md:table-stacked','Responsive stacked team'),'Responsive stacked team region','table-responsive','id="table-stack-demo" style="max-inline-size: 60rem"')),
+      variant('Dark mode and RTL', 'Direction and color mode follow the surrounding context; use explicit text rather than colors alone to describe invoice states.', dark(table('table-striped table-hover','Localized invoice register')))
+    ],
+    variables: documentedTokens('table'),
+    keyboard: [{keys:'Tab / Shift+Tab',behavior:'Native controls and the explicitly focusable named scrolling regions enter the tab order. Table rows are not focusable grid items.'},{keys:'Arrow keys',behavior:'A focused overflowing wrapper can scroll through native browser behavior. No cell-navigation or sorting plugin is installed.'}],
+    guidelines: ['Table styling is opt-in: use .table. Captions and scoped column/row headers remain the semantic foundation; this is not an ARIA grid.', 'Theme classes apply to a table, row or cell. The inset shadow accent cascade prefers state over stripe over theme/base colors; text and borders use corresponding theme tokens.', 'Direct-child selectors and reset accent variables keep nested table accents independent. Theme custom properties inherited from an ancestor are not magically erased.', 'table-responsive establishes an inline-size query container and horizontal scrolling. Prefixed responsive overflow is controlled by viewport media queries, whereas prefixed table-stacked rules use container queries; do not conflate them.', 'Use sm:, md:, lg:, xl: and 2xl: prefixes, not suffix-style table-responsive-md. Stacked tables require a query container and data-cell on td elements for visual labels.', 'Stacking changes CSS display but keeps real headers. Generated labels supplement rather than replace header associations; validate real screen readers for your data before release.', 'Name and focus overflow regions for keyboard access. Overflow clipping may hide menus/tooltips; do not promise those widgets can escape it.', 'Hover and active classes are visual accents, not row selection, sorting or fetching. Those features belong to application code, not a Table plugin.'],
+    sass: "@use 'tremplin/scss/content/tables' with (\n  $table-tokens: (\n    --trm-table-cell-padding-x: .75rem,\n    --trm-table-striped-bg-factor: 8%,\n    --trm-table-hover-bg-factor: 12%\n  ),\n  $table-striped-order: even,\n  $table-striped-columns-order: odd\n);"
+  }
+}

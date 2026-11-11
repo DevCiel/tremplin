@@ -1,0 +1,102 @@
+---
+{
+  "component": "empty-state",
+  "title": "Empty State",
+  "description": "Empty State component documentation for Tremplin.",
+  "lead": "Explain absent content with an optional local presentation pattern and real recovery actions.",
+  "variants": [
+    {
+      "title": "First-use state",
+      "description": "This independent example creates only a transient in-page demonstration. The copied application handler owns status and focus, not the extension CSS."
+    },
+    {
+      "title": "No search results",
+      "description": "Provide an actual recovery destination. This link navigates to the component catalog; no fake filtering service is implied."
+    },
+    {
+      "title": "Borderless and start aligned",
+      "description": "Borderless makes the border transparent; it does not remove its width. Start alignment changes placement and text direction."
+    },
+    {
+      "title": "Multiple next steps",
+      "description": "Offer real links, with one clear path and useful supporting guidance."
+    },
+    {
+      "title": "Compact presentation",
+      "description": "Compact sets minimum height to zero and smaller padding/icon tokens; it is not an automatic responsive breakpoint."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Use explicit text and a real destination; decorative artwork adds no redundant accessible name."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Visits native action links/buttons, not the empty-state container or decorative artwork."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Enter activates links; Enter or Space activates native buttons. Space is not a link activation shortcut."
+    }
+  ],
+  "guidelines": [
+    "This optional local extension provides presentation, not a data-fetching controller.",
+    "Name the section with a real heading and explain why content is absent. Loading, errors and successful emptiness are different states.",
+    "Use real links or implement the advertised native-button action. Do not publish inert Create/Clear controls or unresolved fragment links.",
+    "The supplied creation handler simulates a transient project in the page only; it performs no network call, persistence or account mutation.",
+    "When a focused empty state is removed, the application arranges focus on a surviving useful control and updates the pre-existing status text.",
+    "Hide decorative SVGs and retain unique heading IDs. Compact and borderless only affect presentation."
+  ]
+}
+---
+
+import { localPatternJavascript } from '../../../data/local-pattern-docs'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+<div class="docs-callout docs-callout-info"><strong>Optional local extension.</strong> This optional pattern is separate from the core and has no matching core plugin. This guide explicitly loads the existing optional extension CSS after core; normal core pages do not. Its Sass belongs to the <code>{"custom"}</code> layer. Import optional styling explicitly in your application.</div>
+<Code source={"import 'tremplin/css'\nimport 'tremplin/css/extensions'"} standalone={true} plain={true} label="Copy optional extension CSS imports" />
+
+<Example markup={componentExample("empty-state")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="empty-state" />
+
+{componentDetail("empty-state").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="empty-state" />
+</>}
+
+{componentDetail("empty-state").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("empty-state").sass} standalone={true} />
+</>}
+
+{componentDetail("empty-state").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="empty-state" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="empty-state" />
+
+{documentedComponents.find(component => component.name === "empty-state").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="empty-state" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>This optional CSS extension has no matching core JavaScript plugin. Any demonstrated dynamic action is application-owned and is disclosed below.</p>
+
+<div class="docs-callout"><strong>Explicit application demo.</strong> Copy this handler after the matching markup. It acts only on this example{"'"}s DOM and performs no network requests, persistence or account changes. It is not a new framework plugin. The application owns state, status text and any focus movement.</div>
+<Code source={localPatternJavascript["empty-state"]} standalone={true} plain={true} label="Copy local pattern application handler" />

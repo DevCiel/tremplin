@@ -1,0 +1,2 @@
+@use 'pkg:tremplin/scss' as framework with ($spacer: 2rem);
+.consumer-spacing { padding: framework.$spacer; --consumer-spacer: #{framework.$spacer}; }

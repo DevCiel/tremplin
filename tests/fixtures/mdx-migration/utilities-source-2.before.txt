@@ -1,0 +1,7 @@
+import { mdxGuideMetadata } from './mdx-metadata'
+
+/** Maintained group order; body/frontmatter ownership stays in each MDX file. */
+export const mdxGuideGroups = ['getting-started', 'guides', 'customize', 'layout', 'content', 'forms', 'helpers'] as const
+export function allMdxGuideMetadata() {
+  return mdxGuideGroups.flatMap(group => mdxGuideMetadata(group))
+}

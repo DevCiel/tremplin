@@ -1,0 +1,43 @@
+---
+{
+  "title": "RTL",
+  "description": "Use logical direction and one stylesheet for left-to-right and right-to-left pages.",
+  "group": "Customize",
+  "lead": "Use logical direction and one stylesheet for left-to-right and right-to-left pages.",
+  "order": 8
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { customizeExamples as samples } from '../../../data/customize-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">How it works</h2>
+
+<p>The local styles favor logical inline/block properties. Language and writing direction are separate document settings. There is no separate Tremplin RTL distribution to load.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Required HTML</h2>
+
+<Code sample={samples["customize/rtl#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Switching directions</h2>
+
+<p>Use ms/me and ps/pe utilities. Isolate code and email addresses with an appropriate dir value. Test directional keyboard controls and recreate affected instances if they cache direction.</p>
+
+<Code sample={samples["customize/rtl#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Additional resources</h2>
+
+<p>The <a href="/getting-started/rtl/">{"RTL getting-started guide"}</a> includes mixed-direction markup and a verification checklist. Check reading order, focus order, localization, and directional icons.</p>
+
+</section>

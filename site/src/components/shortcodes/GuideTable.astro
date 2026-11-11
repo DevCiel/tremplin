@@ -1,0 +1,9 @@
+---
+import type { GuideSection } from '../../data/guide-docs'
+interface Props { table: NonNullable<GuideSection['table']>; labelledby: string }
+const { table, labelledby } = Astro.props
+---
+<div class:list={['table-responsive', table.keyboardScroll && 'focus-ring']} tabindex={table.keyboardScroll ? 0 : undefined} role={table.keyboardScroll ? 'region' : undefined} aria-labelledby={table.keyboardScroll ? labelledby : undefined}><table class="table table-bordered">
+  <thead><tr>{table.headings.map(heading => <th scope="col">{heading}</th>)}</tr></thead>
+  <tbody>{table.rows.map(row => <tr>{row.map(cell => <td><code set:html={cell}></code></td>)}</tr>)}</tbody>
+</table></div>

@@ -1,0 +1,58 @@
+---
+{
+  "title": "Align self",
+  "description": "Use align self utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use align self utilities from the configured Tremplin utility map.",
+  "order": 16,
+  "utility": {
+    "category": "Flex and Grid",
+    "classes": [
+      "align-self-auto",
+      "align-self-start",
+      "align-self-center",
+      "md:align-self-end"
+    ],
+    "notes": "Override alignment for one item inside its supporting layout. Viewport prefixes are enabled; generated CSS order decides conflicting classes.",
+    "responsive": true
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/align-self"][0].example} /></div>
+
+<Code sample={samples["utilities/align-self"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"Override alignment for one item inside its supporting layout. Viewport prefixes are enabled; generated CSS order decides conflicting classes."} /></p>
+
+<Code sample={samples["utilities/align-self"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Responsive behavior"}</h2>
+
+<p><Html source={"Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

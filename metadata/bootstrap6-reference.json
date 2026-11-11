@@ -1,0 +1,31 @@
+{
+  "repository": "twbs/bootstrap",
+  "commit": "9062790fdb2379593a2973416dc5a3bfb203e4e3",
+  "upstreamVersion": "6.0.0-alpha.1",
+  "commitDate": "2026-11-05T05:19:46Z",
+  "verifiedOn": "2026-11-09",
+  "expectedCoreModules": {
+    "scss": 102,
+    "javascript": 35
+  },
+  "typescriptVersion": "6.0.3",
+  "target": "bootstrap6-clone-first-legacy-free",
+  "product": "Tremplin",
+  "packageName": "tremplin",
+  "namespace": "trm",
+  "securityExceptionRegistry": "metadata/bootstrap6-security-patches.json",
+  "productionRoots": {
+    "scss/": "src/scss/",
+    "js/src/": "src/js/"
+  },
+  "allowedAdaptations": [
+    "LF line endings",
+    "Product name and four distribution entry basenames",
+    "Framework CSS custom properties use --trm-* instead of unprefixed or --bs-* names",
+    "Third-party --vc-* calendar properties retain their dependency-defined names",
+    "Data attributes and dataset keys use data-trm-* and trm*",
+    "Event/data instance keys use trm.* instead of bs.*",
+    "Product version in the banner and BaseComponent.VERSION",
+    "Original copyright lines and source/license URLs remain intact"
+  ]
+}

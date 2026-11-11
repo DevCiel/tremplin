@@ -1,0 +1,74 @@
+---
+{
+  "title": "Prose",
+  "description": "Give long-form semantic HTML a readable measure and deliberate spacing.",
+  "group": "Content",
+  "lead": "Give long-form semantic HTML a readable measure and deliberate spacing.",
+  "order": 4
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { contentExamples as samples } from '../../../data/content-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">How it works</h2>
+
+<p>Prose is a column flex container with content-gap, a 1000px max-width and automatic inline margins. Its content-font-size and line-height tokens change at 1024px. It normalizes common margins, styles all six heading levels, links, lists, quotations, images and tables. It does not sanitize HTML or make arbitrary content accessible.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Example</h2>
+
+<div class="docs-example"><Html source={samples["content/prose#1"].example} /></div>
+
+<Code sample={samples["content/prose#1"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Inline HTML and headings</h2>
+
+<p>{"Use semantic heading levels and native paragraphs, emphasis and quotes. Prose styles h1–h6 with em sizes, and excludes classed headings from selected spacing rules. The documentation shell's article styling is not a consumer default."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Code and lists</h2>
+
+<p>Use escaped pre/code content for multiline source. Long lines may scroll horizontally inside code blocks. Native lists keep their meaning; do not fake a list with manually typed bullet characters.</p>
+
+<div class="docs-example"><Html source={samples["content/prose#3"].example} /></div>
+
+<Code sample={samples["content/prose#3"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Images and tables</h2>
+
+<p>Prose constrains images and styles unclassed tables with basic borders/padding. It does not generate responsive wrappers or captions. Use img-fluid/table for those dedicated components, and supply an accessible scroll region for wide tables.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Opting out of prose spacing</h2>
+
+<p>{"not-prose excludes its subtree from descendant prose rules, including heading/list spacing and typography. It does not undo inherited font properties, Reboot, the parent's flex gap or application styles. Put an opt-out region in a wrapper when the direct-child gap is unwanted."}</p>
+
+<div class="docs-example"><Html source={samples["content/prose#5"].example} /></div>
+
+<Code sample={samples["content/prose#5"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">Customizing</h2>
+
+<p>Load project CSS after the framework. Check long words, deep lists, zoom, mixed-direction content, and nested interactive components. The documentation site deliberately overrides its own main content width rather than enforcing the default prose measure.</p>
+
+<Code sample={samples["content/prose#6"].code[0]} standalone={true} />
+
+</section>

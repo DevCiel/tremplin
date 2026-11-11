@@ -1,0 +1,82 @@
+---
+{
+  "title": "Border radius",
+  "description": "Use border radius utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use border radius utilities from the configured Tremplin utility map.",
+  "order": 41,
+  "utility": {
+    "category": "Borders",
+    "classes": [
+      "rounded",
+      "rounded-0",
+      "rounded-1",
+      "rounded-2",
+      "rounded-3",
+      "rounded-4",
+      "rounded-5",
+      "rounded-6",
+      "rounded-7",
+      "rounded-8",
+      "rounded-9",
+      "rounded-circle",
+      "rounded-pill",
+      "rounded-size-9",
+      "rounded-top",
+      "rounded-top-0",
+      "rounded-end",
+      "rounded-bottom",
+      "rounded-start"
+    ],
+    "notes": "The numeric 0–9 scale emits literal values into isolated --trm-rounded-size; the base class uses key 5. Circle/pill and logical directional controls are separate. There are no sm/base/lg/xl/xxl aliases. rounded-size changes composition without painting all corners.",
+    "responsive": false
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/border-radius"][0].example} /></div>
+
+<Code sample={samples["utilities/border-radius"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"The numeric 0–9 scale emits literal values into isolated --trm-rounded-size; the base class uses key 5. Circle/pill and logical directional controls are separate. There are no sm/base/lg/xl/xxl aliases. rounded-size changes composition without painting all corners."} /></p>
+
+<Code sample={samples["utilities/border-radius"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Configuration and limits"}</h2>
+
+<p><Html source={"Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Configure the radius scale"}</h2>
+
+<p><Html source={"Sass changes regenerate literal utility values. Changing a root --trm-radius-* token alone does not rewrite those literals; directional fallbacks and explicit local --trm-rounded-size have separate effects."} /></p>
+
+<Code sample={samples["utilities/border-radius"][3].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

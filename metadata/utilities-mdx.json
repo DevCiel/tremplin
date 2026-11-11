@@ -1,0 +1,128 @@
+{
+  "phase": "utilities-authored-mdx",
+  "guides": 48,
+  "remaining": 0,
+  "previousPolicy": {
+    "file": "metadata/helpers-mdx.json",
+    "sha256": "ec5e19319c232710b0eb1d97346cbf59f91f989cc2b345315dd6752425ab2440"
+  },
+  "historicalSources": {
+    "site/src/data/utilities-guides.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/utilities-source-0.before.txt",
+      "sha256": "38cea69fc2ad55a92af761fdb4f4530bc126647b618caf9a573d93a7a661ece1"
+    },
+    "site/src/data/guide-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/utilities-source-1.before.txt",
+      "sha256": "2a771490860889e822c222a17f47cec1290e397bb4fdf0ee20aa3be808fe0c23"
+    },
+    "site/src/libs/mdx-guides.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/utilities-source-2.before.txt",
+      "sha256": "a3ebc1424422dd189172239d8891a83feb44d57a410be20cb36db0696d7ed43d"
+    },
+    "site/src/components/GuideScripts.astro": {
+      "snapshot": "tests/fixtures/mdx-migration/utilities-source-3.before.txt",
+      "sha256": "c8a1861f059e8f3a562a38545fac736e65f645c20cd369a2285db4a0d0faf048"
+    },
+    "site/src/content.config.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/utilities-source-4.before.txt",
+      "sha256": "4dca920c252bb0e01024b9743800a29e5e6d2bd1a6f10b9aa97ef35a81f57d26"
+    },
+    "site/src/pages/[...guide].astro": {
+      "snapshot": "tests/fixtures/mdx-migration/utilities-source-5.before.txt",
+      "sha256": "5b92a0509d2d052faca1c1550e8b0f5a1d2747b56a69f4c7835871bb854be8cd"
+    },
+    "site/src/components/GuideContent.astro": {
+      "snapshot": "tests/fixtures/mdx-migration/utilities-source-6.before.txt",
+      "sha256": "7149e17d22358c8f5216c969be1b35d644c416590e499125b93f6c15a2f94200"
+    },
+    "site/src/libs/content.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/utilities-source-7.before.txt",
+      "sha256": "518045fbfd99b19a88f68cae42586898f21360afa074d33708be9d5b1dc49531"
+    },
+    "site/src/libs/navigation.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/utilities-source-8.before.txt",
+      "sha256": "3881095da0323799e78e550d74c9b543ae17a604bfb6fc12b7accb1e9a8be87b"
+    },
+    "site/src/content/docs/utilities/index.mdx": {
+      "snapshot": "tests/fixtures/mdx-migration/utilities-source-9.before.txt",
+      "sha256": "9051bc49de930800028a2b8cf29f7fd2f640059a3c43bbc3f30527de3dbfac88"
+    }
+  },
+  "expectations": {
+    "raw": {
+      "snapshot": "tests/fixtures/mdx-migration/utilities-raw.before.json",
+      "sha256": "3598a3a027241477d867a63fd06c5770359d34f093cd372512a9fdd9b32a1751"
+    },
+    "published": {
+      "snapshot": "tests/fixtures/mdx-migration/utilities-published.before.json",
+      "sha256": "429cc0a5f99c605402c5690f7099610d398eb7b661d7b5e56c1d80c53353392b"
+    },
+    "topics": {
+      "snapshot": "tests/fixtures/mdx-migration/utilities-topics.before.json",
+      "sha256": "65a8cf8ca5de6a8f48538336f4d68a20950ece107aac545a56e840572d4724e1"
+    }
+  },
+  "removed": [
+    "site/src/components/GuideContent.astro"
+  ],
+  "sources": {
+    "site/src/data/utilities-examples.ts": "d005edb0e69d97dfe57f90faa8622770f803d1db7bb6c85f4e6290a84a367ce4",
+    "site/src/content/docs/utilities/api.mdx": "75a3e00e7eabef6375f28db110899f9983558676abf69e0b0f98b814caf3e6a9",
+    "site/src/content/docs/utilities/colors.mdx": "2ae7f4c78fbbc57f8a5c8065cb7c92554e2611580c22a6bbef9e0eaa3d9d4399",
+    "site/src/content/docs/utilities/background.mdx": "9b8d9d9812b8c3ad6e384824f00a1cbdf0350dafa9c2438f94a0370691afd882",
+    "site/src/content/docs/utilities/color-scheme.mdx": "a10b41f238489dd5e7bcdbe4e3458416db69ebdde97856a24a07a48c87c10d43",
+    "site/src/content/docs/utilities/theme.mdx": "c2ddf4a08fd31f2361bca31f16a2df9f97e88e5314c34fb6ce5b7125aa582e61",
+    "site/src/content/docs/utilities/aspect-ratio.mdx": "87c3b6c985e9e45f2f18df2876f030d9fbb2632e7c4f7a47d3866ad1618935ab",
+    "site/src/content/docs/utilities/container-queries.mdx": "153046a9a7028313e9fc3bd5c83e948ca81d53d4b7b3707499757e91c586fb30",
+    "site/src/content/docs/utilities/display.mdx": "874f63f0034cf58bad63d76d1b539a01d94c3a73ff24f2a551766079047cf703",
+    "site/src/content/docs/utilities/float.mdx": "fe61a240f75fce69b537d9cc612eec82790ae4b8d8ac1091a22425e974128000",
+    "site/src/content/docs/utilities/object-fit.mdx": "9d17922d2315de24b5939cef837e266d3a17021ffb05b79f9c8060f9618f1ccd",
+    "site/src/content/docs/utilities/overflow.mdx": "df20c51ff4c30a32b94e8c039b03e37f3ac77951051ea42dbad8fdc5f2d51aa7",
+    "site/src/content/docs/utilities/position.mdx": "dfa2cbf66fbdb3332332a19db6b98bd67ad68f38b12c9a528b49d813a1bbb0fb",
+    "site/src/content/docs/utilities/visibility.mdx": "35d1d6f8ef701fea135e194a3866a1ffb7540a9f0ba80aca2cf6abadf4053014",
+    "site/src/content/docs/utilities/z-index.mdx": "5438cfb3c0d1ff0d9164c5f8a3847e0c62da14403f3135b8e10bc90460cb187b",
+    "site/src/content/docs/utilities/align-content.mdx": "bfd58974e8fe1ca2ac1c6a0a67a1467d1857c7b8397d7308cc1c4f085d053773",
+    "site/src/content/docs/utilities/align-items.mdx": "721ff87e8ec90c3ad5efb153006851e53241a517a4c1b4e4941deead2a9f1e3b",
+    "site/src/content/docs/utilities/align-self.mdx": "4ddaa2e68cd61ae0559bf2ae396b9097ff325a9382afaa55a4d8578720d830a1",
+    "site/src/content/docs/utilities/flex.mdx": "d84bd0668fb0dde2ba64a52ec41c13abab4902034d55f1f8acc83de9e33ec47a",
+    "site/src/content/docs/utilities/gap.mdx": "ac648257ceeb9ba1caa7af9bc4339276ff0262c8383391642c3f2f584da03a19",
+    "site/src/content/docs/utilities/grid.mdx": "f4b051ef03ae8de6062bec051684dc4e963adc1d9fdd3e4046905497a0f7572b",
+    "site/src/content/docs/utilities/justify-content.mdx": "97955cc685a6cb9d202d4168465af0dfc7b9db318cd1875edf6c51998511c50d",
+    "site/src/content/docs/utilities/justify-items.mdx": "79ffc8e9cc3ada3a7c39d50a0118f1a8c0290454bc23048d2c0252391aed6acf",
+    "site/src/content/docs/utilities/place-items.mdx": "2279883300a00c093384377e1ad6f4eb3964953fd15837d0bbf1f4198f2076c1",
+    "site/src/content/docs/utilities/width.mdx": "4d523485759e2d915957de251bbba0b76a371dff47f9a2657af519c1bc0bf511",
+    "site/src/content/docs/utilities/height.mdx": "8c2c32ee9719deef16942e84895b572114a4699b5d1d336e2d89996099a3a0d6",
+    "site/src/content/docs/utilities/margin.mdx": "3f12646ca678d2a44d8b4fa38b07a1c7d1d28c0f007056f11ca7bac5b75672a6",
+    "site/src/content/docs/utilities/padding.mdx": "3cab7273e33d8bf49f301bcf4007797833c965eed6cf4970309902d21aa00e01",
+    "site/src/content/docs/utilities/space.mdx": "dafe4ebe0c475126716fe765e9cfe787f0014b9056e366c8050bc1f529835bde",
+    "site/src/content/docs/utilities/font-family.mdx": "e6b2ea6927e9e5b3346b3d6f67f1579e5119773c19b6a7e0b41bff48a7ffdbee",
+    "site/src/content/docs/utilities/font-size.mdx": "e00dd0019521215210d7a225550d4be60b61569e8ed6a13ad56495cbf8fb66d6",
+    "site/src/content/docs/utilities/font-style.mdx": "43db526ea7af882bb2b8249ac3e5478853a2a585106718d60c58165b89e694d5",
+    "site/src/content/docs/utilities/font-weight.mdx": "f7822b66efd0b44f0b22065a3a4928fa577818dd1ad27f38b0c995a1ed09acc8",
+    "site/src/content/docs/utilities/line-height.mdx": "cf213fa0dfda8b2c2ea929da1e01c0acfff85c3050d783fcddc8b20fcc672300",
+    "site/src/content/docs/utilities/link.mdx": "fa39ad61f6724d285c1f9fc891e8668f7ad7573c3e149f38300540f297f4b2c0",
+    "site/src/content/docs/utilities/text-alignment.mdx": "30175e82ad657ce6a62a563b305dbef48d2aabab8cc41d9ade7b3c457f5d9770",
+    "site/src/content/docs/utilities/text-decoration.mdx": "50ceffbc021942335b4448d0d8910358b3e4cd9a3089df442041324b56dd6a27",
+    "site/src/content/docs/utilities/text-transform.mdx": "caa2a00e605e3b953a6157f47d2ad1e67c2f6a236fa37618f12ab5caa7650578",
+    "site/src/content/docs/utilities/text-wrapping.mdx": "ac336744c0a7719900d639491e5a101bba0e9d4f26d5532a90c7ca12c1f24d58",
+    "site/src/content/docs/utilities/vertical-align.mdx": "a831c69dec8e775135be36e6c61b086b64fb78a21f697980d3298a85aac57391",
+    "site/src/content/docs/utilities/border.mdx": "3bbc18aec33725f41b67c35920b59aae9b879f1726511309235fc2b57b396e47",
+    "site/src/content/docs/utilities/border-color.mdx": "4bf7fe3cc7fa24b05d18802057e678652c48875e6af620290800fe8394737488",
+    "site/src/content/docs/utilities/border-radius.mdx": "341de5c768a0e82bbb623bd74899ba0da383d47e7362eeaa82b4675777aec3f5",
+    "site/src/content/docs/utilities/divide.mdx": "035c9b60349ac7f7009ea05d69ff3100bf0a2446c94579faa672cb51e505ef5e",
+    "site/src/content/docs/utilities/pointer-events.mdx": "6387609d39af33b11388af36be0c7806e978ad14747e4fa29adac940e61599fc",
+    "site/src/content/docs/utilities/user-select.mdx": "90a9807a226825bde05e9a58cbe6c0c39cf29b3fa010bfe5ed39eec3a06b5864",
+    "site/src/content/docs/utilities/motion.mdx": "7de7e05172a2bc3a06f49adbdb05206c5242fff726c7f627e45fa43c77b3b497",
+    "site/src/content/docs/utilities/opacity.mdx": "78270e6096f06718e3ab4da3ce0bc9b2d0855b65782d46cf8d976e499d52f49c",
+    "site/src/content/docs/utilities/shadows.mdx": "cc2c593f71914fb7c0fff764f97046d86fc376c78ae874dcfe2025ae8d2b81b3",
+    "site/src/data/utilities-guides.ts": "a570417506bbb350e5325aab631d4d9151e06e094f8102628bcd779158875a11",
+    "site/src/libs/mdx-guides.ts": "b34982a9699654f6da2204996269e6c4a690d43795a35e97e259715c11857bbd",
+    "site/src/data/guide-docs.ts": "892eaac9f644f83608ab3e484241bea2fb4e50598785b129afd9f86d699c969f",
+    "site/src/components/GuideScripts.astro": "d733357866ad9dcdfda324c7aaea5e42fcadfb3442990f9581acd57ddec96275",
+    "site/src/content.config.ts": "0ace693934a921aa3651e209f4e86362ceb99ab6a05b869be2431b4ad134b9bd",
+    "site/src/pages/[...guide].astro": "9ca18d2067d93d8ab840ea444ebeb6df45562f28047b227bef9378e0cde4b904",
+    "site/src/libs/content.ts": "3bee24b893ab5e91e1f7dba8035396618f2775407c52a74810333bd106c1b81b",
+    "site/src/libs/navigation.ts": "639262fec8644497608f45862cd6575f4c83ea4c19b8bc1c12e65b344485e390",
+    "site/src/content/docs/utilities/index.mdx": "9c77c23f7365d4c3b1595d8d5aa708ab9d5346cf02706ebf3f3aff30143c12ce"
+  }
+}

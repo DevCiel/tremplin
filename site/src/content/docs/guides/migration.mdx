@@ -1,0 +1,56 @@
+---
+{
+  "title": "Migration",
+  "description": "Adopt the current Tremplin core instead of legacy aliases.",
+  "group": "Guides",
+  "lead": "Adopt the current Tremplin core instead of legacy aliases.",
+  "order": 6
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { workflowExamples as samples } from '../../../data/workflow-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Scope and checkout status</h2>
+
+<p>Keep consumer experiments in a separate directory so their build output cannot overwrite the framework distribution. Use the Node version required by your chosen bundler. See <a href="/getting-started/install/">{"installation"}</a> and <a href="/getting-started/bundlers/">{"the detailed bundler reference"}</a>.</p>
+
+<div class="docs-callout docs-callout-info">This is Tremplin-specific setup/adoption guidance, not a verbatim or exhaustive copy of upstream historical documentation. This checkout is unreleased: use a locally packed tarball, not an unverified public npm/CDN package.</div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Audit your markup and imports</h2>
+
+<p>Public styling classes are unprefixed. Framework-owned CSS properties, events and data hooks retain the trm namespace. See <a href="/getting-started/contents/">{"package contents"}</a>.</p>
+
+<ol class="docs-steps">
+<li>Replace responsive infix names with canonical prefixes, such as md:col-6 and 2xl:col-3.</li>
+<li>Use button variants plus semantic themes, such as btn-outline theme-inverse, instead of old btn-primary-style aliases.</li>
+<li>Use Menu for dropdown behavior and native Dialog/Drawer elements for overlays.</li>
+<li>Import optional extensions separately; there is no legacy compatibility bundle.</li>
+</ol>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Update JavaScript contracts</h2>
+
+<p>Combobox uses a trigger with an adjacent Menu, real option focus and optional hidden submitted values, not an active-descendant text-input shim.</p>
+
+<p>Toggler only changes its configured class/attribute. It does not synchronize hidden, ARIA, dismissal or focus. Use Collapse or native overlay components when those behaviors are needed.</p>
+
+<p>Overlay methods may be asynchronous; wait for actual completion before dependent interactions. See <a href="/customize/transitions/">{"transitions"}</a>.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Rebuild and verify</h2>
+
+<p>Configure each Sass module before its first load and use its owning-module APIs. Follow <a href="/customize/sass/">{"Sass customization"}</a> and <a href="/utilities/api/">{"the Utility API"}</a>, not retired variable/map convenience files.</p>
+
+<p>Test compiled assets, package subpaths, keyboard behavior, focus return, RTL and contrast. The strict core keeps approved source exceptions explicit; an old screenshot is not authority to restore retired CSS. This adoption guide is not an exhaustive reproduction of every upstream historical migration note.</p>
+
+</section>

@@ -1,0 +1,69 @@
+---
+{
+  "title": "Parcel",
+  "description": "Use an HTML entry point and let Parcel resolve the package assets.",
+  "group": "Guides",
+  "lead": "Use an HTML entry point and let Parcel resolve the package assets.",
+  "order": 4
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { workflowExamples as samples } from '../../../data/workflow-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Scope and checkout status</h2>
+
+<p>Keep consumer experiments in a separate directory so their build output cannot overwrite the framework distribution. Use the Node version required by your chosen bundler. See <a href="/getting-started/install/">{"installation"}</a> and <a href="/getting-started/bundlers/">{"the detailed bundler reference"}</a>.</p>
+
+<div class="docs-callout docs-callout-info">This is Tremplin-specific setup/adoption guidance, not a verbatim or exhaustive copy of upstream historical documentation. This checkout is unreleased: use a locally packed tarball, not an unverified public npm/CDN package.</div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Install the local package</h2>
+
+<p>In the framework checkout, run npm pack and copy the generated archive into your separate consumer project. Then install that exact archive and required positioning/calendar peers.</p>
+
+<Code sample={samples["guides/parcel#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Install and serve</h2>
+
+<p>{"For this separately created browser application, remove npm init's default main field so Parcel does not infer a library target. Do not remove main from the Tremplin framework package. See "}<a href="https://parceljs.org/features/targets/">{"Parcel target configuration"}</a> when retaining an intentional library target.</p>
+
+<Code sample={samples["guides/parcel#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Import CSS and JavaScript</h2>
+
+<p>Save this as src/main.js. Root imports register the data APIs; individual subpaths export a default component for targeted programmatic use. Optional Tremplin extensions are separate. See <a href="/getting-started/javascript/">{"JavaScript"}</a> and <a href="/customize/optimize/">{"optimization and distribution formats"}</a>.</p>
+
+<Code sample={samples["guides/parcel#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Add accessible markup</h2>
+
+<p>Put this body in a complete HTML document with lang, charset, viewport and title. Keep names, labels and the native dialog element. Test opening, Escape and focus return; await shown/hidden events before dependent overlay actions.</p>
+
+<Code sample={samples["guides/parcel#4"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Connect the entry and build</h2>
+
+<p>Put the module script in the complete index.html document. Check the resulting CSS, runtime and SVG URLs using a static HTTP server. Deployment base paths and cache policy belong to the consumer application.</p>
+
+<Code sample={samples["guides/parcel#5"].code[0]} standalone={true} />
+
+<Code sample={samples["guides/parcel#5"].code[1]} standalone={true} />
+
+</section>

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gettremplin.com/schema/components.json",
+  "type": "object",
+  "required": ["framework", "version", "classPolicy", "components"],
+  "properties": {
+    "framework": { "const": "Tremplin" },
+    "version": { "type": "string" },
+    "classPolicy": { "type": "string" },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "kind", "status", "classes", "accessibility"],
+        "properties": {
+          "name": { "type": "string" },
+          "kind": { "type": "string" },
+          "status": { "type": "string" },
+          "classes": { "type": "array", "items": { "type": "string" } },
+          "accessibility": { "type": "string" }
+        },
+        "allOf": [{
+          "if": { "properties": { "name": { "const": "toggler" } }, "required": ["name"] },
+          "then": { "properties": { "classes": { "maxItems": 0 } } },
+          "else": { "properties": { "classes": { "minItems": 1 } } }
+        }],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,118 @@
+---
+{
+  "title": "Grid",
+  "description": "Arrange responsive content with a twelve-column Flexbox grid.",
+  "group": "Layout",
+  "lead": "Arrange responsive content with a twelve-column Flexbox grid.",
+  "order": 2
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { layoutExamples as samples } from '../../../data/layout-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Example</h2>
+
+<div class="docs-example"><Html source={samples["layout/grid#0"].example} /></div>
+
+<Code sample={samples["layout/grid#0"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">How it works</h2>
+
+<p>A row is a wrapping flex container. Its direct children get column padding and default to full width. Assign col for equal-width columns or col-N for a fraction of the configured column count. Keep nested rows inside a column, not directly beside column content without an enclosing structure.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Grid options</h2>
+
+<div class="table-responsive"><table class="table">
+<thead><tr><th scope="col">Feature</th><th scope="col">Default</th></tr></thead>
+<tbody>
+<tr><td><span>Columns</span></td><td><span>12</span></td></tr>
+<tr><td><span>Horizontal / vertical gutters</span></td><td><span>1.5rem / 0</span></td></tr>
+<tr><td><span>Breakpoints</span></td><td><span>xs, sm, md, lg, xl, 2xl</span></td></tr>
+<tr><td><span>Responsive syntax</span></td><td><span>md:col-6, lg:offset-2, md:row-cols-3</span></td></tr>
+<tr><td><span>Aliases</span></td><td><span>No infix or xxl compatibility names</span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Auto-layout columns</h2>
+
+<p>col-auto uses the intrinsic width of its content. Long unbroken values can still overflow: test real text, images, and translated labels.</p>
+
+<Code sample={samples["layout/grid#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Responsive classes</h2>
+
+<p>Use md:col-6, md:col and md:col-auto. Flexbox classes respond to the viewport; g-col/g-start CSS Grid placement responds to an eligible container. Generated rule order, not HTML class order, resolves competing declarations.</p>
+
+<div class="docs-example"><Html source={samples["layout/grid#4"].example} /></div>
+
+<Code sample={samples["layout/grid#4"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Grid-only distribution</h2>
+
+<p>The focused bundle includes display, order, Grid tracks/flow, gap, Flexbox/alignment and spacing families. It excludes Reboot, components, general color/sizing utilities and full palette/root output. Supply application-wide base styles separately.</p>
+
+<p>Mapped families support shallow complete replacement, null removal and per-family importance/variant flags. No separate compatibility ordering generator remains. Print/dark variants require explicit opt-in.</p>
+
+<p>Grid-only CSS deliberately excludes Reboot: pair it with a reset or supply border-box sizing. Breakpoint properties on :root/:host are inspection tokens; overriding them does not change compiled queries.</p>
+
+<div class="docs-example"><Html source={samples["layout/grid#5"].example} /></div>
+
+<Code sample={samples["layout/grid#5"].code[0]} standalone={false} />
+
+<Code sample={samples["layout/grid#5"].code[1]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">Row columns</h2>
+
+<p>row-cols-N targets direct children only; numbered variants run through grid-row-columns, six by default. A zero limit removes numbered variants while retaining row-cols-auto. The count is independent of grid-columns. Responsive variants use prefixes only.</p>
+
+<Code sample={samples["layout/grid#6"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">Nesting</h2>
+
+<Code sample={samples["layout/grid#7"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">Sass</h2>
+
+<p>Import explicit mixins/grid for make-row, make-col-ready, make-col, make-col-auto, make-col-offset and row-cols. Column width is physical; offset/padding are logical. The main entry does not forward every mixin.</p>
+
+<Code sample={samples["layout/grid#8"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-9">
+<h2 id="section-9">Grid class generator</h2>
+
+<p>The generator emits canonical viewport prefixes, column/row-count/offset/gutter classes. Provide row geometry and child preparation separately. Manual calls still emit output when automatic grid classes are disabled.</p>
+
+<p>The gutter argument remains in the signature but classes use the gutters map; configure that map deliberately. Scope custom generator output to avoid collisions.</p>
+
+<Code sample={samples["layout/grid#9"].code[0]} standalone={true} />
+
+</section>

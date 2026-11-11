@@ -1,0 +1,36 @@
+@use "../config" as *;
+@use "breakpoints" as *;
+@use "../mixins/grid" as *;
+
+// TODO: check gap utilities as replacement for gutter classes from v5
+
+@layer layout {
+  @if $enable-grid-classes {
+    .row {
+      @include make-row();
+
+      > * {
+        @include make-col-ready();
+      }
+    }
+
+    @include make-grid-columns();
+  }
+
+  @if $enable-cssgrid {
+    .grid {
+      --trm-columns: #{$grid-columns};
+      --trm-rows: 1;
+      --trm-gap: #{$grid-gutter-x};
+
+      @include set-container();
+
+      display: grid;
+      grid-template-rows: repeat(var(--trm-rows), 1fr);
+      grid-template-columns: repeat(var(--trm-columns), 1fr);
+      gap: var(--trm-gap);
+    }
+
+    @include make-cssgrid();
+  }
+}

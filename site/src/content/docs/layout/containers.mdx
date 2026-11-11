@@ -1,0 +1,81 @@
+---
+{
+  "title": "Containers",
+  "description": "Center page content with responsive maximum widths and consistent inline padding.",
+  "group": "Layout",
+  "lead": "Center page content with responsive maximum widths and consistent inline padding.",
+  "order": 1
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { layoutExamples as samples } from '../../../data/layout-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">How they work</h2>
+
+<p>A container supplies full available width, automatic inline margins, and half a horizontal gutter on each side. The default container gains a maximum width at each configured viewport threshold. Nest rows within a container so their negative margins balance its padding.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Default container</h2>
+
+<div class="docs-example"><Html source={samples["layout/containers#1"].example} /></div>
+
+<Code sample={samples["layout/containers#1"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Responsive containers</h2>
+
+<p>sm:container through 2xl:container are fluid below their viewport threshold, then progress through later configured maximums. container-fluid always remains fluid. There are no xxl, container-md or xs:container aliases.</p>
+
+<div class="docs-example"><Html source={samples["layout/containers#2"].example} /></div>
+
+<Code sample={samples["layout/containers#2"].code[0]} standalone={false} />
+
+<div class="table-responsive"><table class="table">
+<thead><tr><th scope="col">Minimum viewport</th><th scope="col">Default maximum width after activation</th></tr></thead>
+<tbody>
+<tr><td><span>Below chosen tier</span></td><td><span>100% (fluid)</span></td></tr>
+<tr><td><span>sm: 576px</span></td><td><span>540px</span></td></tr>
+<tr><td><span>md: 768px</span></td><td><span>720px</span></td></tr>
+<tr><td><span>lg: 1024px</span></td><td><span>960px</span></td></tr>
+<tr><td><span>xl: 1280px</span></td><td><span>1200px</span></td></tr>
+<tr><td><span>2xl: 1536px</span></td><td><span>1440px</span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Fluid containers</h2>
+
+<p>Fluid does not mean edge-to-edge: the default gutter padding remains. Use deliberate padding overrides if the design requires a full-bleed region.</p>
+
+<Code sample={samples["layout/containers#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">CSS and Sass</h2>
+
+<p>{"Container padding is half --trm-gutter-x on each side; container-padding-x defaults to grid-gutter-x. Width/max-width are physical, margins/padding logical. Breakpoint and maximum maps must have coherent keys; unmatched keys are not silently ignored."}</p>
+
+<p>Grid-only CSS does not include Reboot. Supply border-box sizing separately. Root palette/color tokens are not part of the focused Grid output.</p>
+
+<Code sample={samples["layout/containers#4"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Container mixin</h2>
+
+<p>The explicit layout/containers module owns make-container and emits its own layout styles. The mixin adds width:100%, logical half-gutter padding/margins and gutter tokens, not responsive maximums or query containment. The mixins aggregator is not a CSS-free substitute.</p>
+
+<Code sample={samples["layout/containers#5"].code[0]} standalone={true} />
+
+</section>

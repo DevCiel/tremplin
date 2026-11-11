@@ -1,0 +1,50 @@
+---
+{
+  "title": "AI guidance",
+  "description": "Give coding assistants accurate Tremplin documentation and component contracts.",
+  "group": "Getting started",
+  "lead": "Ground generated interfaces in this framework’s actual version, markup, and source contracts.",
+  "order": 1
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { gettingStartedExamples as samples } from '../../../data/getting-started-examples'
+import { frameworkVersion, installCommand, localPackage, requiredPeers, packageMetadata as pkg } from '../../../data/installation-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">1. Supply project context</h2>
+
+<p>Point your coding tool at the repository README, <a href="/llms.txt">{"llms.txt"}</a>, <a href="/components/">{"component guides"}</a>, and <a href="/api/">{"generated API reference"}</a>. In a local checkout, include <code>{"metadata/components.json"}</code> and the relevant <code>{"src/js/"}</code> module.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">2. State the framework contract</h2>
+
+<Code sample={samples["ai#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">3. Review generated markup</h2>
+
+<ol class="docs-steps">
+<li>Check every class against the component guide and every method against the generated API.</li>
+<li>Keep IDs unique, associate labels and errors, and verify target selectors.</li>
+<li>Prefer native controls. Treat generated HTML and suggested dependencies as unverified until reviewed.</li>
+</ol>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">4. Run the relevant checks</h2>
+
+<p>Use your application’s build and browser checks. Framework contributors should run the repository checks below. A generated page still needs a keyboard and screen-reader review.</p>
+
+<div class="docs-callout docs-callout-info">Tremplin currently provides llms.txt, source metadata, and documentation. This project does not publish an agent-skills package or llms-full.txt; do not use an unrelated installer as a Tremplin installer.</div>
+
+<Code sample={samples["ai#3"].code[0]} standalone={true} />
+
+</section>

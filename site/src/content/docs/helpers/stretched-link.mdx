@@ -1,0 +1,58 @@
+---
+{
+  "title": "Stretched link",
+  "description": "Expand a link pointer target within a deliberately positioned containing block.",
+  "group": "Helpers",
+  "lead": "Expand a link pointer target within a deliberately positioned containing block.",
+  "order": 5
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { helpersExamples as samples } from '../../../data/helpers-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Explicit demo contrast customization"}</h2>
+
+<p><Html source={"These examples opt into application CSS with darker solid backgrounds and emphasized foregrounds. This is not a change to framework defaults. Copy this CSS and the demo-contrast wrapper together. Calendar examples also pass a styles option to the dependency."} /></p>
+
+<Code sample={samples["helpers/stretched-link"][0].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Example"}</h2>
+
+<p><Html source={"The generated after-element covers the link containing block using absolute positioning and inset: 0. This example explicitly positions the card. Inspect transforms, containment and positioned ancestors when the target area is not where you expect."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/stretched-link"][1].example} /></div>
+
+<Code sample={samples["helpers/stretched-link"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Multiple controls and keyboard access"}</h2>
+
+<p><Html source={"Prefer one destination in a stretched card. The overlay can cover text selection or a second action. If another action is deliberately placed above it, test pointer and keyboard access separately. Focus remains on the original link; stretching creates no extra tab stops."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"CSS"}</h2>
+
+<p><Html source={"The default overlay layer token is 1. Changing it does not escape the containing block or ancestor stacking context."} /></p>
+
+<Code sample={samples["helpers/stretched-link"][3].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Sass"}</h2>
+
+<p><Html source={"Configure before or after on the owning module before loading the full entry. The pin forwards the configured pseudo-element name without a Sass validation error for other names; only choose a real pseudo-element appropriate to the browser behavior."} /></p>
+
+<Code sample={samples["helpers/stretched-link"][4].code[0]} standalone={true} />
+
+</section>

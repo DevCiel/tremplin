@@ -1,0 +1,137 @@
+---
+{
+  "component": "toast",
+  "title": "Toast",
+  "description": "Toast component documentation for Tremplin.",
+  "lead": "Display transient, non-blocking notifications in an appropriate live region.",
+  "variants": [
+    {
+      "title": "Header and body",
+      "description": "Persistent static presentation uses authored show and autohide=false. Dismissal hides the toast without removing it or restoring focus automatically."
+    },
+    {
+      "title": "Live notification",
+      "description": "An existing polite live-region wrapper contains an initially hidden toast. The button uses the application JavaScript shown below, not a framework toast show-toggle attribute."
+    },
+    {
+      "title": "Contextual notifications",
+      "description": "Theme classes accompany understandable status text; reserve assertive alert announcements for urgent messages."
+    },
+    {
+      "title": "Persistent notification with links",
+      "description": "autohide=false gives users time to follow a real destination. Never depend on an ephemeral toast as the only place to recover important information."
+    },
+    {
+      "title": "Stacked region",
+      "description": "toast-container adds spacing; position-static keeps this demonstration in document flow. Application code owns the queue, count and insertion policy."
+    },
+    {
+      "title": "Translucent and instant",
+      "description": "toast-translucent adds backdrop filtering. toast-instant removes the transition wait; no animation option or showing/hide state classes are used."
+    },
+    {
+      "title": "Contained placement",
+      "description": "Utility positioning belongs to the application. This absolute toast container stays inside the named relative example instead of covering the whole documentation page."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Named empty close masks and logical spacing retain native dismissal behavior in a dark RTL region."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Follow native actions; an initialized toast pauses autohide while it has keyboard focus."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Activate a focused native button. Links use Enter for ordinary navigation."
+    }
+  ],
+  "guidelines": [
+    "Toasts are opt-in: construct/get an instance and call show explicitly. data-trm-dismiss=\"toast\" supplies dismissal, not automatic showing.",
+    "Create the live region before inserting/updating a notification. Static page examples do not prove a screen reader announced a live update.",
+    "Use polite status for routine feedback and assertive alert only for urgent information; retain persistent alternatives.",
+    "autohide defaults to true with delay=5000ms. Initialized instances pause during hover/focus and schedule a full delay after interaction leaves.",
+    "Persistent/actionable notifications need autohide=false and named dismissal controls. Applications decide where focus goes if a focused toast is hidden.",
+    "show/hide starts are cancelable; shown/hidden occur after the CSS callback. Hiding keeps the node; dispose clears the timer and instance.",
+    "Use toast-instant to skip transitions; there is no animation option, showing class or separate hide class in this pin."
+  ],
+  "events": {
+    "focusin.trm.toast": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+    "focusout.trm.toast": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+    "hidden.trm.toast": "After the hide callback; the node remains in the DOM and focus is application-managed.",
+    "hide.trm.toast": "Cancelable start before removing show.",
+    "mouseout.trm.toast": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+    "mouseover.trm.toast": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+    "show.trm.toast": "Cancelable start before adding show.",
+    "shown.trm.toast": "After the show callback, before scheduling autohide."
+  }
+}
+---
+
+import { toastDemoJavascript } from '../../../data/selection-feedback-docs'
+import { componentApi } from '../../../data/component-api'
+import ApiOptions from '../../../components/component/ApiOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("toast")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="toast" />
+
+{componentDetail("toast").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="toast" />
+</>}
+
+{componentDetail("toast").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("toast").sass} standalone={true} />
+</>}
+
+{componentDetail("toast").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="toast" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="toast" />
+
+{documentedComponents.find(component => component.name === "toast").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="toast" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Toasts are opt-in: create an instance and call <code>show()</code> explicitly. The live example uses the application wiring below; <code>data-docs-toast-show</code> is a documentation-only hook, not a framework API. Static examples author <code>show</code> for presentation.</p>
+<Code source={toastDemoJavascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("toast").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<ApiOptions name="toast" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="toast" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="toast" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<p>Use <code>{'data-trm-dismiss="toast"'}</code> on a named close button; <code>data-trm-autohide</code> and <code>data-trm-delay</code> configure an explicitly created instance. There is no automatic show-toggle attribute.</p>
+<p class="mt-4"><a href="/api/toast/">View the generated {componentApi("toast").definition.className}{" API reference →"}</a></p>

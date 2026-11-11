@@ -1,0 +1,120 @@
+---
+{
+  "component": "chip",
+  "title": "Chip",
+  "description": "Chip component documentation for Tremplin.",
+  "lead": "Display compact values, filters, or removable selections.",
+  "variants": [
+    {
+      "title": "Static labels",
+      "description": "CSS-only chips do not register dismiss behavior. Prefer Badge for purely informational labels; these spans demonstrate the primitive without making them controls."
+    },
+    {
+      "title": "Images and icons",
+      "description": "Use the real chip-img and chip-icon classes. An adjacent visible identity makes these local illustrations decorative."
+    },
+    {
+      "title": "Theme inheritance",
+      "description": "Themes can belong to the group or an individual chip. This demonstration retains the disclosed contrast customization, not changed core defaults."
+    },
+    {
+      "title": "Active presentation",
+      "description": "active changes presentation only. These text samples are not toggle controls and have no pressed or selection API."
+    },
+    {
+      "title": "Application-owned filter",
+      "description": "Native buttons provide Enter/Space activation. Copy the application handler below to synchronize aria-pressed and active; focus-ring explicitly restores a visible keyboard outline omitted by bare Chip styling."
+    },
+    {
+      "title": "Application-owned removal",
+      "description": "The nested dismiss control belongs inside a non-interactive span, never inside another button or link. The supplied application handler removes the chip, updates status text and moves focus to a surviving native link."
+    },
+    {
+      "title": "Disabled native control",
+      "description": "A real disabled button is not focusable or activatable. The disabled class is visual/pointer styling only and cannot disable an anchor or remove its keyboard destination."
+    },
+    {
+      "title": "Custom dimensions",
+      "description": "Chip has one built-in size. Override its actual tokens rather than inventing chip-sm, chip-lg or chip-avatar classes."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Logical image margins and gaps follow direction; the native link keeps meaningful navigation without claiming a Chip controller."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Enter / Space",
+      "behavior": "Native buttons activate the explicitly supplied application handler. Standalone spans have no keyboard behavior."
+    },
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Visits enabled native controls and links. Add focus-ring to actionable chips; the primitive removes its own focus-visible outline."
+    },
+    {
+      "keys": "Escape / Arrows / Delete",
+      "behavior": "No standalone Chip behavior. Editable chip-input collections use the separate Chips plugin."
+    }
+  ],
+  "guidelines": [
+    "The upstream standalone Chip primitive is documented in forms/chips, not a separate components/chip page. This retained URL does not create a Chip plugin.",
+    "Chip CSS sets a pointer cursor and hover appearance even on a span; that alone does not make text interactive. Prefer Badge for plain status labels.",
+    "Keep aria-pressed and active synchronized in your application; CSS active alone exposes no selected state.",
+    "Use named native dismiss controls with SVGs hidden from assistive technology. Do not nest interactive controls.",
+    "The supplied removal example owns its status message and focus return; neither is automatically supplied by standalone Chip CSS.",
+    "Use the existing focus-ring helper for visible keyboard focus on native actionable chips. disabled class is not a substitute for native disabled.",
+    "Chip has one size; customize $chip-tokens or runtime tokens. There is no chip-remove, chip-avatar, chip-group, chip-sm or chip-lg class.",
+    "Use Chips for editable collections and built-in add/remove/selection events; standalone examples do not initialize data-trm-chips."
+  ]
+}
+---
+
+import Contrast from '../../../components/component/Contrast.astro'
+import { standaloneChipJavascript } from '../../../data/chip-table-docs'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+<Contrast />
+
+<Example markup={componentExample("chip")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="chip" />
+
+{componentDetail("chip").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="chip" />
+</>}
+
+{componentDetail("chip").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("chip").sass} standalone={true} />
+</>}
+
+{componentDetail("chip").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="chip" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="chip" />
+
+{documentedComponents.find(component => component.name === "chip").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="chip" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Chip is a CSS primitive, not a standalone plugin. The toggle/removal examples below use explicit application code; editable chip-input collections use the separate Chips plugin.</p>
+
+<div class="docs-callout"><strong>Explicit standalone application behavior.</strong> Load this handler after the example markup. It owns filter state, removal, the status message and focus return; none of these are supplied by Chip CSS. The focus-ring helper is also an explicit accessibility choice for actionable chips.</div>
+<Code source={standaloneChipJavascript} standalone={true} plain={true} label="Copy standalone Chip application handler" />

@@ -1,0 +1,398 @@
+[
+  {
+    "name": "alert",
+    "title": "Alert",
+    "description": "Alert component documentation for Tremplin.",
+    "lead": "Provide contextual feedback messages with optional dismiss behavior.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Contextual alerts",
+          "description": "Compose alert with a semantic theme. Use polite status announcements for routine updates and alert only for urgent messages.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"vstack gap-3\"><div class=\"alert theme-primary\" role=\"status\"><p>A project update is available.</p></div><div class=\"alert theme-success\" role=\"status\"><p>Your changes were saved.</p></div><div class=\"alert theme-danger\" role=\"alert\"><p>Payment could not be processed.</p></div></div>\n</div>"
+        },
+        {
+          "title": "Headings and links",
+          "description": "Group rich content inside the flex container. Alert headings and links inherit the contextual foreground.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"alert theme-warning\" role=\"status\"><div><h3 class=\"alert-heading h5\">Review required</h3><p>Confirm the deployment settings before continuing.</p><a class=\"alert-link\" href=\"/getting-started/approach/\">Review the approach</a></div></div>\n</div>"
+        },
+        {
+          "title": "Dismissible alert",
+          "description": "The Alert data API emits cancelable close, removes the element after its exit transition, then emits closed. No alert-dismissible or initial show class is required.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"alert theme-info\" id=\"export-notice\" role=\"status\"><p>Your export is ready.</p><button class=\"btn-close ms-auto\" type=\"button\" data-trm-dismiss=\"alert\" aria-label=\"Dismiss export notification\"></button></div>\n</div>"
+        },
+        {
+          "title": "Instant dismissal",
+          "description": "alert-instant opts out of the exit transition. It does not change removal, cancellation or focus policy.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"alert alert-instant\" id=\"instant-notice\" role=\"status\"><p>Temporary notice.</p><button class=\"btn-close ms-auto\" type=\"button\" data-trm-dismiss=\"alert\" aria-label=\"Dismiss temporary notice\"></button></div>\n</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Logical auto margins place the empty masked close control at the inline end. Do not add a second text glyph inside btn-close.",
+          "markup": "<div class=\"demo-contrast\">\n<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"alert theme-inverse\" role=\"status\"><p>Changes saved.</p><button class=\"btn-close ms-auto\" type=\"button\" data-trm-dismiss=\"alert\" aria-label=\"Dismiss saved notification\"></button></div></div>\n</div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-alert-gap",
+          "defaultValue": "var(--trm-spacer-3)",
+          "purpose": "Default exported through $alert-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-alert-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $alert-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-alert-padding-x",
+          "defaultValue": "var(--trm-spacer)",
+          "purpose": "Default exported through $alert-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-alert-padding-y",
+          "defaultValue": "var(--trm-spacer)",
+          "purpose": "Default exported through $alert-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-alert-color",
+          "defaultValue": "inherit",
+          "purpose": "Default exported through $alert-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-alert-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $alert-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-alert-border-radius",
+          "defaultValue": "var(--trm-radius-7)",
+          "purpose": "Default exported through $alert-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-alert-link-color",
+          "defaultValue": "inherit",
+          "purpose": "Default exported through $alert-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-alert-transition-property",
+          "defaultValue": "opacity",
+          "purpose": "Default exported through $alert-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-alert-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $alert-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-alert-transition-timing",
+          "defaultValue": "linear",
+          "purpose": "Default exported through $alert-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-hr-border-color",
+          "defaultValue": "var(--trm-theme-border, var(--trm-alert-border-color))",
+          "purpose": "Default exported through $alert-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Focus the authored links and optional close button."
+        },
+        {
+          "keys": "Enter / Space",
+          "behavior": "Activate a focused native dismiss button. No built-in focus restoration is supplied after the alert is removed."
+        }
+      ],
+      "guidelines": [
+        "Reserve role=\"alert\" for urgent messages; routine updates should not interrupt the user.",
+        "Keep recovery instructions available, and do not automatically dismiss validation errors.",
+        "The alert starts visible in normal markup. The plugin adds hiding during exit, removes the element, emits closed and disposes its instance.",
+        "Application code can cancel close or handle closed.trm.alert to move focus to a suitable surviving element. Focus restoration is not automatic.",
+        "Use an empty, named native btn-close with data-trm-dismiss=\"alert\"; use actual theme classes, not retired alert-color aliases."
+      ],
+      "sass": "@use 'tremplin/scss/alert' with (\n  $alert-tokens: (\n    --trm-alert-border-radius: .5rem,\n    --trm-alert-padding-x: 1.25rem\n  )\n);"
+    },
+    "example": "<div class=\"demo-contrast\">\n<div class=\"alert theme-primary\" role=\"status\" id=\"release-notice\"><p>A new version is available.</p><button class=\"btn-close ms-auto\" type=\"button\" data-trm-dismiss=\"alert\" aria-label=\"Dismiss\"></button></div>\n</div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_alert.scss",
+    "definition": {
+      "name": "alert",
+      "className": "Alert",
+      "options": [],
+      "methods": [
+        "close(): Promise<void>",
+        "dispose(): void"
+      ],
+      "events": [
+        "close.trm.alert",
+        "closed.trm.alert"
+      ],
+      "dataAttributes": []
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "moduleImport": "import Alert from 'tremplin/alert'",
+    "javascript": "import Alert from 'tremplin/alert'\n\nconst element = document.querySelector('.alert')\nconst instance = Alert.getOrCreateInstance(element)"
+  },
+  {
+    "name": "button",
+    "title": "Button",
+    "description": "Button component documentation for Tremplin.",
+    "lead": "Trigger actions with solid, outline, subtle, text, size, and toggle variants.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Theme-driven styles",
+          "description": "Choose a structural variant and a semantic theme; there are no btn-primary-style aliases. The neutral base btn is also available.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap align-items-center gap-3\"><button class=\"btn\" type=\"button\">Base</button><button class=\"btn-solid theme-primary\" type=\"button\">Solid</button><button class=\"btn-outline theme-primary\" type=\"button\">Outline</button><button class=\"btn-subtle theme-success\" type=\"button\">Subtle</button><button class=\"btn-text theme-danger\" type=\"button\">Text</button></div>\n</div>"
+        },
+        {
+          "title": "Sizes and icon buttons",
+          "description": "Use xs, sm, the default size or lg. Icon-only controls need an accessible name; variants already include base button styling.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap align-items-center gap-3\"><button class=\"btn-solid theme-primary btn-xs\" type=\"button\">Extra small</button><button class=\"btn-solid theme-primary btn-sm\" type=\"button\">Small</button><button class=\"btn-solid theme-primary\" type=\"button\">Default</button><button class=\"btn-solid theme-primary btn-lg\" type=\"button\">Large</button><button class=\"btn-outline theme-inverse btn-icon\" type=\"button\" aria-label=\"Add item\"><span aria-hidden=\"true\">+</span></button></div>\n</div>"
+        },
+        {
+          "title": "Toggle and disabled states",
+          "description": "The Button plugin toggles active and aria-pressed. Native disabled prevents user activation; a disabled navigation example has no href and is removed from the tab order.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap align-items-center gap-3\"><button class=\"btn-solid theme-primary\" type=\"button\" data-trm-toggle=\"button\" aria-pressed=\"false\">Toggle notifications</button><button class=\"btn-solid theme-primary\" type=\"button\" disabled>Disabled</button><a class=\"btn-outline theme-inverse disabled\" role=\"link\" aria-disabled=\"true\" tabindex=\"-1\">Unavailable link</a></div>\n</div>"
+        },
+        {
+          "title": "Native checkbox buttons",
+          "description": "Put a real checkbox inside a btn-check label. Native checked/focus semantics and CSS :has() styling are separate from the Button plugin.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap align-items-center gap-3\"><label class=\"btn-check btn-outline theme-inverse\"><input type=\"checkbox\" name=\"updates\"> Email updates</label><label class=\"btn-check btn-outline theme-inverse\"><input type=\"checkbox\" name=\"locked-updates\" checked disabled> Required updates</label></div>\n</div>"
+        },
+        {
+          "title": "Groups and toolbars",
+          "description": "Name related native controls. These CSS containers do not supply a roving-tabindex or editor implementation.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"btn-toolbar\" role=\"toolbar\" aria-label=\"Editor actions\"><div class=\"btn-group\" role=\"group\" aria-label=\"Text alignment\"><button class=\"btn-outline theme-inverse\" type=\"button\">Start</button><button class=\"btn-outline theme-inverse\" type=\"button\">Center</button><button class=\"btn-outline theme-inverse\" type=\"button\">End</button></div></div>\n</div>"
+        },
+        {
+          "title": "Styled solid buttons",
+          "description": "The styled modifier adds the actual gradient/shadow treatment to a solid variant; it is not a replacement theme.",
+          "markup": "<div class=\"demo-contrast\">\n<button class=\"btn-solid btn-styled theme-inverse\" type=\"button\">Styled action</button>\n</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Existing theme tokens and logical layout adapt to dark RTL content. This example uses the inverse theme deliberately.",
+          "markup": "<div class=\"demo-contrast\">\n<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"hstack flex-wrap align-items-center gap-3\"><button class=\"btn-solid theme-inverse\" type=\"button\">Save</button><button class=\"btn-outline theme-inverse\" type=\"button\">Cancel</button></div></div>\n</div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-btn-gap",
+          "defaultValue": "var(--trm-btn-input-gap)",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-min-height",
+          "defaultValue": "var(--trm-btn-input-min-height)",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-padding-x",
+          "defaultValue": "var(--trm-btn-input-padding-x)",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-padding-y",
+          "defaultValue": "var(--trm-btn-input-padding-y)",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-font-size",
+          "defaultValue": "var(--trm-btn-input-font-size)",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-font-weight",
+          "defaultValue": "var(--trm-btn-input-font-weight)",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-line-height",
+          "defaultValue": "var(--trm-btn-input-line-height)",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-white-space",
+          "defaultValue": "nowrap",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-border-color",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-border-radius",
+          "defaultValue": "var(--trm-radius-5)",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-hover-border-color",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-disabled-opacity",
+          "defaultValue": "0.65",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-transition-property",
+          "defaultValue": "color, background-color, border-color, box-shadow",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-transition-timing",
+          "defaultValue": "ease-in-out",
+          "purpose": "Default exported through $button-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-bg",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $button-link-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-hover-color",
+          "defaultValue": "var(--trm-link-hover-color)",
+          "purpose": "Default exported through $button-link-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-hover-bg",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $button-link-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-active-color",
+          "defaultValue": "var(--trm-link-hover-color)",
+          "purpose": "Default exported through $button-link-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-active-bg",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $button-link-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-active-border-color",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $button-link-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-disabled-color",
+          "defaultValue": "var(--trm-fg-3)",
+          "purpose": "Default exported through $button-link-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-disabled-border-color",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $button-link-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-gradient-start",
+          "defaultValue": "rgba(255, 255, 255, 0.125)",
+          "purpose": "Default exported through $button-styled-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-gradient-end",
+          "defaultValue": "rgba(0, 0, 0, 0.075)",
+          "purpose": "Default exported through $button-styled-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-border-mix-color",
+          "defaultValue": "#000",
+          "purpose": "Default exported through $button-styled-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-border-mix-amount",
+          "defaultValue": "10%",
+          "purpose": "Default exported through $button-styled-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-border-hover-mix-amount",
+          "defaultValue": "12.5%",
+          "purpose": "Default exported through $button-styled-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-border-active-mix-amount",
+          "defaultValue": "20%",
+          "purpose": "Default exported through $button-styled-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-shadow",
+          "defaultValue": "0 1px 2px rgb(0 0 0 / 15%), inset 0 1px 0 rgb(255 255 255 / 10%)",
+          "purpose": "Default exported through $button-styled-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-active-shadow",
+          "defaultValue": "inset 0 2px 4px rgba(0, 0, 0, 0.15)",
+          "purpose": "Default exported through $button-styled-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Enter / Space",
+          "behavior": "Activate a focused native button; the Button data API synchronizes pressed state when enabled."
+        },
+        {
+          "keys": "Enter",
+          "behavior": "Follow an enabled navigation link. A button-styled link does not gain native Space activation."
+        },
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Move through native enabled controls. Checkbox buttons retain native checkbox behavior."
+        }
+      ],
+      "guidelines": [
+        "Use native buttons for actions and real links for navigation; declare non-submit button types explicitly.",
+        "Always name icon-only controls. Keep a toggle button label stable while aria-pressed communicates state.",
+        "A disabled class or aria-disabled alone is not an activation guard. Use native disabled, or remove/guard a disabled link destination deliberately.",
+        "Do not mix the Button plugin and native checkbox state on the same control.",
+        "Semantic color names are not a contrast guarantee. Copy the disclosed demo CSS with customized color examples, or choose and test accessible foreground/background pairs."
+      ],
+      "sass": "@use 'tremplin/scss/buttons/button' with (\n  $button-tokens: (\n    --trm-btn-border-radius: .75rem,\n    --trm-btn-gap: .5rem\n  )\n);"
+    },
+    "example": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap align-items-center gap-3\"><button class=\"btn-solid theme-primary\" type=\"button\">Solid</button><button class=\"btn-outline theme-primary\" type=\"button\">Outline</button><button class=\"btn-subtle theme-success\" type=\"button\">Subtle</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"button\" aria-pressed=\"false\">Toggle example action</button></div>\n</div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/buttons/_button.scss",
+    "definition": {
+      "name": "button",
+      "className": "Button",
+      "options": [],
+      "methods": [
+        "toggle(): void",
+        "dispose(): void"
+      ],
+      "events": [],
+      "dataAttributes": [
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"button\""
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "moduleImport": "import Button from 'tremplin/button'",
+    "javascript": "import Button from 'tremplin/button'\n\nconst element = document.querySelector('[data-trm-toggle=\"button\"]')\nconst instance = Button.getOrCreateInstance(element)"
+  }
+]

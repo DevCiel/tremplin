@@ -1,0 +1,49 @@
+---
+{
+  "title": "Utilities",
+  "description": "Compose responsive layouts with display, Flexbox, spacing, and visibility utilities.",
+  "group": "Layout",
+  "lead": "Compose responsive layouts with display, Flexbox, spacing, and visibility utilities.",
+  "order": 5
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { layoutExamples as samples } from '../../../data/layout-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Changing display</h2>
+
+<p>Display:none removes layout and accessibility-tree participation. Use canonical responsive prefixes. Print variants are not default output; configure the display family explicitly through the Utility API when needed.</p>
+
+<Code sample={samples["layout/utilities#0"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Flexbox options</h2>
+
+<div class="docs-example"><Html source={samples["layout/utilities#1"].example} /></div>
+
+<Code sample={samples["layout/utilities#1"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Margin and padding</h2>
+
+<p>{"Use m-* and p-* for every side, x/y for axes, and s/e for logical inline start/end. ms-auto absorbs available inline-start space. Use gap-* for ordinary Flexbox or CSS Grid composition; use gutter classes for the percentage-based row/column grid."}</p>
+
+<Code sample={samples["layout/utilities#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Toggle visibility</h2>
+
+<p>The native visible/invisible utilities set visibility; invisible preserves geometry but hides content from normal focus/assistive interaction. They do not replace hidden/display semantics. See the Utility API for explicit custom variants.</p>
+
+<Code sample={samples["layout/utilities#3"].code[0]} standalone={true} />
+
+</section>

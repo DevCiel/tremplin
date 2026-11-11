@@ -1,0 +1,36 @@
+---
+title: Utilities
+description: Utility topic references, supported classes and documented limitations.
+---
+
+import { utilityTopics } from '../../../data/utilities-guides'
+
+# Utilities
+
+Browse all 48 Tremplin utility topics, starting with the [Utility API](/utilities/api/). Each guide distinguishes supported local selectors from application-owned CSS fallbacks. Topic coverage does not mean complete utility parity.
+
+{[...new Set(utilityTopics.map(topic => topic.category))].map(category => <section><h2>{category}</h2><ul>{utilityTopics.filter(topic => topic.category === category).map(topic => <li><a href={`/utilities/${topic.slug}/`}>{topic.title}</a> — {topic.description}{topic.classes.length === 0 ? ' (Application CSS fallback)' : ''}</li>)}</ul></section>)}
+
+## Working locally
+
+See the complete [Utility API](/utilities/api/), [breakpoint reference](/layout/breakpoints/), [container reference](/layout/containers/), and [grid guide](/layout/grid/).
+
+The twelve-column flex grid, CSS Grid alternative, and container-query helpers share the same responsive vocabulary.
+
+```html
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
+    <article class="col">...</article>
+  </div>
+</div>
+```
+
+Utilities support selected spacing, sizing, display, flex, typography, color, border, overflow, opacity, state, dark, and print behavior. Not every family supports every variant.
+
+```html
+<section class="d-flex flex-column flex-lg-row align-items-lg-center gap-3 p-3 p-lg-5">
+  <button class="btn btn-primary hover-opacity-75 d-print-none">Launch</button>
+</section>
+```
+
+Override `$utilities`, `$spacers`, `$breakpoints`, or `$container-breakpoints` through Sass module configuration to generate a custom build.

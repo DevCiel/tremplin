@@ -1,0 +1,6 @@
+@layer helpers {
+  .focus-ring:focus-visible {
+    // outline: var(--trm-focus-ring);
+    outline: var(--trm-focus-ring-width) solid var(--trm-theme-focus-ring, var(--trm-focus-ring-color));
+  }
+}

@@ -1,0 +1,144 @@
+---
+{
+  "title": "Tables",
+  "description": "Present tabular data with semantic headers, captions, optional accents, and responsive scrolling.",
+  "group": "Content",
+  "lead": "Present tabular data with semantic headers, captions, optional accents, and responsive scrolling.",
+  "order": 3
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { contentExamples as samples } from '../../../data/content-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Overview</h2>
+
+<p>Use a table for related row/column data, not page layout. Add a useful caption and scope attributes on headers. The table class opts into the component styling.</p>
+
+<div class="docs-example"><Html source={samples["content/tables#0"].example} /></div>
+
+<Code sample={samples["content/tables#0"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Variants</h2>
+
+<p>Use theme-primary, theme-success or another semantic helper on table to supply contextual foreground, subtle background and border roles. There are no table-primary/table-success compatibility classes. The live example uses theme-inverse. Verify the actual role pair in both color modes.</p>
+
+<div class="docs-example"><Html source={samples["content/tables#1"].example} /></div>
+
+<Code sample={samples["content/tables#1"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Striped rows and columns</h2>
+
+<p>Use table-striped for alternating body rows or table-striped-columns for alternating columns. Striping is a visual reading aid, not a substitute for meaningful headers.</p>
+
+<div class="docs-example"><Html source={samples["content/tables#2"].example} /></div>
+
+<Code sample={samples["content/tables#2"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Hoverable and active rows</h2>
+
+<p>{"Striping sets type-layer properties; active and hover use higher-priority state-layer properties read by each cell's inset shadow. Row active state inherits into its cells until a cell declares its own state. Hover is generated after active and writes state on each hovered row's cells, overriding an inherited active state or a cell's active class. This pinned behavior is not silently changed to the previous local active-always-wins contract. Review keyboard interaction separately; CSS classes do not implement row selection."}</p>
+
+<div class="docs-example"><Html source={samples["content/tables#3"].example} /></div>
+
+<Code sample={samples["content/tables#3"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Table borders</h2>
+
+<p>Use table-bordered for explicit cell borders or table-borderless to remove the default cell rules. Choose one border treatment rather than combining conflicting classes.</p>
+
+<div class="docs-example"><Html source={samples["content/tables#4"].example} /></div>
+
+<Code sample={samples["content/tables#4"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Small tables</h2>
+
+<p>table-sm reduces cell padding. Keep interactive targets usable if you add buttons or fields; small cells are not a reason to shrink controls below a comfortable target size.</p>
+
+<div class="docs-example"><Html source={samples["content/tables#5"].example} /></div>
+
+<Code sample={samples["content/tables#5"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">Group dividers and vertical alignment</h2>
+
+<p>table-group-divider emphasizes the boundary between row groups. align-middle is available for cell alignment. Ensure the table remains understandable when divider styling is absent.</p>
+
+<Code sample={samples["content/tables#6"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">Nesting</h2>
+
+<p>Cell rules use direct-child selectors to limit leakage into nested tables. A nested table must declare its own table class and have useful headers. Component custom properties can still inherit, so verify accents and state tokens in the nested region. For complex hierarchical data, separate related tables can be clearer.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">Footer and caption</h2>
+
+<p>caption-top moves the caption above the table. A tfoot contains summary rows, not unrelated page footer content.</p>
+
+<Code sample={samples["content/tables#8"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-9">
+<h2 id="section-9">Responsive tables</h2>
+
+<p>table-responsive always scrolls overflow and establishes an inline-size query container. md:table-responsive scrolls below the md viewport minimum. Name and focus genuinely overflowing regions for keyboard access. Responsive suffix aliases are not generated.</p>
+
+<div class="docs-example"><Html source={samples["content/tables#9"].example} /></div>
+
+<Code sample={samples["content/tables#9"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-10">
+<h2 id="section-10">Card-like and stacked tables</h2>
+
+<p>table-card clips and rounds a wrapper. A table-responsive ancestor establishes inline-size containment. md:table-stacked switches rows/cells to blocks below the 768px container boundary and uses data-cell labels. Preserve real table headers; pseudo-element labels alone are not an accessible table model. Review stacked-table semantics with assistive technology.</p>
+
+<div class="docs-example"><Html source={samples["content/tables#10"].example} /></div>
+
+<Code sample={samples["content/tables#10"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-11">
+<h2 id="section-11">CSS variables</h2>
+
+<p>Color-state/type and bg-state/type properties select state and striping layers. Cell backgrounds use the contextual subtle role and an inset box shadow. Adjust factors or the consumed state property instead of relying on a retired table-active-bg token.</p>
+
+<Code sample={samples["content/tables#11"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-12">
+<h2 id="section-12">Sass customization</h2>
+
+<p>Configure a component before another module loads it. This focused module does not emit root colors or Reboot; pair it with an appropriate base. Use the full framework entry when you do not need a custom composition.</p>
+
+<Code sample={samples["content/tables#12"].code[0]} standalone={true} />
+
+</section>

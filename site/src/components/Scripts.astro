@@ -1,0 +1,192 @@
+---
+import { documentationNavigation } from '../libs/navigation'
+const { searchPages } = documentationNavigation()
+const hasPalette = Astro.url.pathname === '/components/command-palette/'
+---
+  <span class="visually-hidden" id="docs-copy-status" role="status" aria-live="polite"></span>
+  <script is:inline type="module" src={hasPalette ? '/js/tremplin-command-palette.min.js' : '/js/tremplin-docs.min.js'}></script>
+  <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  <script define:vars={{ searchPages }}>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.PagefindUI) new window.PagefindUI({ element: '#search', showSubResults: true })
+      else {
+        const search = document.querySelector('#search')
+        const input = document.createElement('input')
+        input.type = 'search'
+        input.placeholder = 'Search documentation…'
+        input.setAttribute('aria-label', 'Search documentation')
+        input.setAttribute('aria-controls', 'docs-search-results')
+        const results = document.createElement('div')
+        results.id = 'docs-search-results'
+        results.className = 'docs-search-results'
+        results.hidden = true
+        const status = document.createElement('p')
+        status.className = 'visually-hidden'
+        status.setAttribute('role', 'status')
+        search?.append(input, results, status)
+        input.addEventListener('input', () => {
+          const query = input.value.trim().toLowerCase()
+          const matches = query ? searchPages.filter(page => `${page.title} ${page.description}`.toLowerCase().includes(query)).slice(0, 8) : []
+          results.replaceChildren()
+          results.hidden = !query
+          status.textContent = query ? `${matches.length} results` : ''
+          matches.forEach(page => {
+            const link = document.createElement('a')
+            link.href = page.href
+            link.textContent = page.title
+            const detail = document.createElement('small')
+            detail.textContent = page.description
+            link.append(detail)
+            results.append(link)
+          })
+          if (query && !matches.length) results.textContent = 'No results. Try “installation”, “button”, or “grid”.'
+        })
+        document.addEventListener('click', event => {
+          if (!search?.contains(event.target)) results.hidden = true
+        })
+        input.addEventListener('keydown', event => {
+          if (event.key === 'Escape') results.hidden = true
+          if (event.key === 'ArrowDown') { event.preventDefault(); results.querySelector('a')?.focus() }
+          if (event.key === 'Enter') results.querySelector('a')?.click()
+        })
+      }
+      // Pagefind's title/placeholder alone is not a persistent field label.
+      const nameSearchInput = () => {
+        const input = document.querySelector('#search input')
+        if (!input) return false
+        input.setAttribute('aria-label', 'Search documentation')
+        return true
+      }
+      if (!nameSearchInput()) {
+        const observer = new MutationObserver(() => { if (nameSearchInput()) observer.disconnect() })
+        const search = document.querySelector('#search')
+        if (search) observer.observe(search, { childList: true, subtree: true })
+      }
+      document.addEventListener('keydown', event => {
+        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+          event.preventDefault()
+          document.querySelector('#search input')?.focus()
+        }
+      })
+      document.querySelector('#docs-version')?.addEventListener('change', event => {
+        const target = event.currentTarget
+        if (target instanceof HTMLSelectElement) window.location.assign(target.value)
+      })
+      document.querySelector('#theme')?.addEventListener('click', () => {
+        const root = document.documentElement
+        root.dataset.trmTheme = root.dataset.trmTheme === 'dark' ? 'light' : 'dark'
+      })
+      const menuButton = document.querySelector('#docs-menu-toggle')
+      const sidebar = document.querySelector('#docs-sidebar')
+      menuButton?.addEventListener('click', () => {
+        const expanded = menuButton.getAttribute('aria-expanded') === 'true'
+        menuButton.setAttribute('aria-expanded', String(!expanded))
+        sidebar?.classList.toggle('is-open', !expanded)
+      })
+      document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && menuButton?.getAttribute('aria-expanded') === 'true') {
+          menuButton.setAttribute('aria-expanded', 'false')
+          sidebar?.classList.remove('is-open')
+          menuButton.focus()
+        }
+      })
+      const toc = document.querySelector('#docs-toc')
+      const tocNav = document.querySelector('#docs-toc-nav')
+      const headings = [...document.querySelectorAll('.docs-main h2, .docs-main h3')].filter(heading => !heading.closest('.card, .docs-example, .docs-code'))
+      const usedIds = new Set()
+      headings.forEach((heading, index) => {
+        if (!heading.id) {
+          const base = heading.textContent?.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || `section-${index + 1}`
+          let id = base
+          let suffix = 2
+          while (usedIds.has(id) || document.getElementById(id)) id = `${base}-${suffix++}`
+          heading.id = id
+        }
+        usedIds.add(heading.id)
+        const link = document.createElement('a')
+        link.href = `#${heading.id}`
+        link.textContent = heading.textContent
+        link.dataset.level = heading.tagName
+        tocNav?.append(link)
+      })
+      if (headings.length && toc instanceof HTMLElement) toc.hidden = false
+      tocNav?.querySelector('a')?.setAttribute('aria-current', 'true')
+      if ('IntersectionObserver' in window && headings.length) {
+        const links = [...tocNav?.querySelectorAll('a') ?? []]
+        const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+          if (!entry.isIntersecting) return
+          links.forEach(link => link.removeAttribute('aria-current'))
+          links.find(link => link.getAttribute('href') === `#${entry.target.id}`)?.setAttribute('aria-current', 'true')
+        }), { rootMargin: '-15% 0px -75% 0px' })
+        headings.forEach(heading => observer.observe(heading))
+      }
+      document.querySelectorAll('.docs-copy').forEach(button => {
+        const originalLabel = button.getAttribute('aria-label') ?? 'Copy'
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+        svg.setAttribute('viewBox', '0 0 16 16')
+        svg.setAttribute('aria-hidden', 'true')
+        svg.setAttribute('focusable', 'false')
+        const use = document.createElementNS('http://www.w3.org/2000/svg', 'use')
+        use.setAttribute('href', '/docs-icons.svg#copy')
+        svg.append(use)
+        button.replaceChildren(svg)
+        button.setAttribute('aria-label', originalLabel)
+        button.title = originalLabel
+        let resetTimer
+        button.addEventListener('click', async () => {
+          window.clearTimeout(resetTimer)
+          const status = document.querySelector('#docs-copy-status')
+          const code = button.parentElement?.querySelector('code')?.textContent ?? ''
+          try {
+            await navigator.clipboard.writeText(code)
+            button.dataset.copied = 'true'
+            button.setAttribute('aria-label', 'Copied')
+            button.title = 'Copied'
+            use.setAttribute('href', '/docs-icons.svg#check2')
+            if (status) status.textContent = 'Code copied to clipboard.'
+          } catch {
+            delete button.dataset.copied
+            use.setAttribute('href', '/docs-icons.svg#copy')
+            button.setAttribute('aria-label', 'Copy failed. Select the code and copy it manually.')
+            button.title = 'Copy failed. Select the code and copy it manually.'
+            if (status) status.textContent = 'Clipboard access is unavailable. Select the code and copy it manually.'
+          }
+          resetTimer = window.setTimeout(() => {
+            use.setAttribute('href', '/docs-icons.svg#copy')
+            button.setAttribute('aria-label', originalLabel)
+            button.title = originalLabel
+            delete button.dataset.copied
+            if (status) status.textContent = ''
+          }, 1500)
+        })
+      })
+      document.querySelectorAll('[data-package-tabs]').forEach(tabset => {
+        const tabs = [...tabset.querySelectorAll('[role="tab"]')]
+        const panels = [...tabset.querySelectorAll('[role="tabpanel"]')]
+        const activate = tab => {
+          tabs.forEach(item => {
+            item.setAttribute('aria-selected', String(item === tab))
+            item.tabIndex = item === tab ? 0 : -1
+          })
+          panels.forEach(panel => { panel.hidden = panel.id !== tab.getAttribute('aria-controls') })
+        }
+        tabs.forEach((tab, index) => {
+          tab.addEventListener('click', () => activate(tab))
+          tab.addEventListener('keydown', event => {
+            let target
+            if (event.key === 'ArrowRight') target = tabs[(index + 1) % tabs.length]
+            if (event.key === 'ArrowLeft') target = tabs[(index - 1 + tabs.length) % tabs.length]
+            if (event.key === 'Home') target = tabs[0]
+            if (event.key === 'End') target = tabs.at(-1)
+            if (!target) return
+            event.preventDefault()
+            activate(target)
+            target.focus()
+          })
+        })
+      })
+      const framework = window.TremplinFramework
+      document.querySelectorAll('[data-trm-toggle="tooltip"]').forEach(element => framework?.Tooltip?.getOrCreateInstance(element))
+      document.querySelectorAll('[data-trm-toggle="popover"]').forEach(element => framework?.Popover?.getOrCreateInstance(element))
+    })
+  </script>

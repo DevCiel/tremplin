@@ -1,0 +1,105 @@
+---
+{
+  "title": "Reboot",
+  "description": "Understand the element-level defaults that Tremplin applies before component classes.",
+  "group": "Content",
+  "lead": "Understand the element-level defaults that Tremplin applies before component classes.",
+  "order": 0
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { contentExamples as samples } from '../../../data/content-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Approach</h2>
+
+<p>Reboot supplies a common starting point for document elements. It is global CSS, not a component you opt into with a class. Review an existing application’s reset before adding it, and avoid loading the focused reboot build alongside the full framework unnecessarily.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Root CSS variables</h2>
+
+<p>Body consumes body-font-family, body-font-size, body-font-weight, body-line-height, fg-body and bg-body. The default sans stack starts with -apple-system/BlinkMacSystemFont and Segoe UI; it deliberately omits system-ui. No web font is downloaded by the framework. The documentation shell can style its own typography independently.</p>
+
+<Code sample={samples["content/reboot#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Page defaults</h2>
+
+<div class="table-responsive"><table class="table">
+<thead><tr><th scope="col">Rule</th><th scope="col">Pinned behavior</th></tr></thead>
+<tbody>
+<tr><td><span>Box sizing</span></td><td><span>border-box on elements and pseudo-elements</span></td></tr>
+<tr><td><span>Body</span></td><td><span>No margin; 1rem text and 1.5 line-height via runtime tokens</span></td></tr>
+<tr><td><span>Images</span></td><td><span>Inline by default; responsive dimensions are opt-in via img-fluid</span></td></tr>
+<tr><td><span>Controls</span></td><td><span>Normalized font and native semantics; component classes add styling</span></td></tr>
+<tr><td><span>Iframes</span></td><td><span>color-scheme: light dark and no border</span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Headings and paragraphs</h2>
+
+<p>All h1 through h6 and matching h1–h6 classes use named font-size tokens, configured heading margins and a 1.2 line-height. Paragraphs use paragraph-margin-bottom. Choose heading levels semantically.</p>
+
+<div class="docs-example"><Html source={samples["content/reboot#3"].example} /></div>
+
+<Code sample={samples["content/reboot#3"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Links and horizontal rules</h2>
+
+<p>Links use a runtime color and underline offset. A horizontal rule draws a themed block-start border. Keep link purpose clear without relying on color alone.</p>
+
+<p>This live link explicitly uses primary-fg-emphasis as application CSS for normal-text contrast; it does not alter the pinned link default.</p>
+
+<div class="docs-example"><Html source={samples["content/reboot#4"].example} /></div>
+
+<Code sample={samples["content/reboot#4"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Code, user input, and sample output</h2>
+
+<p>code, pre, kbd, and samp use the monospace stack. Preformatted blocks scroll when necessary. Escape user-provided source text before putting it into HTML; CSS does not make unsafe markup safe.</p>
+
+<div class="docs-example"><Html source={samples["content/reboot#5"].example} /></div>
+
+<Code sample={samples["content/reboot#5"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">Forms and miscellaneous elements</h2>
+
+<p>The local reset only normalizes part of native form and document styling. Use the dedicated <a href="/forms/overview/">{"Forms guide"}</a> for controls, visible labels, validation, and keyboard behavior. Details/summary, address, embeds, and other native elements must still be tested across supported browsers.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">Hidden content and reduced motion</h2>
+
+<p>Reboot enforces hidden with display:none !important. Smooth scrolling is opt-in and only enabled when reduced motion is not requested. Transition mixins and individual components handle their own preference rules; Reboot does not globally shorten every application animation.</p>
+
+<p>Iframes receive color-scheme: light dark; third-party embed contents still require independent review.</p>
+
+<Code sample={samples["content/reboot#7"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">Sass</h2>
+
+<Code sample={samples["content/reboot#8"].code[0]} standalone={true} />
+
+</section>

@@ -1,0 +1,147 @@
+---
+{
+  "component": "nav-overflow",
+  "title": "Nav Overflow",
+  "description": "Nav Overflow component documentation for Tremplin.",
+  "lead": "Collapse nested navigation items into the Menu plugin as available width changes.",
+  "variants": [
+    {
+      "title": "Priority navigation",
+      "description": "A direct nav list with nav-item children is required. Kept destinations remain outside the generated More menu."
+    },
+    {
+      "title": "Progressive container sizing",
+      "description": "With collapseBelow=0, the wrapper content box and item widths determine what overflows. The observer watches the wrapper, not the nav it changes."
+    },
+    {
+      "title": "Tabs and underline presentation",
+      "description": "The nav-tabs and nav-underline classes style ordinary links here. They do not initialize Tab panels or install tablist semantics."
+    },
+    {
+      "title": "Nav styles and disabled items",
+      "description": "Pills, tabs and underline are navigation presentation, not automatic Tab panels. A disabled native button is preserved and skipped by Menu navigation."
+    },
+    {
+      "title": "Icon-only and custom label",
+      "description": "The generated icon-only toggle has the accessible name More. Customize text and icon order through real options."
+    },
+    {
+      "title": "Authored toggle and icon",
+      "description": "A named authored Menu toggle can replace the generated toggle. For a generated toggle, a child overflow-icon source is sanitized, consumed and removed."
+    },
+    {
+      "title": "Existing Menu becomes a submenu",
+      "description": "The original Menu node is relocated, not cloned. Its input value and descendants survive overflow/restoration. The associated link becomes a submenu trigger."
+    },
+    {
+      "title": "Collapse threshold and minimum visibility",
+      "description": "collapseBelow compares wrapper width against a pixel value or root breakpoint token. Keep items remain visible. threshold may force more original items to remain and is not a guarantee that they fit."
+    },
+    {
+      "title": "Inside a navbar",
+      "description": "The navbar allocates free space; NavOverflow measures its own wrapper. This is a Priority+ menu, not a responsive Drawer."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Menu supplies keyboard navigation and logical placement. Source ordering stays authored; resizing may rebuild and close an open Menu."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Arrow Down / Arrow Up on More",
+      "behavior": "Menu opens and focuses the first/last enabled item; there is no typeahead promise."
+    },
+    {
+      "keys": "Escape",
+      "behavior": "Menu closes and returns focus to its visible toggle."
+    },
+    {
+      "keys": "Tab / Enter",
+      "behavior": "Native links and controls retain their normal activation behavior. Resize is not a focus-management policy."
+    }
+  ],
+  "guidelines": [
+    "Use a sized wrapper containing a direct nav > nav-item > nav-link structure; initialize the wrapper, not the list.",
+    "Initialization runs on document ready or when loaded after parsing. Without initialization, the wrapper clips/hides the direct nav to avoid a flash. Provide your own no-script fallback when needed.",
+    "Keep items are never candidates for overflow. collapseBelow compares available wrapper width, not the viewport; named breakpoint lookup resolves once at initialization.",
+    "Overflow clones normal links and hides originals. Existing Menu nodes relocate into a submenu and are restored, preserving node identity and live input state.",
+    "A11Y-001 remaps cloned descendant IDs and local ARIA/HTML/SVG references while preserving originals; arbitrary CSS selectors and script-held references are not rewritten.",
+    "The More toggle is generated as a named native button. Custom icon input is sanitized under SEC-001; it is not arbitrary trusted HTML insertion.",
+    "update() recalculates synchronously and then dispatches update. ResizeObserver recalculates directly: it can emit overflow but does not dispatch update. resize is an internal fallback listener.",
+    "overflow is a notification with overflowCount and visibleCount, not a cancelable before gate. Restoration/recalculation can close open menus; arrange application focus deliberately.",
+    "dispose() restores original items/menus, removes the toggle item and disconnects observation. It leaves wrapper initialization classes, so do not assume it is a no-script fallback.",
+    "There is no independent overflow token map. Configure inherited Nav/Menu tokens; Toggler does not replace this component."
+  ],
+  "events": {
+    "overflow.trm.navoverflow": "On the wrapper after overflowing candidates; overflowCount and visibleCount describe that calculation. Notification, not a cancelable before gate.",
+    "resize.trm.navoverflow": "Internal namespaced fallback window listener, not a dispatched component notification.",
+    "update.trm.navoverflow": "On the wrapper after an explicit synchronous update() calculation. ResizeObserver does not dispatch update."
+  }
+}
+---
+
+import { componentApi } from '../../../data/component-api'
+import ApiOptions from '../../../components/component/ApiOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("nav-overflow")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="nav-overflow" />
+
+{componentDetail("nav-overflow").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="nav-overflow" />
+</>}
+
+{componentDetail("nav-overflow").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("nav-overflow").sass} standalone={true} />
+</>}
+
+{componentDetail("nav-overflow").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="nav-overflow" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="nav-overflow" />
+
+{documentedComponents.find(component => component.name === "nav-overflow").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="nav-overflow" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("nav-overflow").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("nav-overflow").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<ApiOptions name="nav-overflow" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="nav-overflow" />
+
+<h3 id="events">Events</h3>
+<p>Runtime events use <code>{".trm.navoverflow"}</code>. The frozen scanner derives a kebab-case suffix from the filename; this guide displays actual runtime names without changing that baseline. Only <code>{"overflow"}</code> and explicit <code>{"update()"}</code> dispatch notifications; <code>{"resize"}</code> is an internal fallback listener.</p>
+<ApiEvents name="nav-overflow" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="nav-overflow" />
+<p class="mt-4"><a href="/api/nav-overflow/">View the generated {componentApi("nav-overflow").definition.className}{" API reference →"}</a></p>

@@ -1,0 +1,19 @@
+{
+  "upstreamCommit": "9062790fdb2379593a2973416dc5a3bfb203e4e3",
+  "reference": "https://github.com/twbs/bootstrap/blob/9062790fdb2379593a2973416dc5a3bfb203e4e3/scss/_config.scss",
+  "breakpoints": {
+    "xs": "0",
+    "sm": "576px",
+    "md": "768px",
+    "lg": "1024px",
+    "xl": "1280px",
+    "2xl": "1536px"
+  },
+  "containerMaxWidths": {
+    "sm": "540px",
+    "md": "720px",
+    "lg": "960px",
+    "xl": "1200px",
+    "2xl": "1440px"
+  }
+}

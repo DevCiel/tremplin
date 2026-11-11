@@ -1,0 +1,80 @@
+---
+{
+  "component": "badge",
+  "title": "Badge",
+  "description": "Badge component documentation for Tremplin.",
+  "lead": "Add a compact count, label, or status indicator to nearby content.",
+  "variants": [
+    {
+      "title": "Labels and counts",
+      "description": "Provide readable context for a count; a badge remains static content even inside a button."
+    },
+    {
+      "title": "Theme variants",
+      "description": "The base badge is solid; badge-subtle and badge-outline use semantic foreground, background and border roles."
+    },
+    {
+      "title": "Larger badge",
+      "description": "badge-lg changes padding. Font sizing stays relative to its surrounding text, with the real minimum size defined by the token map."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Counts retain visible context, and theme roles adapt without directional CSS aliases."
+    }
+  ],
+  "keyboard": [],
+  "guidelines": [
+    "A badge supplies static context, not an independent toggle or removal API.",
+    "Give numeric counts visible or visually hidden context and avoid redundant announcements.",
+    "Do not communicate status through color alone; use understandable labels.",
+    "The theme and structural variant must be composed deliberately. Verify contrast when overriding tokens or adding utilities."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import Contrast from '../../../components/component/Contrast.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Contrast />
+
+<Example markup={componentExample("badge")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="badge" />
+
+{componentDetail("badge").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="badge" />
+</>}
+
+{componentDetail("badge").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("badge").sass} standalone={true} />
+</>}
+
+{componentDetail("badge").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="badge" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="badge" />
+
+{documentedComponents.find(component => component.name === "badge").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="badge" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>This is a CSS component and does not require Tremplin JavaScript.</p>

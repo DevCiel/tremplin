@@ -1,0 +1,76 @@
+---
+{
+  "title": "Z-index",
+  "description": "Use z-index utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use z-index utilities from the configured Tremplin utility map.",
+  "order": 13,
+  "utility": {
+    "category": "Layout",
+    "classes": [
+      "z-n1",
+      "z-0",
+      "z-1",
+      "z-2",
+      "z-3",
+      "z-menu",
+      "z-sticky",
+      "z-fixed",
+      "z-drawer",
+      "z-dialog",
+      "z-popover",
+      "z-tooltip",
+      "z-toast"
+    ],
+    "notes": "Default levels are n1=-1, 0–3, menu=1000, sticky=1010, fixed=1020, drawer=1030, dialog=1040, popover=1050, tooltip=1060 and toast=1070. No dropdown/modal/offcanvas aliases are generated. Ordinary z-index does not escape an ancestor stacking context or outrank the native top layer.",
+    "responsive": false
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/z-index"][0].example} /></div>
+
+<Code sample={samples["utilities/z-index"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"Default levels are n1=-1, 0–3, menu=1000, sticky=1010, fixed=1020, drawer=1030, dialog=1040, popover=1050, tooltip=1060 and toast=1070. No dropdown/modal/offcanvas aliases are generated. Ordinary z-index does not escape an ancestor stacking context or outrank the native top layer."} /></p>
+
+<Code sample={samples["utilities/z-index"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Configuration and limits"}</h2>
+
+<p><Html source={"Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Replace the layer map"}</h2>
+
+<p><Html source={"This map is replaced, not automatically extended. Keep every key required by the application and its component layer tokens."} /></p>
+
+<Code sample={samples["utilities/z-index"][3].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

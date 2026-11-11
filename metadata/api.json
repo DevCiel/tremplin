@@ -1,0 +1,1202 @@
+{
+  "$schema": "./api.schema.json",
+  "framework": "Tremplin",
+  "version": "0.8.0-beta.0",
+  "commonMethods": [
+    "getInstance(element)",
+    "getOrCreateInstance(element, options?)",
+    "dispose()"
+  ],
+  "components": [
+    {
+      "name": "alert",
+      "className": "Alert",
+      "options": [],
+      "methods": [
+        "close(): Promise<void>",
+        "dispose(): void"
+      ],
+      "events": [
+        "close.trm.alert",
+        "closed.trm.alert"
+      ],
+      "dataAttributes": []
+    },
+    {
+      "name": "button",
+      "className": "Button",
+      "options": [],
+      "methods": [
+        "toggle(): void",
+        "dispose(): void"
+      ],
+      "events": [],
+      "dataAttributes": [
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"button\""
+      ]
+    },
+    {
+      "name": "carousel",
+      "className": "Carousel",
+      "options": [
+        {
+          "name": "autoplay",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "ends",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "interval",
+          "type": "number | undefined",
+          "required": false
+        },
+        {
+          "name": "keyboard",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "pause",
+          "type": "string | boolean | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "next(): void",
+        "nextWhenVisible(): void",
+        "prev(): void",
+        "pause(): void",
+        "cycle(): void",
+        "to(index: number | string): void",
+        "dispose(): void",
+        "_pauseFromInteraction(): void",
+        "_togglePlayPause(): void"
+      ],
+      "events": [
+        "keydown.trm.carousel",
+        "mouseenter.trm.carousel",
+        "mouseleave.trm.carousel",
+        "pointerdown.trm.carousel",
+        "slid.trm.carousel",
+        "slide.trm.carousel"
+      ],
+      "dataAttributes": [
+        "data-trm-autoplay",
+        "data-trm-ends",
+        "data-trm-interval",
+        "data-trm-keyboard",
+        "data-trm-pause",
+        "data-trm-pause-label",
+        "data-trm-play-label",
+        "data-trm-slide",
+        "data-trm-slide-to"
+      ]
+    },
+    {
+      "name": "chips",
+      "className": "Chips",
+      "options": [
+        {
+          "name": "separator",
+          "type": "string | null | undefined",
+          "required": false
+        },
+        {
+          "name": "allowDuplicates",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "maxChips",
+          "type": "number | null | undefined",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "dismissible",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "dismissIcon",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "createOnBlur",
+          "type": "boolean | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "add(value: string): HTMLElement | null",
+        "remove(chipOrValue: string | HTMLElement): boolean",
+        "removeSelected(): void",
+        "getValues(): string[]",
+        "getSelectedValues(): string[]",
+        "clear(): void",
+        "clearSelection(): void",
+        "selectChip(chip: HTMLElement, options?: { addToSelection?: boolean; rangeSelect?: boolean; }): void",
+        "focus(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "add.trm.chips",
+        "change.trm.chips",
+        "remove.trm.chips",
+        "select.trm.chips"
+      ],
+      "dataAttributes": [
+        "data-trm-allow-duplicates",
+        "data-trm-chip-value",
+        "data-trm-chips",
+        "data-trm-create-on-blur",
+        "data-trm-dismiss-icon",
+        "data-trm-dismissible",
+        "data-trm-max-chips",
+        "data-trm-placeholder",
+        "data-trm-separator"
+      ]
+    },
+    {
+      "name": "collapse",
+      "className": "Collapse",
+      "options": [
+        {
+          "name": "parent",
+          "type": "string | Element | null | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "toggle(): Promise<void>",
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "dispose(): void"
+      ],
+      "events": [
+        "hidden.trm.collapse",
+        "hide.trm.collapse",
+        "show.trm.collapse",
+        "shown.trm.collapse"
+      ],
+      "dataAttributes": [
+        "data-trm-parent",
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"collapse\""
+      ]
+    },
+    {
+      "name": "combobox",
+      "className": "Combobox",
+      "options": [
+        {
+          "name": "boundary",
+          "type": "string | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "multiple",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string | null | undefined",
+          "required": false
+        },
+        {
+          "name": "offset",
+          "type": "FloatingOffsetOption | undefined",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "search",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "searchNormalize",
+          "type": "boolean | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "toggle(): Promise<void>",
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "dispose(): void"
+      ],
+      "events": [
+        "change.trm.combobox",
+        "hidden.trm.combobox",
+        "hide.trm.combobox",
+        "show.trm.combobox",
+        "shown.trm.combobox"
+      ],
+      "dataAttributes": [
+        "data-trm-boundary",
+        "data-trm-multiple",
+        "data-trm-name",
+        "data-trm-offset",
+        "data-trm-placeholder",
+        "data-trm-placement",
+        "data-trm-search",
+        "data-trm-search-normalize",
+        "data-trm-toggle",
+        "data-trm-value"
+      ]
+    },
+    {
+      "name": "datepicker",
+      "className": "Datepicker",
+      "options": [
+        {
+          "name": "datepickerTheme",
+          "type": "string | null | undefined",
+          "required": false
+        },
+        {
+          "name": "dateMin",
+          "type": "DateAny | null | undefined",
+          "required": false
+        },
+        {
+          "name": "dateMax",
+          "type": "DateAny | null | undefined",
+          "required": false
+        },
+        {
+          "name": "dateFormat",
+          "type": "Intl.DateTimeFormatOptions | ((date: Date, locale: string | undefined) => string) | null | undefined",
+          "required": false
+        },
+        {
+          "name": "displayElement",
+          "type": "string | boolean | HTMLElement | null | undefined",
+          "required": false
+        },
+        {
+          "name": "displayMonthsCount",
+          "type": "MonthsCount | undefined",
+          "required": false
+        },
+        {
+          "name": "firstWeekday",
+          "type": "WeekDayID | undefined",
+          "required": false
+        },
+        {
+          "name": "inline",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "locale",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "positionElement",
+          "type": "string | HTMLElement | null | undefined",
+          "required": false
+        },
+        {
+          "name": "selectedDates",
+          "type": "string[] | undefined",
+          "required": false
+        },
+        {
+          "name": "selectionMode",
+          "type": "DateMode | undefined",
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "PositionToInput | undefined",
+          "required": false
+        },
+        {
+          "name": "vcpOptions",
+          "type": "Options | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "toggle(): Promise<void>",
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "dispose(): void",
+        "getSelectedDates(): string[]",
+        "setSelectedDates(dates: DatesArr): void"
+      ],
+      "events": [
+        "change.trm.datepicker",
+        "click.trm.datepicker",
+        "focusin.trm.datepicker",
+        "hidden.trm.datepicker",
+        "hide.trm.datepicker",
+        "pointerdown.trm.datepicker",
+        "show.trm.datepicker",
+        "shown.trm.datepicker"
+      ],
+      "dataAttributes": [
+        "data-trm-date-format",
+        "data-trm-date-max",
+        "data-trm-date-min",
+        "data-trm-datepicker-display",
+        "data-trm-datepicker-theme",
+        "data-trm-display-element",
+        "data-trm-display-months-count",
+        "data-trm-first-weekday",
+        "data-trm-inline",
+        "data-trm-locale",
+        "data-trm-placement",
+        "data-trm-position-element",
+        "data-trm-selected-dates",
+        "data-trm-selection-mode",
+        "data-trm-theme",
+        "data-trm-toggle",
+        "data-trm-toggle=\"datepicker\"",
+        "data-trm-vcp-options"
+      ]
+    },
+    {
+      "name": "dialog",
+      "className": "Dialog",
+      "options": [
+        {
+          "name": "backdrop",
+          "type": "string | boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "keyboard",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "modal",
+          "type": "boolean | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "handleUpdate(): void",
+        "toggle(relatedTarget?: HTMLElement): Promise<void>",
+        "show(relatedTarget?: HTMLElement): Promise<void>",
+        "hide(): Promise<void>",
+        "dispose(): void"
+      ],
+      "events": [
+        "cancel.trm.dialog",
+        "hidden.trm.dialog",
+        "hide.trm.dialog",
+        "hidePrevented.trm.dialog",
+        "show.trm.dialog",
+        "shown.trm.dialog"
+      ],
+      "dataAttributes": [
+        "data-trm-backdrop",
+        "data-trm-keyboard",
+        "data-trm-modal",
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"dialog\""
+      ]
+    },
+    {
+      "name": "drawer",
+      "className": "Drawer",
+      "options": [
+        {
+          "name": "backdrop",
+          "type": "string | boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "keyboard",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "scroll",
+          "type": "boolean | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "dispose(): void",
+        "toggle(relatedTarget?: HTMLElement): Promise<void>",
+        "show(relatedTarget?: HTMLElement): Promise<void>",
+        "hide(): Promise<void>"
+      ],
+      "events": [
+        "hidden.trm.drawer",
+        "hide.trm.drawer",
+        "hidePrevented.trm.drawer",
+        "resize.trm.drawer",
+        "show.trm.drawer",
+        "shown.trm.drawer"
+      ],
+      "dataAttributes": [
+        "data-trm-backdrop",
+        "data-trm-keyboard",
+        "data-trm-scroll",
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"drawer\""
+      ]
+    },
+    {
+      "name": "command-palette",
+      "className": "CommandPalette",
+      "options": [
+        {
+          "name": "shortcut",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "closeOnSelect",
+          "type": "boolean | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "toggle(): Promise<void>",
+        "dispose(): void"
+      ],
+      "events": [
+        "filter.trm.command-palette",
+        "hidden.trm.command-palette",
+        "hide.trm.command-palette",
+        "select.trm.command-palette",
+        "selected.trm.command-palette",
+        "show.trm.command-palette",
+        "shown.trm.command-palette"
+      ],
+      "dataAttributes": [
+        "data-trm-close-on-select",
+        "data-trm-command-palette",
+        "data-trm-dismiss",
+        "data-trm-shortcut",
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"command-palette\""
+      ]
+    },
+    {
+      "name": "menu",
+      "className": "Menu",
+      "options": [
+        {
+          "name": "autoClose",
+          "type": "boolean | \"inside\" | \"outside\" | undefined",
+          "required": false
+        },
+        {
+          "name": "boundary",
+          "type": "string | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "container",
+          "type": "string | boolean | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "display",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "offset",
+          "type": "FloatingOffsetOption | undefined",
+          "required": false
+        },
+        {
+          "name": "floatingConfig",
+          "type": "FloatingConfigOption | undefined",
+          "required": false
+        },
+        {
+          "name": "menu",
+          "type": "HTMLElement | null | undefined",
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "reference",
+          "type": "string | Element | Record<string, any> | undefined",
+          "required": false
+        },
+        {
+          "name": "strategy",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "submenuTrigger",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "submenuDelay",
+          "type": "number | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "toggle(): Promise<void>",
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "dispose(): void",
+        "update(): void"
+      ],
+      "events": [
+        "hidden.trm.menu",
+        "hide.trm.menu",
+        "show.trm.menu",
+        "shown.trm.menu"
+      ],
+      "dataAttributes": [
+        "data-trm-auto-close",
+        "data-trm-boundary",
+        "data-trm-container",
+        "data-trm-display",
+        "data-trm-floating-config",
+        "data-trm-menu",
+        "data-trm-offset",
+        "data-trm-placement",
+        "data-trm-reference",
+        "data-trm-strategy",
+        "data-trm-submenu-delay",
+        "data-trm-submenu-trigger",
+        "data-trm-toggle",
+        "data-trm-toggle=\"menu\""
+      ]
+    },
+    {
+      "name": "nav-overflow",
+      "className": "NavOverflow",
+      "options": [
+        {
+          "name": "collapseBelow",
+          "type": "string | number | undefined",
+          "required": false
+        },
+        {
+          "name": "iconPlacement",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "menuPlacement",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "menuStrategy",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "moreText",
+          "type": "string | false | undefined",
+          "required": false
+        },
+        {
+          "name": "moreIcon",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "threshold",
+          "type": "number | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "update(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "overflow.trm.nav-overflow",
+        "resize.trm.nav-overflow",
+        "update.trm.nav-overflow"
+      ],
+      "dataAttributes": [
+        "data-trm-collapse-below",
+        "data-trm-icon-placement",
+        "data-trm-menu-placement",
+        "data-trm-menu-strategy",
+        "data-trm-more-icon",
+        "data-trm-more-text",
+        "data-trm-nav-order",
+        "data-trm-nav-overflow",
+        "data-trm-overflow-icon",
+        "data-trm-placement",
+        "data-trm-strategy",
+        "data-trm-theme",
+        "data-trm-threshold",
+        "data-trm-toggle"
+      ]
+    },
+    {
+      "name": "otp-input",
+      "className": "OtpInput",
+      "options": [
+        {
+          "name": "groups",
+          "type": "number[] | null | undefined",
+          "required": false
+        },
+        {
+          "name": "length",
+          "type": "number | null | undefined",
+          "required": false
+        },
+        {
+          "name": "mask",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "separator",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "string | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "getValue(): string",
+        "setValue(value: string | number): void",
+        "clear(): void",
+        "focus(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "complete.trm.otp-input",
+        "input.trm.otp-input"
+      ],
+      "dataAttributes": [
+        "data-trm-groups",
+        "data-trm-length",
+        "data-trm-mask",
+        "data-trm-otp",
+        "data-trm-separator",
+        "data-trm-type"
+      ]
+    },
+    {
+      "name": "popover",
+      "className": "Popover",
+      "options": [
+        {
+          "name": "allowList",
+          "type": "import(\"./util/sanitizer.js\").SanitizerAllowList | undefined",
+          "required": false
+        },
+        {
+          "name": "animation",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "boundary",
+          "type": "string | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "container",
+          "type": "string | boolean | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "customClass",
+          "type": "string | ((...args: any[]) => string) | undefined",
+          "required": false
+        },
+        {
+          "name": "delay",
+          "type": "number | { show: number; hide: number; } | undefined",
+          "required": false
+        },
+        {
+          "name": "fallbackPlacements",
+          "type": "string[] | undefined",
+          "required": false
+        },
+        {
+          "name": "html",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "offset",
+          "type": "import(\"./util/floating-ui.js\").FloatingOffsetOption | undefined",
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "string | ((this: Tooltip, tip: HTMLElement, trigger: HTMLElement) => string) | undefined",
+          "required": false
+        },
+        {
+          "name": "floatingConfig",
+          "type": "import(\"./util/floating-ui.js\").FloatingConfigOption | undefined",
+          "required": false
+        },
+        {
+          "name": "sanitize",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "sanitizeFn",
+          "type": "((unsafeHtml: string) => string) | null | undefined",
+          "required": false
+        },
+        {
+          "name": "selector",
+          "type": "string | boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "template",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "title",
+          "type": "string | Element | ((...args: any[]) => string | Element) | undefined",
+          "required": false
+        },
+        {
+          "name": "trigger",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "content",
+          "type": "string | Element | ((...args: any[]) => string | Element) | null | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "enable(): void",
+        "disable(): void",
+        "toggleEnabled(): void",
+        "toggle(): Promise<void>",
+        "dispose(): void",
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "update(): void",
+        "setContent(content: Record<string, TemplateContentEntry>): void"
+      ],
+      "events": [
+        "hidden.trm.popover",
+        "hide.trm.popover",
+        "inserted.trm.popover",
+        "show.trm.popover",
+        "shown.trm.popover"
+      ],
+      "dataAttributes": [
+        "data-trm-allow-list",
+        "data-trm-animation",
+        "data-trm-boundary",
+        "data-trm-container",
+        "data-trm-content",
+        "data-trm-custom-class",
+        "data-trm-delay",
+        "data-trm-fallback-placements",
+        "data-trm-floating-config",
+        "data-trm-html",
+        "data-trm-offset",
+        "data-trm-placement",
+        "data-trm-sanitize",
+        "data-trm-sanitize-fn",
+        "data-trm-selector",
+        "data-trm-template",
+        "data-trm-title",
+        "data-trm-toggle",
+        "data-trm-toggle=\"popover\"",
+        "data-trm-trigger"
+      ]
+    },
+    {
+      "name": "range",
+      "className": "Range",
+      "options": [
+        {
+          "name": "bubble",
+          "type": "boolean | null | undefined",
+          "required": false
+        },
+        {
+          "name": "formatter",
+          "type": "((value: number) => string) | null | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "update(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "changed.trm.range"
+      ],
+      "dataAttributes": [
+        "data-trm-bubble",
+        "data-trm-formatter"
+      ]
+    },
+    {
+      "name": "scrollspy",
+      "className": "ScrollSpy",
+      "options": [
+        {
+          "name": "rootMargin",
+          "type": "string | null | undefined",
+          "required": false
+        },
+        {
+          "name": "smoothScroll",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "target",
+          "type": "string | Element | null | undefined",
+          "required": false
+        },
+        {
+          "name": "threshold",
+          "type": "string | number[] | undefined",
+          "required": false
+        },
+        {
+          "name": "topMargin",
+          "type": "string | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "refresh(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "activate.trm.scrollspy",
+        "click.trm.scrollspy",
+        "resize.trm.scrollspy",
+        "scroll.trm.scrollspy",
+        "scrollend.trm.scrollspy"
+      ],
+      "dataAttributes": [
+        "data-trm-root-margin",
+        "data-trm-smooth-scroll",
+        "data-trm-spy",
+        "data-trm-target",
+        "data-trm-threshold",
+        "data-trm-toggle",
+        "data-trm-top-margin"
+      ]
+    },
+    {
+      "name": "strength",
+      "className": "Strength",
+      "options": [
+        {
+          "name": "input",
+          "type": "string | HTMLInputElement | null | undefined",
+          "required": false
+        },
+        {
+          "name": "minLength",
+          "type": "number | undefined",
+          "required": false
+        },
+        {
+          "name": "messages",
+          "type": "Record<string, string> | undefined",
+          "required": false
+        },
+        {
+          "name": "weights",
+          "type": "Record<string, number> | undefined",
+          "required": false
+        },
+        {
+          "name": "thresholds",
+          "type": "number[] | undefined",
+          "required": false
+        },
+        {
+          "name": "scorer",
+          "type": "((password: string) => number) | null | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "getStrength(): string | null",
+        "evaluate(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "strengthChange.trm.strength"
+      ],
+      "dataAttributes": [
+        "data-trm-input",
+        "data-trm-messages",
+        "data-trm-min-length",
+        "data-trm-scorer",
+        "data-trm-strength",
+        "data-trm-thresholds",
+        "data-trm-weights"
+      ]
+    },
+    {
+      "name": "tab",
+      "className": "Tab",
+      "options": [],
+      "methods": [
+        "show(): Promise<void>",
+        "dispose(): void"
+      ],
+      "events": [
+        "click.trm.tab",
+        "hidden.trm.tab",
+        "hide.trm.tab",
+        "keydown.trm.tab",
+        "load.trm.tab",
+        "show.trm.tab",
+        "shown.trm.tab"
+      ],
+      "dataAttributes": [
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"tab\""
+      ]
+    },
+    {
+      "name": "toast",
+      "className": "Toast",
+      "options": [
+        {
+          "name": "autohide",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "delay",
+          "type": "number | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "dispose(): void",
+        "isShown(): boolean"
+      ],
+      "events": [
+        "focusin.trm.toast",
+        "focusout.trm.toast",
+        "hidden.trm.toast",
+        "hide.trm.toast",
+        "mouseout.trm.toast",
+        "mouseover.trm.toast",
+        "show.trm.toast",
+        "shown.trm.toast"
+      ],
+      "dataAttributes": [
+        "data-trm-autohide",
+        "data-trm-delay",
+        "data-trm-target",
+        "data-trm-toggle=\"toast\""
+      ]
+    },
+    {
+      "name": "toggler",
+      "className": "Toggler",
+      "options": [],
+      "methods": [
+        "toggle(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "toggle.trm.toggler",
+        "toggled.trm.toggler"
+      ],
+      "dataAttributes": [
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"toggler\"",
+        "data-trm-value"
+      ]
+    },
+    {
+      "name": "tooltip",
+      "className": "Tooltip",
+      "options": [
+        {
+          "name": "allowList",
+          "type": "SanitizerAllowList | undefined",
+          "required": false
+        },
+        {
+          "name": "animation",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "boundary",
+          "type": "string | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "container",
+          "type": "string | boolean | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "customClass",
+          "type": "string | ((...args: any[]) => string) | undefined",
+          "required": false
+        },
+        {
+          "name": "delay",
+          "type": "number | { show: number; hide: number; } | undefined",
+          "required": false
+        },
+        {
+          "name": "fallbackPlacements",
+          "type": "string[] | undefined",
+          "required": false
+        },
+        {
+          "name": "html",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "offset",
+          "type": "FloatingOffsetOption | undefined",
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "string | ((this: Tooltip, tip: HTMLElement, trigger: HTMLElement) => string) | undefined",
+          "required": false
+        },
+        {
+          "name": "floatingConfig",
+          "type": "FloatingConfigOption | undefined",
+          "required": false
+        },
+        {
+          "name": "sanitize",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "sanitizeFn",
+          "type": "((unsafeHtml: string) => string) | null | undefined",
+          "required": false
+        },
+        {
+          "name": "selector",
+          "type": "string | boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "template",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "title",
+          "type": "string | Element | ((...args: any[]) => string | Element) | undefined",
+          "required": false
+        },
+        {
+          "name": "trigger",
+          "type": "string | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "enable(): void",
+        "disable(): void",
+        "toggleEnabled(): void",
+        "toggle(): Promise<void>",
+        "dispose(): void",
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "update(): void",
+        "setContent(content: Record<string, TemplateContentEntry>): void"
+      ],
+      "events": [
+        "hidden.trm.tooltip",
+        "hide.trm.tooltip",
+        "inserted.trm.tooltip",
+        "show.trm.tooltip",
+        "shown.trm.tooltip"
+      ],
+      "dataAttributes": [
+        "data-trm-allow-list",
+        "data-trm-animation",
+        "data-trm-boundary",
+        "data-trm-container",
+        "data-trm-content",
+        "data-trm-custom-class",
+        "data-trm-delay",
+        "data-trm-fallback-placements",
+        "data-trm-floating-config",
+        "data-trm-html",
+        "data-trm-offset",
+        "data-trm-original-title",
+        "data-trm-placement",
+        "data-trm-sanitize",
+        "data-trm-sanitize-fn",
+        "data-trm-selector",
+        "data-trm-template",
+        "data-trm-title",
+        "data-trm-toggle",
+        "data-trm-trigger"
+      ]
+    }
+  ]
+}

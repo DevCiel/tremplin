@@ -1,0 +1,63 @@
+.docs-header {
+  position: sticky;
+  z-index: 1000;
+  inset-block-start: 0;
+  min-block-size: var(--docs-header);
+  border-block-end: 1px solid var(--trm-border-color);
+  background: color-mix(in srgb, var(--trm-bg-body) 90%, transparent);
+  backdrop-filter: blur(16px) saturate(150%);
+}
+
+.docs-header-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 17.5rem minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: center;
+  inline-size: min(100%, var(--docs-width));
+  min-block-size: calc(var(--docs-header) - 1px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.docs-header-start,
+.docs-header-actions,
+.docs-brand,
+.docs-top-nav { display: flex; align-items: center; }
+.docs-header-start { gap: 1.5rem; }
+.docs-header-actions { justify-content: flex-end; gap: .65rem; }
+.docs-brand { gap: .7rem; color: inherit; font-weight: 600; text-decoration: none; }
+.docs-brand-mark {
+  display: grid;
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: .65rem;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--docs-accent) 76%, white), var(--docs-accent));
+  box-shadow: 0 .45rem 1.1rem color-mix(in srgb, var(--docs-accent) 25%, transparent);
+  color: white;
+  font-weight: 850;
+  transform: rotate(-3deg);
+}
+.docs-top-nav { gap: 1.15rem; }
+.docs-top-nav a { color: var(--docs-muted); font-size: .875rem; text-decoration: none; }
+.docs-top-nav a[aria-current=page] { color: var(--docs-text); font-weight: 600; }
+.docs-top-nav a:hover { color: var(--trm-fg-body); }
+.docs-github-link,
+.docs-theme-toggle,
+.docs-menu-toggle {
+  display: grid;
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  place-items: center;
+  border: 0;
+  border-radius: .5rem;
+  background: transparent;
+  color: var(--docs-muted);
+}
+.docs-github-link:hover,
+.docs-theme-toggle:hover,
+.docs-menu-toggle:hover { background: var(--trm-bg-1); color: var(--trm-fg-body); }
+.docs-github-link svg { inline-size: 1.15rem; fill: currentColor; }
+.docs-menu-toggle { display: none; font-size: 1.2rem; }
+#docs-version { inline-size: auto; min-inline-size: 5.75rem; border-color: transparent; background-color: transparent; }

@@ -1,0 +1,106 @@
+---
+{
+  "title": "Form adorn",
+  "description": "Place contextual text around an editable field while keeping focus visible.",
+  "group": "Forms",
+  "lead": "Place contextual text around an editable field while keeping focus visible.",
+  "order": 9
+}
+---
+
+import GuideTable from '../../../components/shortcodes/GuideTable.astro'
+import { formsTables } from '../../../data/forms-tables'
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"How it works"}</h2>
+
+<p>{"Wrap one form-ghost input in a label with both form-control and form-adorn. The label makes clicks on padding/adornments focus the control natively. A separate for/id label names it; decorative spans are aria-hidden. Do not nest labels or put another interactive element inside this wrapper. It is not an extra tab stop."}</p>
+
+<div class="docs-example"><Html source={examples["forms/form-adorn"][0].example} /></div>
+
+<Code sample={examples["forms/form-adorn"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"With form field"}</h2>
+
+<p>{"Meaningful context belongs in the visible label or help, not only a hidden decoration. This example accepts an HTTPS host and does not implement a URL checker or navigation service."}</p>
+
+<div class="docs-example"><Html source={examples["forms/form-adorn"][1].example} /></div>
+
+<Code sample={examples["forms/form-adorn"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Text adornments"}</h2>
+
+<p>{"form-adorn-text handles units/prefixes. form-adorn-end uses order:-1 on the input without changing DOM order. Keep currency/domain meaning in the actual label."}</p>
+
+<div class="docs-example"><Html source={examples["forms/form-adorn"][2].example} /></div>
+
+<Code sample={examples["forms/form-adorn"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Sizing"}</h2>
+
+<p>{"The real size classes are form-control-sm/lg on the wrapper, not form-adorn-sm/lg. The three adorn tokens control gap, icon size and icon color; control sizing does not automatically change the icon-size token."}</p>
+
+<div class="docs-example"><Html source={examples["forms/form-adorn"][3].example} /></div>
+
+<Code sample={examples["forms/form-adorn"][3].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Disabled and readonly"}</h2>
+
+<p>{"Set disabled/readonly on the input. The pinned wrapper does not inherit disabled background automatically; copied demo CSS supplies it. Readonly remains focusable, while the disabled wrapper cannot focus its input."}</p>
+
+<div class="docs-example"><Html source={examples["forms/form-adorn"][4].example} /></div>
+
+<Code sample={examples["forms/form-adorn"][4].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Validation"}</h2>
+
+<p>{"Put is-invalid on the inner form-ghost so :has() styles the wrapper and reveals its following feedback. Wrapper-only is-invalid does not activate that adorn rule. Set aria-invalid and aria-describedby on the input. Static state needs application recovery."}</p>
+
+<div class="docs-example"><Html source={examples["forms/form-adorn"][5].example} /></div>
+
+<Code sample={examples["forms/form-adorn"][5].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"CSS variables"}</h2>
+
+<p>{"These defaults come from the actual component token map. Configure the map before first Sass load or override its CSS property on the component itself. Shared root sizing and form-control properties are documented separately."}</p>
+
+<GuideTable table={{ headings: ["Property","Default"], rows: formsTables["forms/form-adorn#6"], keyboardScroll: true }} labelledby="section-6" />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Sass customization"}</h2>
+
+<Code sample={examples["forms/form-adorn"][7].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">{"Explicit demo accessibility CSS"}</h2>
+
+<p>{"Copy this scoped application CSS with the demo wrappers. It strengthens feedback/placeholder/floating-label and tooltip contrast, restores plaintext focus, mirrors the physical select caret in RTL and gives adorned disabled wrappers a visible background. The tooltip is positioned within the example padding. These are demo choices, not new core defaults."}</p>
+
+<Code sample={examples["forms/form-adorn"][8].code[0]} standalone={true} />
+
+</section>

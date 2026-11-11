@@ -1,0 +1,54 @@
+@use "../functions" as *;
+@use "../mixins/tokens" as *;
+
+$blockquote-tokens: () !default;
+
+// scss-docs-start blockquote-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$blockquote-tokens: defaults(
+  (
+    --trm-blockquote-gap: calc(var(--trm-spacer) / 2),
+    --trm-blockquote-padding-x: var(--trm-spacer),
+    --trm-blockquote-margin-y: var(--trm-spacer),
+    --trm-blockquote-font-size: var(--trm-font-size-md),
+    --trm-blockquote-border-width: .25rem,
+    --trm-blockquote-border-color: var(--trm-border-color),
+    --trm-blockquote-footer-font-size: var(--trm-font-size-sm),
+    --trm-blockquote-footer-color: var(--trm-fg-3),
+  ),
+  $blockquote-tokens
+);
+// scss-docs-end blockquote-tokens
+
+@layer content {
+  .blockquote {
+    @include tokens($blockquote-tokens);
+    display: flex;
+    flex-direction: column;
+    gap: var(--trm-blockquote-gap);
+    padding-inline-start: var(--trm-blockquote-padding-x);
+    margin-bottom: var(--trm-blockquote-margin-y);
+    font-size: var(--trm-blockquote-font-size);
+    border-inline-start: var(--trm-blockquote-border-width) solid var(--trm-blockquote-border-color);
+
+    > * {
+      margin-bottom: 0;
+    }
+  }
+
+  // stylelint-disable-next-line selector-no-qualifying-type
+  figure.blockquote {
+    blockquote {
+      margin-bottom: 0;
+    }
+  }
+
+  .blockquote-footer {
+    font-size: var(--trm-blockquote-footer-font-size);
+    color: var(--trm-blockquote-footer-color);
+
+    &::before {
+      content: "\2014\00A0"; // em dash, nbsp
+    }
+  }
+}

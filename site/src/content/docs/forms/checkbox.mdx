@@ -1,0 +1,113 @@
+---
+{
+  "title": "Checkbox",
+  "description": "Use native checkboxes for independent choices and explicit consent.",
+  "group": "Forms",
+  "lead": "Style native checkbox state with CSS masks, themes and size modifiers.",
+  "order": 3
+}
+---
+
+import GuideTable from '../../../components/shortcodes/GuideTable.astro'
+import { formsTables } from '../../../data/forms-tables'
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Basic checkbox"}</h2>
+
+<p>{"Put check directly on input[type=checkbox]. appearance:none replaces the visual, while native checked state and keyboard behavior remain. CSS mask icons in ::before inherit the contrast color; this is not merely accent-color styling or a JavaScript plugin."}</p>
+
+<div class="docs-example"><Html source={examples["forms/checkbox"][0].example} /></div>
+
+<Code sample={examples["forms/checkbox"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Indeterminate"}</h2>
+
+<p>{"Indeterminate is a DOM property, not an HTML attribute or third submitted value. This copied application setup runs after the markup. A native user toggle clears indeterminate; checked independently determines submission. Without the setup it remains an ordinary checkbox."}</p>
+
+<div class="docs-example"><Html source={examples["forms/checkbox"][1].example} /></div>
+
+<Code sample={examples["forms/checkbox"][1].code[0]} standalone={false} />
+
+<Code sample={examples["forms/checkbox"][1].code[1]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"With form field and description"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/checkbox"][2].example} /></div>
+
+<Code sample={examples["forms/checkbox"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Theme colors"}</h2>
+
+<p>{"Place theme-* on the input, not just its Field wrapper. These specimens use distinct names and keep readable labels."}</p>
+
+<div class="docs-example"><Html source={examples["forms/checkbox"][3].example} /></div>
+
+<Code sample={examples["forms/checkbox"][3].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Disabled"}</h2>
+
+<p>{"Disabled native inputs cannot be toggled or submitted. The CSS dims checked/mixed visuals; disabling does not clear checked or indeterminate."}</p>
+
+<div class="docs-example"><Html source={examples["forms/checkbox"][4].example} /></div>
+
+<Code sample={examples["forms/checkbox"][4].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Sizes"}</h2>
+
+<p>{"Use check-sm/default/check-lg. The label-size selector applies to an immediately adjacent label; a nested form-field-content label does not automatically receive that adjacent-selector size."}</p>
+
+<div class="docs-example"><Html source={examples["forms/checkbox"][5].example} /></div>
+
+<Code sample={examples["forms/checkbox"][5].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"CSS variables"}</h2>
+
+<p>{"These are source-derived property defaults, not a JavaScript options API. Embedded SVG strings are summarized in the table; inspect the pinned Sass for the exact mask/caret data. Null-valued Sass entries are not emitted as CSS declarations."}</p>
+
+<GuideTable table={{ headings: ["Property","Default"], rows: formsTables["forms/checkbox#6"], keyboardScroll: true }} labelledby="section-6" />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Token limits and keyboard"}</h2>
+
+<p>{"Space toggles the focused native checkbox; changing a named checkbox does not affect other checkboxes. The default checkbox is 1.25rem. The published --trm-check-border-radius token is not consumed by the current radius rule (33%); active-bg/active-border-color are also declared without an active selector in this pin. Do not advertise those as working runtime controls. Override icon mask URLs deliberately and test real forced-colors/assistive technology platforms."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">{"Sass customization"}</h2>
+
+<Code sample={examples["forms/checkbox"][8].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-9">
+<h2 id="section-9">{"Explicit demo accessibility CSS"}</h2>
+
+<p>{"Copy this scoped application CSS with the example wrappers. It emphasizes feedback/placeholder text, restores a visible plaintext focus outline, and mirrors the otherwise physical select/caret background position for RTL. These are disclosed demo choices; the pinned core defaults remain unchanged."}</p>
+
+<Code sample={examples["forms/checkbox"][9].code[0]} standalone={true} />
+
+</section>

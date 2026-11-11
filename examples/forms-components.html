@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" data-trm-theme="light">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tremplin forms and components</title><link rel="stylesheet" href="../dist/css/tremplin.css">
+  <link rel="stylesheet" href="examples.css">
+</head>
+<body>
+  <main class="container py-5 stack" style="--trm-stack-gap:2.5rem">
+    <header class="prose"><span class="badge">v0.3 CSS parity</span><h1 class="display-5">Forms and application components</h1><p class="lead">Accessible markup patterns using Tremplin's unprefixed public classes.</p></header>
+
+    <section class="row g-4">
+      <form class="col-lg-7" novalidate>
+        <h2>Account details</h2>
+        <div class="error-summary mb-3" tabindex="-1"><div class="error-summary-title">Correct one field</div><ul class="error-summary-list"><li><a href="#email">Enter a valid email address</a></li></ul></div>
+        <div class="form-floating form-field"><input class="form-control" id="email" type="email" placeholder="name@example.com" aria-invalid="true" aria-describedby="email-error"><label for="email">Email address</label><div class="invalid-feedback" id="email-error">Enter a valid email address.</div></div>
+        <div class="form-field"><label class="form-label" for="role">Role</label><select class="form-select" id="role"><option>Designer</option><option>Developer</option></select></div>
+        <div class="form-field"><label class="form-label" for="experience">Experience</label><input class="form-range" id="experience" type="range" min="0" max="10" value="4" data-trm-range data-trm-bubble="true"></div>
+        <div class="form-field"><label class="chip-input-label" for="skills">Skills</label><div class="chip-input" data-trm-chips><span class="chip" data-value="CSS">CSS<button class="chip-remove" type="button" data-trm-dismiss="chip" aria-label="Remove CSS">&times;</button></span><input class="form-ghost" id="skills" placeholder="Type a skill and press Enter"></div></div>
+        <div class="form-field"><label class="form-label" for="password">Password</label><input class="form-control" id="password" type="password"><div class="password-strength mt-2" data-trm-strength data-trm-input="#password" aria-live="polite"><div class="password-strength-bar"></div></div></div>
+        <fieldset class="form-field"><legend class="form-label">Verification code</legend><div class="otp" data-trm-otp-input data-trm-length="4"><input class="form-control otp-input" aria-label="Digit 1"><input class="form-control otp-input" aria-label="Digit 2"><input class="form-control otp-input" aria-label="Digit 3"><input class="form-control otp-input" aria-label="Digit 4"></div></fieldset>
+        <div class="form-check form-switch"><input class="form-check-input" id="updates" type="checkbox"><label for="updates">Product updates</label></div>
+        <button class="btn btn-primary mt-3" type="submit">Create account</button>
+      </form>
+
+      <aside class="col-lg-5"><h2>Team</h2><div class="list-group"><div class="list-group-item d-flex align-items-center gap-2"><span class="avatar">AM</span><div><strong>Amina</strong><div class="status status-success small">Available</div></div></div><div class="list-group-item d-flex align-items-center gap-2"><span class="avatar">JL</span><div><strong>Jules</strong><div class="status status-warning small">In a meeting</div></div></div></div></aside>
+    </section>
+
+    <section><h2>Progress</h2><ol class="stepper"><li class="step complete">Account</li><li class="step active" aria-current="step">Profile</li><li class="step">Launch</li></ol></section>
+
+    <section><h2>Native accordion</h2><div class="accordion"><details class="accordion-item" open><summary>Does this require JavaScript?</summary><div class="accordion-body">No. This version uses semantic details and summary elements.</div></details><details class="accordion-item"><summary>Can it use the Collapse plugin?</summary><div class="accordion-body">Yes. The button-based class API is also styled.</div></details></div></section>
+
+    <section class="empty-state"><span class="avatar avatar-lg">T</span><h2>No projects yet</h2><p class="text-muted">Create your first Tremplin project to get started.</p><button class="btn btn-primary">Create project</button></section>
+  </main>
+  <script type="module" src="../dist/js/tremplin.bundle.min.js"></script>
+</body>
+</html>

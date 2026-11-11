@@ -1,0 +1,12 @@
+---
+import { componentDetail } from '../../data/component-reference'
+import Example from './Example.astro'
+interface Props { name: string }
+const detail = componentDetail(Astro.props.name)
+if (!detail) throw new Error('Missing component detail')
+---
+{detail.variants.map((variant, index) => <section class="docs-variant" aria-labelledby={`variant-${index}`}>
+  <h3 id={`variant-${index}`}>{variant.title}</h3>
+  <p>{variant.description}</p>
+  <Example markup={variant.markup} />
+</section>)}

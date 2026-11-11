@@ -1,0 +1,144 @@
+---
+{
+  "component": "command-palette",
+  "title": "Command Palette",
+  "description": "Command Palette component documentation for Tremplin.",
+  "lead": "Offer fast keyboard access to application commands as an optional Tremplin extension.",
+  "variants": [
+    {
+      "title": "Grouped results",
+      "description": "Groups get generated aria-labelledby references. Visible labels are hidden from the option tree but still supply each group name through that reference. Arrow navigation spans enabled results across groups; keywords are local substring matches, not remote search."
+    },
+    {
+      "title": "Disabled and empty results",
+      "description": "Search for “protected” to see a disabled-only match, then an absent word for the empty state. The filter event counts enabled results, while empty-state visibility counts all matches including disabled items."
+    },
+    {
+      "title": "Keep open after selection",
+      "description": "closeOnSelect=false lets the local status update without closing. Search text persists across hide/show; use the close button when finished."
+    },
+    {
+      "title": "Dark RTL commands",
+      "description": "Logical alignment follows direction. These examples deliberately bind no letter shortcuts; command-shortcut is only a visual label, never a key binding."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Control/Command + K",
+      "behavior": "Default shortcut=true toggles every enabled instance, even from editable controls. All live guide instances opt out to avoid colliding with documentation search."
+    },
+    {
+      "keys": "Arrow Up / Arrow Down",
+      "behavior": "Wraps through enabled visible commands, keeping input focus and updating aria-activedescendant."
+    },
+    {
+      "keys": "Home / End",
+      "behavior": "Selects first/last enabled result, including when editing the search input; these keys do not move its text caret."
+    },
+    {
+      "keys": "Enter",
+      "behavior": "Selects the active result only when the search input is focused. Command selection is pointerdown, not click or automatic link navigation."
+    },
+    {
+      "keys": "Escape",
+      "behavior": "Requests hide and focus return; a hide listener can veto closing."
+    },
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Wraps at the first/last focusable control. Options here are div nodes with tabindex=-1, leaving search and close as the boundary controls. Native buttons remain in the extension focusable query even with tabindex=-1; this is not a document focus guard."
+    }
+  ],
+  "guidelines": [
+    "Import both optional CSS and the named CommandPalette extension. Do not import it from the core barrel or load two runtime graphs.",
+    "Use a hidden named div root, a labelled command-palette-input and a command-palette-list. The constructor adds dialog/combobox/listbox roles; it does not call showModal or make the background inert.",
+    "Set shortcut=false on all but a single intentional shortcut owner. The default does not ignore editable targets, key repeats or other palette instances. This guide preserves docs search as the closed-state Ctrl/Command+K owner.",
+    "Filtering trims and lowercases the query, matching the combined visible text and data-keywords by substring. It does not fold accents or tokenize words. Query text persists after closing.",
+    "All emitted CustomEvents bubble and are cancelable, but only show, hide and select read preventDefault. Payloads live in event.detail, unlike core direct event properties.",
+    "select is the veto gate; selected reports the accepted command. closeOnSelect requests hide before selected, but a canceled hide can leave the palette open. Neither event executes business actions automatically.",
+    "Initialize dynamic roots explicitly after insertion. Repeating initCommandPalette on the same scope does not rescan it; its descendant query does not include the supplied root itself.",
+    "dispose closes even when hide would be vetoed and removes instance listeners. Generated roles/IDs remain. This extension has no nested-overlay coordination, native top layer or global focus guard; evaluate those limitations before shipping."
+  ],
+  "events": {
+    "filter.trm.command-palette": "detail = { query, results }; results counts enabled visible commands. Disabled matches still suppress the empty state.",
+    "hidden.trm.command-palette": "After close cleanup. dispose closes without dispatching this lifecycle pair.",
+    "hide.trm.command-palette": "Cancelable gate before hiding, overflow restoration and opener focus return.",
+    "select.trm.command-palette": "Cancelable selection gate; detail = { command, value }, with value from data-value or trimmed text. Preventing it blocks the hide request and selected.",
+    "selected.trm.command-palette": "Accepted selection, with the same detail payload, after the optional hide request. Canceling this notification does not undo selection.",
+    "show.trm.command-palette": "Cancelable gate before exposing the root, locking root overflow and focusing search.",
+    "shown.trm.command-palette": "After the immediate show setup and filter notification; not a CSS-transition completion promise."
+  }
+}
+---
+
+import { paletteDemoCss, paletteDemoJavascript } from '../../../data/sheet-command-docs'
+import PaletteOptions from '../../../components/component/PaletteOptions.astro'
+import { componentApi } from '../../../data/component-api'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+    <div class="docs-callout docs-callout-info"><strong>Optional local JS and CSS extension.</strong> Command Palette is separate from the core distribution. This page loads one combined documentation runtime for core plus the extension, and optional styling in the <code>{"custom"}</code> layer. Ordinary core pages load neither optional resource. Do not load the combined runtime alongside a second core bundle.</div>
+    <p>These live previews disable the extension{"'"}s global shortcut to preserve documentation search. The explicit application CSS below improves input focus visibility and active-result contrast; it is not a changed extension default. Commands report only local preview status, never application mutations.</p>
+<Code source={paletteDemoCss} standalone={true} plain={true} label="Copy Command Palette application CSS" />
+
+<Example markup={componentExample("command-palette")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="command-palette" />
+
+{componentDetail("command-palette").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="command-palette" />
+</>}
+
+{componentDetail("command-palette").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("command-palette").sass} standalone={true} />
+</>}
+
+{componentDetail("command-palette").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="command-palette" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="command-palette" />
+
+{documentedComponents.find(component => component.name === "command-palette").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="command-palette" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Load the optional <code>{"tremplin/extensions/command-palette"}</code> module to initialize declarative hooks, or create a typed instance directly. It is intentionally excluded from the core bundle.</p>
+<Code source={componentApi("command-palette").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("command-palette").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<p>Configure these optional values before construction; getOrCreateInstance does not reconfigure an existing instance.</p>
+<PaletteOptions />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="command-palette" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="command-palette" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="command-palette" />
+<p class="mt-4"><a href="/api/command-palette/">View the generated {componentApi("command-palette").definition.className}{" API reference →"}</a></p>
+
+<h2 id="demo-setup">Explicit application demo setup</h2><p>Copy this handler after the example markup. Each demo has one known launcher; the handler focuses it at the show gate before the extension records the opener (including WebKit pointer clicks), owns transient status messages and prevents documentation search from stealing focus behind an open preview. This limited shortcut guard does not make the extension a native modal, supply inertness or provide document-wide focus containment.</p>
+<Code source={paletteDemoJavascript} standalone={true} plain={true} label="Copy Command Palette application handler" />

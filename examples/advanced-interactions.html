@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" data-trm-theme="light">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tremplin advanced interactions</title><link rel="stylesheet" href="../dist/css/tremplin.css">
+  <link rel="stylesheet" href="examples.css">
+  <style>.demo-slide{display:grid;min-block-size:18rem;place-items:center;color:#fff;font-size:clamp(2rem,8vw,5rem);font-weight:800}.section{min-block-size:15rem;padding:1rem;border-block-end:1px solid var(--trm-border-color)}</style>
+</head>
+<body>
+  <main class="container py-5 vstack" style="gap:3rem">
+    <header class="prose"><span class="badge">v0.8 beta</span><h1 class="text-4xl">Advanced interaction set</h1><p class="text-lg">Carousel, menu, scrollspy, and datepicker using the same typed component contract.</p></header>
+
+    <section><h2>Carousel</h2><div class="carousel carousel-overlay rounded" id="demo-carousel" role="region" aria-label="Framework highlights"><div class="carousel-inner" tabindex="0"><div class="carousel-item active" role="group" aria-label="1 of 3"><div class="demo-slide" style="background:#5b4bdb">Layout</div></div><div class="carousel-item" role="group" aria-label="2 of 3"><div class="demo-slide" style="background:#16845b">Components</div></div><div class="carousel-item" role="group" aria-label="3 of 3"><div class="demo-slide" style="background:#1677a7">Interactions</div></div></div><div class="carousel-overlay-controls"><button class="btn btn-icon carousel-control-prev" data-trm-slide="prev" data-trm-target="#demo-carousel" aria-label="Previous slide"><span class="carousel-icon-prev" aria-hidden="true"></span></button><div class="carousel-indicators"><button class="active" data-trm-slide-to="0" data-trm-target="#demo-carousel" aria-label="Slide 1" aria-current="true"></button><button data-trm-slide-to="1" data-trm-target="#demo-carousel" aria-label="Slide 2"></button><button data-trm-slide-to="2" data-trm-target="#demo-carousel" aria-label="Slide 3"></button></div><button class="btn btn-icon carousel-control-play-pause" data-trm-target="#demo-carousel" data-trm-pause-label="Pause slides" data-trm-play-label="Play slides" aria-label="Play slides"><span class="carousel-icon-pause" aria-hidden="true"></span><span class="carousel-icon-play" aria-hidden="true"></span></button><button class="btn btn-icon carousel-control-next" data-trm-slide="next" data-trm-target="#demo-carousel" aria-label="Next slide"><span class="carousel-icon-next" aria-hidden="true"></span></button></div></div></section>
+
+    <section class="row g-4"><div class="col-12 md:col-6"><h2>Keyboard menu</h2><button class="btn-outline theme-secondary" data-trm-toggle="menu" aria-expanded="false">File actions</button><div class="menu"><button class="menu-item">New file</button><div class="submenu"><button class="menu-item" aria-expanded="false">Share</button><div class="menu"><button class="menu-item">Copy link</button><button class="menu-item">Email</button></div></div><button class="menu-item">Download</button></div></div><div class="col-12 md:col-6"><h2>Datepicker</h2><label class="form-label" for="launch-date">Launch date</label><input class="form-control" id="launch-date" data-trm-toggle="datepicker" data-trm-locale="en-CA" data-trm-selected-dates='["2026-10-25"]' data-trm-date-min="2026-10-01" data-trm-date-max="2026-12-31" value="2026-10-25"></div></section>
+
+    <section><h2>Scrollspy</h2><div class="row"><nav class="md:col-3" id="section-nav" aria-label="Example sections"><div class="nav flex-column"><a class="nav-link" href="#overview">Overview</a><a class="nav-link" href="#details">Details</a><a class="nav-link" href="#launch">Launch</a></div></nav><div class="md:col-9 border rounded" style="block-size:22rem;overflow-y:auto" data-trm-spy="scroll" data-trm-target="#section-nav" data-trm-smooth-scroll="true" tabindex="0" aria-label="Scrollable example sections"><section class="section" id="overview"><h3>Overview</h3></section><section class="section" id="details"><h3>Details</h3></section><section class="section" id="launch"><h3>Launch</h3></section></div></div></section>
+  </main>
+  <script type="module" src="../dist/js/tremplin.bundle.min.js"></script>
+</body>
+</html>

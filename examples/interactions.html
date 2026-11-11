@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" data-trm-theme="light">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tremplin interaction components</title><link rel="stylesheet" href="../dist/css/tremplin.css">
+  <!-- Explicit application palette for readable demo buttons, not a core override. -->
+  <style>:root { --trm-primary-bg: var(--trm-blue-700); --trm-primary-fg: var(--trm-primary-fg-emphasis); }</style>
+</head>
+<body>
+  <nav class="navbar md:navbar-expand border" aria-label="Main navigation">
+    <div class="container">
+      <a class="navbar-brand" href="#">Tremplin</a>
+      <button class="btn-icon navbar-toggler" type="button" data-trm-toggle="drawer" data-trm-target="#main-nav" aria-controls="main-nav" aria-haspopup="dialog" aria-label="Open navigation"><span class="navbar-toggler-icon" aria-hidden="true"></span></button>
+      <dialog class="drawer drawer-end" id="main-nav" aria-labelledby="navigation-title" tabindex="-1">
+        <div class="drawer-header"><h2 class="drawer-title" id="navigation-title">Navigation</h2><button class="btn-close" type="button" data-trm-dismiss="drawer" aria-label="Close navigation"></button></div>
+        <div class="drawer-body"><div class="nav navbar-nav"><a class="nav-link active" aria-current="page" href="#">Home</a><a class="nav-link" href="#overlays">Overlays</a></div></div>
+      </dialog>
+    </div>
+  </nav>
+
+  <main class="container py-5 vstack" style="gap:2.5rem">
+    <header class="prose"><span class="badge">v0.8 beta</span><h1 class="text-4xl">Typed, accessible interactions</h1><p class="text-lg">Data attributes for markup-first use and full TypeScript APIs for application code.</p></header>
+
+    <section><h2>Toggle button</h2><p>Button state is reflected by both the <code>.active</code> class and <code>aria-pressed</code>.</p><button class="btn-outline theme-primary" type="button" data-trm-toggle="button" aria-pressed="false">Pin project</button></section>
+
+    <section><h2>Menu</h2><div><button class="btn btn-solid theme-secondary" data-trm-toggle="menu" aria-expanded="false">Project actions</button><div class="menu"><button class="menu-item">Edit</button><button class="menu-item">Duplicate</button><hr class="menu-divider"><button class="menu-item">Archive</button></div></div></section>
+
+    <section id="overlays"><h2>Overlay components</h2><div class="hstack flex-wrap gap-2"><button class="btn btn-solid theme-primary" data-trm-toggle="drawer" data-trm-target="#demo-drawer">Open drawer</button><button class="btn btn-outline theme-primary" data-trm-toggle="drawer" data-trm-target="#demo-sheet">Open bottom sheet</button><button class="btn btn-outline theme-primary" data-trm-toggle="popover" data-trm-title="Popover title" data-trm-content="Safe, dismissible contextual content.">Open popover</button><button class="btn btn-outline theme-secondary" data-trm-toggle="tooltip" data-trm-title="Shown on hover and keyboard focus" data-trm-placement="top">Focus for tooltip</button></div></section>
+  </main>
+
+  <dialog class="drawer drawer-end" id="demo-drawer" aria-labelledby="drawer-title"><div class="drawer-header"><h2 class="drawer-title" id="drawer-title">Project settings</h2><button class="btn-close" data-trm-dismiss="drawer" aria-label="Close">&times;</button></div><div class="drawer-body"><p>Native dialog behavior keeps focus inside this drawer.</p><label class="form-label" for="project-name">Project name</label><input class="form-control" id="project-name" value="Tremplin"><button class="btn btn-solid theme-primary mt-3" data-trm-dismiss="drawer">Save</button></div></dialog>
+  <dialog class="drawer drawer-bottom drawer-sheet" id="demo-sheet" aria-labelledby="sheet-title"><div class="drawer-header"><h2 class="drawer-title" id="sheet-title">Quick actions</h2><button class="btn-close" data-trm-dismiss="drawer" aria-label="Close">&times;</button></div><div class="drawer-body"><div class="hstack flex-wrap gap-2"><button class="btn btn-solid theme-primary">Create project</button><button class="btn btn-outline theme-primary" data-trm-dismiss="drawer">Cancel</button></div></div></dialog>
+  <script type="module" src="../dist/js/tremplin.bundle.min.js"></script>
+</body>
+</html>

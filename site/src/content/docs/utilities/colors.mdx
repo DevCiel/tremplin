@@ -1,0 +1,92 @@
+---
+{
+  "title": "Colors",
+  "description": "Use colors utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use colors utilities from the configured Tremplin utility map.",
+  "order": 1,
+  "utility": {
+    "category": "Color",
+    "classes": [
+      "fg-primary",
+      "fg-secondary",
+      "fg-success",
+      "fg-danger",
+      "fg-warning",
+      "fg-info",
+      "fg-accent",
+      "fg-inverse",
+      "fg-emphasis-primary",
+      "fg-contrast-primary",
+      "fg-body",
+      "fg-1",
+      "fg-2",
+      "fg-3",
+      "fg-4",
+      "fg-bg",
+      "fg-white",
+      "fg-black",
+      "fg-reset",
+      "fg-10",
+      "fg-50",
+      "fg-100"
+    ],
+    "notes": "Semantic foregrounds reference --trm-{name}-fg, emphasis and contrast roles. Neutral levels use --trm-fg-body and --trm-fg-1 through -4. The eight semantic names are primary, accent, secondary, success, danger, warning, info and inverse; old text-primary/light/dark aliases are not generated.",
+    "responsive": false
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/colors"][0].example} /></div>
+
+<Code sample={samples["utilities/colors"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"Semantic foregrounds reference --trm-{name}-fg, emphasis and contrast roles. Neutral levels use --trm-fg-body and --trm-fg-1 through -4. The eight semantic names are primary, accent, secondary, success, danger, warning, info and inverse; old text-primary/light/dark aliases are not generated."} /></p>
+
+<Code sample={samples["utilities/colors"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Configuration and limits"}</h2>
+
+<p><Html source={"Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Opacity and inheritance"}</h2>
+
+<p><Html source={"fg-* assigns the non-inheriting --trm-fg composition token. fg-50 mixes that local role with transparent; there is no currentcolor fallback, so pair it with a role. Ordinary CSS color still inherits. fg-reset explicitly inherits the composition token; it is not a hard-coded body color. Lower alpha and weaker role levels can fail text contrast."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Configure foreground roles"}</h2>
+
+<p><Html source={"Configure the owning theme module before the entry. Theme maps merge shallowly at their top level: replacing one color replaces its whole role map. Use null to remove an exact map key; numeric and quoted string keys are distinct. Test actual pairs in light/dark and forced colors; the pin adds no special CanvasText reminting."} /></p>
+
+<Code sample={samples["utilities/colors"][4].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

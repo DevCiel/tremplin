@@ -1,0 +1,72 @@
+---
+{
+  "title": "Overview",
+  "description": "Choose runtime CSS tokens or a custom Sass build to adapt Tremplin to your project.",
+  "group": "Customize",
+  "lead": "Choose runtime CSS tokens or a custom Sass build to adapt Tremplin to your project.",
+  "order": 0
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { customizeExamples as samples } from '../../../data/customize-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Overview</h2>
+
+<p>{"Use the complete compiled stylesheet for a quick start. Add application CSS after it for brand changes, or compile Sass when changing generated scales and feature switches. Public component classes remain unprefixed; runtime variables use --trm-*."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Sass vs CSS</h2>
+
+<p>Start with <a href="/customize/sass/">{"Sass"}</a>, <a href="/customize/options/">{"Options"}</a>, <a href="/customize/theme/">{"Theme"}</a>, or <a href="/customize/css-variables/">{"CSS variables"}</a>.</p>
+
+<div class="table-responsive"><table class="table">
+<thead><tr><th scope="col">Approach</th><th scope="col">Choose it for</th></tr></thead>
+<tbody>
+<tr><td><span>CSS variables</span></td><td><span>Runtime brand colors, surfaces, typography, and scoped themes.</span></td></tr>
+<tr><td><span>Sass</span></td><td><span>Build-time maps, breakpoints, generated utilities, and global switches.</span></td></tr>
+<tr><td><span>Application CSS</span></td><td><span>Composition and component-specific rules that your application owns.</span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Cascade layers</h2>
+
+<p>The full and utilities entries establish this order through root. Individual modules and focused entries can introduce layers in a different sequence; establish the complete order before composing application layers. Optional Tremplin extensions live in custom and are not loaded by the strict core.</p>
+
+<p>Palette output, root tokens, transition classes, drawer rules, keyframes and composition-property registrations include deliberate unlayered output. Directory names alone do not determine layer ownership.</p>
+
+<Code sample={samples["customize/overview#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Application overrides</h2>
+
+<p>For normal declarations, later layers win before specificity; unlayered application rules beat named layers. Important declarations reverse layer precedence. Utility importance is configured per family/property, not by a global enable-important-utilities switch.</p>
+
+<p>Choose one full or focused entry per stylesheet. Declare application layers after the framework order; do not wrap the whole distribution in another layer unless deliberately changing its contract.</p>
+
+<Code sample={samples["customize/overview#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">CSPs and embedded SVGs</h2>
+
+<p>Some controls use embedded SVG images. Review image-src allowances, fonts, and script policies for your deployment. Test a strict policy against your actual pages rather than disabling CSP. Sanitized HTML and Trusted Types guidance is in the <a href="/getting-started/javascript/">{"JavaScript guide"}</a>.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Implementation boundary</h2>
+
+<div class="docs-callout docs-callout-info">The core is verified against a fixed source contract and recorded security/accessibility fixes. Optional extensions are separate. Prerelease status and source checks do not certify every color combination or accessibility scenario.</div>
+
+</section>

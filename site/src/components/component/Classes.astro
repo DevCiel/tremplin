@@ -1,0 +1,7 @@
+---
+import { documentedComponents } from '../../data/component-reference'
+interface Props { name: string }
+const component = documentedComponents.find(item => item.name === Astro.props.name)
+if (!component) throw new Error('Missing component metadata')
+---
+<div class="docs-cluster docs-class-list">{component.classes.map(className => <code>.{className}</code>)}</div>

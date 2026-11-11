@@ -1,0 +1,35 @@
+---
+import Code from './shortcodes/Code.astro'
+import type { Guide } from '../data/guide-docs'
+import GuidePagination from './GuidePagination.astro'
+interface Props { guide: Guide; index: number }
+const { guide } = Astro.props
+const guideSources: Record<string, string> = { Guides: 'workflow-guides', Customize: 'customize-guides', Layout: 'layout-guides', Content: 'content-guides', Forms: 'forms-guides', Helpers: 'helpers-guides', Utilities: 'utilities-guides' }
+const guideSource = guideSources[guide.group] ?? 'guide-docs'
+const tableKeyboardScroll = (table: { keyboardScroll?: boolean }) => Boolean(table.keyboardScroll)
+---
+
+  <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/getting-started/">Documentation</a></li><li class="breadcrumb-item active" aria-current="page">{guide.title}</li></ol>
+  </nav>
+  <p class="docs-eyebrow">{guide.group}</p>
+  <h1>{guide.title}</h1>
+  <p class="lead">{guide.lead}</p>
+  <div class="docs-page-tools"><a href={`https://github.com/DevCiel/tremplin/blob/main/site/src/data/${guideSource}.ts`}><svg class="docs-edit-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><use href="/docs-icons.svg#github"></use></svg> View &amp; edit</a>{guide.reference && <a href={guide.reference.url}>{guide.reference.title} <span aria-hidden="true">↗</span></a>}</div>
+
+  {guide.sections.map((section, sectionIndex) => <section class="docs-section" aria-labelledby={`section-${sectionIndex}`}>
+    {section.level === 3 ? <h3 id={`section-${sectionIndex}`}>{section.heading}</h3> : <h2 id={`section-${sectionIndex}`}>{section.heading}</h2>}
+    {section.paragraphs?.map(paragraph => <p set:html={paragraph}></p>)}
+    {section.steps && <ol class="docs-steps">{section.steps.map(step => <li set:html={step}></li>)}</ol>}
+    {section.callout && <div class="docs-callout docs-callout-info" set:html={section.callout}></div>}
+    {section.example && <div class="docs-example" set:html={section.example}></div>}
+    {section.code?.map(sample => <Code sample={sample} standalone={!section.example} />)}
+    {section.table && <div class:list={['table-responsive', tableKeyboardScroll(section.table) && 'focus-ring']} tabindex={tableKeyboardScroll(section.table) ? 0 : undefined} role={tableKeyboardScroll(section.table) ? 'region' : undefined} aria-labelledby={tableKeyboardScroll(section.table) ? 'section-' + sectionIndex : undefined}><table class:list={['table', !['Customize', 'Layout', 'Content'].includes(guide.group) && 'table-bordered']}>
+      <thead><tr>{section.table.headings.map(heading => <th scope="col">{heading}</th>)}</tr></thead>
+      <tbody>{section.table.rows.map(row => <tr>{row.map(cell => <td>{['Customize', 'Layout', 'Content'].includes(guide.group) ? <span set:html={cell}></span> : <code set:html={cell}></code>}</td>)}</tr>)}</tbody>
+    </table></div>}
+  </section>)}
+
+  {guide.clientScript && <script is:inline type="module" set:html={guide.clientScript.replaceAll("from 'tremplin'", "from '/js/tremplin-docs.min.js'")}></script>}
+
+  <GuidePagination slug={guide.slug} />

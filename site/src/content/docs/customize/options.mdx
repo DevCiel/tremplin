@@ -1,0 +1,51 @@
+---
+{
+  "title": "Options",
+  "description": "Use supported Sass switches to control generated framework styles.",
+  "group": "Customize",
+  "lead": "Use supported Sass switches to control generated framework styles.",
+  "order": 2
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { customizeExamples as samples } from '../../../data/customize-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Global options</h2>
+
+<p>Utility importance is a family/property option. The color-mode mixin defaults to media-query; root light-dark() color selection and data-trm-theme selectors are separate behavior.</p>
+
+<div class="table-responsive"><table class="table">
+<thead><tr><th scope="col">Variable</th><th scope="col">Pinned default / purpose</th></tr></thead>
+<tbody>
+<tr><td><span>$enable-rounded</span></td><td><span>true: radius mixins</span></td></tr>
+<tr><td><span>$enable-shadows</span></td><td><span>true: shadow mixins</span></td></tr>
+<tr><td><span>$enable-gradients</span></td><td><span>true: gradient mixins</span></td></tr>
+<tr><td><span>$enable-transitions</span></td><td><span>true: transition mixins</span></td></tr>
+<tr><td><span>$enable-reduced-motion</span></td><td><span>true: preference-gated transition mixins</span></td></tr>
+<tr><td><span>$enable-smooth-scroll</span></td><td><span>false: opt-in root smooth scrolling</span></td></tr>
+<tr><td><span>$enable-grid-classes</span></td><td><span>true: Flexbox grid</span></td></tr>
+<tr><td><span>$enable-container-classes</span></td><td><span>true: containers</span></td></tr>
+<tr><td><span>$enable-cssgrid</span></td><td><span>true: CSS Grid placement</span></td></tr>
+<tr><td><span>$enable-button-pointers</span></td><td><span>true: enabled button pointer</span></td></tr>
+<tr><td><span>$enable-deprecation-messages</span></td><td><span>true: Sass deprecation warnings</span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Configure your build</h2>
+
+<Code sample={samples["customize/options#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Verify switch coverage</h2>
+
+<div class="docs-callout docs-callout-info">Flags affect only code paths that read them. Disabling shadow/radius mixins does not remove the independent shadow/rounded utilities. Motion flags do not remove every direct CSS rule or application animation; inspect the built stylesheet and test preference changes.</div>
+
+</section>

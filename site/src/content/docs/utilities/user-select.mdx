@@ -1,0 +1,58 @@
+---
+{
+  "title": "User select",
+  "description": "Use user select utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use user select utilities from the configured Tremplin utility map.",
+  "order": 44,
+  "utility": {
+    "category": "Interactions",
+    "classes": [
+      "user-select-all",
+      "user-select-auto",
+      "user-select-text",
+      "user-select-none"
+    ],
+    "notes": "Selection behavior is not an application security boundary. A text-selectable descendant can override a selection-disabled ancestor where supported. Do not unnecessarily prevent copying important information.",
+    "responsive": false
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/user-select"][0].example} /></div>
+
+<Code sample={samples["utilities/user-select"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"Selection behavior is not an application security boundary. A text-selectable descendant can override a selection-disabled ancestor where supported. Do not unnecessarily prevent copying important information."} /></p>
+
+<Code sample={samples["utilities/user-select"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Configuration and limits"}</h2>
+
+<p><Html source={"Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

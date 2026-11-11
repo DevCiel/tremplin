@@ -1,0 +1,56 @@
+---
+{
+  "title": "Font family",
+  "description": "Use font family utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use font family utilities from the configured Tremplin utility map.",
+  "order": 28,
+  "utility": {
+    "category": "Type",
+    "classes": [
+      "font-body",
+      "font-monospace"
+    ],
+    "notes": "font-body reads --trm-body-font-family; font-monospace reads --trm-font-mono. These are not responsive by default. Actual glyph coverage and metrics depend on installed fonts; do not use typography alone to communicate meaning.",
+    "responsive": false
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/font-family"][0].example} /></div>
+
+<Code sample={samples["utilities/font-family"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"font-body reads --trm-body-font-family; font-monospace reads --trm-font-mono. These are not responsive by default. Actual glyph coverage and metrics depend on installed fonts; do not use typography alone to communicate meaning."} /></p>
+
+<Code sample={samples["utilities/font-family"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Configuration and limits"}</h2>
+
+<p><Html source={"Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

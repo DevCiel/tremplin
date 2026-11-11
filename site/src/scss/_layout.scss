@@ -1,0 +1,38 @@
+.docs-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 5fr);
+  gap: 2rem;
+  inline-size: min(100%, var(--docs-width));
+  margin: .75rem auto;
+  padding-inline: var(--docs-gutter);
+  min-block-size: calc(100dvh - var(--docs-header));
+}
+.docs-sidebar {
+  font-size: .875rem;
+  line-height: 1.5;
+  position: sticky;
+  inset-block-start: calc(var(--docs-header) + 1.75rem);
+  align-self: start;
+  block-size: calc(100dvh - var(--docs-header) - 3.5rem);
+  overflow: auto;
+  padding: 0 0 2rem;
+  scrollbar-width: thin;
+}
+.docs-sidebar .nav { flex-direction: column; gap: .125rem; }
+.docs-sidebar .nav-link { inline-size: 100%; padding: .25rem .75rem; border-radius: .5rem; color: var(--docs-muted); font-size: .875rem; font-weight: 400; text-align: start; justify-content: flex-start; text-decoration: none; line-height: 1.5; }
+.docs-sidebar .nav-link:hover { background: var(--trm-bg-1); color: var(--trm-fg-body); }
+.docs-sidebar .nav-link[aria-current=page] { background: color-mix(in srgb, var(--docs-text) 7%, var(--trm-bg-body)); color: var(--docs-text); font-weight: 400; }
+.docs-sidebar-heading { margin: 1.6rem .7rem .45rem; color: var(--trm-fg-body); font-size: .76rem; font-weight: 800; letter-spacing: .055em; text-transform: uppercase; }
+.docs-nav-section { margin-block-end: 1rem; }
+.docs-nav-section summary { display: flex; gap: .5rem; align-items: center; padding: .25rem 0; border-radius: .45rem; color: var(--docs-text); font-size: .875rem; font-weight: 600; cursor: pointer; list-style: none; }
+.docs-nav-section summary::-webkit-details-marker { display: none; }
+.docs-nav-section summary::after { content: '›'; margin-inline-start: auto; color: var(--docs-muted); font-size: 1.1rem; transform: rotate(0deg); }
+.docs-nav-section[open] summary::after { transform: rotate(90deg); }
+.docs-nav-section summary:hover { background: var(--trm-bg-1); }
+.docs-nav-section .nav { margin-block-start: .125rem; padding-inline: .75rem .375rem; }
+.docs-nav-icon { display: inline-block; inline-size: 1rem; block-size: 1rem; flex: 0 0 auto; fill: currentColor; color: var(--docs-accent); }
+.docs-nav-icon-grid-fill { color: #198754; }
+.docs-nav-icon-ui-radios { color: #fd7e14; }
+.docs-nav-icon-palette2 { color: #d63384; }
+.docs-nav-icon-tools { color: #0d6efd; }
+.docs-nav-icon-components { color: #6f42c1; }

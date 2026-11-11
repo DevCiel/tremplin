@@ -1,0 +1,129 @@
+---
+{
+  "component": "range",
+  "title": "Range",
+  "description": "Range component documentation for Tremplin.",
+  "lead": "Enhance a native slider inside a form-range wrapper with fill, bubble and datalist ticks.",
+  "variants": [
+    {
+      "title": "Value bubble",
+      "description": "Range belongs to the wrapper. A bare bubble attribute enables the generated decorative output."
+    },
+    {
+      "title": "Datalist ticks",
+      "description": "Option labels are literal text. The pin sorts/clamps numeric positions; formatter does not format these labels."
+    },
+    {
+      "title": "Disabled slider",
+      "description": "Native disabled prevents user focus/edits; the API can still recompute a programmatic value."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Native keyboard behavior follows the browser, but pinned gradient and bubble use physical left/to-right coordinates. No RTL correction is applied to core."
+    },
+    {
+      "title": "Bounds, fractional steps and no bubble",
+      "description": "Actual native constraints and a wrapper without a bubble; the fill still needs Range JavaScript."
+    },
+    {
+      "title": "Theme colors",
+      "description": "A supported theme class on the token-owning wrapper colors the fill and thumb."
+    },
+    {
+      "title": "Custom bubble formatter",
+      "description": "The copied browser-bundle setup deliberately replaces any auto-created instance before configuring a percent bubble. It does not change native value/submission or tick labels."
+    },
+    {
+      "title": "Programmatic update and native submission",
+      "description": "This explicit application button sets the native value and calls update(); it does not submit or synthesize input/change."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Arrows / Home / End",
+      "behavior": "Native range keyboard rules and min/max/step constraints remain browser-owned. A bubble is not an interactive Tooltip plugin."
+    }
+  ],
+  "guidelines": [
+    "Use form-range around one labelled form-range-input; every matching wrapper auto-initializes on document ready.",
+    "The wrapper receives --trm-range-fill as a ratio, not a percentage. Native bounds supply 0/100 when absent; min>=max makes the adapter ratio zero.",
+    "After assigning input.value, call update(). Construction/update and native input/change paths emit changed on the actual input, even when unchanged; it is not a cancelable mutation gate.",
+    "Formatter text uses textContent for the bubble only. Tick labels read option.label without formatter; datalist points are snapshotted once, sorted and clamped to positions.",
+    "The bubble and ticks are aria-hidden. Native name/value submit the numeric value; formatter does not create aria-valuetext or convert submitted units.",
+    "Pinned track gradient is to right and bubble uses left even in RTL; test native thumb versus decoration rather than claiming direction-aware fill. dispose removes generated bubble/ticks/listeners but retains the wrapper fill property."
+  ],
+  "events": {
+    "changed.trm.range": "Notification on the native input after construction, update(), input or change, even if the numeric value is unchanged. Direct value is numeric; canceling does not roll back the slider."
+  }
+}
+---
+
+import { advancedDemoJavascript } from '../../../data/advanced-input-docs'
+import { componentApi } from '../../../data/component-api'
+import AdvancedOptions from '../../../components/component/AdvancedOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("range")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="range" />
+
+{componentDetail("range").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="range" />
+</>}
+
+{componentDetail("range").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("range").sass} standalone={true} />
+</>}
+
+{componentDetail("range").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="range" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="range" />
+
+{documentedComponents.find(component => component.name === "range").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="range" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("range").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("range").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<p>Configure these optional values before construction; getOrCreateInstance does not reconfigure an existing instance.</p>
+<AdvancedOptions name="range" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="range" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="range" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="range" />
+<p class="mt-4"><a href="/api/range/">View the generated {componentApi("range").definition.className}{" API reference →"}</a></p>
+
+<h2 id="demo-setup">Explicit browser-bundle demo setup</h2><p>This copied application setup configures marked examples locally. It deliberately disposes any auto-created instance before setting function options; getOrCreateInstance does not reconfigure it. No requests or automatic submission are made.</p>
+<Code source={advancedDemoJavascript} standalone={true} plain={true} label="Copy advanced input demo setup" />

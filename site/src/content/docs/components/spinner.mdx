@@ -1,0 +1,97 @@
+---
+{
+  "component": "spinner",
+  "title": "Spinner",
+  "description": "Spinner component documentation for Tremplin.",
+  "lead": "Indicate that an operation is currently in progress.",
+  "variants": [
+    {
+      "title": "Border and growing spinners",
+      "description": "Both are HTML/CSS loading indicators. Border rotates; grow pulses. Each standalone indicator includes meaningful status text."
+    },
+    {
+      "title": "Current-color variants",
+      "description": "Use foreground utilities; border utilities can override the transparent edge that makes the spinner visible."
+    },
+    {
+      "title": "Size",
+      "description": "Both variants are 1em by default. The shared spinner-sm class is .75em; old spinner-border-sm and spinner-grow-sm aliases are not supported."
+    },
+    {
+      "title": "Loading buttons and badges",
+      "description": "Use native disabled controls and one status label. Hide decorative spinners so the operation is not announced twice."
+    },
+    {
+      "title": "Alignment",
+      "description": "Spinners assume a flex parent. Use layout utilities rather than floats or an overlay blocking unrelated content."
+    },
+    {
+      "title": "Custom rotation",
+      "description": "spinner-rotate rotates an authored SVG. Unlike border/grow, it has no reduced-motion rule in this pin; the application must provide its own pause/replacement policy."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "The spinner inherits currentColor. Direction changes surrounding layout, not a new controller or completed state."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "None",
+      "behavior": "Loading indicators are not controls. A native disabled loading button cannot be activated."
+    }
+  ],
+  "guidelines": [
+    "No JavaScript plugin is needed to draw a spinner. The application starts/stops work and updates visibility.",
+    "Use role=status plus hidden text for a standalone loader; hide decoration when adjacent text provides the status.",
+    "Use spinner-sm for either variant; there is no standalone spinner class or variant-specific small alias.",
+    "Reduced motion slows border/grow to 1.5s; it does not stop them. spinner-rotate has no automatic reduced-motion handling.",
+    "Spinner uses currentColor. Prefer foreground utilities to border utilities, which can erase the transparent edge.",
+    "The spinner-border-tokens and spinner-grow-tokens maps are separate. The table shows border defaults; grow uses ease-in-out and spinner-grow for timing/name.",
+    "Use Progress for meaningful numeric completion; neither component automatically announces application updates."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("spinner")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="spinner" />
+
+{componentDetail("spinner").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="spinner" />
+</>}
+
+{componentDetail("spinner").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("spinner").sass} standalone={true} />
+</>}
+
+{componentDetail("spinner").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="spinner" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="spinner" />
+
+{documentedComponents.find(component => component.name === "spinner").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="spinner" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>This is a CSS component and does not require Tremplin JavaScript.</p>

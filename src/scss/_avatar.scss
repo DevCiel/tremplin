@@ -1,0 +1,159 @@
+@use "sass:map";
+@use "functions" as *;
+@use "mixins/border-radius" as *;
+@use "mixins/transition" as *;
+@use "mixins/tokens" as *;
+
+$avatar-tokens: () !default;
+
+// stylelint-disable custom-property-no-missing-var-function
+// scss-docs-start avatar-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$avatar-tokens: defaults(
+  (
+    --trm-avatar-size: 2.5rem,
+    --trm-avatar-border-radius: 50%,
+    --trm-avatar-border-width: 2px,
+    --trm-avatar-border-color: var(--trm-bg-body),
+    --trm-avatar-bg: var(--trm-bg-2),
+    --trm-avatar-color: var(--trm-fg-body),
+    // --trm-avatar-font-weight: var(--trm-font-weight-medium), // Defaults to fallback
+    --trm-avatar-status-size: .75rem,
+    --trm-avatar-status-border-width: 2px,
+    --trm-avatar-status-border-color: var(--trm-bg-body),
+    --trm-avatar-stack-spacing: -.3,
+    --trm-avatar-stack-transition: "transform .2s ease-in-out",
+  ),
+  $avatar-tokens
+);
+// scss-docs-end avatar-tokens
+// stylelint-enable custom-property-no-missing-var-function
+
+// scss-docs-start avatar-sizes
+$avatar-sizes: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$avatar-sizes: defaults(
+  (
+    "xs": (
+      size: 1.5rem,
+      status-size: .625rem,
+    ),
+    "sm": (
+      size: 2rem,
+    ),
+    "lg": (
+      size: 3rem,
+      status-size: 1rem,
+      border-width: 3px,
+    ),
+    "xl": (
+      size: 4rem,
+      status-size: 1.25rem,
+      border-width: 4px,
+    ),
+  ),
+  $avatar-sizes
+);
+// scss-docs-end avatar-sizes
+
+@layer components {
+  .avatar {
+    @include tokens($avatar-tokens);
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--trm-avatar-size);
+    height: var(--trm-avatar-size);
+    font-size: calc(var(--trm-avatar-size) * .4);
+    font-weight: var(--trm-avatar-font-weight, var(--trm-font-weight-medium));
+    line-height: 1;
+    color: var(--trm-theme-contrast, var(--trm-avatar-color));
+    text-transform: uppercase;
+    vertical-align: middle;
+    background-color: var(--trm-theme-bg, var(--trm-avatar-bg));
+    @include border-radius(var(--trm-avatar-border-radius));
+
+    > .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .avatar-subtle {
+    color: var(--trm-theme-fg, var(--trm-avatar-color));
+    background-color: var(--trm-theme-bg-subtle, var(--trm-avatar-bg));
+  }
+
+  .avatar-img {
+    @include border-radius(var(--trm-avatar-border-radius, 50%));
+  }
+
+  .avatar-status {
+    position: absolute;
+    right: calc(var(--trm-avatar-status-border-width) * -1);
+    bottom: calc(var(--trm-avatar-status-border-width) * -1);
+    width: var(--trm-avatar-status-size);
+    height: var(--trm-avatar-status-size);
+    background-color: var(--trm-gray-400);
+    border: var(--trm-avatar-status-border-width) solid var(--trm-avatar-status-border-color);
+    @include border-radius(50%);
+
+    &.status-online {
+      background-color: var(--trm-green-500);
+    }
+
+    &.status-offline {
+      background-color: var(--trm-gray-400);
+      @include border-radius(20%);
+    }
+
+    &.status-busy {
+      background-color: var(--trm-red-500);
+      @include border-radius(20%);
+    }
+
+    &.status-away {
+      background-color: var(--trm-yellow-500);
+    }
+  }
+
+  .avatar-stack {
+    display: inline-flex;
+    flex-direction: row-reverse;
+
+    .avatar {
+      // Stack spacing is calculated as a percentage of avatar size
+      margin-left: calc(var(--trm-avatar-size) * var(--trm-avatar-stack-spacing));
+      border: var(--trm-avatar-border-width) solid var(--trm-avatar-border-color);
+      mask-image: none;
+      @include transition(var(--trm-avatar-stack-transition));
+
+      &:last-child {
+        margin-left: 0;
+      }
+
+      &:hover {
+        z-index: 1;
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  @each $size, $tokens in $avatar-sizes {
+    .avatar-#{$size},
+    .avatar-stack-#{$size} > .avatar {
+      --trm-avatar-size: #{map.get($tokens, size)};
+
+      @if map.has-key($tokens, status-size) {
+        --trm-avatar-status-size: #{map.get($tokens, status-size)};
+      }
+
+      @if map.has-key($tokens, border-width) {
+        --trm-avatar-border-width: #{map.get($tokens, border-width)};
+      }
+    }
+  }
+}

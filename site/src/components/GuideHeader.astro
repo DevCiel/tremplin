@@ -1,0 +1,16 @@
+---
+import type { Guide } from '../data/guide-docs'
+interface Props { guide: Guide }
+const { guide } = Astro.props
+const guideSource = guide.slug
+const isInstall = guideSource === 'getting-started/install'
+---
+  <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+    <ol class="breadcrumb"><li class="breadcrumb-item"><a href="/getting-started/">Documentation</a></li><li class="breadcrumb-item active" aria-current="page">{guide.title}</li></ol>
+  </nav>
+  <p class="docs-eyebrow">{guide.group}</p>
+  <h1>{guide.title}</h1>
+  <p class="lead">{guide.lead}</p>
+  <div class="docs-page-tools"><a href={`https://github.com/DevCiel/tremplin/blob/main/site/src/content/docs/${guideSource}.mdx`}><svg class="docs-edit-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><use href="/docs-icons.svg#github"></use></svg> View &amp; edit</a>{guide.reference && <a href={guide.reference.url}>{guide.reference.title} <span aria-hidden="true">↗</span></a>}</div>
+
+  {guide.group === 'Getting started' && !isInstall && <div class="docs-callout"><strong>Development checkout.</strong> Start with local downloads or a locally packed tarball. Public npm and CDN snippets describe installation after publication; verify the exact version exists before using them.</div>}

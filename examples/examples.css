@@ -1,0 +1,18 @@
+/* Application-level accessibility choices for these demos, not core overrides.
+ * The pinned default link/solid palette is not a blanket contrast guarantee.
+ */
+:root {
+  --trm-link-color: var(--trm-primary-fg-emphasis);
+  --trm-link-hover-color: var(--trm-primary-fg-emphasis);
+}
+
+/* Enlarge the real indicator hit areas; do not hide or disable Axe targets. */
+#demo-carousel {
+  --trm-carousel-indicator-width: 1.5rem;
+  --trm-carousel-indicator-height: 1.5rem;
+}
+
+/* This page explicitly opts into the optional CommandPalette extension. */
+.command-palette {
+  --trm-command-palette-active-bg: var(--trm-primary-fg-emphasis);
+}

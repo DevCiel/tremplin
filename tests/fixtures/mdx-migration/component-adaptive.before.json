@@ -1,0 +1,523 @@
+[
+  {
+    "name": "nav-overflow",
+    "title": "Nav Overflow",
+    "description": "Nav Overflow component documentation for Tremplin.",
+    "lead": "Collapse nested navigation items into the Menu plugin as available width changes.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Priority navigation",
+          "description": "A direct nav list with nav-item children is required. Kept destinations remain outside the generated More menu.",
+          "markup": "<nav id=\"guide-project-navigation\" class=\"nav-overflow\" aria-label=\"guide-project-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-collapse-below=\"600\"><ul class=\"nav \"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li></ul></nav>"
+        },
+        {
+          "title": "Progressive container sizing",
+          "description": "With collapseBelow=0, the wrapper content box and item widths determine what overflows. The observer watches the wrapper, not the nav it changes.",
+          "markup": "<nav id=\"progressive-navigation\" class=\"nav-overflow\" aria-label=\"progressive-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-collapse-below=\"0\"><ul class=\"nav \"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/utilities/\">Utilities</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/examples/\">Examples</a></li></ul></nav>"
+        },
+        {
+          "title": "Tabs and underline presentation",
+          "description": "The nav-tabs and nav-underline classes style ordinary links here. They do not initialize Tab panels or install tablist semantics.",
+          "markup": "<nav id=\"tabs-navigation\" class=\"nav-overflow\" aria-label=\"tabs-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-collapse-below=\"600\"><ul class=\"nav nav-tabs theme-inverse\"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li></ul></nav><nav id=\"underline-navigation\" class=\"nav-overflow\" aria-label=\"underline-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-collapse-below=\"600\"><ul class=\"nav nav-underline theme-inverse\"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li></ul></nav>"
+        },
+        {
+          "title": "Nav styles and disabled items",
+          "description": "Pills, tabs and underline are navigation presentation, not automatic Tab panels. A disabled native button is preserved and skipped by Menu navigation.",
+          "markup": "<nav id=\"styled-navigation\" class=\"nav-overflow\" aria-label=\"styled-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-collapse-below=\"600\"><ul class=\"nav nav-pills theme-inverse\"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li><li class=\"nav-item\"><button class=\"nav-link\" type=\"button\" disabled>Unavailable section</button></li></ul></nav>"
+        },
+        {
+          "title": "Icon-only and custom label",
+          "description": "The generated icon-only toggle has the accessible name More. Customize text and icon order through real options.",
+          "markup": "<nav id=\"icon-navigation\" class=\"nav-overflow\" aria-label=\"icon-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-more-text=\"false\" data-trm-collapse-below=\"600\"><ul class=\"nav \"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li></ul></nav><nav id=\"label-navigation\" class=\"nav-overflow\" aria-label=\"label-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-more-text=\"More sections\" data-trm-icon-placement=\"end\" data-trm-collapse-below=\"600\"><ul class=\"nav \"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li></ul></nav>"
+        },
+        {
+          "title": "Authored toggle and icon",
+          "description": "A named authored Menu toggle can replace the generated toggle. For a generated toggle, a child overflow-icon source is sanitized, consumed and removed.",
+          "markup": "<nav id=\"authored-navigation\" class=\"nav-overflow\" aria-label=\"authored-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-collapse-below=\"600\"><ul class=\"nav \"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li><li class=\"nav-item nav-overflow-item\"><button class=\"nav-link nav-overflow-toggle\" type=\"button\" data-trm-toggle=\"menu\" aria-expanded=\"false\" aria-label=\"More project links\"><span class=\"nav-overflow-icon\" aria-hidden=\"true\">...</span></button><div class=\"nav-overflow-menu menu\"></div></li></ul></nav><nav id=\"custom-icon-navigation\" class=\"nav-overflow\" aria-label=\"custom-icon-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-collapse-below=\"600\"><ul class=\"nav \"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li></ul><svg data-trm-overflow-icon width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" aria-hidden=\"true\" focusable=\"false\"><circle cx=\"8\" cy=\"8\" r=\"3\" fill=\"currentColor\"/></svg></nav>"
+        },
+        {
+          "title": "Existing Menu becomes a submenu",
+          "description": "The original Menu node is relocated, not cloned. Its input value and descendants survive overflow/restoration. The associated link becomes a submenu trigger.",
+          "markup": "<nav id=\"submenu-navigation\" class=\"nav-overflow\" aria-label=\"submenu-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-collapse-below=\"600\"><ul class=\"nav \"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li><li class=\"nav-item\"><button class=\"nav-link\" type=\"button\" data-trm-toggle=\"menu\" aria-expanded=\"false\">Project tools</button><div class=\"menu\" id=\"overflow-tools\"><a class=\"menu-item\" href=\"/components/\">Browse tools</a><label class=\"menu-text\" for=\"overflow-note\">Workspace note</label><input class=\"form-control\" id=\"overflow-note\" value=\"Draft\"></div></li></ul></nav>"
+        },
+        {
+          "title": "Collapse threshold and minimum visibility",
+          "description": "collapseBelow compares wrapper width against a pixel value or root breakpoint token. Keep items remain visible. threshold may force more original items to remain and is not a guarantee that they fit.",
+          "markup": "<nav id=\"breakpoint-navigation\" class=\"nav-overflow\" aria-label=\"breakpoint-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-collapse-below=\"sm\"><ul class=\"nav \"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li></ul></nav><nav id=\"threshold-navigation\" class=\"nav-overflow\" aria-label=\"threshold-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-threshold=\"1\" data-trm-collapse-below=\"0\"><ul class=\"nav \"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li></ul></nav>"
+        },
+        {
+          "title": "Inside a navbar",
+          "description": "The navbar allocates free space; NavOverflow measures its own wrapper. This is a Priority+ menu, not a responsive Drawer.",
+          "markup": "<nav class=\"navbar navbar-expand bg-1\" aria-label=\"Priority navbar\" ><div class=\"container-fluid\"><a class=\"navbar-brand\" href=\"/\">Tremplin</a><nav id=\"navbar-overflow\" class=\"nav-overflow\" aria-label=\"navbar-overflow project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-collapse-below=\"600\"><ul class=\"nav \"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li></ul></nav></div></nav>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Menu supplies keyboard navigation and logical placement. Source ordering stays authored; resizing may rebuild and close an open Menu.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><nav id=\"rtl-navigation\" class=\"nav-overflow\" aria-label=\"rtl-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-collapse-below=\"600\"><ul class=\"nav \"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li></ul></nav></div>"
+        }
+      ],
+      "variables": [],
+      "keyboard": [
+        {
+          "keys": "Arrow Down / Arrow Up on More",
+          "behavior": "Menu opens and focuses the first/last enabled item; there is no typeahead promise."
+        },
+        {
+          "keys": "Escape",
+          "behavior": "Menu closes and returns focus to its visible toggle."
+        },
+        {
+          "keys": "Tab / Enter",
+          "behavior": "Native links and controls retain their normal activation behavior. Resize is not a focus-management policy."
+        }
+      ],
+      "guidelines": [
+        "Use a sized wrapper containing a direct nav > nav-item > nav-link structure; initialize the wrapper, not the list.",
+        "Initialization runs on document ready or when loaded after parsing. Without initialization, the wrapper clips/hides the direct nav to avoid a flash. Provide your own no-script fallback when needed.",
+        "Keep items are never candidates for overflow. collapseBelow compares available wrapper width, not the viewport; named breakpoint lookup resolves once at initialization.",
+        "Overflow clones normal links and hides originals. Existing Menu nodes relocate into a submenu and are restored, preserving node identity and live input state.",
+        "A11Y-001 remaps cloned descendant IDs and local ARIA/HTML/SVG references while preserving originals; arbitrary CSS selectors and script-held references are not rewritten.",
+        "The More toggle is generated as a named native button. Custom icon input is sanitized under SEC-001; it is not arbitrary trusted HTML insertion.",
+        "update() recalculates synchronously and then dispatches update. ResizeObserver recalculates directly: it can emit overflow but does not dispatch update. resize is an internal fallback listener.",
+        "overflow is a notification with overflowCount and visibleCount, not a cancelable before gate. Restoration/recalculation can close open menus; arrange application focus deliberately.",
+        "dispose() restores original items/menus, removes the toggle item and disconnects observation. It leaves wrapper initialization classes, so do not assume it is a no-script fallback.",
+        "There is no independent overflow token map. Configure inherited Nav/Menu tokens; Toggler does not replace this component."
+      ],
+      "sass": "@use 'tremplin/scss/nav' with ($nav-tokens: (--trm-nav-gap: .5rem));\n@use 'tremplin/scss/nav-overflow';"
+    },
+    "example": "<nav id=\"project-navigation\" class=\"nav-overflow\" aria-label=\"project-navigation project sections\" data-trm-toggle=\"nav-overflow\" style=\"width:100%;max-width:24rem;\" data-trm-collapse-below=\"600\"><ul class=\"nav \"><li class=\"nav-item nav-overflow-keep\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Overview</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Activity</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/customize/\">Project settings</a></li></ul></nav>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_nav-overflow.scss",
+    "definition": {
+      "name": "nav-overflow",
+      "className": "NavOverflow",
+      "options": [
+        {
+          "name": "collapseBelow",
+          "type": "string | number | undefined",
+          "required": false
+        },
+        {
+          "name": "iconPlacement",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "menuPlacement",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "menuStrategy",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "moreText",
+          "type": "string | false | undefined",
+          "required": false
+        },
+        {
+          "name": "moreIcon",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "threshold",
+          "type": "number | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "update(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "overflow.trm.nav-overflow",
+        "resize.trm.nav-overflow",
+        "update.trm.nav-overflow"
+      ],
+      "dataAttributes": [
+        "data-trm-collapse-below",
+        "data-trm-icon-placement",
+        "data-trm-menu-placement",
+        "data-trm-menu-strategy",
+        "data-trm-more-icon",
+        "data-trm-more-text",
+        "data-trm-nav-order",
+        "data-trm-nav-overflow",
+        "data-trm-overflow-icon",
+        "data-trm-placement",
+        "data-trm-strategy",
+        "data-trm-theme",
+        "data-trm-threshold",
+        "data-trm-toggle"
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "overflow.trm.navoverflow": "On the wrapper after overflowing candidates; overflowCount and visibleCount describe that calculation. Notification, not a cancelable before gate.",
+      "resize.trm.navoverflow": "Internal namespaced fallback window listener, not a dispatched component notification.",
+      "update.trm.navoverflow": "On the wrapper after an explicit synchronous update() calculation. ResizeObserver does not dispatch update."
+    },
+    "moduleImport": "import NavOverflow from 'tremplin/nav-overflow'",
+    "javascript": "import NavOverflow from 'tremplin/nav-overflow'\n\nconst element = document.querySelector('[data-trm-toggle=\"nav-overflow\"]')\nconst instance = NavOverflow.getOrCreateInstance(element)"
+  },
+  {
+    "name": "navbar",
+    "title": "Navbar",
+    "description": "Navbar component documentation for Tremplin.",
+    "lead": "Build responsive, branded navigation headers.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Brand and navigation",
+          "description": "Use a labelled landmark, real links, nav plus navbar-nav and an authored current-page marker. Navbar has no independent controller.",
+          "markup": "<nav class=\"navbar navbar-expand bg-1\" aria-label=\"Brand example\" ><div class=\"container-fluid\"><a class=\"navbar-brand\" href=\"/\">Tremplin</a><ul class=\"nav navbar-nav\"><li class=\"nav-item\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Home</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Components</a></li></ul></div></nav>"
+        },
+        {
+          "title": "Responsive Drawer navigation",
+          "description": "Container-width expansion displays the same native dialog inline. Below the breakpoint, Drawer supplies modal behavior. The launcher identifies a dialog, not an unsynchronized expanded state.",
+          "markup": "<nav class=\"navbar md:navbar-expand bg-1\" aria-label=\"Open navigation\" ><div class=\"container-fluid\"><a class=\"navbar-brand\" href=\"/\">Tremplin</a><button class=\"btn-icon navbar-toggler\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#docs-navbar\" aria-controls=\"docs-navbar\" aria-haspopup=\"dialog\" aria-label=\"Open navigation\"><span class=\"navbar-toggler-icon\" aria-hidden=\"true\"></span></button><dialog class=\"drawer drawer-end\" id=\"docs-navbar\" tabindex=\"-1\" aria-labelledby=\"docs-navbar-title\"><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"docs-navbar-title\">Navigation</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Open navigation\" autofocus></button></header><div class=\"drawer-body\"><ul class=\"nav navbar-nav\"><li class=\"nav-item\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Home</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Components</a></li></ul></div></dialog></div></nav>"
+        },
+        {
+          "title": "Container-based expansion",
+          "description": "At the same viewport width, narrowing this navbar can show its launcher. sm:navbar-expand expands at 576px of navbar container width, not a viewport media query.",
+          "markup": "<nav class=\"navbar sm:navbar-expand bg-1\" aria-label=\"Open container navigation\" ><div class=\"container-fluid\"><a class=\"navbar-brand\" href=\"/\">Tremplin</a><button class=\"btn-icon navbar-toggler\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#container-navbar\" aria-controls=\"container-navbar\" aria-haspopup=\"dialog\" aria-label=\"Open container navigation\"><span class=\"navbar-toggler-icon\" aria-hidden=\"true\"></span></button><dialog class=\"drawer drawer-end\" id=\"container-navbar\" tabindex=\"-1\" aria-labelledby=\"container-navbar-title\"><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"container-navbar-title\">Navigation</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Open container navigation\" autofocus></button></header><div class=\"drawer-body\"><ul class=\"nav navbar-nav\"><li class=\"nav-item\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Home</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Components</a></li></ul></div></dialog></div></nav>"
+        },
+        {
+          "title": "Always expanded and always collapsed",
+          "description": "navbar-expand always renders descendants inline. Omitting an expand class keeps the Drawer launcher, independent of viewport size.",
+          "markup": "<nav class=\"navbar  bg-1\" aria-label=\"Open always-collapsed navigation\" ><div class=\"container-fluid\"><a class=\"navbar-brand\" href=\"/\">Tremplin</a><button class=\"btn-icon navbar-toggler\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#always-navbar\" aria-controls=\"always-navbar\" aria-haspopup=\"dialog\" aria-label=\"Open always-collapsed navigation\"><span class=\"navbar-toggler-icon\" aria-hidden=\"true\"></span></button><dialog class=\"drawer drawer-end\" id=\"always-navbar\" tabindex=\"-1\" aria-labelledby=\"always-navbar-title\"><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"always-navbar-title\">Navigation</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Open always-collapsed navigation\" autofocus></button></header><div class=\"drawer-body\"><ul class=\"nav navbar-nav\"><li class=\"nav-item\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Home</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Components</a></li></ul></div></dialog></div></nav>"
+        },
+        {
+          "title": "Menu integration",
+          "description": "A nested Menu needs its own trigger and wrapper. Menu, not Navbar, owns arrow/Escape behavior and expanded state.",
+          "markup": "<nav class=\"navbar navbar-expand bg-1\" aria-label=\"Navbar with Menu\" ><div class=\"container-fluid\"><a class=\"navbar-brand\" href=\"/\">Tremplin</a><ul class=\"nav navbar-nav\"><li class=\"nav-item\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Home</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Components</a></li><li class=\"nav-item\"><button class=\"nav-link\" type=\"button\" data-trm-toggle=\"menu\" aria-expanded=\"false\">Project actions</button><div class=\"menu\"><a class=\"menu-item\" href=\"/components/\">Components</a><a class=\"menu-item\" href=\"/getting-started/install/\">Installation</a></div></li></ul></div></nav>"
+        },
+        {
+          "title": "Forms and actions",
+          "description": "Keep a named search form and native labelled input. Submission navigates to the component catalog with a query parameter; it does not implement server-side search.",
+          "markup": "<nav class=\"navbar  bg-1\" aria-label=\"Search example\" ><div class=\"container-fluid\"><a class=\"navbar-brand\" href=\"/\">Tremplin</a><form class=\"d-flex flex-wrap gap-2\" role=\"search\" aria-label=\"Example documentation search\" action=\"/components/\" method=\"get\"><label class=\"visually-hidden\" for=\"adaptive-nav-search\">Search components</label><input class=\"form-control\" style=\"width: 10rem; max-width: 100%\" id=\"adaptive-nav-search\" name=\"q\" type=\"search\"><button class=\"btn-outline theme-inverse\" type=\"submit\">Search</button></form></div></nav>"
+        },
+        {
+          "title": "Text and containers",
+          "description": "navbar-text supports inline content. Inner containers align contents; spacing and position remain utility/application concerns.",
+          "markup": "<nav class=\"navbar navbar-expand bg-1\" aria-label=\"Text example\" ><div class=\"container-fluid\"><a class=\"navbar-brand\" href=\"/\">Tremplin</a><span class=\"navbar-text\">Workspace <a href=\"/components/\">components</a></span></div></nav>"
+        },
+        {
+          "title": "Image and text brand",
+          "description": "A native brand image can accompany text. This existing local illustration is decorative because adjacent text names the brand; explicit dimensions reserve space.",
+          "markup": "<nav class=\"navbar navbar-expand bg-1\" aria-label=\"Illustrated brand\" ><div class=\"container-fluid\"><a class=\"navbar-brand\" href=\"/\"><img class=\"d-inline-block align-text-top\" src=\"/content-sample.svg\" width=\"32\" height=\"24\" alt=\"\"> Tremplin</a><span class=\"navbar-text\">Brand illustration</span></div></nav>"
+        },
+        {
+          "title": "Drawer placement",
+          "description": "Use actual Drawer direction modifiers. This example always uses a top Drawer, with a named close control and initial focus authored explicitly.",
+          "markup": "<nav class=\"navbar  bg-1\" aria-label=\"Open top navigation\" ><div class=\"container-fluid\"><a class=\"navbar-brand\" href=\"/\">Tremplin</a><button class=\"btn-icon navbar-toggler\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#top-navbar\" aria-controls=\"top-navbar\" aria-haspopup=\"dialog\" aria-label=\"Open top navigation\"><span class=\"navbar-toggler-icon\" aria-hidden=\"true\"></span></button><dialog class=\"drawer drawer-top\" id=\"top-navbar\" tabindex=\"-1\" aria-labelledby=\"top-navbar-title\"><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"top-navbar-title\">Navigation</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Open top navigation\" autofocus></button></header><div class=\"drawer-body\"><ul class=\"nav navbar-nav\"><li class=\"nav-item\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Home</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Components</a></li></ul></div></dialog></div></nav>"
+        },
+        {
+          "title": "Translucent presentation",
+          "description": "navbar-translucent supplies a blurred backing layer, not fixed positioning. Fixed layouts need application space for content; this in-flow example does not cover the documentation shell.",
+          "markup": "<nav class=\"navbar navbar-expand navbar-translucent bg-1\" aria-label=\"Translucent example\" ><div class=\"container-fluid\"><a class=\"navbar-brand\" href=\"/\">Tremplin</a><span class=\"navbar-text\">In-flow navigation surface</span></div></nav>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Set the theme on the actual navbar for dark navbar tokens. Logical spacing adapts direction; Drawer still owns modal behavior.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><nav class=\"navbar sm:navbar-expand bg-1\" aria-label=\"Open dark navigation\" data-trm-theme=\"dark\" dir=\"rtl\"><div class=\"container-fluid\"><a class=\"navbar-brand\" href=\"/\">Tremplin</a><button class=\"btn-icon navbar-toggler\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#dark-navbar\" aria-controls=\"dark-navbar\" aria-haspopup=\"dialog\" aria-label=\"Open dark navigation\"><span class=\"navbar-toggler-icon\" aria-hidden=\"true\"></span></button><dialog class=\"drawer drawer-start\" id=\"dark-navbar\" tabindex=\"-1\" aria-labelledby=\"dark-navbar-title\"><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"dark-navbar-title\">Navigation</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Open dark navigation\" autofocus></button></header><div class=\"drawer-body\"><ul class=\"nav navbar-nav\"><li class=\"nav-item\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Home</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/\">Components</a></li></ul></div></dialog></div></nav></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-navbar-padding-x",
+          "defaultValue": "0",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-padding-y",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-min-height",
+          "defaultValue": "3.5rem",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-color",
+          "defaultValue": "var(--trm-fg-2)",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-hover-color",
+          "defaultValue": "var(--trm-fg-1)",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-disabled-color",
+          "defaultValue": "var(--trm-fg-3)",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-active-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-brand-padding-y",
+          "defaultValue": "0.375rem",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-brand-margin-end",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-brand-font-size",
+          "defaultValue": "var(--trm-font-size-md)",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-brand-font-weight",
+          "defaultValue": "var(--trm-font-weight-medium)",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-brand-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-brand-hover-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-nav-link-padding-x",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-toggler-transition",
+          "defaultValue": "box-shadow 0.15s ease-in-out",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-toggler-icon-size",
+          "defaultValue": "1.25rem",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-navbar-toggler-icon",
+          "defaultValue": "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath stroke='black' stroke-linecap='round' stroke-width='1' d='M1 3.5h14M1 8h14M1 12.5h14'/%3e%3c/svg%3e\")",
+          "purpose": "Default exported through $navbar-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-gap",
+          "defaultValue": "0.25rem",
+          "purpose": "Default exported through $navbar-nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-gap",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $navbar-nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-padding-x",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $navbar-nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-padding-y",
+          "defaultValue": "0.375rem",
+          "purpose": "Default exported through $navbar-nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-color",
+          "defaultValue": "var(--trm-navbar-color)",
+          "purpose": "Default exported through $navbar-nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $navbar-nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-hover-color",
+          "defaultValue": "var(--trm-navbar-hover-color)",
+          "purpose": "Default exported through $navbar-nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-hover-bg",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $navbar-nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-active-color",
+          "defaultValue": "var(--trm-navbar-active-color)",
+          "purpose": "Default exported through $navbar-nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-active-bg",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $navbar-nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-disabled-color",
+          "defaultValue": "var(--trm-navbar-disabled-color)",
+          "purpose": "Default exported through $navbar-nav-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Native links and controls follow document order. An open modal Drawer contains focus."
+        },
+        {
+          "keys": "Enter / Space",
+          "behavior": "Activate the native Drawer launcher or Menu trigger."
+        },
+        {
+          "keys": "Escape",
+          "behavior": "The active Menu or Drawer handles dismissal; Navbar supplies no Escape controller."
+        }
+      ],
+      "guidelines": [
+        "Use nav or a named navigation landmark and real destinations; author aria-current on the actual current link.",
+        "Include nav with navbar-nav. An always-expanded example uses navbar-expand; responsive sm:/md:/lg:navbar-expand classes use container queries.",
+        "The navbar container, not the viewport, determines expansion. Keep inner containers and test actual available width.",
+        "Responsive Drawer needs a native named dialog and Drawer JavaScript. Author initial focus and a visible close control.",
+        "Do not claim the launcher synchronizes aria-expanded: this Drawer implementation does not. aria-haspopup=dialog and aria-controls describe the relationship.",
+        "Use a separate Menu for contextual actions; Navbar has no JavaScript class or Toggler-based disclosure policy.",
+        "Close a modal Drawer before changing application layout. CSS expansion alone does not promise to release top-layer inertness or transfer focus.",
+        "Configure navbar-tokens, navbar-dark-tokens and navbar-nav-tokens. navbar-breakpoints controls generation; size lookup uses the global breakpoint helpers in this pin.",
+        "Dark navbar overrides can require explicit contrast choices in applications; the demo does not redefine core defaults."
+      ],
+      "sass": "@use 'tremplin/scss/navbar' with (\n  $navbar-tokens: (--trm-navbar-min-height: 4rem),\n  $navbar-nav-tokens: (--trm-nav-gap: .5rem),\n  $navbar-dark-tokens: (--trm-navbar-brand-color: var(--trm-white))\n);"
+    },
+    "example": "<nav class=\"navbar navbar-expand bg-1\" aria-label=\"Main navigation\" ><div class=\"container-fluid\"><a class=\"navbar-brand\" href=\"/\">Tremplin</a><ul class=\"nav navbar-nav\"><li class=\"nav-item\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/\">Home</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/getting-started/install/\">Docs</a></li></ul></div></nav>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_navbar.scss",
+    "applicationJavascript": "document.querySelectorAll('.navbar dialog.drawer').forEach(panel => {\n  panel.addEventListener('shown.trm.drawer', () => {\n    if (!panel.matches(':modal')) return\n    panel.querySelector('[autofocus]')?.focus({ preventScroll: true })\n  })\n})"
+  },
+  {
+    "name": "toggler",
+    "title": "Toggler",
+    "description": "Toggler component documentation for Tremplin.",
+    "lead": "Toggle a configured class or attribute without adding disclosure or focus policy.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Configured class mutation",
+          "description": "Configuration belongs to the target. Toggle a real utility without changing visibility, ARIA or focus.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"toggler\" data-trm-target=\"#toggler-panel\" >Toggle project highlight</button><div id=\"toggler-panel\" class=\"p-3 mt-2\" data-trm-value=\"bg-2\">Always available project information.</div>"
+        },
+        {
+          "title": "Remove an existing class",
+          "description": "The first activation removes an existing class; the next adds it. No active/pressed state is maintained on the launcher.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"toggler\" data-trm-target=\"#toggler-existing\" >Remove or restore highlight</button><div id=\"toggler-existing\" class=\"p-3 mt-2 bg-2\" data-trm-value=\"bg-2\">Starts highlighted.</div>"
+        },
+        {
+          "title": "Self target and multiple targets",
+          "description": "A native button can target itself explicitly. A selector can also match multiple independent configured targets; events fire on each target.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" id=\"self-toggler\" data-trm-toggle=\"toggler\" data-trm-target=\"#self-toggler\" data-trm-value=\"bg-2\">Toggle this button</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"toggler\" data-trm-target=\"[data-tgl-pair]\">Toggle two targets</button><p data-tgl-pair data-trm-value=\"bg-2\">First target</p><p data-tgl-pair data-trm-value=\"border\" class=\"p-2\">Second target</p>"
+        },
+        {
+          "title": "Configured attribute mutation",
+          "description": "Non-class attributes compare as strings: an equal value is removed, otherwise the configured value is set. This does not introduce a CSS selector or disclosure policy.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"toggler\" data-trm-target=\"#toggler-custom\" >Toggle text emphasis</button><div id=\"toggler-custom\" class=\"p-3 mt-2\" data-trm-attribute=\"style\" data-trm-value=\"font-weight: 700\">Attribute target</div><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"toggler\" data-trm-target=\"#numeric-toggler\" >Toggle numeric marker</button><div id=\"numeric-toggler\" class=\"p-3 mt-2\" data-trm-attribute=\"data-count\" data-trm-value=\"0\">Inspect data-count to see the numeric value set/removed.</div>"
+        },
+        {
+          "title": "Native fieldset state",
+          "description": "A boolean disabled attribute disables native descendants. The outside launcher remains available to remove it; Toggler does not move focus or update pressed state.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"toggler\" data-trm-target=\"#toggler-fieldset\">Toggle form availability</button><fieldset id=\"toggler-fieldset\" data-trm-attribute=\"disabled\" data-trm-value=\"true\" class=\"mt-2\"><legend class=\"h6\">Project properties</legend><label for=\"toggler-name\">Project name</label><input class=\"form-control\" id=\"toggler-name\" value=\"Tremplin\"></fieldset>"
+        },
+        {
+          "title": "Disabled trigger",
+          "description": "Native disabled triggers do not activate the delegated data API.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"toggler\" data-trm-target=\"#toggler-disabled\" disabled>Unavailable toggle</button><div id=\"toggler-disabled\" class=\"p-3 mt-2\" data-trm-value=\"bg-2\">Unchanged target</div>"
+        },
+        {
+          "title": "Protected id and unset value",
+          "description": "id cannot be changed. A null or missing runtime value performs no mutation. Unless canceled, toggled still fires after these no-op paths; it is not proof of a DOM change.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"toggler\" data-trm-target=\"#protected-toggler\" >Try protected id</button><div id=\"protected-toggler\" class=\"p-3 mt-2\" data-trm-attribute=\"id\" data-trm-value=\"replacement\">This id remains protected.</div><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"toggler\" data-trm-target=\"#null-toggler\" >Try null value</button><div id=\"null-toggler\" class=\"p-3 mt-2\" data-trm-value=\"null\">Null leaves this target unchanged.</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "The primitive works on a themed surface without inventing a dismissal or keyboard-navigation policy.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"toggler\" data-trm-target=\"#toggler-rtl\" >Toggle RTL highlight</button><div id=\"toggler-rtl\" class=\"p-3 mt-2\" data-trm-value=\"bg-2\">Always available project information.</div></div>"
+        }
+      ],
+      "variables": [],
+      "keyboard": [
+        {
+          "keys": "Enter / Space",
+          "behavior": "Activate an enabled native trigger. Non-native clickable elements do not gain keyboard semantics automatically."
+        },
+        {
+          "keys": "Escape",
+          "behavior": "No special behavior: targets do not hide and focus does not move."
+        }
+      ],
+      "guidelines": [
+        "Configure value and optional attribute on the actual target, not only the trigger. Without a selector the trigger is its own target.",
+        "Use a single valid class token for class mutation. Multi-target selectors create/retrieve an independent instance on each matching target.",
+        "Non-class values compare as strings. Boolean HTML attributes depend on presence, so setting disabled=false still disables a native control.",
+        "The id attribute is protected; missing/null value is a no-op. A contradictory source comment does not change runtime null acceptance.",
+        "toggle.trm.toggler fires on the target before execution and is cancelable; toggled follows synchronously unless canceled, even when execution does nothing.",
+        "There is no fixed CSS class, Sass token map, className option, autoClose, dismiss, hidden, ARIA synchronization or focus policy.",
+        "Native disabled controls are ignored by the data API. Use native buttons for keyboard activation; the plugin only delegates click.",
+        "Use Collapse or native Dialog/Drawer for disclosure and modal workflows, not a Toggler compatibility shim."
+      ]
+    },
+    "example": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"toggler\" data-trm-target=\"#generic-panel\" >Toggle highlight</button><div id=\"generic-panel\" class=\"p-3 mt-2\" data-trm-value=\"bg-2\">Always available content; only its background class changes.</div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/js/toggler.ts",
+    "definition": {
+      "name": "toggler",
+      "className": "Toggler",
+      "options": [],
+      "methods": [
+        "toggle(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "toggle.trm.toggler",
+        "toggled.trm.toggler"
+      ],
+      "dataAttributes": [
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"toggler\"",
+        "data-trm-value"
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "toggle.trm.toggler": "Cancelable start on the configured target, before execution. Canceling prevents execution and toggled.",
+      "toggled.trm.toggler": "Synchronous notification on the target after execution, including protected-id or null-value no-ops; not proof that an attribute changed."
+    },
+    "moduleImport": "import Toggler from 'tremplin/toggler'",
+    "javascript": "import Toggler from 'tremplin/toggler'\n\nconst element = document.querySelector('#generic-panel')\nconst instance = Toggler.getOrCreateInstance(element)\ninstance.toggle() // Mutates the configured target, not its external launcher.",
+    "sourceOptions": [
+      {
+        "name": "attribute",
+        "type": "string",
+        "defaultValue": "class",
+        "description": "Attribute to mutate on the target. id is protected."
+      },
+      {
+        "name": "value",
+        "type": "string | number | boolean",
+        "defaultValue": "null (unset)",
+        "description": "One class token or the attribute value. Runtime null/missing values do nothing; the public TypeScript config excludes null."
+      }
+    ]
+  }
+]

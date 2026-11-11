@@ -1,0 +1,109 @@
+---
+{
+  "title": "Background",
+  "description": "Use background utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use background utilities from the configured Tremplin utility map.",
+  "order": 2,
+  "utility": {
+    "category": "Color",
+    "classes": [
+      "bg-primary",
+      "bg-secondary",
+      "bg-success",
+      "bg-danger",
+      "bg-warning",
+      "bg-info",
+      "bg-accent",
+      "bg-inverse",
+      "bg-subtle-primary",
+      "bg-muted-primary",
+      "bg-body",
+      "bg-1",
+      "bg-2",
+      "bg-3",
+      "bg-4",
+      "bg-fg",
+      "bg-white",
+      "bg-black",
+      "bg-transparent",
+      "bg-10",
+      "bg-50",
+      "bg-100",
+      "bg-gradient"
+    ],
+    "notes": "Background roles assign --trm-bg and paint background-color. Subtle and muted role families are separate. Neutral body/1–4, foreground, white, black and transparent values come from the theme maps. There are no bg-light/bg-dark or bg-inherit aliases.",
+    "responsive": false
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Explicit demo contrast customization"}</h2>
+
+<p><Html source={"These examples opt into application CSS with darker solid backgrounds and emphasized foregrounds. This is not a change to framework defaults. Copy this CSS and the demo-contrast wrapper together. Calendar examples also pass a styles option to the dependency."} /></p>
+
+<Code sample={samples["utilities/background"][0].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/background"][1].example} /></div>
+
+<Code sample={samples["utilities/background"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Supported classes"}</h2>
+
+<p><Html source={"Background roles assign --trm-bg and paint background-color. Subtle and muted role families are separate. Neutral body/1–4, foreground, white, black and transparent values come from the theme maps. There are no bg-light/bg-dark or bg-inherit aliases."} /></p>
+
+<Code sample={samples["utilities/background"][2].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Configuration and limits"}</h2>
+
+<p><Html source={"Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Opacity and pairing"}</h2>
+
+<p><Html source={"bg-50 requires a companion background role because the opacity expression has no fallback for --trm-bg. It changes the background alpha, not child opacity or text color. Choose foregrounds independently; a background class is not a contrast guarantee."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Configure surface roles"}</h2>
+
+<Code sample={samples["utilities/background"][5].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"Gradient configuration and mixins"}</h2>
+
+<p><Html source={"bg-gradient reads --trm-gradient. The enable-gradients switch controls gradient-bg() consumers, not this explicit utility. The pin does not add a forced-colors gradient reset; review decorative backgrounds on supported platforms."} /></p>
+
+<Code sample={samples["utilities/background"][6].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

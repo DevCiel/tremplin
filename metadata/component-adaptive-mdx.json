@@ -1,0 +1,59 @@
+{
+  "phase": "component-adaptive-authored-mdx",
+  "names": [
+    "nav-overflow",
+    "navbar",
+    "toggler"
+  ],
+  "canonical": [
+    "nav-overflow",
+    "toggler"
+  ],
+  "remaining": 17,
+  "previousPolicy": {
+    "file": "metadata/component-floating-mdx.json",
+    "sha256": "7af16337ba636956e32a3231af1805c19f5c6ee52f7a8953bae87cf9a6c463b6"
+  },
+  "historicalSources": {
+    "site/src/data/component-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-docs.before-adaptive.ts.txt",
+      "sha256": "983f31be567827857600fffddcaa77e407d60b543327cb3e26e15e1638bca7c3"
+    },
+    "site/src/data/strict-control-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/strict-control-docs.before-adaptive.ts.txt",
+      "sha256": "f00c8a15374c8b5824ce2a392fda3f889967540fa4863ac57ce7b2ee6df9b6a9"
+    },
+    "site/src/data/adaptive-navigation-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/adaptive-navigation-docs.before-adaptive.ts.txt",
+      "sha256": "91be3b19bf99694f880eecea402b9fe4d7121f90a926eaee3a4373f7c479b673"
+    },
+    "site/src/data/component-api.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-api.before-adaptive.ts.txt",
+      "sha256": "b76bb298fa0fd53d0782c5b4e4a97b8f29b8a49e1f47b22c72562395bfefdea2"
+    },
+    "site/src/libs/component-mdx.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-mdx.before-adaptive.ts.txt",
+      "sha256": "0b20fcd9b0bcf7a90efecabf9eaddd8d04748407c1ffc25430598b8968d76b69"
+    },
+    "site/src/pages/components/[slug].astro": {
+      "snapshot": "tests/fixtures/mdx-migration/component-page.before-adaptive.astro.txt",
+      "sha256": "ec156bee04d6a1d0837a731594b05074c73fc174dee8c59735e0db4e99005ad0"
+    }
+  },
+  "expectation": {
+    "snapshot": "tests/fixtures/mdx-migration/component-adaptive.before.json",
+    "sha256": "5f82b9f3c582dfe8f13b46593b33da3c3b136b03b11a9d1cc95bb070f00f07fb"
+  },
+  "sources": {
+    "site/src/components/component/TogglerOptions.astro": "f6ebb64ed09727cef28f38cefd01410e09f0e92e6f29e7edb0fd95499437d8ff",
+    "site/src/content/docs/components/nav-overflow.mdx": "4678d86be845bfb0299b3f57d9f1bdcd9c5ed3f3b9d67c538d921d969b47b564",
+    "site/src/content/docs/components/navbar.mdx": "d36a3fb7337003d5127a67cd6e0063ecf4f44e2e8e2ba811d60b63979fb55c73",
+    "site/src/content/docs/components/toggler.mdx": "eac8bc02dba491775d5733995db65fa01baae3248afa593eaff7a58e9740d7bd",
+    "site/src/data/adaptive-navigation-docs.ts": "aeed8555c51d213f459d8e78fa12acedc5aa7db7a8b3119ba5265c8ea968bb2b",
+    "site/src/data/component-api.ts": "21a7a4e9ea5a0965ec957d80f1ea7fd4fbf3167dd72292a06bc1f51e9d826ebc",
+    "site/src/data/component-docs.ts": "e08073cbf4d51bbd3f06f5eb3d68c19cdc184c738362fa52cab49dd3305bd38d",
+    "site/src/data/strict-control-docs.ts": "1e3c99e0e528d6ebb1345f706a1ffc36576413af8336fcae95b489ab8231f6e3",
+    "site/src/libs/component-mdx.ts": "f4d1220da8911e82479cb576b8bf20e1538986a13deb744c5dc2dcd4f0cc9327",
+    "site/src/pages/components/[slug].astro": "ed3f6fda76f70fb6b2c465e9c6921aed5a150663294d4d453905f4571525a150"
+  }
+}

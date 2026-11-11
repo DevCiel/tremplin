@@ -1,0 +1,88 @@
+---
+{
+  "title": "Text decoration",
+  "description": "Use text decoration utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use text decoration utilities from the configured Tremplin utility map.",
+  "order": 35,
+  "utility": {
+    "category": "Type",
+    "classes": [
+      "text-decoration-none",
+      "text-decoration-underline",
+      "text-decoration-line-through",
+      "underline-offset-1",
+      "underline-offset-2",
+      "underline-offset-3",
+      "underline-primary",
+      "underline-secondary",
+      "underline-success",
+      "underline-danger",
+      "underline-warning",
+      "underline-info",
+      "underline-accent",
+      "underline-inverse",
+      "underline-10",
+      "underline-50",
+      "underline-100",
+      "underline-thickness-1",
+      "underline-thickness-2",
+      "underline-thickness-3",
+      "underline-thickness-4",
+      "underline-thickness-5",
+      "hover:underline-offset-3",
+      "hover:underline-100",
+      "hover:underline-thickness-3"
+    ],
+    "notes": "Underline offset uses .125/.25/.375em and thickness uses 1–5px. Color assigns the configured foreground-role expression to --trm-underline-color; opacity has a currentcolor fallback. Offset/opacity/thickness have hover states only by default. These controls do not independently change text color.",
+    "responsive": false
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/text-decoration"][0].example} /></div>
+
+<Code sample={samples["utilities/text-decoration"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"Underline offset uses .125/.25/.375em and thickness uses 1–5px. Color assigns the configured foreground-role expression to --trm-underline-color; opacity has a currentcolor fallback. Offset/opacity/thickness have hover states only by default. These controls do not independently change text color."} /></p>
+
+<Code sample={samples["utilities/text-decoration"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Configuration and limits"}</h2>
+
+<p><Html source={"Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Customize underline families"}</h2>
+
+<p><Html source={"The explicit list adds keyboard focus-visible and shallowly replaces the thickness scale. Preserve a usable text/link contrast and do not remove essential link affordances."} /></p>
+
+<Code sample={samples["utilities/text-decoration"][3].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

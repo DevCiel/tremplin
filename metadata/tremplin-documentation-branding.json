@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "phase": "tremplin-documentation-branding",
+  "reference": "9062790fdb2379593a2973416dc5a3bfb203e4e3",
+  "scope": "Reviewed public identity, source-link destinations and catalog prose only. Original source/fixture/API hashes remain unchanged.",
+  "changes": [
+    {
+      "file": "site/src/data/advanced-input-docs.ts",
+      "before": "f2951a4b50874a187607a1a3cf9d959a49a7a9e11a0661be26e5bd63506b47f8",
+      "after": "f914d5c0818686e60da54443ee43724e7564061b6c8bafe18a79c24e7f500ac5"
+    },
+    {
+      "file": "site/src/data/choice-input-docs.ts",
+      "before": "8deaf67a429ca49345dadf6423f1efb163824521bbaf66ca6092d3350a03ba0c",
+      "after": "d769ee8183cdd0aee093c384eab60c4a4851e96e9e2e15bd0c1bcafcabe5ab18"
+    },
+    {
+      "file": "site/src/data/component-reference.ts",
+      "before": "6e7c0907aea08f584f3deb8e42f9596d4af0a63c3cbdc519ce8014e001d2a578",
+      "after": "25d23a614990c18ffa87f1d5624bd6b97cddd6a2994dcb252d6c9a37a47adb6f"
+    },
+    {
+      "file": "site/src/data/content-guides.ts",
+      "before": "f2b45c1192209deb5671df54036d83a1350fac14cf0d5b8a68a6714b79bde146",
+      "after": "db062d17a5d38190737a750d8b91fbc76f25f03b86bd9d77a6717530d6066dac"
+    },
+    {
+      "file": "site/src/data/customize-guides.ts",
+      "before": "79bf6b0fc1ac6823ec81032d7a06adc7aea81fc52c534a0d6fd036aeae2f4c55",
+      "after": "1d302cffa0a683fcda369b5a54202dd76c0a72247eb2936fc68e2180e8e67f54"
+    },
+    {
+      "file": "site/src/data/form-composition-guides.ts",
+      "before": "8452d1410d1164629dd9a5594cfacc5450820b5aaecc4f1ee0e73624c57468a4",
+      "after": "f1057147a5518e732112595e4cfb49c4bcb9293e6e9a35fe9cd7d6c47b3d03cd"
+    },
+    {
+      "file": "site/src/data/forms-overview-docs.ts",
+      "before": "0f9b0ea0c4d2a927604a6fb8098ace28e1c322d1ff37d6f2b9abfff739fc7879",
+      "after": "03067a5253c2f28cb2666fd9fe642b2d64b628ddf7c34f0959563d2faec7702d"
+    },
+    {
+      "file": "site/src/data/getting-started-guides.ts",
+      "before": "566919a700fe8d85b370dfb94761578aa9e000ded1828a4509b90da333102f29",
+      "after": "3c424695b86e099cc147625c58e9a33e07aea7e7f96be79806f9f9bc6db631db"
+    },
+    {
+      "file": "site/src/data/helpers-guides.ts",
+      "before": "165e09ed2f8643b1a85dbc1b4e859dd0b736d9138ee016308129cf0664a3b218",
+      "after": "014a619800e55280e9cec02dc7002c24b29121e715ca5d01bbe54e25c216258f"
+    },
+    {
+      "file": "site/src/data/installation-guide.ts",
+      "before": "f3b3c022bc92d2d115179194cce41cb77915d9486c4a1471656c92cc1a7303cc",
+      "after": "67caf0c088cf9601d75e7ddf55ac5b84c78d15c6626f591e2a1ee1fd792dc5cc"
+    },
+    {
+      "file": "site/src/data/layout-guides.ts",
+      "before": "ae41675f8b2bb8f3bb36a8fbfd6ea62e11b69bb748de91d22ca6944143a3e61e",
+      "after": "5a59fe2d5174b13b1669832e3ab4cbfbedaef0b1234c0badfac2d3b3cfaaf352"
+    },
+    {
+      "file": "site/src/data/local-pattern-docs.ts",
+      "before": "d9cd7a2f96e8b6e055f760e4689ac1f0365ec30f3c650d952905603e9d0e7a2a",
+      "after": "c7beef43b42e71580fc5e02912d7c70162b37d557312074d581667cff39cd184"
+    },
+    {
+      "file": "site/src/data/native-form-guides.ts",
+      "before": "701e66446f75950be3f04b60d7dd4da7090160443b6f59b563425716817fe2c1",
+      "after": "8cc447079c7fe03df8714addd7bb0bd64dc3c71ad3a0a2fbf0e49e34cd094a40"
+    },
+    {
+      "file": "site/src/data/sheet-command-docs.ts",
+      "before": "3d208efb8b2995c2aa89c6e01f19a93a5151b847133e69194ea20b1d34bf9ea8",
+      "after": "9587fac1a2d714b62d49650b31fe2348947646df93ad5049602fe93d8c54c56c"
+    },
+    {
+      "file": "site/src/data/strict-control-docs.ts",
+      "before": "fbabaa978b0a7a38615f4fc4ff0c90ac57fb7ec7c9206f0755d9c8c2d2461d0b",
+      "after": "f00c8a15374c8b5824ce2a392fda3f889967540fa4863ac57ce7b2ee6df9b6a9"
+    },
+    {
+      "file": "site/src/data/utilities-guides.ts",
+      "before": "39be21dcd11a6a2f867af8d3e53a517701d27e29a65329182a663887b0fb0ce0",
+      "after": "38cea69fc2ad55a92af761fdb4f4530bc126647b618caf9a573d93a7a661ece1"
+    },
+    {
+      "file": "site/src/data/workflow-guides.ts",
+      "before": "16cea64fe8f7bf6c25fa18551e4fee30b4f7672087b27402a574ff89954bcc31",
+      "after": "c51314f03dcb3716eab37917a283fd5eb7c2cd5765809d2973fe80499bbea47e"
+    }
+  ],
+  "localOnly": true,
+  "releaseBlocked": true
+}

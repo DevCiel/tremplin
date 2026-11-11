@@ -1,0 +1,30 @@
+---
+title: Customize Tremplin
+description: Configure Tremplin variables, maps, functions, mixins, and runtime tokens.
+---
+
+import GuideIndex from '../../../components/GuideIndex.astro'
+import Code from '../../../components/shortcodes/Code.astro'
+import { customizeExamples } from '../../../data/customize-examples'
+
+# Customize Tremplin
+
+Choose a runtime CSS override or a custom Sass build, then verify your components in light, dark, and right-to-left layouts.
+
+## Customization guides
+
+<GuideIndex group="customize" />
+
+## Configure once
+
+Configure the main Sass module once, before it is loaded elsewhere:
+
+<Code sample={customizeExamples['customize/sass#2'].code[0]} standalone={true} />
+
+The full entry exposes configuration and theme maps, plus component-owned token maps. Use `sass:map` with `config.$spacers` for spacing values, and import mixins explicitly from their owning modules, such as `mixins/focus-ring`, `mixins/visually-hidden`, or `layout/breakpoints`. The main entry does not re-export every Sass helper. See the [Sass guide](/customize/sass/) for load order and forwarding details. Runtime themes override `--trm-*` properties without renaming public classes.
+
+For focused bundles, import `tremplin-grid`, `tremplin-reboot`, or `tremplin-utilities` from the published Sass source.
+
+## Source and credits
+
+Examples use Tremplin's actual configuration and tokens. See the [maintained source](https://github.com/DevCiel/tremplin/tree/main/src/scss) for supported Sass contracts and [third-party notices](/THIRD_PARTY_NOTICES.txt) for original code and documentation credits. Unsupported APIs are not advertised as local features.

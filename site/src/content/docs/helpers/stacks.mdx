@@ -1,0 +1,79 @@
+---
+{
+  "title": "Stacks",
+  "description": "Compose horizontal and vertical groups with container-responsive stack controls.",
+  "group": "Helpers",
+  "lead": "Compose horizontal and vertical groups with container-responsive stack controls.",
+  "order": 4
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { helpersExamples as samples } from '../../../data/helpers-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Vertical"}</h2>
+
+<p><Html source={"vstack selects column direction and stretched items. It supplies no gap; add a spacing utility such as gap-3. Stack classes affect visual composition, not list or group semantics."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/stacks"][0].example} /></div>
+
+<Code sample={samples["helpers/stacks"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Horizontal"}</h2>
+
+<p><Html source={"hstack selects row direction with flex-start alignment. Add flex-wrap when wrapping is wanted. Both stacks use flex: 1 1 auto and align-self: stretch unless their input tokens change. There are no legacy stack or cluster classes in the strict core. The controls shown here use the inverse theme for readable labels. The pinned primary solid variant has only about 3.56:1 white-on-blue contrast at normal 16px text in light mode; variant names are not an accessibility guarantee. Check actual foreground and background pairs."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/stacks"][1].example} /></div>
+
+<Code sample={samples["helpers/stacks"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Container-responsive stacks"}</h2>
+
+<p><Html source={"stack-container establishes inline-size containment. Put the responsive stack inside it: a container cannot query itself. vstack sm:hstack switches to a row at the nearest eligible container minimum of 576px, independent of viewport width. md uses 768px."} /></p>
+
+<p><Html source={"The pinned base selectors match any class attribute containing hstack or vstack. Prefix-only names therefore establish a flex box before their query matches, normally with inherited direction or the row fallback. Application class names containing those substrings can also match. These inheriting controls can affect nested stacks; set a local base class when independence is needed."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/stacks"][2].example} /></div>
+
+<Code sample={samples["helpers/stacks"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Viewport-responsive alternative"}</h2>
+
+<p><Html source={"Use responsive flex utilities when the viewport, rather than a query container, should control direction. Keep DOM and keyboard order meaningful. Do not reverse reading order merely to rearrange the visual layout."} /></p>
+
+<Code sample={samples["helpers/stacks"][3].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"CSS"}</h2>
+
+<p><Html source={"Stack inputs are --trm-stack-flex, --trm-stack-direction, --trm-stack-align-items and --trm-stack-align-self. They are inheriting helper controls, not registered utility composition properties. Use normal gap utilities for spacing. The full and utilities-only entries include these helpers."} /></p>
+
+<p><Html source={"Container queries use physical width at this pin. Test unusual writing modes, nesting, intrinsic sizing, long labels, RTL and zoom. Give contained layouts an appropriate available size instead of assuming shrink-to-fit behavior is unchanged."} /></p>
+
+<Code sample={samples["helpers/stacks"][4].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Container Sass helpers"}</h2>
+
+<p><Html source={"Import query mixins from layout/breakpoints. set-container accepts a containment type and optional name. The up/down/only mixins accept a breakpoint, optional container name and optional map; between accepts the two bounds first."} /></p>
+
+<p><Html source={"The smallest zero minimum emits content without a query. Unknown keys also yield unqueried content at this pin, so keep map names coherent rather than relying on validation that the source does not provide."} /></p>
+
+<Code sample={samples["helpers/stacks"][5].code[0]} standalone={true} />
+
+</section>

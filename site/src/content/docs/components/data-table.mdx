@@ -1,0 +1,110 @@
+---
+{
+  "component": "data-table",
+  "title": "Data Table",
+  "description": "Data Table component documentation for Tremplin.",
+  "lead": "Compose native tables with optional local styling and explicit application-owned controls.",
+  "variants": [
+    {
+      "title": "Toolbar and sortable columns",
+      "description": "The copyable application demo filters and sorts its two existing rows without network access. aria-sort appears only on the currently sorted header, not the button."
+    },
+    {
+      "title": "Selectable rows",
+      "description": "Native checkboxes own selection semantics. The supplied change handler mirrors checked state into the core table-active visual class and a count; it does not turn this plain table into a grid."
+    },
+    {
+      "title": "Responsive sticky table",
+      "description": "The actual named scroll region contains both horizontal and vertical overflow. The optional extension pins header cells, not the caption or toolbar."
+    },
+    {
+      "title": "Empty results and footer",
+      "description": "Keep real headers and an explanatory spanning cell. Recovery is an actual catalog link; CSS does not fetch results or implement pagination."
+    },
+    {
+      "title": "Custom presentation",
+      "description": "Only real data-table tokens customize this root. Native row/column relationships remain unchanged."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Ordinary native table semantics and destinations remain valid in the surrounding direction. Localized data and application sort order are separate concerns."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Visits labelled native search, sort, checkbox and recovery controls plus explicitly focusable scrolling regions."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Native buttons activate the copied application sorter; Space changes a checkbox. Links activate with Enter."
+    },
+    {
+      "keys": "Arrow keys",
+      "behavior": "Native scrolling within the focused overflow element, not grid-cell movement."
+    }
+  ],
+  "guidelines": [
+    "This optional local CSS extension has no DataTable JavaScript class or fetch API. Import optional CSS explicitly after core.",
+    "The copied handler owns local filtering, sort order, aria-sort, checkbox styling and status counts. It preserves native table semantics and never adds grid roles.",
+    "Place aria-sort on only the currently sorted th. Name actual buttons and preserve focus while rearranging rows; filter hidden rows without destroying their data.",
+    "Checkbox checked state is the selection source of truth. These plain-table demos use table-active for color, not aria-selected. The extension selected-bg token only drives its optional aria-selected CSS hook; that hook does not justify adding grid semantics.",
+    "Name and focus the actual data-table-scroll region. Sticky headers require actual vertical overflow; the toolbar/caption are not pinned by this extension.",
+    "Empty cells use colspan to preserve column structure, with count/recovery controls outside the table. The pattern supplies no automatic pagination or remote results."
+  ]
+}
+---
+
+import { tableDemoIsolationCss } from '../../../data/chip-table-docs'
+import Style from '../../../components/component/Style.astro'
+import { localPatternJavascript } from '../../../data/local-pattern-docs'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+<p>These live examples locally revert the documentation prose-table cell rules so the real framework padding and borders remain visible. This is documentation isolation, not a core CSS change.</p>
+<Style source={tableDemoIsolationCss} />
+<div class="docs-callout docs-callout-info"><strong>Optional local extension.</strong> This optional pattern is separate from the core and has no matching core plugin. This guide explicitly loads the existing optional extension CSS after core; normal core pages do not. Its Sass belongs to the <code>{"custom"}</code> layer. Import optional styling explicitly in your application.</div>
+<Code source={"import 'tremplin/css'\nimport 'tremplin/css/extensions'"} standalone={true} plain={true} label="Copy optional extension CSS imports" />
+
+<Example markup={componentExample("data-table")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="data-table" />
+
+{componentDetail("data-table").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="data-table" />
+</>}
+
+{componentDetail("data-table").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("data-table").sass} standalone={true} />
+</>}
+
+{componentDetail("data-table").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="data-table" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="data-table" />
+
+{documentedComponents.find(component => component.name === "data-table").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="data-table" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>This optional CSS extension has no matching core JavaScript plugin. Any demonstrated dynamic action is application-owned and is disclosed below.</p>
+
+<div class="docs-callout"><strong>Explicit application demo.</strong> Copy this handler after the matching markup. It acts only on this example{"'"}s DOM and performs no network requests, persistence or account changes. It is not a new framework plugin. The application owns state, status text and any focus movement.</div>
+<Code source={localPatternJavascript["data-table"]} standalone={true} plain={true} label="Copy local pattern application handler" />

@@ -1,0 +1,49 @@
+---
+{
+  "title": "Visually hidden",
+  "description": "Keep supplementary text accessible and reveal focusable content when keyboard focus reaches it.",
+  "group": "Helpers",
+  "lead": "Keep supplementary text accessible and reveal focusable content when keyboard focus reaches it.",
+  "order": 8
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { helpersExamples as samples } from '../../../data/helpers-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Hidden visually, still available"}</h2>
+
+<p><Html source={"visually-hidden clips a one-pixel box while keeping its content available to assistive technology. It is not hidden or display: none. Do not place an interactive control in this always-hidden helper, because its focus could disappear from view."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/visually-hidden"][0].example} /></div>
+
+<Code sample={samples["helpers/visually-hidden"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Focusable content"}</h2>
+
+<p><Html source={"The focusable helper applies hiding only when neither the element nor its descendants have focus, using :not(:focus, :focus-within). Keep a visible focus indicator and a usable destination. The mixin preserves a caption positioning exception and clips overflowing descendants, matching the pin."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/visually-hidden"][1].example} /></div>
+
+<Code sample={samples["helpers/visually-hidden"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Sass"}</h2>
+
+<Code sample={samples["helpers/visually-hidden"][2].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Verification"}</h2>
+
+<p><Html source={"Tab to the link, confirm it appears and activate it. Check that its destination is not covered by sticky content. Screen-reader behavior still needs manual review with supported assistive technologies. Do not add aria-hidden to text intended to be announced."} /></p>
+
+</section>

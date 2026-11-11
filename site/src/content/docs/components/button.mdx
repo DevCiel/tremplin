@@ -1,0 +1,128 @@
+---
+{
+  "component": "button",
+  "title": "Button",
+  "description": "Button component documentation for Tremplin.",
+  "lead": "Trigger actions with solid, outline, subtle, text, size, and toggle variants.",
+  "variants": [
+    {
+      "title": "Theme-driven styles",
+      "description": "Choose a structural variant and a semantic theme; there are no btn-primary-style aliases. The neutral base btn is also available."
+    },
+    {
+      "title": "Sizes and icon buttons",
+      "description": "Use xs, sm, the default size or lg. Icon-only controls need an accessible name; variants already include base button styling."
+    },
+    {
+      "title": "Toggle and disabled states",
+      "description": "The Button plugin toggles active and aria-pressed. Native disabled prevents user activation; a disabled navigation example has no href and is removed from the tab order."
+    },
+    {
+      "title": "Native checkbox buttons",
+      "description": "Put a real checkbox inside a btn-check label. Native checked/focus semantics and CSS :has() styling are separate from the Button plugin."
+    },
+    {
+      "title": "Groups and toolbars",
+      "description": "Name related native controls. These CSS containers do not supply a roving-tabindex or editor implementation."
+    },
+    {
+      "title": "Styled solid buttons",
+      "description": "The styled modifier adds the actual gradient/shadow treatment to a solid variant; it is not a replacement theme."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Existing theme tokens and logical layout adapt to dark RTL content. This example uses the inverse theme deliberately."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Enter / Space",
+      "behavior": "Activate a focused native button; the Button data API synchronizes pressed state when enabled."
+    },
+    {
+      "keys": "Enter",
+      "behavior": "Follow an enabled navigation link. A button-styled link does not gain native Space activation."
+    },
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Move through native enabled controls. Checkbox buttons retain native checkbox behavior."
+    }
+  ],
+  "guidelines": [
+    "Use native buttons for actions and real links for navigation; declare non-submit button types explicitly.",
+    "Always name icon-only controls. Keep a toggle button label stable while aria-pressed communicates state.",
+    "A disabled class or aria-disabled alone is not an activation guard. Use native disabled, or remove/guard a disabled link destination deliberately.",
+    "Do not mix the Button plugin and native checkbox state on the same control.",
+    "Semantic color names are not a contrast guarantee. Copy the disclosed demo CSS with customized color examples, or choose and test accessible foreground/background pairs."
+  ],
+  "events": {}
+}
+---
+
+import { componentApi } from '../../../data/component-api'
+import ApiOptions from '../../../components/component/ApiOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import Contrast from '../../../components/component/Contrast.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Contrast />
+
+<Example markup={componentExample("button")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="button" />
+
+{componentDetail("button").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="button" />
+</>}
+
+{componentDetail("button").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("button").sass} standalone={true} />
+</>}
+
+{componentDetail("button").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="button" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="button" />
+
+{documentedComponents.find(component => component.name === "button").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="button" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("button").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("button").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<ApiOptions name="button" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="button" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="button" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="button" />
+<p class="mt-4"><a href="/api/button/">View the generated {componentApi("button").definition.className}{" API reference →"}</a></p>

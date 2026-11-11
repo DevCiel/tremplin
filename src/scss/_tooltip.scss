@@ -1,0 +1,147 @@
+@use "config" as *;
+@use "functions" as *;
+@use "mixins/border-radius" as *;
+@use "mixins/reset-text" as *;
+@use "mixins/tokens" as *;
+@use "mixins/transition" as *;
+
+$tooltip-tokens: () !default;
+
+// scss-docs-start tooltip-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$tooltip-tokens: defaults(
+  (
+    --trm-tooltip-zindex: var(--trm-z-tooltip),
+    --trm-tooltip-max-width: 200px,
+    --trm-tooltip-padding-x: var(--trm-spacer-3),
+    --trm-tooltip-padding-y: calc(var(--trm-spacer) * .375),
+    --trm-tooltip-font-size: var(--trm-font-size-sm),
+    --trm-tooltip-color: var(--trm-bg-body),
+    --trm-tooltip-bg: var(--trm-fg-body),
+    --trm-tooltip-border-radius: var(--trm-radius-5),
+    --trm-tooltip-opacity: .95,
+    --trm-tooltip-arrow-width: .8rem,
+    --trm-tooltip-arrow-height: .4rem,
+    --trm-tooltip-transition-property: "opacity",
+    --trm-tooltip-transition-duration: .15s,
+    --trm-tooltip-transition-timing: linear,
+  ),
+  $tooltip-tokens
+);
+// scss-docs-end tooltip-tokens
+
+@layer components {
+  .tooltip {
+    @include tokens($tooltip-tokens);
+
+    z-index: var(--trm-tooltip-zindex);
+    display: block;
+    // Our parent element can be arbitrary since tooltips are by default inserted as a sibling of their target element.
+    // So reset our font and text properties to avoid inheriting weird values.
+    @include reset-text();
+    font-size: var(--trm-tooltip-font-size);
+    // Allow breaking very long words so they don't overflow the tooltip's bounds
+    word-wrap: break-word;
+    opacity: 0;
+
+    // The JS inserts the tip, so the fade needs a starting state below. Add
+    // .tooltip-instant, or pass `animation: false`, to skip it.
+    &:not(.tooltip-instant) {
+      @include transition-props(
+        var(--trm-tooltip-transition-property),
+        var(--trm-tooltip-transition-duration),
+        var(--trm-tooltip-transition-timing)
+      );
+    }
+
+    &.show { opacity: var(--trm-tooltip-opacity); }
+
+    .tooltip-arrow {
+      display: block;
+      width: var(--trm-tooltip-arrow-width);
+      height: var(--trm-tooltip-arrow-height);
+
+      &::before {
+        position: absolute;
+        content: "";
+        border-color: transparent;
+        border-style: solid;
+      }
+    }
+  }
+
+  @starting-style {
+    .tooltip:not(.tooltip-instant).show {
+      opacity: 0;
+    }
+  }
+
+  .bs-tooltip-top .tooltip-arrow {
+    bottom: calc(-1 * var(--trm-tooltip-arrow-height));
+
+    &::before {
+      top: -1px;
+      border-width: var(--trm-tooltip-arrow-height) calc(var(--trm-tooltip-arrow-width) * .5) 0;
+      border-block-start-color: var(--trm-tooltip-bg);
+    }
+  }
+
+  .bs-tooltip-end .tooltip-arrow {
+    left: calc(-1 * var(--trm-tooltip-arrow-height));
+    width: var(--trm-tooltip-arrow-height);
+    height: var(--trm-tooltip-arrow-width);
+
+    &::before {
+      right: -1px;
+      border-width: calc(var(--trm-tooltip-arrow-width) * .5) var(--trm-tooltip-arrow-height) calc(var(--trm-tooltip-arrow-width) * .5) 0;
+      border-inline-end-color: var(--trm-tooltip-bg);
+    }
+  }
+
+  .bs-tooltip-bottom .tooltip-arrow {
+    top: calc(-1 * var(--trm-tooltip-arrow-height));
+
+    &::before {
+      bottom: -1px;
+      border-width: 0 calc(var(--trm-tooltip-arrow-width) * .5) var(--trm-tooltip-arrow-height);
+      border-block-end-color: var(--trm-tooltip-bg);
+    }
+  }
+
+  .bs-tooltip-start .tooltip-arrow {
+    right: calc(-1 * var(--trm-tooltip-arrow-height));
+    width: var(--trm-tooltip-arrow-height);
+    height: var(--trm-tooltip-arrow-width);
+
+    &::before {
+      left: -1px;
+      border-width: calc(var(--trm-tooltip-arrow-width) * .5) 0 calc(var(--trm-tooltip-arrow-width) * .5) var(--trm-tooltip-arrow-height);
+      border-inline-start-color: var(--trm-tooltip-bg);
+    }
+  }
+
+  .bs-tooltip-auto {
+    &[data-trm-placement^="top"] {
+      @extend .bs-tooltip-top;
+    }
+    &[data-trm-placement^="right"] {
+      @extend .bs-tooltip-end;
+    }
+    &[data-trm-placement^="bottom"] {
+      @extend .bs-tooltip-bottom;
+    }
+    &[data-trm-placement^="left"] {
+      @extend .bs-tooltip-start;
+    }
+  }
+
+  // Wrapper for the tooltip content
+  .tooltip-inner {
+    max-width: var(--trm-tooltip-max-width);
+    padding: var(--trm-tooltip-padding-y) var(--trm-tooltip-padding-x);
+    color: var(--trm-tooltip-color);
+    text-align: center;
+    background-color: var(--trm-tooltip-bg);
+    @include border-radius(var(--trm-tooltip-border-radius));
+  }
+}

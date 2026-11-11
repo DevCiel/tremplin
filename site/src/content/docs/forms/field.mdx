@@ -1,0 +1,102 @@
+---
+{
+  "title": "Field",
+  "description": "Group controls with labels, legends, descriptions, and validation feedback.",
+  "group": "Forms",
+  "lead": "Compose labels, controls, help and feedback with the core grid-based Field layout.",
+  "order": 1
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"How it works"}</h2>
+
+<p>{"form-field is a grid layout, not a plugin or validation engine. Its default single column stacks content. Direct-child check, radio or switch elements activate two columns; form-label spans both columns. form-field-content stacks a label and description; form-group arranges related fields. Use actual label associations and native fieldset/legend for question groups."}</p>
+
+<div class="docs-example"><Html source={examples["forms/field"][0].example} /></div>
+
+<Code sample={examples["forms/field"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Select and textarea"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/field"][1].example} /></div>
+
+<Code sample={examples["forms/field"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Checks, radios and switches"}</h2>
+
+<p>{"Place the styled control directly inside each form-field so the :has() layout selector applies. Native control state still belongs to the input."}</p>
+
+<div class="docs-example"><Html source={examples["forms/field"][2].example} /></div>
+
+<Code sample={examples["forms/field"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Grouped cards"}</h2>
+
+<p>{"The stretched label covers its form-field-card. Checked/indeterminate state changes the card background/border using CSS. There is no card controller, roving focus or automatic ARIA group name. Do not put unrelated links/buttons under a stretched label."}</p>
+
+<div class="docs-example"><Html source={examples["forms/field"][3].example} /></div>
+
+<Code sample={examples["forms/field"][3].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Overhead label and descriptions"}</h2>
+
+<p>{"The visible group title below is a paragraph associated through aria-labelledby, not an unassociated label. form-label spans both columns; the input still has its own real label and associated description."}</p>
+
+<div class="docs-example"><Html source={examples["forms/field"][4].example} /></div>
+
+<Code sample={examples["forms/field"][4].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Validation"}</h2>
+
+<p>{"These are static application/server states, not a live validator: changing the value does not clear is-invalid or aria-invalid automatically. CSS arranges and displays associated feedback. data-trm-validate opts into native user-invalid styling; success additionally requires its valid token. Labels, descriptions, announcements and error recovery remain application-owned. See the working "}<a href="/forms/overview/">{"overview demo"}</a>{" and "}<a href="/forms/validation/">{"Validation"}</a>{"."}</p>
+
+<div class="docs-example"><Html source={examples["forms/field"][5].example} /></div>
+
+<Code sample={examples["forms/field"][5].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"Enhanced controls"}</h2>
+
+<p>{"Field layout also accepts named enhanced widgets such as "}<a href="/forms/combobox/">{"Combobox"}</a>{", "}<a href="/forms/datepicker/">{"Datepicker"}</a>{" and "}<a href="/forms/otp-input/">{"OTP input"}</a>{". Those widgets have their own JavaScript APIs; a Field wrapper does not initialize their behavior. Native examples on this page need CSS only."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Sass customization"}</h2>
+
+<p>{"There is no dedicated Field token map. Card radius reads --trm-radius-7 and spacing uses the source grid rules; configure shared root properties deliberately."}</p>
+
+<Code sample={examples["forms/field"][7].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">{"Explicit demo accessibility CSS"}</h2>
+
+<p>{"Copy this scoped application CSS with the example wrappers. It emphasizes feedback/placeholder text, restores a visible plaintext focus outline, and mirrors the otherwise physical select/caret background position for RTL. These are disclosed demo choices; the pinned core defaults remain unchanged."}</p>
+
+<Code sample={examples["forms/field"][8].code[0]} standalone={true} />
+
+</section>

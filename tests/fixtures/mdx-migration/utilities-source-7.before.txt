@@ -1,0 +1,22 @@
+import type { Guide } from '../data/guide-docs'
+
+interface MdxDocument { id: string; data: { title: string; description: string } }
+interface StructuredGuide { id: string; data: { guide: Guide; order: number } }
+
+/** One route registry for authored MDX and the existing executable guide data. */
+export function documentationPaths<Document extends MdxDocument>(documents: Document[], guides: StructuredGuide[]) {
+  const entries = [
+    ...documents.map(document => ({ params: { guide: document.id }, props: { document } })),
+    ...guides.map(entry => ({
+      params: { guide: entry.id }, props: { guide: entry.data.guide, index: entry.data.order }
+    }))
+  ]
+  const seen = new Set<string>()
+  for (const entry of entries) {
+    const route = entry.params.guide
+    if (!/^[a-z0-9-]+(?:\/[a-z0-9-]+)*$/.test(route)) throw new Error(`Invalid documentation route: ${route}`)
+    if (seen.has(route)) throw new Error(`Duplicate documentation route: ${route}`)
+    seen.add(route)
+  }
+  return entries
+}

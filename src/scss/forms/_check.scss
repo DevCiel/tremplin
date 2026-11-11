@@ -1,0 +1,129 @@
+@use "../functions" as *;
+@use "../mixins/focus-ring" as *;
+@use "../mixins/mask-icon" as *;
+@use "../mixins/tokens" as *;
+@use "../mixins/transition" as *;
+
+// stylelint-disable custom-property-no-missing-var-function
+$check-tokens: () !default;
+
+// scss-docs-start check-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$check-tokens: defaults(
+  (
+    --trm-check-size: 1.25rem,
+    --trm-check-margin-block: .125rem,
+    --trm-check-bg: var(--trm-bg-body),
+    --trm-check-border-color: var(--trm-border-color),
+    --trm-check-border-radius: var(--trm-radius-5),
+    --trm-check-icon-checked: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m5.5 10 3 3 6-6'/></svg>"))},
+    --trm-check-icon-indeterminate: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 10h8'/></svg>"))},
+    --trm-check-checked-bg: var(--trm-control-checked-bg),
+    --trm-check-checked-border-color: var(--trm-control-checked-border-color),
+    --trm-check-indeterminate-bg: var(--trm-check-checked-bg),
+    --trm-check-indeterminate-border-color: var(--trm-check-checked-border-color),
+    --trm-check-active-bg: var(--trm-control-active-bg),
+    --trm-check-active-border-color: var(--trm-control-active-border-color),
+    --trm-check-disabled-bg: var(--trm-control-disabled-bg),
+    --trm-check-disabled-opacity: var(--trm-control-disabled-opacity),
+  ),
+  $check-tokens
+);
+// scss-docs-end check-tokens
+// stylelint-enable custom-property-no-missing-var-function
+
+@layer forms {
+  // The class lives on the `<input>` itself; `appearance: none` controls render
+  // pseudo-elements, so the mark is drawn directly on the input — no wrapper.
+  .check {
+    @include tokens($check-tokens);
+
+    position: relative;
+    flex-shrink: 0;
+    width: var(--trm-check-size);
+    height: var(--trm-check-size);
+    margin-block: var(--trm-check-margin-block);
+    appearance: none;
+    // later: maybe set a tertiary bg color?
+    background-color: var(--trm-theme-bg, var(--trm-check-bg));
+    border: 1px solid var(--trm-theme-bg, var(--trm-check-border-color));
+    // stylelint-disable-next-line property-disallowed-list
+    border-radius: 33%;
+    @include transition(
+      background-color var(--trm-control-transition-duration) var(--trm-control-transition-timing),
+      border-color var(--trm-control-transition-duration) var(--trm-control-transition-timing)
+    );
+
+    // Check/indeterminate mark, overlaid on the input and rendered via a CSS
+    // mask so it inherits the contrast color without an inline SVG. Always
+    // present but scaled/faded out until checked so it can pop in. `mask-image`
+    // cannot be transitioned, so the tick stays masked in every state — drop it
+    // and the mark would flash as a solid block while fading out on uncheck.
+    &::before {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      content: "";
+      background-color: var(--trm-theme-contrast, var(--trm-primary-contrast));
+      opacity: 0;
+      transform: scale(0);
+      @include mask-icon(var(--trm-check-icon-checked));
+      @include transition(
+        opacity var(--trm-control-transition-duration) var(--trm-control-transition-timing),
+        transform var(--trm-control-transition-duration) var(--trm-control-transition-timing)
+      );
+    }
+
+    &:checked {
+      background-color: var(--trm-theme-bg, var(--trm-check-checked-bg));
+      border-color: var(--trm-theme-bg, var(--trm-check-checked-border-color));
+    }
+
+    &:indeterminate {
+      background-color: var(--trm-theme-bg, var(--trm-check-indeterminate-bg));
+      border-color: var(--trm-theme-bg, var(--trm-check-indeterminate-border-color));
+    }
+
+    &:checked::before,
+    &:indeterminate::before {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    &:indeterminate::before { mask-image: var(--trm-check-icon-indeterminate); }
+
+    &:focus-visible {
+      @include focus-ring(true);
+      --trm-focus-ring-offset: -1px;
+    }
+
+    &:disabled {
+      --trm-check-bg: var(--trm-check-disabled-bg);
+
+      ~ label {
+        color: var(--trm-fg-3);
+        cursor: default;
+      }
+    }
+    &:disabled:checked,
+    &:disabled:indeterminate {
+      opacity: var(--trm-check-disabled-opacity);
+    }
+  }
+
+  .check-sm {
+    --trm-check-size: 1rem;
+
+    + label {
+      font-size: var(--trm-font-size-sm);
+    }
+  }
+  .check-lg {
+    --trm-check-size: 1.5rem;
+    --trm-check-margin-block: .375rem;
+
+    + label {
+      font-size: var(--trm-font-size-lg);
+    }
+  }
+}

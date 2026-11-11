@@ -1,0 +1,9 @@
+{
+  "groupIcons": {
+    "Getting started": "book-half",
+    "Layout": "grid-fill",
+    "Forms": "ui-radios",
+    "Customize": "palette2",
+    "Utilities": "tools"
+  }
+}

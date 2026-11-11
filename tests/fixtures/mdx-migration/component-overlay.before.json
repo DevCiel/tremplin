@@ -1,0 +1,685 @@
+[
+  {
+    "name": "bottom-sheet",
+    "implementation": "drawer",
+    "title": "Bottom Sheet",
+    "description": "Bottom Sheet component documentation for Tremplin.",
+    "lead": "Compose a bottom-placed sheet from the core native Drawer, without a separate BottomSheet plugin.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Content-height sheet",
+          "description": "An explicit --trm-drawer-height:auto override uses content height. The separate drawer-fit-content class only resets inset-block-end; it is not a sheet height preset.",
+          "markup": "<button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-toggle=\"drawer\" data-trm-target=\"#sheet-fit\" aria-controls=\"sheet-fit\">Open content-height sheet</button>\n<dialog id=\"sheet-fit\" class=\"drawer drawer-bottom drawer-sheet \" aria-labelledby=\"sheet-fit-title\" tabindex=\"-1\" style=\"--trm-drawer-height: auto\">\n  <header class=\"drawer-header\"><h3 id=\"sheet-fit-title\" class=\"drawer-title h5\">content-height sheet</h3><button type=\"button\" class=\"btn-close\" data-trm-dismiss=\"drawer\" aria-label=\"Close content-height sheet\" autofocus></button></header>\n  <div class=\"drawer-body\"><p>A short task with a visible close control.</p></div>\n  <footer class=\"drawer-footer\"><button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-dismiss=\"drawer\">Done</button></footer>\n</dialog>"
+        },
+        {
+          "title": "Scrollable body",
+          "description": "The actual drawer-body owns vertical scrolling. This explicit height token is an application choice; headers and final actions remain outside the scroller.",
+          "markup": "<button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-toggle=\"drawer\" data-trm-target=\"#sheet-scroll\" aria-controls=\"sheet-scroll\">Open scrollable sheet</button>\n<dialog id=\"sheet-scroll\" class=\"drawer drawer-bottom drawer-sheet \" aria-labelledby=\"sheet-scroll-title\" tabindex=\"-1\" style=\"--trm-drawer-height: min(65vh, 30rem)\">\n  <header class=\"drawer-header\"><h3 id=\"sheet-scroll-title\" class=\"drawer-title h5\">scrollable sheet</h3><button type=\"button\" class=\"btn-close\" data-trm-dismiss=\"drawer\" aria-label=\"Close scrollable sheet\" autofocus></button></header>\n  <div class=\"drawer-body\"><p>Review item 1: confirm the project documentation and access requirements.</p><p>Review item 2: confirm the project documentation and access requirements.</p><p>Review item 3: confirm the project documentation and access requirements.</p><p>Review item 4: confirm the project documentation and access requirements.</p><p>Review item 5: confirm the project documentation and access requirements.</p><p>Review item 6: confirm the project documentation and access requirements.</p><p>Review item 7: confirm the project documentation and access requirements.</p><p>Review item 8: confirm the project documentation and access requirements.</p><p>Review item 9: confirm the project documentation and access requirements.</p><p>Review item 10: confirm the project documentation and access requirements.</p></div>\n  <footer class=\"drawer-footer\"><button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-dismiss=\"drawer\">Done</button></footer>\n</dialog>"
+        },
+        {
+          "title": "Static backdrop",
+          "description": "Set options on the dialog before construction. Backdrop clicks and Escape do not dismiss this example; use the close button. hidePrevented reports rejected attempts.",
+          "markup": "<button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-toggle=\"drawer\" data-trm-target=\"#sheet-static\" aria-controls=\"sheet-static\">Open protected sheet</button>\n<dialog id=\"sheet-static\" class=\"drawer drawer-bottom drawer-sheet \" aria-labelledby=\"sheet-static-title\" tabindex=\"-1\" data-trm-backdrop=\"static\" data-trm-keyboard=\"false\">\n  <header class=\"drawer-header\"><h3 id=\"sheet-static-title\" class=\"drawer-title h5\">protected sheet</h3><button type=\"button\" class=\"btn-close\" data-trm-dismiss=\"drawer\" aria-label=\"Close protected sheet\" autofocus></button></header>\n  <div class=\"drawer-body\"><p>This local example has no unsaved data. Close it with either explicit dismissal button.</p></div>\n  <footer class=\"drawer-footer\"><button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-dismiss=\"drawer\">Done</button></footer>\n</dialog>"
+        },
+        {
+          "title": "Explicit width and instant presentation",
+          "description": "drawer-sheet uses a 760px width fallback at lg and above. Override its runtime width property and the real Drawer height/inset tokens; there are no small/large Bottom Sheet aliases.",
+          "markup": "<button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-toggle=\"drawer\" data-trm-target=\"#sheet-width\" aria-controls=\"sheet-width\">Open compact sheet</button>\n<dialog id=\"sheet-width\" class=\"drawer drawer-bottom drawer-sheet drawer-instant\" aria-labelledby=\"sheet-width-title\" tabindex=\"-1\" style=\"--trm-drawer-sheet-width: 34rem; --trm-drawer-height: 18rem; --trm-drawer-inset: .5rem\">\n  <header class=\"drawer-header\"><h3 id=\"sheet-width-title\" class=\"drawer-title h5\">compact sheet</h3><button type=\"button\" class=\"btn-close\" data-trm-dismiss=\"drawer\" aria-label=\"Close compact sheet\" autofocus></button></header>\n  <div class=\"drawer-body\"><p>No transition is used in this example. Width and height are authored token overrides.</p></div>\n  <footer class=\"drawer-footer\"><button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-dismiss=\"drawer\">Done</button></footer>\n</dialog>"
+        },
+        {
+          "title": "Dark RTL sheet",
+          "description": "Theme and direction belong on the dialog itself because it enters the native top layer. Bottom placement still swipes downward on supported touch/pointer devices.",
+          "markup": "<button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-toggle=\"drawer\" data-trm-target=\"#sheet-rtl\" aria-controls=\"sheet-rtl\">Open RTL sheet</button>\n<dialog id=\"sheet-rtl\" class=\"drawer drawer-bottom drawer-sheet \" aria-labelledby=\"sheet-rtl-title\" tabindex=\"-1\" dir=\"rtl\" data-trm-theme=\"dark\">\n  <header class=\"drawer-header\"><h3 id=\"sheet-rtl-title\" class=\"drawer-title h5\">RTL sheet</h3><button type=\"button\" class=\"btn-close\" data-trm-dismiss=\"drawer\" aria-label=\"Close RTL sheet\" autofocus></button></header>\n  <div class=\"drawer-body\"><p dir=\"rtl\" lang=\"ar\">راجع إعدادات المشروع ثم أغلق اللوحة.</p></div>\n  <footer class=\"drawer-footer\"><button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-dismiss=\"drawer\">Done</button></footer>\n</dialog>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-drawer-inset",
+          "defaultValue": "var(--trm-spacer)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-zindex",
+          "defaultValue": "var(--trm-z-drawer)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-width",
+          "defaultValue": "400px",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-height",
+          "defaultValue": "30vh",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-padding-x",
+          "defaultValue": "var(--trm-spacer)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-padding-y",
+          "defaultValue": "var(--trm-spacer)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-border-color",
+          "defaultValue": "var(--trm-border-color-translucent)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-border-radius",
+          "defaultValue": "var(--trm-radius-7)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-box-shadow",
+          "defaultValue": "var(--trm-box-shadow-xl)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-transition-property",
+          "defaultValue": "transform, visibility",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-transition-duration",
+          "defaultValue": "0.3s",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-transition-timing",
+          "defaultValue": "var(--trm-transition-timing-overlay)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-title-line-height",
+          "defaultValue": "1.5",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-backdrop-bg",
+          "defaultValue": "color-mix(in oklch, var(--trm-bg-body) 25%, transparent)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-backdrop-blur",
+          "defaultValue": "8px",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "sass": "@use 'tremplin/scss/drawer' with (\n  $drawer-tokens: (\n    --trm-drawer-height: 22rem,\n    --trm-drawer-border-radius: 1rem\n  )\n);\n\n// Separate runtime fallback, not a Sass-map key:\n.drawer-sheet { --trm-drawer-sheet-width: 42rem; }",
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Native modal focus navigation; only backdrop=false plus scroll=true opens a non-modal Drawer."
+        },
+        {
+          "keys": "Escape",
+          "behavior": "Requests hide when keyboard=true. With keyboard=false the modal attempt reports hidePrevented; explicit dismiss buttons still work."
+        }
+      ],
+      "guidelines": [
+        "Reuse drawer drawer-bottom drawer-sheet on a native dialog. There is no BottomSheet export, separate Sass map, bottom-sheet class or bottom-sheet size/handle API.",
+        "drawer-sheet sets physical left/right/bottom to zero and a desktop width fallback; other Drawer size constraints still apply. It supplies no automatic safe-area padding or Bottom Sheet height API. The first example explicitly raises the height token for its mobile action links.",
+        "Default options are backdrop=true, keyboard=true and scroll=false. Modal state is backdrop || !scroll; scroll=false locks the root with dialog-open.",
+        "Keep the close control available. Swipe-down dismissal is capability-dependent and has no drag animation or snap-point API.",
+        "show/hide starts can be canceled; shown/hidden follow the transition. Calls during transitions are ignored. resize is an internal listener, not a dispatched lifecycle event.",
+        "For programmatic opening, supply the opener to show(opener), choose initial focus and implement any required focus-return policy; visible data-API triggers register their own return handler."
+      ]
+    },
+    "example": "<button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-toggle=\"drawer\" data-trm-target=\"#actions\" aria-controls=\"actions\">Open quick actions</button>\n<dialog id=\"actions\" class=\"drawer drawer-bottom drawer-sheet \" aria-labelledby=\"actions-title\" tabindex=\"-1\" style=\"--trm-drawer-height: min(55vh, 24rem)\">\n  <header class=\"drawer-header\"><h3 id=\"actions-title\" class=\"drawer-title h5\">quick actions</h3><button type=\"button\" class=\"btn-close\" data-trm-dismiss=\"drawer\" aria-label=\"Close quick actions\" autofocus></button></header>\n  <div class=\"drawer-body\"><p>Choose a real documentation destination or dismiss this sheet.</p><nav class=\"d-flex flex-wrap gap-2\" aria-label=\"Quick actions\"><a class=\"btn-outline theme-inverse\" href=\"/components/\">Browse components</a><a class=\"btn-outline theme-inverse\" href=\"/api/drawer/\">Drawer API</a></nav></div>\n  <footer class=\"drawer-footer\"><button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-dismiss=\"drawer\">Done</button></footer>\n</dialog>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_drawer.scss",
+    "definition": {
+      "name": "drawer",
+      "className": "Drawer",
+      "options": [
+        {
+          "name": "backdrop",
+          "type": "string | boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "keyboard",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "scroll",
+          "type": "boolean | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "dispose(): void",
+        "toggle(relatedTarget?: HTMLElement): Promise<void>",
+        "show(relatedTarget?: HTMLElement): Promise<void>",
+        "hide(): Promise<void>"
+      ],
+      "events": [
+        "hidden.trm.drawer",
+        "hide.trm.drawer",
+        "hidePrevented.trm.drawer",
+        "resize.trm.drawer",
+        "show.trm.drawer",
+        "shown.trm.drawer"
+      ],
+      "dataAttributes": [
+        "data-trm-backdrop",
+        "data-trm-keyboard",
+        "data-trm-scroll",
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"drawer\""
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "hidden.trm.drawer": "After native close and scroll cleanup; a data-API opener registers visible-trigger focus return.",
+      "hide.trm.drawer": "Cancelable start before hiding. Calls during an active transition are ignored.",
+      "hidePrevented.trm.drawer": "Rejected static-backdrop or disabled modal Escape attempt. Canceling this notification suppresses the bounce, not a pending hide.",
+      "resize.trm.drawer": "Internal namespaced resize listener; not a dispatched Drawer lifecycle event.",
+      "show.trm.drawer": "Cancelable start on the native dialog, before opening; relatedTarget identifies the opener when supplied.",
+      "shown.trm.drawer": "After the entry callback; the controller no longer considers the panel transitioning."
+    },
+    "moduleImport": "import Drawer from 'tremplin/drawer'",
+    "javascript": "import Drawer from 'tremplin/drawer'\n\nconst element = document.querySelector('#actions')\nconst instance = Drawer.getOrCreateInstance(element)",
+    "applicationJavascript": "document.addEventListener('DOMContentLoaded', () => {\n  // Application initial-focus policy after Drawer becomes visible.\n  document.querySelectorAll('.docs-example dialog.drawer-sheet').forEach(root => {\n    root.addEventListener('shown.trm.drawer', () => root.querySelector('[autofocus]')?.focus())\n  })\n})"
+  },
+  {
+    "name": "dialog",
+    "implementation": "dialog",
+    "title": "Dialog",
+    "description": "Dialog component documentation for Tremplin.",
+    "lead": "Present modal tasks with native dialog semantics and managed focus.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Structured modal",
+          "description": "A real native modal with header/body/footer, an authored initial-focus close button and a named dismissal action. Data-API opening registers return to the visible opener.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#dialog-structure\" aria-controls=\"dialog-structure\" >Open structured dialog</button><dialog class=\"dialog \" id=\"dialog-structure\" aria-labelledby=\"dialog-structure-title\" tabindex=\"-1\" ><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"dialog-structure-title\">Project review</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close Project review\" autofocus></button></header><div class=\"dialog-body\"><p>Publishing makes this project available to the workspace.</p></div><footer class=\"dialog-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"dialog\">Finish review</button></footer></dialog>"
+        },
+        {
+          "title": "Scrollable content",
+          "description": "The constrained body scrolls while the header/footer stay available. Scrollability is demonstrated with enough real content, not an open non-modal imitation.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#dialog-scroll\" aria-controls=\"dialog-scroll\" >Review long terms</button><dialog class=\"dialog dialog-scrollable\" id=\"dialog-scroll\" aria-labelledby=\"dialog-scroll-title\" tabindex=\"-1\" style=\"block-size: 24rem\"><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"dialog-scroll-title\">Workspace terms</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close Workspace terms\" autofocus></button></header><div class=\"dialog-body\"><p>Section 1: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 2: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 3: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 4: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 5: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 6: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 7: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 8: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 9: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 10: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 11: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 12: Review the workspace terms, access policy and release requirements before continuing.</p></div><footer class=\"dialog-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"dialog\">Finish reading</button></footer></dialog>"
+        },
+        {
+          "title": "Sizes and responsive fullscreen",
+          "description": "Use actual dialog size classes and breakpoint-down fullscreen syntax. Fullscreen is layout, not a separate JavaScript controller.",
+          "markup": "<div class=\"hstack flex-wrap gap-2\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#dialog-small\" aria-controls=\"dialog-small\" >Small dialog</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#dialog-large\" aria-controls=\"dialog-large\" >Large dialog</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#dialog-full\" aria-controls=\"dialog-full\" >Responsive fullscreen</button></div><dialog class=\"dialog dialog-sm\" id=\"dialog-small\" aria-labelledby=\"dialog-small-title\" tabindex=\"-1\" ><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"dialog-small-title\">Small review</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close Small review\" autofocus></button></header><div class=\"dialog-body\"><p>Compact content.</p></div></dialog><dialog class=\"dialog dialog-lg\" id=\"dialog-large\" aria-labelledby=\"dialog-large-title\" tabindex=\"-1\" ><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"dialog-large-title\">Large review</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close Large review\" autofocus></button></header><div class=\"dialog-body\"><p>Wider content.</p></div></dialog><dialog class=\"dialog md-down:dialog-fullscreen\" id=\"dialog-full\" aria-labelledby=\"dialog-full-title\" tabindex=\"-1\" ><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"dialog-full-title\">Responsive review</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close Responsive review\" autofocus></button></header><div class=\"dialog-body\"><p>Fullscreen below md.</p></div></dialog>"
+        },
+        {
+          "title": "Non-modal dialog",
+          "description": "modal=false uses native show(), without top-layer inertness or root scroll locking. Escape works while focus remains inside; the application owns background interaction and focus policy.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#dialog-nonmodal\" aria-controls=\"dialog-nonmodal\" data-trm-modal=\"false\">Open inspector</button><dialog class=\"dialog \" id=\"dialog-nonmodal\" aria-labelledby=\"dialog-nonmodal-title\" tabindex=\"-1\" ><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"dialog-nonmodal-title\">Page inspector</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close Page inspector\" autofocus></button></header><div class=\"dialog-body\"><p>Non-modal supporting information.</p></div><footer class=\"dialog-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"dialog\">Done inspecting</button></footer></dialog>"
+        },
+        {
+          "title": "Static backdrop",
+          "description": "Static backdrop and keyboard=false reject outside/Escape dismissal via hidePrevented. The visible close action still works; cancel.trm.dialog is a notification, not the cancelable hide gate.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#dialog-static\" aria-controls=\"dialog-static\" data-trm-backdrop=\"static\" data-trm-keyboard=\"false\">Review unsaved changes</button><dialog class=\"dialog \" id=\"dialog-static\" aria-labelledby=\"dialog-static-title\" tabindex=\"-1\" ><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"dialog-static-title\">Unsaved changes</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close Unsaved changes\" autofocus></button></header><div class=\"dialog-body\"><p>Choose an explicit action before leaving.</p></div><footer class=\"dialog-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"dialog\">Keep editing</button></footer></dialog>"
+        },
+        {
+          "title": "Dialog swap",
+          "description": "A trigger inside one dialog swaps to another only after both show/hide gates accept. This is a swap, not support for arbitrarily stacked modal workflows.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#dialog-first\" aria-controls=\"dialog-first\" >Start review flow</button><dialog class=\"dialog \" id=\"dialog-first\" aria-labelledby=\"dialog-first-title\" tabindex=\"-1\" ><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"dialog-first-title\">First review</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close First review\" autofocus></button></header><div class=\"dialog-body\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#dialog-second\" aria-controls=\"dialog-second\" >Continue to second review</button></div></dialog><dialog class=\"dialog \" id=\"dialog-second\" aria-labelledby=\"dialog-second-title\" tabindex=\"-1\" ><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"dialog-second-title\">Second review</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close Second review\" autofocus></button></header><div class=\"dialog-body\"><p>The first dialog is now closed.</p></div></dialog>"
+        },
+        {
+          "title": "Nested tooltip and popover",
+          "description": "Default body containers are redirected into the open dialog for top-layer rendering. First Escape closes the shown tip; the next can close the dialog. Modal tasks still belong in the dialog, not in a tooltip.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#dialog-overlays\" aria-controls=\"dialog-overlays\" >Open overlay review</button><dialog class=\"dialog \" id=\"dialog-overlays\" aria-labelledby=\"dialog-overlays-title\" tabindex=\"-1\" ><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"dialog-overlays-title\">Overlay review</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close Overlay review\" autofocus></button></header><div class=\"dialog-body\"><div class=\"hstack flex-wrap gap-2\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"tooltip\" data-trm-title=\"Review guidance\" id=\"dialog-tooltip\">Explain review</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"popover\" data-trm-title=\"Review status\" data-trm-content=\"Ready for review.\" id=\"dialog-popover\">Review status</button></div></div></dialog>"
+        },
+        {
+          "title": "Instant and slide transitions",
+          "description": "Use actual instant/slide classes. show/hide return completion promises; calls during an active transition are ignored, not queued.",
+          "markup": "<div class=\"hstack flex-wrap gap-2\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#dialog-instant-demo\" aria-controls=\"dialog-instant-demo\" >Instant dialog</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#dialog-slide\" aria-controls=\"dialog-slide\" >Slide up dialog</button></div><dialog class=\"dialog dialog-instant\" id=\"dialog-instant-demo\" aria-labelledby=\"dialog-instant-demo-title\" tabindex=\"-1\" ><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"dialog-instant-demo-title\">Instant review</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close Instant review\" autofocus></button></header><div class=\"dialog-body\"><p>No transition wait.</p></div></dialog><dialog class=\"dialog dialog-slide-up\" id=\"dialog-slide\" aria-labelledby=\"dialog-slide-title\" tabindex=\"-1\" ><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"dialog-slide-title\">Slide review</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close Slide review\" autofocus></button></header><div class=\"dialog-body\"><p>CSS owns the slide transition.</p></div></dialog>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Put the theme/direction on the actual native dialog as well as its trigger region. Logical alignment is separate from focus policy.",
+          "markup": "<div id=\"dialog-dark\" data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#dialog-rtl\" aria-controls=\"dialog-rtl\" >Open dark dialog</button><dialog class=\"dialog \" id=\"dialog-rtl\" aria-labelledby=\"dialog-rtl-title\" tabindex=\"-1\" data-trm-theme=\"dark\" dir=\"rtl\"><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"dialog-rtl-title\">Dark review</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close Dark review\" autofocus></button></header><div class=\"dialog-body\"><p>Review the project in a dark RTL surface.</p></div></dialog></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-dialog-padding",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-width",
+          "defaultValue": "500px",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-margin",
+          "defaultValue": "1.75rem",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-border-color",
+          "defaultValue": "var(--trm-border-color-translucent)",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-border-radius",
+          "defaultValue": "var(--trm-radius-7)",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-box-shadow",
+          "defaultValue": "var(--trm-box-shadow-xl)",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-transition-property",
+          "defaultValue": "opacity, transform, visibility",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-transition-duration",
+          "defaultValue": "0.3s",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-transition-timing",
+          "defaultValue": "var(--trm-transition-timing-overlay)",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-backdrop-bg",
+          "defaultValue": "light-dark(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.65))",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-backdrop-blur",
+          "defaultValue": "8px",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-header-padding",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-header-border-color",
+          "defaultValue": "var(--trm-border-color-translucent)",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-header-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-footer-padding",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-footer-border-color",
+          "defaultValue": "var(--trm-border-color-translucent)",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-footer-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-dialog-footer-gap",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $dialog-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Native showModal contains focus. Non-modal show does not make the rest of the document inert."
+        },
+        {
+          "keys": "Escape",
+          "behavior": "Requests hide when keyboard=true; disabled modal keyboard dismissal emits hidePrevented. A visible child tip handles the first Escape."
+        },
+        {
+          "keys": "Enter / Space",
+          "behavior": "Activate a native button; a dismissal hook requests the cancelable hide operation."
+        }
+      ],
+      "guidelines": [
+        "Use a native dialog, a visible labelled heading, and an explicit dismissal control. Author autofocus on the safest useful control.",
+        "Default modal=true uses showModal and locks the root with dialog-open. Non-modal mode does neither.",
+        "Data-API triggers register focus restoration when visible. Direct programmatic callers must deliberately arrange their focus policy.",
+        "show/hide are cancelable starts; shown/hidden notify after the transition callback. cancel is not the same as cancelable hide.",
+        "Backdrop=false changes outside-click handling, not modal focus semantics. Use modal=false for non-modal behavior.",
+        "Do not bypass framework hide with raw close/form method=dialog when lifecycle/scroll cleanup is required; coordinate native/application actions explicitly.",
+        "Nested tips use the open dialog container by default and are hidden during framework close. handleUpdate is an API-consistency no-op in this implementation."
+      ],
+      "sass": "@use 'tremplin/scss/dialog' with (\n  $dialog-tokens: (--trm-dialog-width: 36rem, --trm-dialog-footer-gap: .75rem)\n);"
+    },
+    "example": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"dialog\" data-trm-target=\"#confirm\" aria-controls=\"confirm\" >Open dialog</button><dialog class=\"dialog \" id=\"confirm\" aria-labelledby=\"confirm-title\" tabindex=\"-1\" ><header class=\"dialog-header\"><h3 class=\"h5 mb-0\" id=\"confirm-title\">Publish project?</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"dialog\" aria-label=\"Close Publish project?\" autofocus></button></header><div class=\"dialog-body\"><p>Review the project before publishing.</p></div><footer class=\"dialog-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"dialog\">Confirm</button></footer></dialog>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_dialog.scss",
+    "definition": {
+      "name": "dialog",
+      "className": "Dialog",
+      "options": [
+        {
+          "name": "backdrop",
+          "type": "string | boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "keyboard",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "modal",
+          "type": "boolean | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "handleUpdate(): void",
+        "toggle(relatedTarget?: HTMLElement): Promise<void>",
+        "show(relatedTarget?: HTMLElement): Promise<void>",
+        "hide(): Promise<void>",
+        "dispose(): void"
+      ],
+      "events": [
+        "cancel.trm.dialog",
+        "hidden.trm.dialog",
+        "hide.trm.dialog",
+        "hidePrevented.trm.dialog",
+        "show.trm.dialog",
+        "shown.trm.dialog"
+      ],
+      "dataAttributes": [
+        "data-trm-backdrop",
+        "data-trm-keyboard",
+        "data-trm-modal",
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"dialog\""
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "cancel.trm.dialog": "Escape notification when keyboard dismissal is enabled; prevent hide.trm.dialog to veto closing. This is not the cancelable hide gate.",
+      "hidden.trm.dialog": "After native close and scroll cleanup; a data-API opener registers visible-trigger focus return.",
+      "hide.trm.dialog": "Cancelable start before hiding. Calls during an active transition are ignored.",
+      "hidePrevented.trm.dialog": "Rejected static-backdrop or disabled modal Escape attempt. Canceling this notification suppresses the bounce, not a pending hide.",
+      "show.trm.dialog": "Cancelable start on the native dialog, before opening; relatedTarget identifies the opener when supplied.",
+      "shown.trm.dialog": "After the entry callback; the controller no longer considers the panel transitioning."
+    },
+    "moduleImport": "import Dialog from 'tremplin/dialog'",
+    "javascript": "import Dialog from 'tremplin/dialog'\n\nconst element = document.querySelector('#confirm')\nconst instance = Dialog.getOrCreateInstance(element)"
+  },
+  {
+    "name": "drawer",
+    "implementation": "drawer",
+    "title": "Drawer",
+    "description": "Drawer component documentation for Tremplin.",
+    "lead": "Present navigation or tasks from any viewport edge with modal behavior.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Start and end drawers",
+          "description": "Functional drawers require native dialog markup and an explicit placement. Logical edges mirror in RTL. Width is a real token, not drawer-sm or drawer-lg aliases.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap gap-2\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#drawer-start-demo\" aria-controls=\"drawer-start-demo\" >Open start drawer</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#drawer-end-demo\" aria-controls=\"drawer-end-demo\" >Open end drawer</button></div><dialog class=\"drawer drawer-start\" id=\"drawer-start-demo\" aria-labelledby=\"drawer-start-demo-title\" tabindex=\"-1\" ><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"drawer-start-demo-title\">Start panel</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Start panel\" autofocus></button></header><div class=\"drawer-body\"><p>Navigation and supporting content.</p></div><footer class=\"drawer-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"drawer\">Done</button></footer></dialog><dialog class=\"drawer drawer-end\" id=\"drawer-end-demo\" aria-labelledby=\"drawer-end-demo-title\" tabindex=\"-1\" style=\"--trm-drawer-width: 22rem\"><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"drawer-end-demo-title\">End panel</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close End panel\" autofocus></button></header><div class=\"drawer-body\"><p>Project properties.</p></div><footer class=\"drawer-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"drawer\">Done</button></footer></dialog>\n</div>"
+        },
+        {
+          "title": "Top, bottom, and fullscreen",
+          "description": "Each live native dialog uses a real placement modifier. The JavaScript controller is still Drawer.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap gap-2\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#drawer-top-demo\" aria-controls=\"drawer-top-demo\" >Open top drawer</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#drawer-bottom-demo\" aria-controls=\"drawer-bottom-demo\" >Open bottom drawer</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#drawer-fullscreen-demo\" aria-controls=\"drawer-fullscreen-demo\" >Open fullscreen drawer</button></div><dialog class=\"drawer drawer-top\" id=\"drawer-top-demo\" aria-labelledby=\"drawer-top-demo-title\" tabindex=\"-1\" ><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"drawer-top-demo-title\">top panel</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close top panel\" autofocus></button></header><div class=\"drawer-body\"><p>Directional drawer content.</p></div><footer class=\"drawer-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"drawer\">Done</button></footer></dialog><dialog class=\"drawer drawer-bottom\" id=\"drawer-bottom-demo\" aria-labelledby=\"drawer-bottom-demo-title\" tabindex=\"-1\" ><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"drawer-bottom-demo-title\">bottom panel</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close bottom panel\" autofocus></button></header><div class=\"drawer-body\"><p>Directional drawer content.</p></div><footer class=\"drawer-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"drawer\">Done</button></footer></dialog><dialog class=\"drawer drawer-fullscreen\" id=\"drawer-fullscreen-demo\" aria-labelledby=\"drawer-fullscreen-demo-title\" tabindex=\"-1\" ><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"drawer-fullscreen-demo-title\">fullscreen panel</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close fullscreen panel\" autofocus></button></header><div class=\"drawer-body\"><p>Directional drawer content.</p></div><footer class=\"drawer-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"drawer\">Done</button></footer></dialog>\n</div>"
+        },
+        {
+          "title": "Bottom sheet",
+          "description": "drawer-bottom plus drawer-sheet supplies the core sheet layout. No bottom-sheet alias or authored handle is required; retain a native button alternative to swipe dismissal.",
+          "markup": "<div class=\"demo-contrast\">\n<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#drawer-sheet-demo\" aria-controls=\"drawer-sheet-demo\" >Open bottom sheet</button><dialog class=\"drawer drawer-bottom drawer-sheet\" id=\"drawer-sheet-demo\" aria-labelledby=\"drawer-sheet-demo-title\" tabindex=\"-1\" ><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"drawer-sheet-demo-title\">Share project</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Share project\" autofocus></button></header><div class=\"drawer-body\"><p>Choose a sharing destination.</p><a class=\"fg-body\" href=\"/components/\">Browse components</a></div><footer class=\"drawer-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"drawer\">Done</button></footer></dialog>\n</div>"
+        },
+        {
+          "title": "Header, body, and footer",
+          "description": "A real labelled input and long scrolling body sit between persistent title/actions. The Done button dismisses; this example does not pretend to save data.",
+          "markup": "<div class=\"demo-contrast\">\n<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#drawer-regions\" aria-controls=\"drawer-regions\" >Edit project details</button><dialog class=\"drawer drawer-start\" id=\"drawer-regions\" aria-labelledby=\"drawer-regions-title\" tabindex=\"-1\" ><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"drawer-regions-title\">Edit project</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Edit project\" autofocus></button></header><div class=\"drawer-body\"><div class=\"form-field\"><label for=\"drawer-name\">Project name</label><input class=\"form-control\" id=\"drawer-name\" value=\"Tremplin\"></div><p>Section 1: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 2: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 3: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 4: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 5: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 6: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 7: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 8: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 9: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 10: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 11: Review the workspace terms, access policy and release requirements before continuing.</p><p>Section 12: Review the workspace terms, access policy and release requirements before continuing.</p></div><footer class=\"drawer-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"drawer\">Done</button></footer></dialog>\n</div>"
+        },
+        {
+          "title": "Background scrolling and non-modal mode",
+          "description": "scroll=true permits page scrolling but stays modal while backdrop is truthy. Only scroll=true with backdrop=false uses native non-modal show(). Configure Drawer options on its element, not only on the trigger.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"hstack flex-wrap gap-2\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#drawer-scroll\" aria-controls=\"drawer-scroll\" >Modal with page scrolling</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#drawer-nonmodal\" aria-controls=\"drawer-nonmodal\" >Open non-modal drawer</button></div><dialog class=\"drawer drawer-end\" id=\"drawer-scroll\" aria-labelledby=\"drawer-scroll-title\" tabindex=\"-1\" data-trm-scroll=\"true\"><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"drawer-scroll-title\">Scrollable background</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Scrollable background\" autofocus></button></header><div class=\"drawer-body\"><p>The background is still inert because this is modal.</p></div><footer class=\"drawer-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"drawer\">Done</button></footer></dialog><dialog class=\"drawer drawer-end\" id=\"drawer-nonmodal\" aria-labelledby=\"drawer-nonmodal-title\" tabindex=\"-1\" data-trm-scroll=\"true\" data-trm-backdrop=\"false\"><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"drawer-nonmodal-title\">Non-modal panel</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Non-modal panel\" autofocus></button></header><div class=\"drawer-body\"><p>The surrounding page remains interactive.</p></div><footer class=\"drawer-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"drawer\">Done</button></footer></dialog>\n</div>"
+        },
+        {
+          "title": "Static dismissal policy",
+          "description": "A static backdrop and keyboard=false emit hidePrevented for rejected modal dismissal. The named close button remains available.",
+          "markup": "<div class=\"demo-contrast\">\n<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#drawer-static-demo\" aria-controls=\"drawer-static-demo\" >Open protected drawer</button><dialog class=\"drawer drawer-start\" id=\"drawer-static-demo\" aria-labelledby=\"drawer-static-demo-title\" tabindex=\"-1\" data-trm-backdrop=\"static\" data-trm-keyboard=\"false\"><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"drawer-static-demo-title\">Protected panel</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Protected panel\" autofocus></button></header><div class=\"drawer-body\"><p>Use an explicit close action.</p></div><footer class=\"drawer-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"drawer\">Done</button></footer></dialog>\n</div>"
+        },
+        {
+          "title": "Responsive drawer",
+          "description": "lg:drawer is a panel below lg and normal in-flow content above it. The responsive trigger is hidden above lg. This is CSS presentation, not an always-open modal.",
+          "markup": "<div class=\"demo-contrast\">\n<button class=\"btn-outline theme-inverse lg:d-none\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#drawer-responsive\" aria-controls=\"drawer-responsive\" >Open responsive drawer</button><dialog class=\"lg:drawer drawer-end\" id=\"drawer-responsive\" aria-labelledby=\"drawer-responsive-title\" tabindex=\"-1\" ><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"drawer-responsive-title\">Responsive panel</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Responsive panel\" autofocus></button></header><div class=\"drawer-body\"><p>In-flow content above lg, a Drawer below lg.</p></div><footer class=\"drawer-footer lg:d-none\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"drawer\">Done</button></footer></dialog>\n</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Theme and direction are authored on the actual panel. Swipe direction follows the document direction when the helper is initialized; a local RTL wrapper alone is not a gesture policy.",
+          "markup": "<div class=\"demo-contrast\">\n<div id=\"drawer-dark\" data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#drawer-rtl\" aria-controls=\"drawer-rtl\" >Open dark drawer</button><dialog class=\"drawer drawer-start\" id=\"drawer-rtl\" aria-labelledby=\"drawer-rtl-title\" tabindex=\"-1\" data-trm-theme=\"dark\" dir=\"rtl\"><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"drawer-rtl-title\">Dark navigation</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Dark navigation\" autofocus></button></header><div class=\"drawer-body\"><p>Supporting content in a dark RTL panel.</p></div><footer class=\"drawer-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"drawer\">Done</button></footer></dialog></div>\n</div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-drawer-inset",
+          "defaultValue": "var(--trm-spacer)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-zindex",
+          "defaultValue": "var(--trm-z-drawer)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-width",
+          "defaultValue": "400px",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-height",
+          "defaultValue": "30vh",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-padding-x",
+          "defaultValue": "var(--trm-spacer)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-padding-y",
+          "defaultValue": "var(--trm-spacer)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-border-color",
+          "defaultValue": "var(--trm-border-color-translucent)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-border-radius",
+          "defaultValue": "var(--trm-radius-7)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-box-shadow",
+          "defaultValue": "var(--trm-box-shadow-xl)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-transition-property",
+          "defaultValue": "transform, visibility",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-transition-duration",
+          "defaultValue": "0.3s",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-transition-timing",
+          "defaultValue": "var(--trm-transition-timing-overlay)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-title-line-height",
+          "defaultValue": "1.5",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-backdrop-bg",
+          "defaultValue": "color-mix(in oklch, var(--trm-bg-body) 25%, transparent)",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-drawer-backdrop-blur",
+          "defaultValue": "8px",
+          "purpose": "Default exported through $drawer-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Native modal containment applies when backdrop is truthy or scroll=false. Non-modal mode leaves the page interactive."
+        },
+        {
+          "keys": "Escape",
+          "behavior": "Close when keyboard=true and focus is in the panel; a modal keyboard=false attempt emits hidePrevented."
+        },
+        {
+          "keys": "Directional swipe",
+          "behavior": "Where supported, dismiss toward the placement edge using document RTL. Always retain a close button."
+        }
+      ],
+      "guidelines": [
+        "Functional drawers are named native dialog elements, not section elements with visibility/transform overrides.",
+        "Always choose drawer-start/end/top/bottom/fullscreen. Size with --trm-drawer-width/height; there are no drawer-sm/lg classes.",
+        "Modal state is backdrop || !scroll; scroll=true alone does not permit background interaction.",
+        "Data-API openers restore focus when visible. Programmatic workflows own their focus policy.",
+        "Drawer options are read from the Drawer element. Responsive lg:drawer is static above lg and panel-like below it.",
+        "show/hide starts are cancelable; shown/hidden follow transition cleanup. resize is an internal listener, not a public lifecycle notification.",
+        "drawer-sheet is the supported core sheet class. Optional additional patterns must not be misrepresented as core aliases."
+      ],
+      "sass": "@use 'tremplin/scss/drawer' with (\n  $drawer-tokens: (--trm-drawer-width: 24rem, --trm-drawer-padding-x: 1.25rem)\n);"
+    },
+    "example": "<div class=\"demo-contrast\">\n<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"drawer\" data-trm-target=\"#navigation\" aria-controls=\"navigation\" >Open drawer</button><dialog class=\"drawer drawer-start\" id=\"navigation\" aria-labelledby=\"navigation-title\" tabindex=\"-1\" ><header class=\"drawer-header\"><h3 class=\"drawer-title h5\" id=\"navigation-title\">Navigation</h3><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"drawer\" aria-label=\"Close Navigation\" autofocus></button></header><div class=\"drawer-body\"><nav class=\"nav flex-column\" aria-label=\"Drawer navigation\"><a class=\"nav-link fg-body\" href=\"/\">Home</a><a class=\"nav-link fg-body\" href=\"/components/\">Components</a></nav></div><footer class=\"drawer-footer\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-dismiss=\"drawer\">Done</button></footer></dialog>\n</div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_drawer.scss",
+    "definition": {
+      "name": "drawer",
+      "className": "Drawer",
+      "options": [
+        {
+          "name": "backdrop",
+          "type": "string | boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "keyboard",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "scroll",
+          "type": "boolean | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "dispose(): void",
+        "toggle(relatedTarget?: HTMLElement): Promise<void>",
+        "show(relatedTarget?: HTMLElement): Promise<void>",
+        "hide(): Promise<void>"
+      ],
+      "events": [
+        "hidden.trm.drawer",
+        "hide.trm.drawer",
+        "hidePrevented.trm.drawer",
+        "resize.trm.drawer",
+        "show.trm.drawer",
+        "shown.trm.drawer"
+      ],
+      "dataAttributes": [
+        "data-trm-backdrop",
+        "data-trm-keyboard",
+        "data-trm-scroll",
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"drawer\""
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "hidden.trm.drawer": "After native close and scroll cleanup; a data-API opener registers visible-trigger focus return.",
+      "hide.trm.drawer": "Cancelable start before hiding. Calls during an active transition are ignored.",
+      "hidePrevented.trm.drawer": "Rejected static-backdrop or disabled modal Escape attempt. Canceling this notification suppresses the bounce, not a pending hide.",
+      "resize.trm.drawer": "Internal namespaced resize listener; not a dispatched Drawer lifecycle event.",
+      "show.trm.drawer": "Cancelable start on the native dialog, before opening; relatedTarget identifies the opener when supplied.",
+      "shown.trm.drawer": "After the entry callback; the controller no longer considers the panel transitioning."
+    },
+    "moduleImport": "import Drawer from 'tremplin/drawer'",
+    "javascript": "import Drawer from 'tremplin/drawer'\n\nconst element = document.querySelector('#navigation')\nconst instance = Drawer.getOrCreateInstance(element)"
+  }
+]

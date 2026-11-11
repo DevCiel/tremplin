@@ -1,0 +1,72 @@
+---
+{
+  "title": "Package contents",
+  "description": "Choose Tremplin CSS builds, JavaScript formats, types, and source entry points.",
+  "group": "Getting started",
+  "lead": "Understand which files to ship, which files need a bundler, and which files are source-only.",
+  "order": 8
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { gettingStartedExamples as samples } from '../../../data/getting-started-examples'
+import { frameworkVersion, installCommand, localPackage, requiredPeers, packageMetadata as pkg } from '../../../data/installation-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">1. Inspect the distribution</h2>
+
+<Code sample={samples["contents#0"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">2. Select CSS</h2>
+
+<div class="table-responsive"><table class="table table-bordered">
+<thead><tr><th scope="col">Package export</th><th scope="col">Purpose</th></tr></thead>
+<tbody>
+<tr><td><code>{"tremplin/css"}</code></td><td><code>{"Complete compiled framework."}</code></td></tr>
+<tr><td><code>{"tremplin/css/min"}</code></td><td><code>{"Minified complete stylesheet."}</code></td></tr>
+<tr><td><code>{"tremplin/css/grid"}</code></td><td><code>{"Focused layout build."}</code></td></tr>
+<tr><td><code>{"tremplin/css/reboot"}</code></td><td><code>{"Normalization and base content styles."}</code></td></tr>
+<tr><td><code>{"tremplin/css/utilities"}</code></td><td><code>{"Generated utilities."}</code></td></tr>
+<tr><td><code>{"tremplin/scss"}</code></td><td><code>{"Configurable Sass entry; must be compiled."}</code></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">3. Select JavaScript</h2>
+
+<div class="docs-callout docs-callout-info">The standard browser ES module has bare package dependencies, not split browser chunks. Use the self-contained bundle in plain HTML, or provide a bundler/import map for the standard build. Individual js/dist modules intentionally retain their sibling module imports.</div>
+
+<div class="table-responsive"><table class="table table-bordered">
+<thead><tr><th scope="col">File or export</th><th scope="col">Environment</th></tr></thead>
+<tbody>
+<tr><td><code>{"dist/js/tremplin.min.js"}</code></td><td><code>{"Standard ES module; positioning and calendar peers remain external."}</code></td></tr>
+<tr><td><code>{"dist/js/tremplin.bundle.min.js"}</code></td><td><code>{"Self-contained ES module including both peers; no window global."}</code></td></tr>
+<tr><td><code>{"tremplin"}</code></td><td><code>{"Canonical native ES modules; Node 24 also supports require(ESM) interop, not a separate CommonJS build."}</code></td></tr>
+<tr><td><code>{"tremplin/collapse"}</code></td><td><code>{"Individual core component package entry."}</code></td></tr>
+<tr><td><code>{"tremplin/js/dist/collapse.js"}</code></td><td><code>{"Explicit canonical module path in the same graph."}</code></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">4. Keep declarations and maps straight</h2>
+
+<p>TypeScript declarations describe the API and are resolved through package exports; they are not browser scripts. Source maps support debugging and can be deployed or withheld according to your application policy. Source TypeScript and Sass are inputs, not compiled browser assets.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">5. Verify package contents locally</h2>
+
+<p>Run these in the repository. The tarball consumer check verifies installation and exports. Prefer declared package subpaths instead of internal chunks, which may change between builds.</p>
+
+<Code sample={samples["contents#4"].code[0]} standalone={true} />
+
+</section>

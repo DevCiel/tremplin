@@ -1,0 +1,153 @@
+import type { ComponentDetail } from './component-docs'
+import type { Guide } from './guide-docs'
+import { documentedTokens } from './documented-tokens'
+
+const wrap=(markup:string)=>`<div data-docs-forms>${markup}</div>`
+const field=(id:string,label:string,attrs='',help='')=>`<div class="form-field"><label class="form-label" for="${id}">${label}</label><input class="form-control" id="${id}" ${attrs}${help?` aria-describedby="${id}-help"`:''}>${help?`<p class="form-text mb-0" id="${id}-help">${help}</p>`:''}</div>`
+const check=(id:string,label:string,type='checkbox',attrs='')=>`<div class="form-field"><input class="${type==='radio'?'radio':'check'}" type="${type}" id="${id}" ${attrs}><label for="${id}">${label}</label></div>`
+const switchField=(id:string,label:string)=>`<div class="form-field"><span class="switch"><input type="checkbox" role="switch" id="${id}"></span><label for="${id}">${label}</label></div>`
+const button=(label:string,attrs='')=>`<button class="btn-outline theme-inverse" ${attrs}>${label}</button>`
+
+export const basicForm=(id:string)=>wrap(`<form id="${id}" data-docs-forms-preview class="vstack gap-3">
+  ${field(id+'-email','Email address (required)','type="email" name="email" required autocomplete="email"','Use an example address for this local preview.')}
+  ${field(id+'-project','Project name (required)','type="text" name="project" required autocomplete="off"')}
+  ${check(id+'-updates','Include project updates','checkbox','name="updates" value="yes"')}
+  <div class="d-flex flex-wrap gap-2">${button('Check locally','type="submit" data-docs-forms-submit disabled')}${button('Reset','type="reset"')}</div>
+  <p class="form-text mb-0" role="status" data-docs-forms-status>No submission attempted.</p>
+</form>`)
+export const disabledForm=(id:string)=>wrap(`<fieldset disabled class="vstack gap-3">
+  <legend>Unavailable settings</legend>
+  ${field(id+'-name','Disabled display name','type="text" name="displayName" value="Unavailable"')}
+  <div class="form-field"><label class="form-label" for="${id}-select">Disabled role</label><select class="form-control" id="${id}-select" name="role"><option>Viewer</option><option>Editor</option></select></div>
+  ${check(id+'-updates','Managed updates','checkbox','name="updates" checked')}
+  <div>${button('Save unavailable settings','type="button"')}</div>
+</fieldset>`)
+export const stateForm=(id:string)=>wrap(`<form id="${id}" data-docs-forms-values class="vstack gap-3">
+  ${field(id+'-readonly','Readonly account','name="account" readonly value="example-account"')}
+  ${field(id+'-disabled','Disabled account note','name="note" disabled value="Not submitted"')}
+  <div>${button('Inspect included field names','type="button" data-docs-forms-inspect disabled')}</div>
+  <p class="form-text mb-0" role="status" data-docs-forms-status>No inspection attempted.</p>
+</form>`)
+export const validationForm=(id:string)=>wrap(`<form id="${id}" data-docs-forms-validation novalidate class="vstack gap-3">
+  <div class="border rounded-5 p-3 focus-ring" tabindex="-1" role="alert" data-docs-forms-summary hidden><p><strong>Check the required details.</strong></p><ul class="mb-0"><li><a href="#${id}-email">Enter a valid email address.</a></li><li><a href="#${id}-code">Use six uppercase letters or digits for the project code.</a></li></ul></div>
+  <div class="form-field"><label class="form-label" for="${id}-email">Email address (required)</label><input class="form-control" type="email" name="email" id="${id}-email" required autocomplete="email" aria-describedby="${id}-email-error"><p class="invalid-feedback mb-0" id="${id}-email-error">Enter a valid email address.</p></div>
+  <div class="form-field"><label class="form-label" for="${id}-code">Project code (required)</label><input class="form-control" name="code" id="${id}-code" required pattern="[A-Z0-9]{6}" maxlength="6" aria-describedby="${id}-code-help ${id}-code-error"><p class="form-text mb-0" id="${id}-code-help">Use exactly six uppercase letters or digits.</p><p class="invalid-feedback mb-0" id="${id}-code-error">Enter a six-character code such as ABC123.</p></div>
+  <div class="d-flex flex-wrap gap-2">${button('Check details locally','type="submit" data-docs-forms-submit disabled')}${button('Reset validation','type="reset"')}</div>
+  <p class="form-text mb-0" role="status" data-docs-forms-status>No submission attempted.</p>
+</form>`)
+const controls=(id:string)=>wrap(`<div class="vstack gap-3">
+  <div class="form-field"><label class="form-label" for="${id}-role">Project role</label><select class="form-control" id="${id}-role" name="role"><option value="designer">Designer</option><option value="developer">Developer</option></select></div>
+  <div class="form-field"><label class="form-label" for="${id}-notes">Project notes</label><textarea class="form-control" id="${id}-notes" name="notes" rows="3" aria-describedby="${id}-notes-help"></textarea><p class="form-text mb-0" id="${id}-notes-help">Keep personal information out of this preview.</p></div>
+  ${field(id+'-small','Small control','type="text"').replace('class="form-control"','class="form-control form-control-sm"')}
+  ${field(id+'-large','Large control','type="text"').replace('class="form-control"','class="form-control form-control-lg"')}
+</div>`)
+const choices=(id:string)=>wrap(`<div class="vstack gap-3">
+  ${check(id+'-updates','Receive a weekly summary')}
+  <fieldset class="form-group"><legend>Billing schedule</legend>${check(id+'-monthly','Monthly','radio',`name="${id}-billing" value="monthly" checked`)}${check(id+'-yearly','Yearly','radio',`name="${id}-billing" value="yearly"`)}</fieldset>
+  ${switchField(id+'-notices','Enable project notices')}
+</div>`)
+const floating=(id:string)=>wrap(`<div class="vstack gap-3">
+  <div class="form-floating"><label for="${id}-workspace">Workspace name</label><input class="form-control" id="${id}-workspace" name="workspace" placeholder="Workspace name" autocomplete="off"></div>
+  <div><label class="form-label" for="${id}-path">Project path</label><div class="input-group"><span class="input-group-text" id="${id}-prefix">/projects/</span><input class="form-control" id="${id}-path" name="path" aria-describedby="${id}-prefix" value="demo"></div></div>
+</div>`)
+const layout=(id:string)=>wrap(`<div class="row g-3"><div class="col-12 md:col-6">${field(id+'-first','First name','name="firstName" autocomplete="given-name"')}</div><div class="col-12 md:col-6">${field(id+'-last','Last name','name="lastName" autocomplete="family-name"')}</div></div>`)
+const dark=(id:string)=>wrap(`<div data-trm-theme="dark" dir="rtl" lang="ar" class="bg-body fg-body rounded-5 p-3 vstack gap-3"><div class="form-field"><label class="form-label" for="${id}-message">رسالة المشروع</label><textarea class="form-control" id="${id}-message" rows="3" aria-describedby="${id}-help"></textarea><p class="form-text mb-0" id="${id}-help">هذا مثال محلي ولا يتم إرسال الرسالة.</p></div>${switchField(id+'-notices','تفعيل إشعارات المشروع')}</div>`)
+
+// Root-form-variables is the pinned shared group, not every component token map.
+export const sharedFormTokens=documentedTokens('root').filter(t=>/^--trm-(btn-input-|control-(checked-|active-|disabled-|transition-))/.test(t.name))
+const representativeTokens=[...sharedFormTokens.filter(t=>!/^--trm-btn-input-(xs|sm|lg)-/.test(t.name)),...documentedTokens('forms').filter(t=>['--trm-control-border-radius','--trm-control-placeholder-color','--trm-form-text-color','--trm-form-floating-height','--trm-input-group-addon-bg'].includes(t.name))]
+export const formsSass=`@use 'tremplin/scss/root' with (\n  $root-tokens: (--trm-btn-input-padding-x: .875rem)\n);\n@use 'tremplin/scss/forms/form-control' with (\n  $form-control-tokens: (--trm-control-border-radius: .75rem)\n);\n@use 'tremplin/scss';`
+export const formsDemoCss=`[data-docs-forms] { --trm-danger-fg: var(--trm-danger-fg-emphasis); }
+[data-docs-forms] .form-control { --trm-control-placeholder-color: var(--trm-fg-2); }`
+export const formsDemoJavascript=`document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-docs-forms-preview]').forEach(form => {
+    const status = form.querySelector('[data-docs-forms-status]')
+    form.addEventListener('submit', event => {
+      event.preventDefault()
+      status.textContent = 'Valid locally. Nothing was sent or saved.'
+    })
+    form.addEventListener('reset', () => { status.textContent = 'No submission attempted.' })
+    form.querySelector('[data-docs-forms-submit]').disabled = false
+  })
+  document.querySelectorAll('[data-docs-forms-values]').forEach(form => {
+    const inspect = form.querySelector('[data-docs-forms-inspect]')
+    form.addEventListener('submit', event => event.preventDefault())
+    inspect.addEventListener('click', () => {
+      const names = [...new Set(new FormData(form).keys())]
+      form.querySelector('[data-docs-forms-status]').textContent = 'Included field names: ' + names.join(', ') + '. Disabled fields are omitted.'
+    })
+    inspect.disabled = false
+  })
+  document.querySelectorAll('[data-docs-forms-validation]').forEach(form => {
+    const fields = [...form.querySelectorAll('input')]
+    const summary = form.querySelector('[data-docs-forms-summary]')
+    const status = form.querySelector('[data-docs-forms-status]')
+    form.addEventListener('submit', event => {
+      event.preventDefault()
+      const invalid = fields.filter(field => !field.validity.valid)
+      fields.forEach(field => {
+        field.classList.toggle('is-invalid', !field.validity.valid)
+        field.setAttribute('aria-invalid', String(!field.validity.valid))
+      })
+      summary.querySelectorAll('li').forEach(item => {
+        const id = item.querySelector('a').getAttribute('href').slice(1)
+        item.hidden = !invalid.some(field => field.id === id)
+      })
+      summary.hidden = invalid.length === 0
+      status.textContent = invalid.length ? '' : 'Valid locally. Nothing was sent or saved.'
+      if (invalid.length) summary.focus()
+    })
+    form.addEventListener('reset', () => {
+      fields.forEach(field => { field.classList.remove('is-invalid'); field.removeAttribute('aria-invalid') })
+      summary.hidden = true
+      status.textContent = 'No submission attempted.'
+    })
+    form.querySelector('[data-docs-forms-submit]').disabled = false
+  })
+})`
+
+export const formsClasses=['form-label','form-control','form-control-sm','form-control-lg','form-control-plaintext','form-control-color','form-control-caret','form-field','form-field-content','form-field-card','form-group','check','radio','switch','form-text','form-floating','input-group','input-group-text','valid-feedback','invalid-feedback','is-valid','is-invalid']
+export const formsAccessibility='Use native controls with visible labels, explicit names, instructions and programmatic help/error associations. Checkbox, radio and switch keep native keyboard state. Disabled and readonly differ; feedback and summary focus are application-owned. Forms has no standalone JavaScript plugin.'
+export const formsExample=basicForm('forms-example')
+export const formsDetails:ComponentDetail={
+  variants:[
+    {title:'Native controls and sizes',description:'Use form-control on inputs, textareas and native selects. form-control-sm/lg change presentation, not input type, validation or keyboard semantics.',markup:controls('forms-controls')},
+    {title:'Disabled and readonly values',description:'Disabled controls are omitted by native FormData; readonly text controls remain focusable and included. This application button reports only the included field names, never entered values.',markup:stateForm('forms-state')},
+    {title:'Disabled fieldset',description:'Native fieldset disabled affects contained native controls. The first-legend exception is a browser rule; do not put custom links in this example and assume they become disabled.',markup:disabledForm('forms-disabled')},
+    {title:'Checks, radios and switches',description:'Place check/radio on their native inputs. Put switch on a wrapper around a checkbox with role=switch. The browser owns checked state and same-name radio exclusion; no Forms plugin is involved.',markup:choices('forms-choice')},
+    {title:'Floating labels and input groups',description:'The floating label precedes its control; :has() reacts to focus/value. The input group supplements a persistent label and associates its path prefix as help. Input group Sass is in the components layer, unlike most form styles.',markup:floating('forms-composition')},
+    {title:'Responsive form layout',description:'Canonical md:col-6 columns share a row from md upward and stack below it. DOM order and visible labels stay unchanged.',markup:layout('forms-layout-demo')},
+    {title:'Application-owned validation and recovery',description:'This copied handler uses native validity, explicit is-invalid/aria-invalid state, persistent feedback, a focused summary and native reset. The summary uses ordinary border/spacing helpers; there is no core error-summary class.',markup:validationForm('forms-validation')},
+    {title:'Dark mode and RTL',description:'Set theme/direction on a subtree; native controls remain labelled. The switch thumb uses logical position. Native select popup and validation UI can still vary by browser.',markup:dark('forms-rtl')}
+  ],
+  variables:representativeTokens,
+  sass:formsSass,
+  keyboard:[{keys:'Tab / Shift+Tab',behavior:'Moves through enabled native controls in DOM order; disabled controls are skipped and readonly text remains focusable.'},{keys:'Space',behavior:'Toggles a focused checkbox or switch. The switch label remains stable while checked conveys state.'},{keys:'Arrow keys',behavior:'Changes native radio/select values according to browser/platform conventions; no custom form-wide key handler is installed.'},{keys:'Enter',behavior:'Can submit a native form from supported controls. These local demos intercept submission after handlers are installed and do not send values.'}],
+  guidelines:[
+    'Forms is a composition of CSS/native controls, not a Forms class or plugin. Most partials use the forms layer; Input group uses components. Enhanced Chips, Combobox, Datepicker, OTP, Range and Strength have separate component APIs.',
+    'Use form-control for native selects, check and radio on the input, and a switch wrapper for switch styling. Retired form-select/form-check/form-switch aliases are not strict core.',
+    'Provide visible labels and real input types, name/value, autocomplete and constraints appropriate for your application. Placeholder text is a hint, not a label. These examples deliberately use no real account or password submission.',
+    'Use fieldset/legend for related choices. Disabled values are omitted; readonly is only for supported text-like controls, not select/checkbox/radio. Fieldset does not automatically disable links or custom widgets.',
+    'Keep floating labels before their controls. Associate meaningful input-group addons with aria-describedby rather than replacing the visible label or accessible name.',
+    'Visual feedback does not set aria-invalid, generate error text, focus a summary or validate a server request. The copied local demo owns those tasks. data-trm-validate opts into native user-invalid styles; success additionally needs its valid token.',
+    'The representative token table mixes root shared properties with component-local map entries. Root input/button sizing is reused selectively; local defaults can override inheritance. Consult individual form topics for their complete maps.',
+    'Native controls work without framework JavaScript. Demo submission/inspection buttons start disabled until the application handlers are installed; this safety setup is documentation code, not core behavior.'
+  ]
+}
+
+const html=(source:string)=>({example:source,code:[{language:'html',source}]})
+const topics=[['field','Field'],['form-control','Form control'],['checkbox','Checkbox'],['radio','Radio'],['switch','Switch'],['range','Range'],['input-group','Input group'],['floating-labels','Floating labels'],['form-adorn','Form adorn'],['chips','Chips'],['combobox','Combobox'],['datepicker','Datepicker'],['otp-input','OTP input'],['password-strength','Password strength'],['layout','Layout'],['validation','Validation']]
+export const formsOverviewGuide:Guide={
+  slug:'forms/overview',group:'Forms',title:'Forms',description:'Build accessible forms from native controls, explicit labels, and deliberate layouts.',lead:'Build forms from native controls, visible labels, shared CSS tokens and deliberate application validation.',reference:{title:'Tremplin source',url:'https://github.com/DevCiel/tremplin/blob/main/site/src/data/forms-overview-docs.ts'},
+  sections:[
+    {heading:'Overview',paragraphs:['Form classes opt into styling on top of <a href="/content/reboot/">Reboot</a>. Use a real input type, visible label, submitted name, autocomplete and appropriate constraints; styling does not supply those semantics. This local project example follows the reference structure without creating an account or sending values.'],...html(basicForm('forms-overview'))},
+    {heading:'Disabled forms',paragraphs:['Use disabled on an individual native control or fieldset. Native controls in a disabled fieldset cannot normally be edited, focused or submitted; descendants of its first legend are the native exception. That does not disable links or custom widgets. For non-native actions, prefer a disabled native button or remove navigation/activation and expose aria-disabled="true" deliberately; ARIA alone does not block behavior.'],...html(disabledForm('forms-overview-disabled'))},
+    {heading:'Readonly and submitted values',paragraphs:['Readonly text controls remain focusable and successful form fields; disabled values are omitted. Readonly is not a checkbox/radio/select state. This local inspector lists only field names from native FormData, not entered values.'],...html(stateForm('forms-overview-state'))},
+    {heading:'Accessibility',paragraphs:['Visible labels are the default. Use for/id, fieldset/legend for questions, aria-describedby for help and errors, and required in both markup and understandable text. A placeholder is not a durable label. A visually-hidden label is an alternative only when the visual context still makes the purpose clear.','Native controls own keyboard behavior; CSS does not implement submission, persistence, error announcements or summary focus. Prefer persistent feedback and a recovery path. See <a href="/getting-started/accessibility/">Accessibility</a> and <a href="/forms/validation/">Validation</a>.'],...html(wrap(field('forms-overview-description','Project reference','name="reference"','Use a short reference that teammates recognize.')))},
+    {heading:'Validation and recovery',paragraphs:['The following is an explicit application example, not automatic framework validation. It intercepts submission, uses native validity, sets aria-invalid, shows associated feedback and focuses a summary. Its summary uses standard layout helpers, not a core error-summary component. The error links return to their fields; reset clears application state. Always validate production requests on the server.'],...html(validationForm('forms-overview-validation'))},
+    {heading:'CSS',paragraphs:['The shared root-form-variables group is listed below exactly as exported through $root-tokens. Control-level maps reuse selected root values and also declare their own defaults. Most form partials emit the forms layer; the Input group partial emits components. Follow the individual topics for all component-specific token maps.'],table:{headings:['Shared root property','Default'],rows:sharedFormTokens.map(t=>[t.name,t.defaultValue]),keyboardScroll:true}},
+    {heading:'Sass customization',paragraphs:['Configure a map before its first load. This example changes shared horizontal padding and the text-control radius separately; it does not invent a global Forms token map or change framework defaults.'],code:[{language:'scss',source:formsSass}]},
+    {heading:'Choose a form topic',paragraphs:['Native text/select/check/radio/switch and layout need no Forms plugin. The strict-core enhanced Chips, Combobox, Datepicker, OTP, Range decoration and Strength components have their own JavaScript APIs; native controls can still retain basic browser behavior without those enhancements.','Browse the complete local reference: '+topics.map(([slug,label])=>`<a href="/forms/${slug}/">${label}</a>`).join(' · ')+'. Also see the <a href="/components/forms/">Forms composition guide</a>.'],code:[{language:'js',source:"import 'tremplin/css'\n// Add individual component modules only for enhancements you use."}]},
+    {heading:'Explicit local demo setup',paragraphs:['Copy this CSS and application handler with the live demo markup. Focus/feedback contrast is an explicit demo choice, not a core override. Submission/inspection buttons are enabled only after handlers are attached. These previews make no requests, store no data, and never print entered values; the inspector reports field names only. No framework Forms plugin or error-summary class is added.'],code:[{language:'css',source:formsDemoCss},{language:'js',source:formsDemoJavascript}]}
+  ],clientScript:formsDemoJavascript
+}

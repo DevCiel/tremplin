@@ -1,0 +1,126 @@
+---
+{
+  "component": "carousel",
+  "title": "Carousel",
+  "description": "Carousel component documentation for Tremplin.",
+  "lead": "Cycle through a collection of slides with controls, indicators, keyboard support, and touch gestures.",
+  "variants": [
+    {
+      "title": "Controls and indicators",
+      "description": "Keep controls inside the labelled carousel, but outside its scroll viewport. Explicit 24px indicator tokens make the small target example easier to operate."
+    },
+    {
+      "title": "Multi-item layout and peek",
+      "description": "The items, gap and peek tokens control scroll-snap geometry. Unit-bearing gaps are required; initialize an instance before relying on active-slide tracking during direct scrolling."
+    },
+    {
+      "title": "Fade transition",
+      "description": "carousel-fade stacks slides and switches the active item instead of scrolling. No old slide, alert-color or button-color aliases are needed."
+    },
+    {
+      "title": "Autoplay with pause control",
+      "description": "This example starts paused. Play explicitly starts a six-second cycle; Pause, arrows, manual controls or pointer interaction stop autoplay intent. The pause-on-hover option temporarily suspends a running timer."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Direction-aware navigation and masked icons work without alternate framework stylesheets. Plain slide content avoids duplicate IDs during loop cloning."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "ArrowLeft / ArrowRight",
+      "behavior": "Once initialized, navigate previous/next respecting RTL, except while typing in an input or textarea. This stops autoplay intent."
+    },
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Use native focus order through the scroll viewport, controls and any authored slide links. Offscreen slide focus is not a roving-tablist contract."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Activate a focused native previous/next, indicator or play/pause button."
+    }
+  ],
+  "guidelines": [
+    "Name the region and slides, mark one starting slide active and give every carousel its own ID. Control data-trm-target values must resolve to their owning carousel.",
+    "The scroll viewport and slides use real scroll-snap geometry. Set slide dimensions as needed; nested carousels are unsupported.",
+    "The data API initializes on a control click. Active tracking during direct scrolling or keyboard control before that requires Carousel.getOrCreateInstance(element).",
+    "data-trm-autoplay=\"true\" automatically initializes on page load. Do not initialize the same autoplay carousel twice. This documentation example starts paused for predictable, user-controlled motion.",
+    "Provide a visible pause control whenever autoplay is enabled. Pressing a manual control or dragging stops autoplay intent; focus alone is not an advertised auto-pause policy.",
+    "Use actual button variants plus named masked icons. The inverse theme and larger indicator tokens shown here are explicit composition choices, not new core defaults.",
+    "Verify keyboard direction, native touch scrolling, reduced motion, page zoom and RTL on the devices your application supports."
+  ],
+  "events": {
+    "keydown.trm.carousel": "During the component lifecycle. Events that occur before a state change may be cancelable.",
+    "mouseenter.trm.carousel": "During the component lifecycle. Events that occur before a state change may be cancelable.",
+    "mouseleave.trm.carousel": "During the component lifecycle. Events that occur before a state change may be cancelable.",
+    "pointerdown.trm.carousel": "During the component lifecycle. Events that occur before a state change may be cancelable.",
+    "slid.trm.carousel": "During the component lifecycle. Events that occur before a state change may be cancelable.",
+    "slide.trm.carousel": "During the component lifecycle. Events that occur before a state change may be cancelable."
+  }
+}
+---
+
+import { componentApi } from '../../../data/component-api'
+import ApiOptions from '../../../components/component/ApiOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("carousel")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="carousel" />
+
+{componentDetail("carousel").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="carousel" />
+</>}
+
+{componentDetail("carousel").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("carousel").sass} standalone={true} />
+</>}
+
+{componentDetail("carousel").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="carousel" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="carousel" />
+
+{documentedComponents.find(component => component.name === "carousel").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="carousel" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("carousel").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("carousel").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<ApiOptions name="carousel" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="carousel" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="carousel" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="carousel" />
+<p class="mt-4"><a href="/api/carousel/">View the generated {componentApi("carousel").definition.className}{" API reference →"}</a></p>

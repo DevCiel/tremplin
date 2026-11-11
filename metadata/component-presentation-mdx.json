@@ -1,0 +1,73 @@
+{
+  "phase": "component-presentation-authored-mdx",
+  "names": [
+    "avatar",
+    "badge",
+    "card",
+    "placeholder",
+    "progress",
+    "skeleton",
+    "spinner"
+  ],
+  "remaining": 40,
+  "historicalSources": {
+    "site/src/data/component-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-docs.before-presentation.ts.txt",
+      "sha256": "62446b404fc415cc66bddb71c05334b654711daa9eed93dda6306e49dc5daff4"
+    },
+    "site/src/data/component-reference.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-reference.before-presentation.ts.txt",
+      "sha256": "25d23a614990c18ffa87f1d5624bd6b97cddd6a2994dcb252d6c9a37a47adb6f"
+    },
+    "site/src/data/loading-identity-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/loading-identity-docs.before-presentation.ts.txt",
+      "sha256": "e3fdd7ff46692a3b8f54773679db818cb11688ff9fe41fdfbd8051c3badf426c"
+    },
+    "site/src/data/foundation-component-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/foundation-component-docs.before-presentation.ts.txt",
+      "sha256": "d8a9721a92c41d5f596e7a64a706f7aefaf4206c03a0bfc4381001902b1361fc"
+    },
+    "site/src/pages/components/[slug].astro": {
+      "snapshot": "tests/fixtures/mdx-migration/component-page.before-presentation.astro.txt",
+      "sha256": "147ed72be2bb31cd18db59688c3c525baab8e108bd498be9fcff9e5d0e7ea4ce"
+    },
+    "site/src/pages/[...guide].astro": {
+      "snapshot": "tests/fixtures/mdx-migration/guide-page.before-presentation.astro.txt",
+      "sha256": "cc9eee5826fe37ea07258e82c56860aa76cb938432bca5cb50dd2c62b9bd58c0"
+    },
+    "site/src/content.config.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/content-config.before-presentation.ts.txt",
+      "sha256": "2f166a7d3cd562e2be4ae8548fdb6e15b5a5683673382aa6ba12f5c9bb26ec50"
+    }
+  },
+  "expectation": {
+    "snapshot": "tests/fixtures/mdx-migration/component-presentation.before.json",
+    "sha256": "d3a82b2d4b1f2a2e65419d4af2f436d3b17fb848ed179730d7e51c4538efc416"
+  },
+  "sources": {
+    "site/src/components/component/Classes.astro": "01b6d0e827a1583207d0bcff0a1208f3390806e203b2fdc9365a93d798934e4c",
+    "site/src/components/component/Code.astro": "ad21361fff7b3f7566efc529f1191506a530d7ab7f0dd08d1b298dd2d4b33641",
+    "site/src/components/component/Contrast.astro": "de3fac5bf0296154d9dd5296b8ee1f088c324876eaf8201e97047aace87573e8",
+    "site/src/components/component/Example.astro": "bef19dfa94054e7f578a0380198d6981823da73ae4ffaa93353731d5b6aa8501",
+    "site/src/components/component/Guidelines.astro": "52b52030ae41e558a8edcc8a8b3d7c27a1646ca18478f7056b0b5172d52d0756",
+    "site/src/components/component/Header.astro": "eb22cf8663fc1ee751a56e6866562bb525469232ccd36e3e2fd88e188cf656b1",
+    "site/src/components/component/Keyboard.astro": "17ac612d88be1189e7a32a8f12e000f25c3b49e2f2e5cb5f4ab2fa359146f7e0",
+    "site/src/components/component/Tokens.astro": "eede047c0146f8d69d853d9086e084b1a776815095571d82c3ee7b2baa4cc1ab",
+    "site/src/components/component/Variants.astro": "6e6b6d93ebe079983add9711e9882498830b6c1b0053edf85621d3bc46ddbf69",
+    "site/src/content.config.ts": "5951d1fe05f58d2752f20dd13f8cdcb6fa38734a0c6471c80298ddc271c36cf7",
+    "site/src/content/docs/components/avatar.mdx": "a72307180b3402b22cab5af844e9be6a89191041300918a995da485b0c0e9a15",
+    "site/src/content/docs/components/badge.mdx": "1ae074a58d134681b883daa2fdfc5cdebdfc9ec702a8165422ec73a67b2b5cea",
+    "site/src/content/docs/components/card.mdx": "3817d1a6cf3fbdf0ce0846cc976874564a2167da0825c14a91948c891d5d379d",
+    "site/src/content/docs/components/placeholder.mdx": "e9f6edeb27cc056532687270b38e2d8b8378447d6101177cc797a41688006a71",
+    "site/src/content/docs/components/progress.mdx": "7096272f390ea8afd76d7748cea430bb6d14b5445f491d696f36290c0c221db1",
+    "site/src/content/docs/components/skeleton.mdx": "a2a7b394b26be037468f51468267210900c0eafa9c21984b960e4caa24e0318d",
+    "site/src/content/docs/components/spinner.mdx": "13775f22adba0852e086791464833c3f4b549305f1f872c44b3e65ccf816c270",
+    "site/src/data/component-docs.ts": "76b6fa48850dbfe61f905f865abe3f41a04a5aa0943f826cdfaf8690b4705b99",
+    "site/src/data/component-reference.ts": "45bf88d516d7a625ad6acb395b39939857658b649bc75b129dcef68239260b0a",
+    "site/src/data/foundation-component-docs.ts": "f7bf665e32b0fff1e2af14938ea0bfe006401ed8ed7c1f31000b94344a7d1f30",
+    "site/src/data/loading-identity-docs.ts": "ff310938c6d92898191b5d37bc677a351635821b860b83c34752f5051b7679c1",
+    "site/src/libs/component-mdx.ts": "41e1aef8812fd67f4ab46501c49741213bfa47348d3a7109e2a23e2e5ee8486f",
+    "site/src/pages/[...guide].astro": "5b92a0509d2d052faca1c1550e8b0f5a1d2747b56a69f4c7835871bb854be8cd",
+    "site/src/pages/components/[slug].astro": "778b9ae95936c75417782605a6bccc37eb8dc228bc6c23d381d085b394b110fa"
+  }
+}

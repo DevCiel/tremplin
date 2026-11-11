@@ -1,0 +1,46 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro'
+import { paletteApiJavascript, paletteEvents, paletteOptionRows } from '../../data/sheet-command-docs'
+import { advancedApiJavascript, advancedEvents, advancedOptionRows, advancedRuntimeEvent, isAdvancedTopic } from '../../data/advanced-input-docs'
+import { choiceApiJavascript, choiceEvents, choiceOptionRows } from '../../data/choice-input-docs'
+import { adaptiveEventDescriptions, adaptiveRuntimeEvent, togglerOptionRows } from '../../data/adaptive-navigation-docs'
+import api from '../../../../metadata/api.json'
+import manifest from '../../../../metadata/components.json'
+
+export function getStaticPaths() {
+  return api.components.map(component => ({ params: { slug: component.name }, props: { component } }))
+}
+
+const { component } = Astro.props
+const advancedTopic = isAdvancedTopic(component.name) ? component.name : undefined
+const choiceTopic = component.name === 'chips' || component.name === 'combobox' ? component.name : undefined
+const choiceOptions = component.name === 'command-palette' ? paletteOptionRows : advancedTopic ? advancedOptionRows[advancedTopic] : choiceTopic ? choiceOptionRows[choiceTopic] : undefined
+const metadata = manifest.components.find(candidate => candidate.name === component.name)
+const code = component.name === 'command-palette' ? paletteApiJavascript : advancedTopic ? advancedApiJavascript[advancedTopic] : choiceTopic ? choiceApiJavascript[choiceTopic] : component.name === 'toggler' ? `import Toggler from 'tremplin/toggler'\n\n// Use the configured target from the guide, not its external launcher.\nconst target = document.querySelector('#generic-panel')\nToggler.getOrCreateInstance(target, { attribute: 'class', value: 'bg-2' }).toggle()`
+  : component.name === 'nav-overflow' ? `import NavOverflow from 'tremplin/nav-overflow'\n\n// Initialize the wrapper from the guide, not its inner nav list.\nconst wrapper = document.querySelector('#project-navigation')\nconst instance = NavOverflow.getOrCreateInstance(wrapper)\ninstance.update()`
+  : `import { ${component.className} } from 'tremplin'\n\nconst instance = ${component.className}.getOrCreateInstance('#example')${component.name === 'toast' ? '\ninstance.show() // Toast is opt-in; initialize and show explicitly.' : ''}`
+---
+<DocsLayout title={`${component.className} API`} description={`Options, methods, events, and data attributes for Tremplin ${component.className}.`}>
+  <p><a href="/api/">← API reference</a></p>
+  <span class="badge">{metadata?.status}</span>
+  <h1>{component.className}</h1>
+  <p class="lead">{metadata?.accessibility}</p>
+  <h2>Usage</h2>
+  {component.name === 'command-palette' && <p>This is an optional Tremplin extension, separate from the core distribution. Import the named extension and its optional CSS separately. The guide documents shortcut ownership, selection payloads and focus-management limitations; there is no native modal inertness or top-layer rendering.</p>}
+  <pre><code>{code}</code></pre>
+  <h2>CSS classes</h2>
+  <div class={choiceTopic || advancedTopic || component.name === 'command-palette' ? 'd-flex flex-wrap gap-2' : 'cluster'}>{metadata?.classes.map(className => <code>.{className}</code>)}</div>
+  <h2>Options</h2>
+  {choiceOptions ? <><p>Configure these optional values before construction; getOrCreateInstance does not reconfigure an existing instance.</p><div class="table-responsive focus-ring" tabindex="0" role="region" aria-label="Source-verified option defaults"><table class="table"><thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Behavior</th></tr></thead><tbody>{choiceOptions.map(option => <tr><td><code>{option.name}</code></td><td>{option.type}</td><td><code>{option.defaultValue}</code></td><td>{option.description}</td></tr>)}</tbody></table></div></> : component.name === 'toggler' ? <><p>The frozen scanner omits the alias-declared TogglerConfig. These source-verified options belong on the target; this authored table does not change the frozen metadata.</p><div class="table-responsive" tabindex="0" role="region" aria-label="Scrollable Toggler options"><table class="table"><thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Purpose</th></tr></thead><tbody>{togglerOptionRows.map(option => <tr><td><code>{option.name}</code></td><td><code>{option.type}</code></td><td><code>{option.defaultValue}</code></td><td>{option.description}</td></tr>)}</tbody></table></div></> : component.options.length ? <div class="table-responsive"><table class="table table-bordered"><thead><tr><th>Name</th><th>Type</th><th>Required</th></tr></thead><tbody>{component.options.map(option => <tr><td><code>{option.name}</code></td><td><code>{option.type}</code></td><td>{option.required ? 'Yes' : 'No'}</td></tr>)}</tbody></table></div> : <p>This component has no configuration options.</p>}
+  <h2>Methods</h2>
+  <ul>{[...api.commonMethods, ...component.methods].map(method => <li><code>{method}</code></li>)}</ul>
+  <h2>Events</h2>
+  {component.name === 'command-palette' && <><p>Payloads are CustomEvent.detail. All notifications are cancelable, but only show/hide/select inspect cancellation. These descriptions supplement the unchanged scanner catalog.</p><ul>{component.events.map(event => <li><code>{event}</code> — {paletteEvents[event]}</li>)}</ul></>}
+  {component.name === 'nav-overflow' && <p>Actual runtime event keys use <code>.trm.navoverflow</code>, not the filename-derived suffix in the frozen scanner catalog. The names below are presentation corrections, not changed core APIs. ResizeObserver recalculation does not dispatch <code>update</code>; the namespaced <code>resize</code> key is an internal fallback listener.</p>}
+  {['tab', 'toast', 'scrollspy'].includes(component.name) && <p>The frozen source catalog below includes internal namespaced DOM listeners, not only dispatched plugin notifications. Public notifications are {component.name === 'scrollspy' ? 'activate' : 'show, shown, hide and hidden'}; see the <a href={`/components/${component.name}/#events`}>guide event descriptions</a> for timing and cancellation.</p>}
+  {component.name === 'command-palette' ? null : advancedTopic ? <><p>Source-derived runtime names and listener/notification distinctions are presentation corrections; the frozen scanner is unchanged.</p><ul>{component.events.map(event => <li><code>{advancedRuntimeEvent(event)}</code> — {advancedEvents[advancedRuntimeEvent(event)]}</li>)}</ul></> : choiceTopic ? <ul>{component.events.map(event => <li><code>{event}</code> — {choiceEvents[event]}</li>)}</ul> : ['nav-overflow', 'toggler'].includes(component.name) ? <ul>{component.events.map(event => <li><code>{adaptiveRuntimeEvent(event)}</code> — {adaptiveEventDescriptions[adaptiveRuntimeEvent(event)]}</li>)}</ul> : component.events.length ? <ul>{component.events.map(event => <li><code>{event}</code></li>)}</ul> : <p>This component does not emit component-specific events.</p>}
+  <h2>Data attributes</h2>
+  {component.name === 'toggler' && <p>Set <code>data-trm-attribute</code> and <code>data-trm-value</code> on the mutation target. The trigger uses <code>data-trm-toggle="toggler"</code> with an optional <code>data-trm-target</code>. The scanner catalog below omits the attribute configuration hook; this prose restores that documentation without changing the baseline.</p>}
+  {component.name === 'scrollspy' && <p>Use <code>data-trm-spy="scroll"</code> and a matching <code>data-trm-target</code>. The scanner entry <code>data-trm-toggle</code> belongs to Menu integration, not Scrollspy initialization.</p>}
+  {component.name === 'alert' ? <p>Use <code>data-trm-dismiss="alert"</code> on a named native close button. Alternatively, create an Alert instance and call <code>close()</code>.</p> : component.name === 'toast' ? <p>Use <code>data-trm-dismiss="toast"</code> for dismissal. Configure <code>data-trm-autohide</code> and <code>data-trm-delay</code> on the toast before creating its instance; these attributes do not automatically show it.</p> : component.dataAttributes.length ? <ul>{component.dataAttributes.map(attribute => <li><code>{attribute}</code></li>)}</ul> : <p>This component is initialized through JavaScript.</p>}
+</DocsLayout>

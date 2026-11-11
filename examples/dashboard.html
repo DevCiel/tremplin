@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" data-trm-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tremplin dashboard example</title>
+  <link rel="stylesheet" href="../dist/css/tremplin.css">
+</head>
+<body>
+  <header class="border sticky-top" style="background:var(--trm-body-bg)">
+    <nav class="container navbar" aria-label="Primary navigation">
+      <a class="navbar-brand fw-bold" href="#">Tremplin Admin</a>
+      <div class="navbar-nav"><a class="nav-link active" aria-current="page" href="#overview">Overview</a><a class="nav-link" href="#activity">Activity</a></div>
+      <button class="btn btn-outline-primary btn-sm" type="button">Account</button>
+    </nav>
+  </header>
+  <main class="container py-5 stack" id="overview">
+    <div class="d-flex flex-column flex-md-row justify-content-between gap-3"><div><span class="badge">Dashboard</span><h1>Project overview</h1><p class="text-muted">A responsive application shell composed entirely from Tremplin classes.</p></div><button class="btn btn-primary" type="button">Create report</button></div>
+    <section class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3" aria-label="Project metrics">
+      <div class="col"><article class="card"><div class="card-body"><p class="text-muted">Revenue</p><h2>$48,240</h2><span class="badge badge-success">+12.4%</span></div></article></div>
+      <div class="col"><article class="card"><div class="card-body"><p class="text-muted">Customers</p><h2>1,284</h2><span class="badge badge-info">+84</span></div></article></div>
+      <div class="col"><article class="card"><div class="card-body"><p class="text-muted">Conversion</p><h2>7.8%</h2><span class="badge badge-warning">Review</span></div></article></div>
+      <div class="col"><article class="card"><div class="card-body"><p class="text-muted">Open tasks</p><h2>23</h2><span class="badge">This week</span></div></article></div>
+    </section>
+    <section class="card" id="activity"><div class="card-header"><h2>Recent activity</h2></div><div class="table-responsive" tabindex="0"><table class="table"><caption class="visually-hidden">Recent project activity</caption><thead><tr><th scope="col">Project</th><th scope="col">Owner</th><th scope="col">Status</th><th scope="col">Updated</th></tr></thead><tbody><tr><td>Northstar</td><td>Amélie</td><td><span class="badge badge-success">Ready</span></td><td>Today</td></tr><tr><td>Horizon</td><td>Samir</td><td><span class="badge badge-warning">Review</span></td><td>Yesterday</td></tr><tr><td>Atlas</td><td>Mina</td><td><span class="badge badge-info">Active</span></td><td>Friday</td></tr></tbody></table></div></section>
+  </main>
+</body>
+</html>

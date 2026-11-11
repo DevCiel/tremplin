@@ -1,0 +1,228 @@
+@use "sass:map";
+@use "colors" as *;
+@use "config" as *;
+@use "functions" as *;
+@use "theme" as *;
+@use "mixins/tokens" as *;
+
+@layer colors, config, root, reboot, layout, content, forms, components, custom, helpers, utilities;
+
+$root-tokens: () !default;
+
+// scss-docs-start root-tokens
+// stylelint-disable @stylistic/value-list-max-empty-lines, @stylistic/function-max-empty-lines, custom-property-no-missing-var-function
+// stylelint-disable-next-line scss/dollar-variable-default
+$root-tokens: defaults(
+  (
+    --trm-black: #{$black},
+    --trm-white: #{$white},
+
+    --trm-gradient: #{$gradient},
+
+    // scss-docs-start root-body-variables
+    // The stack omits system-ui. It resolves to the user interface font of the
+    // locale, which shows non-Latin text incorrectly. See twbs/tremplin#42703.
+    --trm-body-font-family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+    --trm-body-font-size: 1rem,
+    --trm-body-font-weight: var(--trm-font-weight-normal),
+    --trm-body-line-height: 1.5,
+    // scss-docs-end root-body-variables
+
+    --trm-heading-color: inherit,
+
+    --trm-hr-border-color: var(--trm-border-color),
+
+    --trm-link-color: light-dark(var(--trm-primary-base), var(--trm-primary-fg)),
+    --trm-link-decoration: underline,
+    --trm-link-underline-offset: .2em,
+    --trm-link-hover-color: color-mix(in oklch, var(--trm-link-color) 90%, #000),
+
+    --trm-font-mono: "ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Monaco, 'Cascadia Mono', Consolas, 'Liberation Mono', monospace",
+    --trm-code-font-size: 95%,
+    --trm-code-color: var(--trm-fg-2),
+
+    // scss-docs-start root-border-var
+    --trm-border-width: #{$border-width},
+    --trm-border-width-keyline: .5px,
+    --trm-border-style: #{$border-style},
+    --trm-border-color: light-dark(var(--trm-gray-200), var(--trm-gray-700)),
+    --trm-border-color-translucent: color-mix(in oklch, var(--trm-fg-body) 15%, transparent),
+    // scss-docs-end root-border-var
+
+    // scss-docs-start root-box-shadow-variables
+    // --trm-box-shadow* tokens are generated below (see root-box-shadow-loop) from
+    // the shared $shadows map in scss/_config.scss, which reads these two.
+    --trm-shadow-color: #000,
+    --trm-shadow-strength: 1,
+    // scss-docs-end root-box-shadow-variables
+
+    // scss-docs-start root-transition-variables
+    // Shared easing curve for overlay components (dialog, drawer, menu)
+    --trm-transition-timing-overlay: cubic-bezier(.22, 1, .36, 1),
+    // scss-docs-end root-transition-variables
+
+    --trm-spacer: #{$spacer},
+
+    // scss-docs-start root-focus-variables
+    --trm-focus-ring-width: 3px,
+    --trm-focus-ring-offset: 1px,
+    --trm-focus-ring-color: var(--trm-primary-focus-ring),
+    --trm-focus-ring: var(--trm-focus-ring-width) solid var(--trm-focus-ring-color),
+    // scss-docs-end root-focus-variables
+
+    // scss-docs-start root-form-variables
+    --trm-control-checked-bg: var(--trm-primary-base),
+    --trm-control-checked-border-color: var(--trm-control-checked-bg),
+    --trm-control-active-bg: var(--trm-primary-base),
+    --trm-control-active-border-color: var(--trm-control-active-bg),
+    --trm-control-disabled-bg: var(--trm-bg-3),
+    --trm-control-disabled-opacity: .65,
+    // Shared motion for checkbox/radio marks; slight overshoot so the mark pops in
+    --trm-control-transition-duration: .15s,
+    --trm-control-transition-timing: cubic-bezier(.34, 1.56, .64, 1),
+
+    --trm-btn-input-fg: var(--trm-fg-body),
+    --trm-btn-input-bg: var(--trm-bg-body),
+
+    --trm-btn-input-gap: .375rem,
+    --trm-btn-input-min-height: 2.375rem,
+    --trm-btn-input-padding-y: .375rem,
+    --trm-btn-input-padding-x: .75rem,
+    --trm-btn-input-font-size: var(--trm-body-font-size),
+    --trm-btn-input-font-weight: var(--trm-font-weight-normal),
+    --trm-btn-input-line-height: var(--trm-body-line-height),
+    --trm-btn-input-border-radius: var(--trm-radius-5),
+
+    --trm-btn-input-xs-gap: var(--trm-spacer-1),
+    --trm-btn-input-xs-min-height: 1.5rem,
+    --trm-btn-input-xs-padding-y: .125rem,
+    --trm-btn-input-xs-padding-x: .5rem,
+    --trm-btn-input-xs-font-size: var(--trm-font-size-xs),
+    --trm-btn-input-xs-line-height: 1.125,
+    --trm-btn-input-xs-border-radius: var(--trm-radius-5),
+
+    --trm-btn-input-sm-gap: .375rem,
+    --trm-btn-input-sm-min-height: 2rem,
+    --trm-btn-input-sm-padding-y: .25rem,
+    --trm-btn-input-sm-padding-x: .625rem,
+    --trm-btn-input-sm-font-size: var(--trm-font-size-sm),
+    --trm-btn-input-sm-line-height: var(--trm-line-height-sm),
+    --trm-btn-input-sm-border-radius: var(--trm-radius-5),
+
+    --trm-btn-input-lg-gap: .375rem,
+    --trm-btn-input-lg-min-height: 2.75rem,
+    --trm-btn-input-lg-padding-y: .5rem,
+    --trm-btn-input-lg-padding-x: 1rem,
+    --trm-btn-input-lg-font-size: var(--trm-font-size-md),
+    --trm-btn-input-lg-line-height: var(--trm-line-height-md),
+    --trm-btn-input-lg-border-radius: var(--trm-radius-7),
+    // scss-docs-end root-form-variables
+  ),
+  $root-tokens
+);
+// stylelint-enable @stylistic/value-list-max-empty-lines, @stylistic/function-max-empty-lines, custom-property-no-missing-var-function
+// scss-docs-end root-tokens
+
+// scss-docs-start root-font-size-loop
+// Generate font-size and line-height tokens
+@each $name, $props in $font-sizes {
+  $root-tokens: map.set($root-tokens, --trm-font-size-#{$name}, map.get($props, "font-size"));
+  $root-tokens: map.set($root-tokens, --trm-line-height-#{$name}, map.get($props, "line-height"));
+}
+// scss-docs-end root-font-size-loop
+
+// scss-docs-start root-font-weight-loop
+// Generate font-weight tokens
+@each $name, $value in $font-weights {
+  $root-tokens: map.set($root-tokens, --trm-font-weight-#{$name}, $value);
+}
+// scss-docs-end root-font-weight-loop
+
+// scss-docs-start root-theme-tokens
+// Generate semantic theme colors
+@each $color-name, $color-map in $theme-colors {
+  @each $key, $value in $color-map {
+    $root-tokens: map.set($root-tokens, --trm-#{$color-name}-#{$key}, $value);
+  }
+}
+
+// Generate background tokens
+@each $key, $value in $theme-bgs {
+  $root-tokens: map.set($root-tokens, --trm-bg-#{$key}, $value);
+}
+
+// Generate foreground tokens
+@each $key, $value in $theme-fgs {
+  $root-tokens: map.set($root-tokens, --trm-fg-#{$key}, $value);
+}
+
+// Generate border tokens
+@each $key, $value in $theme-borders {
+  $root-tokens: map.set($root-tokens, --trm-border-#{$key}, $value);
+}
+// scss-docs-end root-theme-tokens
+
+// Generate breakpoint tokens
+@each $name, $value in $breakpoints {
+  $root-tokens: map.set($root-tokens, --trm-breakpoint-#{$name}, $value);
+}
+
+// Generate spacer tokens
+// scss-docs-start root-spacer-loop
+@each $key, $value in $spacers {
+  $root-tokens: map.set($root-tokens, --trm-spacer-#{$key}, $value);
+}
+// scss-docs-end root-spacer-loop
+
+// Generate radius tokens
+// scss-docs-start root-radius-loop
+@each $key, $value in $radii {
+  $root-tokens: map.set($root-tokens, --trm-radius-#{$key}, $value);
+}
+// There is no `$radii` step for the pill, so keep a value passed through `$root-tokens`.
+@if not map.has-key($root-tokens, --trm-radius-pill) {
+  $root-tokens: map.set($root-tokens, --trm-radius-pill, 50rem);
+}
+// scss-docs-end root-radius-loop
+
+// Generate box-shadow tokens
+// scss-docs-start root-box-shadow-loop
+@each $key, $value in $shadows {
+  @if $key == null {
+    $root-tokens: map.set($root-tokens, --trm-box-shadow, $value);
+  } @else {
+    $root-tokens: map.set($root-tokens, --trm-box-shadow-#{$key}, $value);
+  }
+}
+// scss-docs-end root-box-shadow-loop
+
+// Generate z-index tokens
+@each $key, $value in $zindex-levels {
+  $root-tokens: map.set($root-tokens, --trm-z-#{$key}, $value);
+}
+
+:root,
+:host {
+  @include tokens($root-tokens);
+
+  color-scheme: light dark;
+}
+
+// Deepen shadows in dark mode. The shadow-strength token is a plain number, so it
+// can't use light-dark() (colors only); vary it alongside color-scheme instead.
+@media (prefers-color-scheme: dark) {
+  :root,
+  :host {
+    --trm-shadow-strength: 2.4;
+  }
+}
+
+[data-trm-theme="dark"] {
+  --trm-shadow-strength: 2.4;
+  color-scheme: dark;
+}
+
+[data-trm-theme="light"] {
+  --trm-shadow-strength: 1;
+  color-scheme: light;
+}

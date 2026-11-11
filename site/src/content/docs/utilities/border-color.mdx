@@ -1,0 +1,80 @@
+---
+{
+  "title": "Border color",
+  "description": "Use border color utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use border color utilities from the configured Tremplin utility map.",
+  "order": 40,
+  "utility": {
+    "category": "Borders",
+    "classes": [
+      "border-primary",
+      "border-secondary",
+      "border-success",
+      "border-danger",
+      "border-warning",
+      "border-info",
+      "border-accent",
+      "border-inverse",
+      "border-subtle-primary",
+      "border-body",
+      "border-muted",
+      "border-subtle",
+      "border-emphasized",
+      "border-white",
+      "border-black",
+      "border-bg",
+      "border-10",
+      "border-50",
+      "border-100"
+    ],
+    "notes": "Semantic border colors use the theme background role; border-subtle uses the boundary role. Neutral colors reference --trm-border-*. Opacity requires the isolated --trm-bc assignment and has no root-border-color fallback. These classes do not add border width/style by themselves.",
+    "responsive": false
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/border-color"][0].example} /></div>
+
+<Code sample={samples["utilities/border-color"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"Semantic border colors use the theme background role; border-subtle uses the boundary role. Neutral colors reference --trm-border-*. Opacity requires the isolated --trm-bc assignment and has no root-border-color fallback. These classes do not add border width/style by themselves."} /></p>
+
+<Code sample={samples["utilities/border-color"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Configuration and limits"}</h2>
+
+<p><Html source={"Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Configure border roles"}</h2>
+
+<Code sample={samples["utilities/border-color"][3].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

@@ -1,0 +1,135 @@
+---
+{
+  "title": "Form control",
+  "description": "Style text fields, textareas, native selects, files, and readonly values.",
+  "group": "Forms",
+  "lead": "Style native inputs, textareas and selects with shared sizing, focus and state contracts.",
+  "order": 2
+}
+---
+
+import GuideTable from '../../../components/shortcodes/GuideTable.astro'
+import { formsTables } from '../../../data/forms-tables'
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"With a form field"}</h2>
+
+<p>{"Use form-control on native textual inputs, textareas and selects. Native options and popup UI remain browser/OS-owned; this is not a Combobox or Datepicker plugin."}</p>
+
+<div class="docs-example"><Html source={examples["forms/form-control"][0].example} /></div>
+
+<Code sample={examples["forms/form-control"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Textarea and select"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/form-control"][1].example} /></div>
+
+<Code sample={examples["forms/form-control"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Sizes"}</h2>
+
+<p>{"Small and large variants adjust root-backed minimum height, padding, font size, line height and radius. Input type and native validity are unchanged. The default size keys are sm and lg."}</p>
+
+<div class="docs-example"><Html source={examples["forms/form-control"][2].example} /></div>
+
+<Code sample={examples["forms/form-control"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Form text and states"}</h2>
+
+<p>{"form-text has no intrinsic margin. Associate it with aria-describedby and use Field gap for spacing. Disabled controls are not focusable/submitted; readonly text controls remain focusable/submitted. Use form-control-plaintext instead of form-control for a readonly plain presentation; the explicit demo CSS restores its removed focus outline."}</p>
+
+<div class="docs-example"><Html source={examples["forms/form-control"][3].example} /></div>
+
+<Code sample={examples["forms/form-control"][3].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Date and time"}</h2>
+
+<p>{"These use native browser pickers, not the JavaScript calendar. Rendering, parsing and picker availability vary by browser/OS. The form-control class does not standardize those UIs."}</p>
+
+<div class="docs-example"><Html source={examples["forms/form-control"][4].example} /></div>
+
+<Code sample={examples["forms/form-control"][4].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Color and datalist"}</h2>
+
+<p>{"Color adds form-control-color alongside form-control. A datalist supplies browser suggestions, not a restricted set of valid values or a custom listbox. form-control-caret draws a decorative caret; its default background position is physical right, with explicit RTL demo CSS shown below."}</p>
+
+<div class="docs-example"><Html source={examples["forms/form-control"][5].example} /></div>
+
+<Code sample={examples["forms/form-control"][5].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"File inputs"}</h2>
+
+<p>{"The ::file-selector-button pseudo-element styles the native chooser. These examples do not upload files. accept is only a picker hint; verify types/content on the server in a real application."}</p>
+
+<div class="docs-example"><Html source={examples["forms/form-control"][6].example} /></div>
+
+<Code sample={examples["forms/form-control"][6].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Ghost controls"}</h2>
+
+<p>{"form-ghost removes input styling and its focus outline. This example reuses form-control form-adorn for a visible focus-within ring and a named native search input. A ghost field alone does not create search results or a command controller."}</p>
+
+<div class="docs-example"><Html source={examples["forms/form-control"][7].example} /></div>
+
+<Code sample={examples["forms/form-control"][7].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">{"CSS variables"}</h2>
+
+<p>{"These are source-derived property defaults, not a JavaScript options API. Embedded SVG strings are summarized in the table; inspect the pinned Sass for the exact mask/caret data. Null-valued Sass entries are not emitted as CSS declarations."}</p>
+
+<GuideTable table={{ headings: ["Property","Default"], rows: formsTables["forms/form-control#8"], keyboardScroll: true }} labelledby="section-8" />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-9">
+<h2 id="section-9">{"Labels, root variables and size map"}</h2>
+
+<p>{"form-control and form-text emit their token maps on their classes. At this pin, $form-label-tokens is declared but not emitted by labels.scss: use runtime --trm-label-* properties on the relevant subtree rather than promising that configuring that map changes the compiled labels. Label weight falls back to 500; color falls back to the body foreground."}</p>
+
+<p>{"Shared button/input sizing properties are listed in "}<a href="/forms/overview/">{"Forms overview"}</a>{". $form-control-sizes is a defaults-merged map: adding a key generates that class, but its matching root sizing properties must exist. A null override removes a key; a false value is still iterated by the size loop. The following sample adds compact in a custom build; it is not in default core."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-10">
+<h2 id="section-10">{"Sass customization"}</h2>
+
+<Code sample={examples["forms/form-control"][10].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-11">
+<h2 id="section-11">{"Explicit demo accessibility CSS"}</h2>
+
+<p>{"Copy this scoped application CSS with the example wrappers. It emphasizes feedback/placeholder text, restores a visible plaintext focus outline, and mirrors the otherwise physical select/caret background position for RTL. These are disclosed demo choices; the pinned core defaults remain unchanged."}</p>
+
+<Code sample={examples["forms/form-control"][11].code[0]} standalone={true} />
+
+</section>

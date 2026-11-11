@@ -1,0 +1,66 @@
+---
+{
+  "title": "Range",
+  "description": "Wrap a native slider with synchronized fill, optional bubble and datalist ticks.",
+  "group": "Forms",
+  "lead": "Wrap a native slider with synchronized fill, optional bubble and datalist ticks.",
+  "order": 6
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Overview"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/range"][0].example} /></div>
+
+<Code sample={examples["forms/range"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Additional example"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/range"][1].example} /></div>
+
+<Code sample={examples["forms/range"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Behavior, submission and cleanup"}</h2>
+
+<p>{"Use form-range around one labelled form-range-input; every matching wrapper auto-initializes on document ready."}</p>
+
+<p>{"The wrapper receives --trm-range-fill as a ratio, not a percentage. Native bounds supply 0/100 when absent; min>=max makes the adapter ratio zero."}</p>
+
+<p>{"After assigning input.value, call update(). Construction/update and native input/change paths emit changed on the actual input, even when unchanged; it is not a cancelable mutation gate."}</p>
+
+<p>{"Formatter text uses textContent for the bubble only. Tick labels read option.label without formatter; datalist points are snapshotted once, sorted and clamped to positions."}</p>
+
+<p>{"The bubble and ticks are aria-hidden. Native name/value submit the numeric value; formatter does not create aria-valuetext or convert submitted units."}</p>
+
+<p>{"Pinned track gradient is to right and bubble uses left even in RTL; test native thumb versus decoration rather than claiming direction-aware fill. dispose removes generated bubble/ticks/listeners but retains the wrapper fill property."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Source-verified usage"}</h2>
+
+<p>{"See the "}<a href="/components/range/">{"component guide"}</a>{" for all options/defaults, actual events, tokens and additional examples. Client interaction is not server validation."}</p>
+
+<Code sample={examples["forms/range"][3].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Explicit browser-bundle demo setup"}</h2>
+
+<p>{"The following copied application code configures only marked demo nodes and keeps changes local. It intentionally replaces an existing instance when needed; getOrCreateInstance alone does not reconfigure it. No network request or automatic form submission is made."}</p>
+
+<Code sample={examples["forms/range"][4].code[0]} standalone={true} />
+
+</section>

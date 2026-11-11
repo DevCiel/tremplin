@@ -1,0 +1,53 @@
+@media (min-width: 64rem) and (max-width: 78rem) {
+  .docs-header-inner { grid-template-columns: 1fr minmax(16rem, 24rem) auto; }
+  .docs-top-nav { display: none; }
+}
+
+@media (max-width: 70rem) {
+  .docs-footer-inner { grid-template-columns: 1.5fr repeat(2, 1fr); }
+}
+
+@media (max-width: 63.999rem) {
+  :root { --docs-header: 7.25rem; }
+  .docs-header-inner { grid-template-columns: 1fr auto; gap: .75rem; min-block-size: 4rem; }
+  .docs-menu-toggle { display: grid; }
+  .docs-header-start { gap: .65rem; }
+  .docs-header-actions .docs-github-link { display: none; }
+  .docs-search-wrap { grid-column: 1 / -1; grid-row: 2; margin-block-end: .75rem; }
+  .docs-top-nav { display: none; }
+  .docs-toc { display: none; }
+  .docs-shell { display: block; min-block-size: calc(100dvh - 7.5rem); }
+  .docs-sidebar { display: none; position: fixed; z-index: 999; inset: var(--docs-header) 0 auto; block-size: calc(100dvh - var(--docs-header)); padding: 1rem 1.5rem; border-block-end: 1px solid var(--docs-border); background: var(--trm-bg-body); }
+  .docs-sidebar.is-open { display: block; }
+  .docs-shell { padding-inline: max(1rem, 3vw); }
+  .docs-workspace { display: block; padding: 1rem 0 3rem; }
+  .docs-main { padding-inline-start: 0; }
+  .docs-main > h1, .docs-main > .docs-eyebrow + h1 { font-size: 2rem; }
+  .docs-home-showcase { grid-template-columns: 1fr; gap: 2rem; }
+  .docs-home .docs-menu-toggle { display: none; }
+}
+
+@media (max-width: 42rem) {
+  .docs-brand > span:last-child { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .docs-header-inner { padding-inline: .8rem; }
+  .docs-header-actions { gap: .25rem; }
+  .docs-home-features { grid-template-columns: 1fr; }
+  .docs-hero-actions { flex-direction: column; }
+  .docs-install-command { inline-size: 100%; }
+  .docs-hero { padding-block: 3rem; min-block-size: auto; }
+  .docs-hero h1 { font-size: clamp(2rem, 8vw, 3rem); line-height: 1.1; }
+  .docs-hero-break { display: none; }
+  .docs-hero .lead { font-size: 1.125rem; }
+  .docs-pagination { grid-template-columns: 1fr; }
+  .docs-footer-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+  .docs-home-showcase { margin-block-start: 3rem; padding-block-start: 2.5rem; }
+  .docs-showcase-preview { padding: 1.5rem; }
+  .docs-footer-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .docs-footer-brand { grid-column: 1 / -1; }
+}
+
+@media print {
+  .docs-header,.docs-sidebar,.docs-toc,.docs-footer,.docs-copy { display: none; }
+  .docs-shell,.docs-workspace { display: block; }
+  .docs-workspace { padding: 0; }
+}

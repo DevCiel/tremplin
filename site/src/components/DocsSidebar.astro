@@ -1,0 +1,30 @@
+---
+import { componentGroups, componentNames, displayName, groupIcons, documentationNavigation } from '../libs/navigation'
+const { guideGroups } = documentationNavigation()
+const pathname = Astro.url.pathname
+const componentActive = pathname.startsWith('/components/')
+---
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation">
+      <nav class="docs-guide-nav" aria-label="Guide navigation">
+        {guideGroups.map(([group, entries]) => <details class="docs-nav-section" open>
+          <summary><svg class={`docs-nav-icon docs-nav-icon-${groupIcons[group] ?? 'book-half'}`} viewBox="0 0 16 16" aria-hidden="true" focusable="false"><use href={`/docs-icons.svg#${groupIcons[group] ?? 'book-half'}`}></use></svg>{group}</summary>
+          <div class="nav">{entries.map(guide => {
+            const href = `/${guide.slug}/`
+            return <a class="nav-link" href={href} aria-current={pathname === href ? 'page' : undefined}>{guide.title}</a>
+          })}</div>
+        </details>)}
+        <details class="docs-nav-section" open={componentActive}>
+          <summary><svg class="docs-nav-icon docs-nav-icon-components" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><use href="/docs-icons.svg#menu-button-wide-fill"></use></svg>Components</summary>
+          <div class="nav"><a class="nav-link" href="/components/" aria-current={pathname === '/components/' ? 'page' : undefined}>Overview</a></div>
+        </details>
+      </nav>
+      {componentActive && <nav class="docs-component-nav" aria-label="Component documentation">
+          {Object.entries(componentGroups).map(([group, names]) => <>
+            <p class="docs-sidebar-heading">{group}</p>
+            <div class="nav">{names.filter(name => componentNames.has(name)).map(name => {
+              const href = `/components/${name}/`
+              return <a class="nav-link" href={href} aria-current={pathname === href ? 'page' : undefined}>{displayName(name)}</a>
+            })}</div>
+          </>)}
+        </nav>}
+    </aside>

@@ -1,0 +1,22 @@
+node_modules/
+# Track the root distribution; ignore only generated website copies.
+/site/public/dist/
+coverage/
+playwright-report/
+test-results/
+test-results-current/
+.astro/
+artifacts/
+site-dist/
+site/public/css/
+site/public/js/
+site/public/llms.txt
+site/public/icons/
+site/public/themes/
+site/public/legacy/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+*.tgz

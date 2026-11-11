@@ -1,0 +1,224 @@
+---
+import { getCollection, render } from 'astro:content'
+import ComponentHeader from '../../components/component/Header.astro'
+import { authoredComponentNames } from '../../libs/component-mdx'
+import DocsLayout from '../../layouts/DocsLayout.astro'
+import { formsDemoCss, formsDemoJavascript } from '../../data/forms-overview-docs'
+import { paletteApiJavascript, paletteDemoCss, paletteDemoJavascript, paletteEvents, paletteOptionRows, sheetDemoJavascript } from '../../data/sheet-command-docs'
+import { advancedApiJavascript, advancedDemoCss, advancedDemoJavascript, advancedEvents, advancedOptionRows, advancedRuntimeEvent, isAdvancedTopic } from '../../data/advanced-input-docs'
+import { choiceApiJavascript, choiceDemoCss, choiceEvents, choiceOptionRows, chipsSubmissionJavascript } from '../../data/choice-input-docs'
+import { standaloneChipJavascript, tableDemoIsolationCss } from '../../data/chip-table-docs'
+import { isLocalPattern, localPatternJavascript } from '../../data/local-pattern-docs'
+import { adaptiveEventDescriptions, adaptiveRuntimeEvent, navbarFocusJavascript, togglerOptionRows } from '../../data/adaptive-navigation-docs'
+import { toastDemoJavascript } from '../../data/selection-feedback-docs'
+import { contrastComponentNames, demoContrastCss } from '../../data/contrast-examples'
+import api from '../../../../metadata/api.json'
+import { displayName } from '../../data/component-docs'
+import { documentedComponents, implementationName, componentExample, componentDetail, componentTitle, componentReference, componentImport, componentTarget } from '../../data/component-reference'
+
+export async function getStaticPaths() {
+  const pages = new Map((await getCollection('docs')).filter(page => page.id.startsWith('components/')).map(page => [page.id, page]))
+  if (pages.size !== authoredComponentNames.length || authoredComponentNames.some(name => !pages.has('components/' + name))) throw new Error('Component MDX routes do not match the migration registry')
+  return documentedComponents.map((component, index) => ({
+    params: { slug: component.name },
+    props: { component, index, document: pages.get('components/' + component.name) }
+  }))
+}
+
+const { component, index, document } = Astro.props
+const Content = document ? (await render(document)).Content : null
+const localName = implementationName(component.name)
+const advancedTopic = isAdvancedTopic(localName) ? localName : undefined
+const choiceOptions = localName === 'command-palette' ? paletteOptionRows : advancedTopic ? advancedOptionRows[advancedTopic] : localName === 'chips' || localName === 'combobox' ? choiceOptionRows[localName] : undefined
+const patternJavascript = isLocalPattern(localName) ? localPatternJavascript[localName] : undefined
+const apiComponent = api.components.find(candidate => candidate.name === localName)
+const title = componentTitle(component.name)
+const example = componentExample(component.name) ?? `<div class="${component.classes[0]}">${title} example</div>`
+const detail = componentDetail(component.name)
+const selector = componentTarget(component.name)
+const moduleImport = apiComponent ? componentImport(component.name, apiComponent.className) : ''
+const reference = componentReference(component.name)
+const javascript = localName === 'command-palette' ? paletteApiJavascript : advancedTopic ? advancedApiJavascript[advancedTopic] : localName === 'chips' || localName === 'combobox' ? choiceApiJavascript[localName] : localName === 'toast' ? toastDemoJavascript : apiComponent
+  ? `${moduleImport}\n\nconst element = document.querySelector('${selector}')\nconst instance = ${apiComponent.className}.getOrCreateInstance(element)${localName === 'toggler' ? '\ninstance.toggle() // Mutates the configured target, not its external launcher.' : ''}`
+  : ''
+const previous = documentedComponents[index - 1]
+const next = documentedComponents[index + 1]
+const balancedVariableColumns = new Set(['close-button', 'breadcrumb', 'navbar'])
+const overlayEventDescriptions: Record<string, string> = {
+  ...Object.fromEntries(['dialog', 'drawer'].flatMap(name => [
+    [`show.trm.${name}`, 'Cancelable start on the native dialog, before opening; relatedTarget identifies the opener when supplied.'],
+    [`shown.trm.${name}`, 'After the entry callback; the controller no longer considers the panel transitioning.'],
+    [`hide.trm.${name}`, 'Cancelable start before hiding. Calls during an active transition are ignored.'],
+    [`hidden.trm.${name}`, 'After native close and scroll cleanup; a data-API opener registers visible-trigger focus return.'],
+    [`hidePrevented.trm.${name}`, 'Rejected static-backdrop or disabled modal Escape attempt. Canceling this notification suppresses the bounce, not a pending hide.']
+  ])),
+  'cancel.trm.dialog': 'Escape notification when keyboard dismissal is enabled; prevent hide.trm.dialog to veto closing. This is not the cancelable hide gate.',
+  'resize.trm.drawer': 'Internal namespaced resize listener; not a dispatched Drawer lifecycle event.',
+  ...Object.fromEntries(['tooltip', 'popover'].flatMap(name => [
+    [`show.trm.${name}`, 'Cancelable start on the trigger before generating/inserting the tip.'],
+    [`inserted.trm.${name}`, 'On the trigger after generated DOM insertion, before positioning and the shown callback.'],
+    [`shown.trm.${name}`, 'On the trigger after the entry transition callback.'],
+    [`hide.trm.${name}`, 'Cancelable start before removing show from generated output.'],
+    [`hidden.trm.${name}`, 'On the trigger after exit cleanup and removal of aria-describedby, unless reactivated.']
+  ]))
+}
+const selectionEventDescriptions: Record<string, string> = {
+  'show.trm.toast': 'Cancelable start before adding show.',
+  'shown.trm.toast': 'After the show callback, before scheduling autohide.',
+  'hide.trm.toast': 'Cancelable start before removing show.',
+  'hidden.trm.toast': 'After the hide callback; the node remains in the DOM and focus is application-managed.',
+  'activate.trm.scrollspy': 'On the observed scrolling element after changing active classes; relatedTarget is the active link. No aria-current update is supplied.'
+}
+const cssBehavior: Record<string, string> = {
+  forms: 'Forms is CSS/native-control composition, not a Forms JavaScript plugin. Native constraints, checked state and keyboard behavior come from the browser. The separately copied demo handler owns submission interception, summary/status updates and reset; individual enhanced widgets have their own modules.',
+  ...Object.fromEntries(['status','timeline','divider','empty-state','data-table'].map(name => [name, 'This optional CSS extension has no matching core JavaScript plugin. Any demonstrated dynamic action is application-owned and is disclosed below.'])),
+  chip: 'Chip is a CSS primitive, not a standalone plugin. The toggle/removal examples below use explicit application code; editable chip-input collections use the separate Chips plugin.',
+  table: 'Table is opt-in CSS with native table semantics. There is no Table plugin, automatic sorting, selection, pagination or cell-navigation controller.',
+  navbar: 'Navbar layout is CSS-only. The responsive Drawer examples require the Drawer JavaScript plugin for modal behavior, Escape and focus restoration.',
+}
+const eventDescription = (event: string) => paletteEvents[event] ?? advancedEvents[advancedRuntimeEvent(event)] ?? choiceEvents[event] ?? (adaptiveEventDescriptions[adaptiveRuntimeEvent(event)] ?? overlayEventDescriptions[event] ?? selectionEventDescriptions[event] ?? (['toast', 'scrollspy'].includes(localName) ? 'Internal namespaced DOM listener; not a dispatched plugin lifecycle event.' : 'During the component lifecycle. Events that occur before a state change may be cancelable.'))
+---
+<DocsLayout title={title} description={document?.data.description ?? `${title} component documentation for Tremplin.`}>
+  <ComponentHeader component={component} title={title} localName={localName} reference={reference} authored={Boolean(document)} />
+
+  {Content ? <Content /> : <>
+  <h2 id="example">Example</h2>
+  {localName === 'forms' && <><div class="docs-callout docs-callout-info"><strong>Native controls and CSS, not a Forms plugin.</strong> Most form partials use the forms layer; Input group uses components. The examples follow the current Tremplin implementation. See <a href="/forms/overview/">Forms overview</a> for the complete topic navigation and shared root variables.</div><p>These local previews use an explicit application handler for submission prevention, status, inspection and error-summary recovery. Submission/inspection buttons start disabled until that handler is installed. No requests or persistence are performed. The CSS below is a deliberate demo contrast choice; it does not change core.</p><div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy Forms demo contrast CSS">Copy</button><pre tabindex="0"><code>{formsDemoCss}</code></pre></div></>}
+  {component.name === 'bottom-sheet' && <><p>Use the pinned Drawer sheet composition, not retired <code>bottom-sheet-*</code> aliases. Drawer supplies this page's JavaScript options, methods and events below; its complete API lives on the shared Drawer route.</p><p>These examples explicitly focus the authored close button after shown, including WebKit where native autofocus can occur before the animated control is visible. Copy this application policy with the markup; it does not modify core.</p><div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy Bottom Sheet initial focus handler">Copy</button><pre tabindex="0"><code>{sheetDemoJavascript}</code></pre></div></>}
+  {localName === 'command-palette' && <>
+    <div class="docs-callout docs-callout-info"><strong>Optional local JS and CSS extension.</strong> Command Palette is separate from the core distribution. This page loads one combined documentation runtime for core plus the extension, and optional styling in the <code>custom</code> layer. Ordinary core pages load neither optional resource. Do not load the combined runtime alongside a second core bundle.</div>
+    <p>These live previews disable the extension's global shortcut to preserve documentation search. The explicit application CSS below improves input focus visibility and active-result contrast; it is not a changed extension default. Commands report only local preview status, never application mutations.</p>
+    <div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy Command Palette application CSS">Copy</button><pre tabindex="0"><code>{paletteDemoCss}</code></pre></div>
+  </>}
+  {localName === 'datepicker' && <><p>This explicit application CSS removes hidden popup layout boxes after desktop-to-mobile resize. Inline examples also use a sibling hidden field and the copied application handler below because this Calendar Pro pin replaces inline children. Neither choice changes the core or weakens CSP.</p><div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy calendar demo layout CSS">Copy</button><pre tabindex="0"><code>{advancedDemoCss}</code></pre></div></>}
+  {['chips','combobox'].includes(localName) && <><div class="docs-callout"><strong>Explicit demo accessibility CSS.</strong> These guides give focused chips an individual outline and emphasize Combobox placeholder/no-results text. Copy this application CSS with the markup; pinned core styles remain unchanged.</div><div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy choice input accessibility CSS">Copy</button><pre tabindex="0"><code>{choiceDemoCss}</code></pre></div></>}
+  {['table','data-table'].includes(localName) && <><p>These live examples locally revert the documentation prose-table cell rules so the real framework padding and borders remain visible. This is documentation isolation, not a core CSS change.</p><style is:inline set:html={tableDemoIsolationCss}></style></>}
+  {isLocalPattern(localName) && <>
+    <div class="docs-callout docs-callout-info"><strong>Optional local extension.</strong> This optional pattern is separate from the core and has no matching core plugin. This guide explicitly loads the existing optional extension CSS after core; normal core pages do not. Its Sass belongs to the <code>custom</code> layer. Import optional styling explicitly in your application.</div>
+    <div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy optional extension CSS imports">Copy</button><pre tabindex="0"><code>{"import 'tremplin/css'\nimport 'tremplin/css/extensions'"}</code></pre></div>
+  </>}
+  {contrastComponentNames.has(component.name) && <>
+    <div class="docs-callout"><strong>Explicit demo contrast customization.</strong> These examples use darker solid backgrounds and emphasized foregrounds for small text. These are application-level choices, not the framework's unchanged defaults. Copy the CSS below together with the example wrapper. Calendar examples also set Calendar Pro's styles option so popup calendars receive the same customization.</div>
+    <style is:inline set:html={demoContrastCss}></style>
+    <details><summary>Example contrast CSS</summary><div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy demo contrast CSS">Copy</button><pre tabindex="0"><code>{demoContrastCss}</code></pre></div></details>
+  </>}
+  <div class="docs-example" set:html={example}></div>
+  <div class="docs-code">
+    <button class="btn btn-sm btn-outline-secondary docs-copy" type="button">Copy</button>
+    <pre tabindex="0"><code>{example}</code></pre>
+  </div>
+
+  {detail && <>
+    <h2 id="variants">Variants and states</h2>
+    {detail.variants.map((variant, variantIndex) => <section class="docs-variant" aria-labelledby={`variant-${variantIndex}`}>
+      <h3 id={`variant-${variantIndex}`}>{variant.title}</h3>
+      <p>{variant.description}</p>
+      <div class="docs-example" set:html={variant.markup}></div>
+      <div class="docs-code"><button class="btn btn-sm btn-outline-secondary docs-copy" type="button">Copy</button><pre tabindex="0"><code>{variant.markup}</code></pre></div>
+    </section>)}
+
+    {detail.variables.length > 0 && <><h2 id="css-variables">CSS variables</h2>
+    <p>Override these namespaced properties globally or on a component subtree.</p>
+    {localName === 'scrollspy' && <p>These variables belong to the reused Nav presentation, not to a Scrollspy Sass partial or token map.</p>}
+    <div class="table-responsive" tabindex="0" role="region" aria-label="Scrollable CSS variables"><table class="table table-bordered" style={balancedVariableColumns.has(component.name) ? 'table-layout: fixed' : undefined}>{balancedVariableColumns.has(component.name) && <colgroup><col style="width: 28%" /><col style="width: 37%" /><col style="width: 35%" /></colgroup>}
+      <thead><tr><th scope="col">Variable</th><th scope="col">Default</th><th scope="col">Purpose</th></tr></thead>
+      <tbody>{detail.variables.map(variable => <tr><td><code>{variable.name}</code></td><td><code style={balancedVariableColumns.has(component.name) ? 'overflow-wrap: anywhere' : undefined}>{variable.defaultValue}</code></td><td>{variable.purpose}</td></tr>)}</tbody>
+    </table></div></>}
+
+    {detail.sass && <>
+      <h2 id="sass">Sass customization</h2>
+      <div class="docs-code docs-code-standalone"><button class="btn btn-sm btn-outline-secondary docs-copy" type="button">Copy</button><pre tabindex="0"><code>{detail.sass}</code></pre></div>
+    </>}
+
+    {detail.keyboard.length > 0 && <>
+      <h2 id="keyboard">Keyboard interactions</h2>
+      <div class="table-responsive" tabindex="0" role="region" aria-label="Scrollable keyboard interactions"><table class="table">
+        <thead><tr><th scope="col">Keys</th><th scope="col">Behavior</th></tr></thead>
+        <tbody>{detail.keyboard.map(row => <tr><td><kbd>{row.keys}</kbd></td><td>{row.behavior}</td></tr>)}</tbody>
+      </table></div>
+    </>}
+
+    <h2 id="guidelines">Usage guidelines</h2>
+    <ul>{detail.guidelines.map(guideline => <li>{guideline}</li>)}</ul>
+  </>}
+
+  {component.classes.length > 0 && <><h2 id="classes">CSS classes</h2>
+  <p>Use these public, unprefixed classes in application markup.</p>
+  <div class="docs-cluster docs-class-list">{component.classes.map(className => <code>.{className}</code>)}</div></>}
+
+  {apiComponent ? <>
+    <h2 id="javascript">JavaScript</h2>
+    {component.name === 'command-palette'
+      ? <p>Load the optional <code>tremplin/extensions/command-palette</code> module to initialize declarative hooks, or create a typed instance directly. It is intentionally excluded from the core bundle.</p>
+      : localName === 'toast' ? <p>Toasts are opt-in: create an instance and call <code>show()</code> explicitly. The live example uses the application wiring below; <code>data-docs-toast-show</code> is a documentation-only hook, not a framework API. Static examples author <code>show</code> for presentation.</p>
+      : ['tooltip', 'popover'].includes(localName) ? <p>The core data API lazily initializes interaction hooks. This documentation explicitly initializes these examples on DOMContentLoaded for first-interaction behavior. The module sample below creates the instance; the configured triggers or an explicit <code>show()</code> call reveal it. Floating UI must be available.</p>
+      : <p>Declarative <code>data-trm-*</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>}
+    <div class="docs-code"><button class="btn btn-sm btn-outline-secondary docs-copy" type="button">Copy</button><pre tabindex="0"><code>{javascript}</code></pre></div>
+    <p>For the smallest application bundle, import only this component:</p>
+    <div class="docs-code docs-code-standalone"><button class="btn btn-sm btn-outline-secondary docs-copy" type="button">Copy</button><pre tabindex="0"><code>{moduleImport}</code></pre></div>
+
+    <h3 id="options">Options</h3>
+    {choiceOptions ? <><p>Configure these optional values before construction; getOrCreateInstance does not reconfigure an existing instance.</p><div class="table-responsive focus-ring" tabindex="0" role="region" aria-label="Source-verified option defaults"><table class="table"><thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Behavior</th></tr></thead><tbody>{choiceOptions.map(option => <tr><td><code>{option.name}</code></td><td>{option.type}</td><td><code>{option.defaultValue}</code></td><td>{option.description}</td></tr>)}</tbody></table></div></> : localName === 'toggler' ? <><p>The frozen scanner omits the alias-declared TogglerConfig. These source-verified options belong on the target; this authored table does not change the frozen metadata.</p><div class="table-responsive" tabindex="0" role="region" aria-label="Scrollable Toggler options"><table class="table"><thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Purpose</th></tr></thead><tbody>{togglerOptionRows.map(option => <tr><td><code>{option.name}</code></td><td><code>{option.type}</code></td><td><code>{option.defaultValue}</code></td><td>{option.description}</td></tr>)}</tbody></table></div></> : apiComponent.options.length ? <div class="table-responsive" tabindex="0" role="region" aria-label="Scrollable component options"><table class="table table-bordered"><thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Required</th></tr></thead><tbody>{apiComponent.options.map(option => <tr><td><code>{option.name}</code></td><td><code>{option.type}</code></td><td>{option.required ? 'Yes' : 'No'}</td></tr>)}</tbody></table></div> : <p>This component has no configuration options.</p>}
+    {localName === 'chips' && <><div class="docs-callout"><strong>Explicit application submission.</strong> The example's hidden JSON value and status text are maintained by this handler, not by Chips. It does not send a request.</div><div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy Chips submission handler">Copy</button><pre tabindex="0"><code>{chipsSubmissionJavascript}</code></pre></div></>}
+
+    <h3 id="methods">Methods</h3>
+    <ul>{[...api.commonMethods, ...apiComponent.methods].map(method => <li><code>{method}</code></li>)}</ul>
+
+    <h3 id="events">Events</h3>
+    {localName === 'nav-overflow' && <p>Runtime events use <code>.trm.navoverflow</code>. The frozen scanner derives a kebab-case suffix from the filename; this guide displays actual runtime names without changing that baseline. Only <code>overflow</code> and explicit <code>update()</code> dispatch notifications; <code>resize</code> is an internal fallback listener.</p>}
+    {apiComponent.events.length ? <div class="table-responsive" tabindex="0" role="region" aria-label="Scrollable lifecycle events"><table class="table"><thead><tr><th scope="col">Event</th><th scope="col">When it fires</th></tr></thead><tbody>{apiComponent.events.map(event => <tr><td><code>{advancedRuntimeEvent(adaptiveRuntimeEvent(event))}</code></td><td>{eventDescription(event)}</td></tr>)}</tbody></table></div> : <p>This component does not emit component-specific lifecycle events.</p>}
+
+    <h3 id="data-attributes">Data attributes</h3>
+    {localName === 'toggler' && <p>Configure <code>data-trm-attribute</code> and <code>data-trm-value</code> on each target. The delegated trigger uses <code>data-trm-toggle="toggler"</code> and an optional <code>data-trm-target</code>. The frozen scanner omits the attribute configuration hook.</p>}
+    {localName === 'scrollspy' && <p>Initialize with <code>data-trm-spy="scroll"</code> and a matching <code>data-trm-target</code>. The frozen scanner also lists <code>data-trm-toggle</code> from Menu integration; it is not a Scrollspy initialization hook.</p>}
+    {component.name === 'alert' ? <p>Use <code>data-trm-dismiss="alert"</code> on a named native close button. Alternatively, create an Alert instance and call <code>close()</code>.</p> : localName === 'toast' ? <p>Use <code>data-trm-dismiss="toast"</code> on a named close button; <code>data-trm-autohide</code> and <code>data-trm-delay</code> configure an explicitly created instance. There is no automatic show-toggle attribute.</p> : apiComponent.dataAttributes.length ? <div class="docs-cluster docs-class-list">{apiComponent.dataAttributes.map(attribute => <code>{attribute}</code>)}</div> : <p>Initialize this component with JavaScript.</p>}
+    <p class="mt-4"><a href={`/api/${localName}/`}>View the generated {apiComponent.className} API reference →</a></p>
+  </> : <>
+    <h2 id="javascript">JavaScript</h2>
+    <p>{cssBehavior[component.name] ?? 'This is a CSS component and does not require Tremplin JavaScript.'}</p>
+    {localName === 'navbar' && <>
+      <div class="docs-callout"><strong>Explicit application focus policy.</strong> These examples focus the authored autofocus control after a modal Drawer finishes opening. WebKit can otherwise leave focus outside this responsive example. Copy this handler with the markup and load it after that markup. This is documentation/application wiring, not an extra Navbar plugin or a change to pinned Drawer behavior.</div>
+      <div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy Navbar application focus handler">Copy</button><pre tabindex="0"><code>{navbarFocusJavascript}</code></pre></div>
+    </>}
+    {localName === 'chip' && <>
+      <div class="docs-callout"><strong>Explicit standalone application behavior.</strong> Load this handler after the example markup. It owns filter state, removal, the status message and focus return; none of these are supplied by Chip CSS. The focus-ring helper is also an explicit accessibility choice for actionable chips.</div>
+      <div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy standalone Chip application handler">Copy</button><pre tabindex="0"><code>{standaloneChipJavascript}</code></pre></div>
+    </>}
+    {patternJavascript && <>
+      <div class="docs-callout"><strong>Explicit application demo.</strong> Copy this handler after the matching markup. It acts only on this example's DOM and performs no network requests, persistence or account changes. It is not a new framework plugin. The application owns state, status text and any focus movement.</div>
+      <div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy local pattern application handler">Copy</button><pre tabindex="0"><code>{patternJavascript}</code></pre></div>
+    </>}
+  </>}
+
+  {advancedTopic === 'datepicker' && <p>Catalog click/focusin/pointerdown entries are internal listeners, not dispatched Datepicker lifecycle notifications. These source-derived descriptions do not change the frozen scanner baseline.</p>}
+  {localName === 'forms' && <><h2 id="demo-setup">Explicit application demo setup</h2><p>Copy this handler with the demo markup. It uses native validity and FormData, reports only field names, focuses the summary, and clears application error state on reset. It does not replace server validation or create a framework Forms plugin.</p><div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy Forms application demo handler">Copy</button><pre tabindex="0"><code>{formsDemoJavascript}</code></pre></div></>}
+  {localName === 'command-palette' && <><h2 id="demo-setup">Explicit application demo setup</h2><p>Copy this handler after the example markup. Each demo has one known launcher; the handler focuses it at the show gate before the extension records the opener (including WebKit pointer clicks), owns transient status messages and prevents documentation search from stealing focus behind an open preview. This limited shortcut guard does not make the extension a native modal, supply inertness or provide document-wide focus containment.</p><div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy Command Palette application handler">Copy</button><pre tabindex="0"><code>{paletteDemoJavascript}</code></pre></div></>}
+  {advancedTopic === 'otp-input' && <p>OTP runtime keys use <code>.trm.otpInput</code>, not the filename suffix in the frozen scanner. This presentation correction does not change the baseline or core.</p>}
+  {['datepicker','range','strength'].includes(localName) && <><h2 id="demo-setup">Explicit browser-bundle demo setup</h2><p>This copied application setup configures marked examples locally. It deliberately disposes any auto-created instance before setting function options; getOrCreateInstance does not reconfigure it. No requests or automatic submission are made.</p><div class="docs-code docs-code-standalone"><button class="docs-copy" type="button" aria-label="Copy advanced input demo setup">Copy</button><pre tabindex="0"><code>{advancedDemoJavascript}</code></pre></div></>}
+
+  </>}
+
+  <nav class="docs-pagination" aria-label="Component documentation pages">
+    {previous ? <a rel="prev" href={`/components/${previous.name}/`}><small>Previous</small><span>← {displayName(previous.name)}</span></a> : <span></span>}
+    {next ? <a rel="next" href={`/components/${next.name}/`}><small>Next</small><span>{displayName(next.name)} →</span></a> : <span></span>}
+  </nav>
+  {localName === 'toast' && <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const Toast = window.TremplinFramework?.Toast
+      document.querySelectorAll('[data-docs-toast-show]').forEach(trigger => {
+        const target = document.querySelector(trigger.getAttribute('data-docs-toast-show'))
+        if (!Toast || !target) return
+        const notification = Toast.getOrCreateInstance(target)
+        trigger.addEventListener('click', () => notification.show())
+      })
+    })
+  </script>}
+  {localName === 'navbar' && <script is:inline set:html={navbarFocusJavascript}></script>}
+  {localName === 'chip' && <script is:inline set:html={standaloneChipJavascript}></script>}
+  {localName === 'forms' && <script is:inline set:html={formsDemoJavascript}></script>}
+  {localName === 'command-palette' && <script is:inline type="module" set:html={paletteDemoJavascript.replaceAll("from 'tremplin/extensions/command-palette'", "from '/js/tremplin-command-palette.min.js'")}></script>}
+  {component.name === 'bottom-sheet' && <script is:inline set:html={sheetDemoJavascript}></script>}
+  {localName === 'chips' && <script is:inline set:html={chipsSubmissionJavascript}></script>}
+  {patternJavascript && <script is:inline set:html={patternJavascript}></script>}
+  {['datepicker','range','strength'].includes(localName) && <script is:inline type="module" set:html={advancedDemoJavascript.replaceAll("from 'tremplin'", "from '/js/tremplin-docs.min.js'")}></script>}
+</DocsLayout>

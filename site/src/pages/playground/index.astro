@@ -1,0 +1,31 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro'
+const initial = `<main class="container py-5">
+  <div class="card">
+    <div class="card-body">
+      <span class="badge">Tremplin</span>
+      <h1 class="mt-3">Build something great</h1>
+      <p class="fg-2">Edit this markup and see the result instantly.</p>
+      <button class="btn-solid theme-accent" type="button">Launch</button>
+    </div>
+  </div>
+</main>`
+---
+<DocsLayout title="Playground" description="Try Tremplin HTML and classes in a live sandbox.">
+  <h1>Playground</h1>
+  <p>Edit HTML using Tremplin classes. The preview runs in a sandboxed frame and does not execute pasted scripts.</p>
+  <div class="grid gap-3" style="max-inline-size:none">
+    <div class="g-col-12 md:g-col-6"><label class="form-label" for="markup">HTML</label><textarea class="form-control" id="markup" style="min-block-size:30rem;font-family:var(--trm-font-mono)">{initial}</textarea></div>
+    <div class="g-col-12 md:g-col-6"><div class="form-label">Preview</div><iframe class="border rounded" id="preview" title="Tremplin playground preview" sandbox="allow-same-origin" style="inline-size:100%;block-size:30rem;background:#fff"></iframe></div>
+  </div>
+  <script is:inline>
+    const editor = document.querySelector('#markup')
+    const preview = document.querySelector('#preview')
+    const render = () => {
+      const safeMarkup = editor.value.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '')
+      preview.srcdoc = `<!doctype html><html lang="en" data-trm-theme="light"><head><meta charset="utf-8"><title>Tremplin playground preview</title><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="/css/tremplin.min.css"></head><body>${safeMarkup}</body></html>`
+    }
+    editor.addEventListener('input', render)
+    render()
+  </script>
+</DocsLayout>

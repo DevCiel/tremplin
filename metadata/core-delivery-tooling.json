@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "phase": "compilation-tooling-and-canonical-modules",
+  "upstreamLockGitBlob": "6a9718ae0e97db041f00b0bd887100aeb45579b8",
+  "dependencyAdditions": {
+    "rolldown": "1.2.0",
+    "browserslist": "4.28.9",
+    "terser": "5.51.2",
+    "autoprefixer": "10.6.2",
+    "lightningcss": "1.33.0",
+    "globby": "16.2.4",
+    "postcss-prefix-custom-properties": "0.1.0"
+  },
+  "scriptAdditions": {
+    "js-compile-plugins": "node build/build-plugins.mjs",
+    "js-emit-types": "node node_modules/typescript-bootstrap/bin/tsc --project build/tsconfig.dts.json",
+    "build:core-preview": "node tests/tooling/build-core-preview.mjs"
+  },
+  "scriptReplacements": {
+    "build:js": {
+      "before": "node build/build-strict-js.mjs",
+      "after": "node build/build-strict-js.mjs && npm run js-compile-plugins && npm run js-emit-types"
+    },
+    "build": {
+      "before": "npm run check:no-legacy && npm run clean && npm run check:bootstrap && npm run build:api && npm run check:api && npm run build:css && npm run build:css:extensions && npm run build:js && npm run build:manifest && npm run check:size && npm run check:no-legacy",
+      "after": "npm run check:no-legacy && npm run clean && npm run check:bootstrap && npm run build:api && npm run check:api && npm run build:css && npm run build:css:extensions && npm run build:js && npm run build:manifest && npm run check:size && npm run check:no-legacy && npm run build:core-preview"
+    }
+  },
+  "bundledJavaScriptBudgetApproval": {
+    "before": 61000,
+    "after": 62000,
+    "previewBytes": 61419,
+    "source": "Explicit user approval during local compiler qualification on 9 November 2026; standard JS and CSS limits are unchanged."
+  },
+  "publicExportChanges": false,
+  "defaultBrowserCompilerChanged": false
+}

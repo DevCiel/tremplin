@@ -1,0 +1,87 @@
+---
+{
+  "title": "Width",
+  "description": "Use width utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use width utilities from the configured Tremplin utility map.",
+  "order": 23,
+  "utility": {
+    "category": "Sizing",
+    "classes": [
+      "w-1",
+      "w-2",
+      "w-25",
+      "w-50",
+      "w-75",
+      "w-100",
+      "w-auto",
+      "w-min",
+      "w-max",
+      "w-fit",
+      "max-w-100",
+      "min-w-0",
+      "min-w-100",
+      "vw-100",
+      "min-vw-100",
+      "dvw-100",
+      "min-dvw-100"
+    ],
+    "notes": "Width utilities use physical width, not inline-size, and are not responsive by default. Fixed size-map widths, percentages, auto and intrinsic min/max/fit values are available. Canonical constraints are max-w/min-w, not mw. Viewport units can exceed a padded parent; viewport demos are code-only.",
+    "responsive": false
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/width"][0].example} /></div>
+
+<Code sample={samples["utilities/width"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"Width utilities use physical width, not inline-size, and are not responsive by default. Fixed size-map widths, percentages, auto and intrinsic min/max/fit values are available. Canonical constraints are max-w/min-w, not mw. Viewport units can exceed a padded parent; viewport demos are code-only."} /></p>
+
+<Code sample={samples["utilities/width"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Configuration and limits"}</h2>
+
+<p><Html source={"Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Sizing maps and reserved values"}</h2>
+
+<p><Html source={"The sizes map contributes to width only, not height. Reserved percentage/auto/min/max/fit width values are merged afterward and win over sizes keys. Configure a whole utility family to replace those values or opt into responsive modes. Physical dimensions do not swap in vertical writing."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Local sizing configuration"}</h2>
+
+<p><Html source={"These shallow replacements remove fit while changing min to 10rem in each family. They do not claim a shared intrinsic sizing map."} /></p>
+
+<Code sample={samples["utilities/width"][4].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

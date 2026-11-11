@@ -1,0 +1,108 @@
+---
+{
+  "title": "Layout",
+  "description": "Arrange labels, controls, and actions with the responsive grid and spacing utilities.",
+  "group": "Forms",
+  "lead": "Arrange labels, controls, and actions with the responsive grid and spacing utilities.",
+  "order": 15
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Forms and utilities"}</h2>
+
+<p>{"The form element has no special layout. Use an actual form and explicit button types for application fields, with an endpoint/server validation in production. These local buttons start disabled until their preventDefault handlers exist. Use form-field for inner spacing and consistent margins/gaps between groups."}</p>
+
+<div class="docs-example"><Html source={examples["forms/layout"][0].example} /></div>
+
+<Code sample={examples["forms/layout"][0].code[0]} standalone={false} />
+
+<Code sample={examples["forms/layout"][0].code[1]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Form grid and gutters"}</h2>
+
+<p>{"The default Flexbox grid needs $enable-grid-classes:true. Canonical responsive classes use prefixes such as md:col-6, not col-md-6. g-3 controls gutters; preserve meaningful source order when stacked."}</p>
+
+<div class="docs-example"><Html source={examples["forms/layout"][1].example} /></div>
+
+<Code sample={examples["forms/layout"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Mixed column widths"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/layout"][2].example} /></div>
+
+<Code sample={examples["forms/layout"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Horizontal forms"}</h2>
+
+<p>{"Use col-form-label and responsive label/control columns. A real fieldset/legend names related choices; responsive offsets align controls without empty placeholder labels."}</p>
+
+<div class="docs-example"><Html source={examples["forms/layout"][3].example} /></div>
+
+<Code sample={examples["forms/layout"][3].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Horizontal label sizing"}</h2>
+
+<p>{"col-form-label-sm/lg track form-control-sm/lg through shared root sizing. These exist in strict core and need no custom replacement."}</p>
+
+<div class="docs-example"><Html source={examples["forms/layout"][4].example} /></div>
+
+<Code sample={examples["forms/layout"][4].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Column sizing and auto-sizing"}</h2>
+
+<p>{"A fixed fraction can share space with flexible sm:col siblings. col-auto makes content-sized columns; responsive prefixes also apply to offsets/row-cols. Keep visual order aligned with keyboard and source order."}</p>
+
+<div class="docs-example"><Html source={examples["forms/layout"][5].example} /></div>
+
+<Code sample={examples["forms/layout"][5].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"Inline forms"}</h2>
+
+<p>{"lg:row-cols-auto gives content-sized columns at large viewports; col-12 stacks below. Long translations and native controls still need real-device checks. These examples keep visible labels."}</p>
+
+<div class="docs-example"><Html source={examples["forms/layout"][6].example} /></div>
+
+<Code sample={examples["forms/layout"][6].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Sass customization"}</h2>
+
+<p>{"Use the existing config/layout modules; there is no dedicated forms-layout Sass partial. Grid configuration is documented separately under Layout."}</p>
+
+<Code sample={examples["forms/layout"][7].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">{"Explicit demo accessibility CSS"}</h2>
+
+<p>{"Copy this scoped application CSS with the demo wrappers. It strengthens feedback/placeholder/floating-label and tooltip contrast, restores plaintext focus, mirrors the physical select caret in RTL and gives adorned disabled wrappers a visible background. The tooltip is positioned within the example padding. These are demo choices, not new core defaults."}</p>
+
+<Code sample={examples["forms/layout"][8].code[0]} standalone={true} />
+
+</section>

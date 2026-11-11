@@ -1,0 +1,86 @@
+---
+{
+  "title": "Datepicker",
+  "description": "Choose dates with the Vanilla Calendar Pro adapter.",
+  "group": "Forms",
+  "lead": "Choose dates with the Vanilla Calendar Pro adapter.",
+  "order": 12
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Explicit demo contrast customization"}</h2>
+
+<p>{"These examples opt into application CSS with darker solid backgrounds and emphasized foregrounds. This is not a change to framework defaults. Copy this CSS and the demo-contrast wrapper together. Calendar examples also pass a styles option to the dependency."}</p>
+
+<Code sample={examples["forms/datepicker"][0].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Overview"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/datepicker"][1].example} /></div>
+
+<Code sample={examples["forms/datepicker"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Additional example"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/datepicker"][2].example} /></div>
+
+<Code sample={examples["forms/datepicker"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Explicit calendar layout CSS"}</h2>
+
+<p>{"This application-only rule removes hidden body-appended popups from layout so stale desktop coordinates do not cause overflow after resize. It is not a core default or new CSP exception. Copy this CSS and the sibling-field handler with the examples."}</p>
+
+<Code sample={examples["forms/datepicker"][3].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Behavior, submission and cleanup"}</h2>
+
+<p>{"Use a labelled type=text field, not a second native type=date popup. ISO preselection is an array, while named text-input submission is formatted display text."}</p>
+
+<p>{"getSelectedDates() returns a copy. setSelectedDates() updates display but does not dispatch adapter change or native input/change. Calendar Pro replaces an inline child field; the example uses a sibling field and a disclosed click-change handler instead. Sync that field explicitly after API calls."}</p>
+
+<p>{"Manual text edits after initialization do not automatically resync the selection array. Supply an explicit application parse/validation policy or use a native date input where appropriate."}</p>
+
+<p>{"Popup visibility callbacks and promises do not establish focus restoration or async animation completion. Inline mode remains visible; disposal destroys the calendar, observer and owned outside handlers."}</p>
+
+<p>{"vcpOptions is spread before adapter-owned configuration: only the months extension is enabled, callbacks/settings can be overwritten, and sanitizer enforcement stays mandatory."}</p>
+
+<p>{"Keep the approved Calendar HTML sanitizer and same-origin dist/icons/datepicker-chevron.svg relative to dist/css. Never weaken Trusted Types/CSP to make a sample render."}</p>
+
+<p>{"The explicit contrast wrapper styles are application choices, including a Calendar Pro styles class for body-appended popups. Parent CSS inheritance alone cannot reach those popups. An explicit demo-only hidden-popup display rule prevents stale desktop coordinates from creating mobile resize overflow."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Source-verified usage"}</h2>
+
+<p>{"See the "}<a href="/components/datepicker/">{"component guide"}</a>{" for all options/defaults, actual events, tokens and additional examples. Client interaction is not server validation."}</p>
+
+<Code sample={examples["forms/datepicker"][5].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"Explicit browser-bundle demo setup"}</h2>
+
+<p>{"The following copied application code configures only marked demo nodes and keeps changes local. It intentionally replaces an existing instance when needed; getOrCreateInstance alone does not reconfigure it. No network request or automatic form submission is made."}</p>
+
+<Code sample={examples["forms/datepicker"][6].code[0]} standalone={true} />
+
+</section>

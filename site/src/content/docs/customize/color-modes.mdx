@@ -1,0 +1,47 @@
+---
+{
+  "title": "Color modes",
+  "description": "Choose light, dark, automatic, or scoped custom themes.",
+  "group": "Customize",
+  "lead": "Choose light, dark, automatic, or scoped custom themes.",
+  "order": 5
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { customizeExamples as samples } from '../../../data/customize-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Dark mode</h2>
+
+<p>Set data-trm-theme on the root or a subtree. It changes runtime colors without loading a second stylesheet.</p>
+
+<Code sample={samples["customize/color-modes#0"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Usage</h2>
+
+<p>Without an explicit data-trm-theme value, root advertises light dark and follows the platform preference. Auto is an application choice implemented by removing the override, not a separate compiled theme.</p>
+
+<Code sample={samples["customize/color-modes#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Custom color modes</h2>
+
+<p>A new attribute value has no built-in mode rules: set color-scheme and a coherent token set yourself. Test nested modes, native controls and overlays.</p>
+
+<Code sample={samples["customize/color-modes#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">CSS variables and Sass</h2>
+
+<p>{"The explicit mixins/color-mode module defaults to media-query output. Configure config.$color-mode-type to data to select attribute-based mixin output. This controls the mixin, not root's existing light-dark() and explicit light/dark selectors."}</p>
+
+</section>

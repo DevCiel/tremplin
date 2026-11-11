@@ -1,0 +1,133 @@
+---
+{
+  "component": "tooltip",
+  "title": "Tooltip",
+  "description": "Tooltip component documentation for Tremplin.",
+  "lead": "Provide short supporting descriptions on hover and keyboard focus.",
+  "variants": [
+    {
+      "title": "Preferred trigger",
+      "description": "Default hover and focus triggers provide pointer/keyboard access. The documentation explicitly initializes examples on DOMContentLoaded; construction alone does not show a tip."
+    },
+    {
+      "title": "Placement",
+      "description": "Use top/right/bottom/left, not standalone start/end. This pin mirrors right/left through its document-direction attachment map; Floating UI may flip or shift the result."
+    },
+    {
+      "title": "Responsive placement",
+      "description": "Viewport breakpoint prefixes use the actual Floating UI helper. Resizing updates a visible tip; preferred placement is not a guarantee when the viewport clips it."
+    },
+    {
+      "title": "Static specimen",
+      "description": "Styling only: no generated ID, trigger relationship or controller is implied by a static specimen. Essential instructions remain visible elsewhere."
+    },
+    {
+      "title": "Disabled control wrapper",
+      "description": "The wrapper is named and keyboard focusable because a native disabled control cannot receive focus. This is a deliberate extra focus stop, not a substitute for visible permission guidance."
+    },
+    {
+      "title": "Sanitized HTML",
+      "description": "html=true allows a limited allowlist; default remains text. Security options cannot be disabled by data attributes. Keep templates/content trusted and sanitization enabled."
+    },
+    {
+      "title": "Instant animation",
+      "description": "animation=false adds the actual tooltip-instant class to generated output; it does not introduce a fade class."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "An explicit container keeps the generated tip inside this local theme. Placement uses document direction, not merely this wrapper direction."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Focus enters/leaves default focus triggers; hovering the tip can keep it open."
+    },
+    {
+      "keys": "Escape",
+      "behavior": "Dismiss the visible tip without moving focus. Inside a dialog, the tip consumes the first Escape."
+    }
+  ],
+  "guidelines": [
+    "Use concise supplemental information on a named native focusable trigger; never make a tip the only source of essential instructions.",
+    "The core has lazy data-API initialization. For deterministic first-interaction behavior, explicitly initialize triggers, as this site does.",
+    "Floating UI is required; use the bundle or resolve the dependency in a module build.",
+    "Generated output gets a unique ID and aria-describedby. The pin replaces/removes this attribute; do not assume it merges an existing description list.",
+    "Default hover/focus behavior keeps the tip accessible while pointer/focus remains relevant; Escape dismisses without moving focus.",
+    "Plain text is the default. HTML/template input uses the approved sanitizer; sanitize/allowList/sanitizeFn cannot come from data attributes.",
+    "Interactive content may be technically supported, but a role=tooltip is not a modal task or a focus-managed dialog. Prefer visible help or a Dialog for complex controls."
+  ],
+  "events": {
+    "hidden.trm.tooltip": "On the trigger after exit cleanup and removal of aria-describedby, unless reactivated.",
+    "hide.trm.tooltip": "Cancelable start before removing show from generated output.",
+    "inserted.trm.tooltip": "On the trigger after generated DOM insertion, before positioning and the shown callback.",
+    "show.trm.tooltip": "Cancelable start on the trigger before generating/inserting the tip.",
+    "shown.trm.tooltip": "On the trigger after the entry transition callback."
+  }
+}
+---
+
+import { componentApi } from '../../../data/component-api'
+import ApiOptions from '../../../components/component/ApiOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("tooltip")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="tooltip" />
+
+{componentDetail("tooltip").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="tooltip" />
+</>}
+
+{componentDetail("tooltip").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("tooltip").sass} standalone={true} />
+</>}
+
+{componentDetail("tooltip").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="tooltip" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="tooltip" />
+
+{documentedComponents.find(component => component.name === "tooltip").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="tooltip" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>The core data API lazily initializes interaction hooks. This documentation explicitly initializes these examples on DOMContentLoaded for first-interaction behavior. The module sample below creates the instance; the configured triggers or an explicit <code>show()</code> call reveal it. Floating UI must be available.</p>
+<Code source={componentApi("tooltip").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("tooltip").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<ApiOptions name="tooltip" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="tooltip" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="tooltip" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="tooltip" />
+<p class="mt-4"><a href="/api/tooltip/">View the generated {componentApi("tooltip").definition.className}{" API reference →"}</a></p>

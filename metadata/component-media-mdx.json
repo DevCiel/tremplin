@@ -1,0 +1,45 @@
+{
+  "phase": "component-media-authored-mdx",
+  "names": [
+    "carousel",
+    "stepper"
+  ],
+  "canonical": [
+    "carousel"
+  ],
+  "remaining": 15,
+  "previousPolicy": {
+    "file": "metadata/component-adaptive-mdx.json",
+    "sha256": "79bd0bfc2351387469d294debef18d4548158adabb09c9975864112673f25341"
+  },
+  "historicalSources": {
+    "site/src/data/component-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-docs.before-media.ts.txt",
+      "sha256": "e08073cbf4d51bbd3f06f5eb3d68c19cdc184c738362fa52cab49dd3305bd38d"
+    },
+    "site/src/data/progress-media-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/progress-media-docs.before-media.ts.txt",
+      "sha256": "c1f879bf9db342b16f91233e897723368a0216df2a64655a5c7e88ea08af6f1d"
+    },
+    "site/src/data/component-api.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-api.before-media.ts.txt",
+      "sha256": "21a7a4e9ea5a0965ec957d80f1ea7fd4fbf3167dd72292a06bc1f51e9d826ebc"
+    },
+    "site/src/libs/component-mdx.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-mdx.before-media.ts.txt",
+      "sha256": "f4d1220da8911e82479cb576b8bf20e1538986a13deb744c5dc2dcd4f0cc9327"
+    }
+  },
+  "expectation": {
+    "snapshot": "tests/fixtures/mdx-migration/component-media.before.json",
+    "sha256": "692964dea724e9eb2c7185f36843f13b841bb74add14f3672f047cc15b3acd94"
+  },
+  "sources": {
+    "site/src/content/docs/components/carousel.mdx": "b310d4a646d734b9e1e308faced31ab91382196d03c119f7e6621172b3e4db1c",
+    "site/src/content/docs/components/stepper.mdx": "0189b24251ac1bb398a6429d0fe65d3f6d9dbad7b94b4677f21cec74a0001197",
+    "site/src/data/component-api.ts": "3eb17c76b8ebb9056ae22e450a88c39e8fe96d4c880dc0df95929e0d26e636ae",
+    "site/src/data/component-docs.ts": "3d22d382a21b875b5fe0edde4d2fd60a0e0c630720b98def23f659da2a309789",
+    "site/src/data/progress-media-docs.ts": "da1c26d2712d6decd8ac4a3041a73abeecd599e16910470850cc8c3d5263ba25",
+    "site/src/libs/component-mdx.ts": "6b4c556313519c300dc704d1579fc8357f6c4b5203aa29102e0b66cb85e70a03"
+  }
+}

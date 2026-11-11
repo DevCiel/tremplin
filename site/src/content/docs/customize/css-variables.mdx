@@ -1,0 +1,45 @@
+---
+{
+  "title": "CSS variables",
+  "description": "Override global and component tokens at runtime without recompiling Sass.",
+  "group": "Customize",
+  "lead": "Override global and component tokens at runtime without recompiling Sass.",
+  "order": 10
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { customizeExamples as samples } from '../../../data/customize-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Global tokens</h2>
+
+<p>{"Set actual consumed roles. Radius uses numbered --trm-radius-* tokens, not a single legacy radius variable. Token maps may redeclare properties on components, so scope local overrides on the component when necessary."}</p>
+
+<Code sample={samples["customize/css-variables#0"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Local overrides</h2>
+
+<p>Use tokens consumed by that variant and review hover, active, focus and disabled pairs too. A token existing on root does not guarantee every component reads it.</p>
+
+<Code sample={samples["customize/css-variables#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Namespace policy</h2>
+
+<p>{"Classes remain unprefixed. CSS variables use --trm-* and behavior hooks use data-trm-*. Keep frameworks with overlapping selectors out of the same document unless you deliberately isolate them."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Verification</h2>
+
+<p>Check every theme and interactive state, including keyboard focus and disabled controls. Breakpoint conditions require Sass configuration rather than runtime CSS variable substitutions. See <a href="/getting-started/css-variables/">{"Getting started with CSS variables"}</a> for a step-by-step introduction.</p>
+
+</section>

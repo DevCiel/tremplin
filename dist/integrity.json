@@ -1,0 +1,58 @@
+{
+  "version": "0.8.0-beta.0",
+  "algorithm": "sha384",
+  "assets": {
+    "css/tremplin-grid.css": {
+      "bytes": 131249,
+      "integrity": "sha384-DsAE1aa4/mZ8yfTPFPyLMwHKZ5KuWvzMBln3brQiwhJd4i4Cm98ldI0OzS1WAKuZ"
+    },
+    "css/tremplin-grid.min.css": {
+      "bytes": 83149,
+      "integrity": "sha384-gOF7ZRY614Dz6wmSieKk76Wu6G71I6rAvYcWbeiJsNlkuwBwX3oth6PrI/tMzZxm"
+    },
+    "css/tremplin-reboot.css": {
+      "bytes": 41355,
+      "integrity": "sha384-QVjwbpqnlp/2PifPSny4es9xJuP8BBjBbNwr5YmZR/i6YVXpf78eLFxWIB+eRTGm"
+    },
+    "css/tremplin-reboot.min.css": {
+      "bytes": 36957,
+      "integrity": "sha384-CYIPxq2pj46VxuvjDOhrArfeRpN+5x20xtzqXf8K3UxggPY/JypVjNAQkv5vW0Zv"
+    },
+    "css/tremplin-utilities.css": {
+      "bytes": 202352,
+      "integrity": "sha384-EMOmEiGpamjak0EmI0qx0phQOecHfX/RslQfY2dCaZULDwSaY886seLA551yjuAq"
+    },
+    "css/tremplin-utilities.min.css": {
+      "bytes": 147811,
+      "integrity": "sha384-5LZXRYurMjFmgxM3a8eyJcd+Uee9vrcinc6kwLnYXPX3tw2g9OHVlNEVt8ZJuyAn"
+    },
+    "css/tremplin.css": {
+      "bytes": 503605,
+      "integrity": "sha384-Okv3xco0mYkNR2zKGR+Z7IDfHh7HtEYOoz8xIL4Ak/FbzJAJtn43p71HGTSBFqjI"
+    },
+    "css/tremplin.min.css": {
+      "bytes": 388247,
+      "integrity": "sha384-CRpCUZ98QhvAAv1ISSsLbdBxrBta9WkDWgphsIpursF+3Y7FVuXd6nr0lxRj9For"
+    },
+    "icons/datepicker-chevron.svg": {
+      "bytes": 202,
+      "integrity": "sha384-3wBxAGcCvguRcR9lEYeLVNcaVBH8YTvt1mYNB9chIzJzR/yrNgq78jJq6z2kP/tK"
+    },
+    "js/tremplin.bundle.js": {
+      "bytes": 334190,
+      "integrity": "sha384-92YuQHQEycZHmJJ1ZCSTxAT4EylLl3a8DlA5Rp9UCVdUspUmHOIgg2Z6jFh+Mru0"
+    },
+    "js/tremplin.bundle.min.js": {
+      "bytes": 223886,
+      "integrity": "sha384-ROwsTH/s8vKy4wUpGDtBM4Ufl6II2+BNdCLMdUDOHz1SxkqqxG1WSNYOfzxV8kbM"
+    },
+    "js/tremplin.js": {
+      "bytes": 219563,
+      "integrity": "sha384-JJMhFC/Ub2h4qJtZKlpflKLky9m7SgD85jf2KZZyH2gHLwuQnTrHeiTwacBy1Uwo"
+    },
+    "js/tremplin.min.js": {
+      "bytes": 144819,
+      "integrity": "sha384-MO5CiV83giCBAftHmPRsDKtXKol1Qq4BaGpMaJs1IXDNkl99pZyn49I4OLyGzfH2"
+    }
+  }
+}

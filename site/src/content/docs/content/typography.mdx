@@ -1,0 +1,102 @@
+---
+{
+  "title": "Typography",
+  "description": "Style readable text while preserving headings, lists, quotations, and document semantics.",
+  "group": "Content",
+  "lead": "Style readable text while preserving headings, lists, quotations, and document semantics.",
+  "order": 1
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { contentExamples as samples } from '../../../data/content-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Global settings</h2>
+
+<p>Body typography comes from the framework configuration and runtime font variables. Keep a readable line-height and test browser text zoom. The documentation shell overrides its own typography, so its heading measurements are not the default values of a consumer page.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Headings</h2>
+
+<p>{"Native h1–h6 and matching heading classes exist. Use fs-* utilities with named sizes when appearance should differ from the semantic level; classes do not change document structure."}</p>
+
+<div class="docs-example"><Html source={samples["content/typography#1"].example} /></div>
+
+<Code sample={samples["content/typography#1"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Display headings and lead text</h2>
+
+<p>The strict pin uses named font-size and weight utilities rather than display-1 through display-6 or lead classes. This example deliberately uses fs-3xl/fw-light and fs-xl. Test long text and zoom at narrow widths.</p>
+
+<div class="docs-example"><Html source={samples["content/typography#2"].example} /></div>
+
+<Code sample={samples["content/typography#2"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Inline text elements</h2>
+
+<p>Use elements that describe the meaning you intend. The .mark and .small classes provide corresponding visual treatments when different markup is appropriate.</p>
+
+<div class="docs-example"><Html source={samples["content/typography#3"].example} /></div>
+
+<Code sample={samples["content/typography#3"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Text utilities and abbreviations</h2>
+
+<p>Utilities cover size, weight, alignment, wrapping, and decoration. Give abbreviations an understandable expansion in surrounding text where needed; a title attribute alone is not an accessible tooltip replacement.</p>
+
+<div class="docs-example"><Html source={samples["content/typography#4"].example} /></div>
+
+<Code sample={samples["content/typography#4"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Blockquotes and sources</h2>
+
+<p>Use blockquote for a quotation and put attribution outside it. The local quote style has an inline-start accent border and adapts to RTL. Do not invent a real person or publication as the source of sample text.</p>
+
+<div class="docs-example"><Html source={samples["content/typography#5"].example} /></div>
+
+<Code sample={samples["content/typography#5"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">Lists</h2>
+
+<p>list-unstyled removes markers and start padding. list-inline/list-inline-item supply inline-list styling. Use the native list semantics and a meaningful reading order; layout classes do not change them.</p>
+
+<div class="docs-example"><Html source={samples["content/typography#6"].example} /></div>
+
+<Code sample={samples["content/typography#6"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">Responsive font sizes</h2>
+
+<p>{"Heading sizes refer to named runtime tokens such as font-size-3xl and font-size-xl; larger scale entries use clamp() fluid sizing. These are not the retired display-* classes. Scope runtime token changes or opt into generated responsive utility families deliberately; do not assume default responsive font-size variants."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">CSS and Sass</h2>
+
+<p>{"Font-sizes entries use named keys and nested font-size/line-height maps, emitting runtime scale tokens consumed by headings and fs-* utilities. Replacement entries must supply both values. Root tokens configure body typography; component token maps control component-specific text."}</p>
+
+<Code sample={samples["content/typography#8"].code[0]} standalone={true} />
+
+</section>

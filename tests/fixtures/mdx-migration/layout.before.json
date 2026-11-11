@@ -1,0 +1,920 @@
+[
+  {
+    "slug": "layout/breakpoints",
+    "group": "Layout",
+    "title": "Breakpoints",
+    "description": "Build mobile-first layouts with viewport queries and opt-in container queries.",
+    "lead": "Build mobile-first layouts with viewport queries and opt-in container queries.",
+    "sections": [
+      {
+        "heading": "Core concepts",
+        "paragraphs": [
+          "Start with styles that work at the narrowest width, then add changes as space becomes available. Viewport breakpoints measure the browser window. Container queries measure an eligible ancestor, so the same component can adapt differently in a sidebar and a main column."
+        ]
+      },
+      {
+        "heading": "Available breakpoints",
+        "table": {
+          "headings": [
+            "Tier",
+            "Minimum",
+            "Prefix"
+          ],
+          "rows": [
+            [
+              "xs",
+              "0",
+              "none"
+            ],
+            [
+              "sm",
+              "576px",
+              "sm:"
+            ],
+            [
+              "md",
+              "768px",
+              "md:"
+            ],
+            [
+              "lg",
+              "1024px",
+              "lg:"
+            ],
+            [
+              "xl",
+              "1280px",
+              "xl:"
+            ],
+            [
+              "2xl",
+              "1536px",
+              "2xl:"
+            ]
+          ]
+        },
+        "paragraphs": [
+          "The default Sass map has six keys, with numeric/unit key 2xl, not a duplicate xxl alias. Responsive Flexbox classes use viewport prefixes; CSS Grid placement uses container prefixes. Infix and legacy cq-* names are not emitted."
+        ]
+      },
+      {
+        "heading": "Media queries",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/layout/breakpoints' as bp;\n.dashboard { display: grid; }\n@include bp.media-breakpoint-up(lg) {\n  .dashboard { grid-template-columns: 18rem 1fr; }\n}"
+          }
+        ],
+        "paragraphs": [
+          "Range queries use inclusive lower bounds and exclusive upper bounds. There is no .02px subtraction or media-up convenience alias."
+        ]
+      },
+      {
+        "heading": "Max-width",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/layout/breakpoints' as bp;\n@include bp.media-breakpoint-down(md) { .project-navigation { flex-direction: column; } }"
+          }
+        ],
+        "paragraphs": [
+          "down(md) means width < 768px, not the whole md tier. Zero/null upper bounds emit unqueried content; down(xs) is unconditional. A typo can yield a null bound rather than a useful range."
+        ]
+      },
+      {
+        "heading": "Single breakpoint",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/layout/breakpoints' as bp;\n@include bp.media-breakpoint-only(md) { .project-panel { width: 40rem; } }"
+          }
+        ],
+        "paragraphs": [
+          "only(md) spans 768px &lt;= width &lt; 1024px; only(2xl) is unbounded above. Map order determines the next tier. Unknown keys are not coerced to aliases."
+        ]
+      },
+      {
+        "heading": "Between breakpoints",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/layout/breakpoints' as bp;\n@include bp.media-breakpoint-between(md, xl) { .project-summary { display: grid; } }"
+          }
+        ],
+        "paragraphs": [
+          "between(md,xl) spans 768px &lt;= width &lt; 1280px. Null bounds are open. Reversed positive bounds are emitted as written, not sorted."
+        ],
+        "table": {
+          "headings": [
+            "Call",
+            "Local default interval"
+          ],
+          "rows": [
+            [
+              "up(md)",
+              "width >= 768px"
+            ],
+            [
+              "down(md)",
+              "width < 768px"
+            ],
+            [
+              "only(md)",
+              "768px &lt;= width &lt; 1024px"
+            ],
+            [
+              "between(md, xl)",
+              "768px &lt;= width &lt; 1280px"
+            ]
+          ]
+        }
+      },
+      {
+        "heading": "Custom breakpoints",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/config' with (\n  $breakpoints: (base: 0, compact: 30rem, wide: 60rem),\n  $container-max-widths: (sm: null, md: null, lg: null, xl: null, 2xl: null, compact: 28rem, wide: 56rem)\n);\n@use 'tremplin/scss/tremplin-grid';"
+          }
+        ],
+        "paragraphs": [
+          "Breakpoints replace the entire map. Container maximums merge defaults; remove unmatched default keys explicitly. Unmatched maximum keys can emit an unqueried container maximum in the pin. Keep maps coherent and ordered."
+        ]
+      },
+      {
+        "heading": "Migration from previous defaults",
+        "paragraphs": [
+          "Strict core removes infix aliases, xxl aliases, separate legacy container-breakpoints and the container-widths configuration name. Migrate markup to canonical prefixes and configure container-max-widths. Do not load compatibility CSS into the strict bundle."
+        ]
+      },
+      {
+        "heading": "Canonical largest tier",
+        "example": "<div class=\"row g-3\" data-layout-demo=\"largest-canonical\"><div class=\"col-12 2xl:col-6\"><div class=\"border rounded p-3\">Canonical 2xl</div></div><div class=\"col-12 2xl:col-6\"><div class=\"border rounded p-3\">Canonical 2xl</div></div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"row g-3\"><div class=\"col-12 2xl:col-6\">First</div><div class=\"col-12 2xl:col-6\">Second</div></div>"
+          }
+        ],
+        "paragraphs": [
+          "Only canonical 2xl is present by default. The generated selector escapes its leading digit; HTML keeps the literal 2xl:col-6 spelling. A custom xxl map key is an explicit independent tier, not an automatic alias. Use the actual Sass key type in lookups."
+        ]
+      },
+      {
+        "heading": "Container queries",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"grid\">\n  <article class=\"g-col-12 sm:g-col-6\">First</article>\n  <article class=\"g-col-12 sm:g-col-6\">Second</article>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "grid establishes inline-size containment. Its descendants use the shared breakpoint map: sm=576px, md=768px. The container cannot query itself; a nearer eligible ancestor changes which size is measured. There are no cq-span-* aliases."
+        ]
+      },
+      {
+        "heading": "Container query mixins",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/layout/breakpoints' as bp;\n.project-frame { @include bp.set-container(inline-size, project-frame); }\n@include bp.container-breakpoint-between(sm, lg, project-frame) { .project-items { display: grid; } }\n@include bp.container-breakpoint-only(lg, project-frame) { .project-items { grid-template-columns: 1fr 1fr; } }\n@include bp.container-breakpoint-down(sm, project-frame) { .project-items { display: block; } }"
+          }
+        ],
+        "paragraphs": [
+          "Container range mixins mirror viewport intervals, measuring an eligible named or nearest ancestor. Physical width is queried even in vertical writing. Size containment can affect intrinsic sizing; give shrink-to-fit layouts deliberate dimensions."
+        ]
+      },
+      {
+        "heading": "Named containers",
+        "paragraphs": [
+          "A named query selects an eligible ancestor with that name even when a nearer unnamed container exists. Use a matching name in set-container(inline-size, project-frame) and the query mixin. An absent matching ancestor means a bounded query does not apply; an unbounded branch emits ordinary CSS without requiring a container.",
+          "The physical width feature uses width; it is not rewritten to inline-size in vertical writing modes. Relative em bounds resolve against the query container’s font size, unlike em media queries, which use the browser’s initial font size. Verify container padding, zoom, nesting, and RTL with real content."
+        ]
+      },
+      {
+        "heading": "Sass functions and loops",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/layout/breakpoints' as bp;\n$tiers: (base: 0, compact: 30rem, wide: 60rem);\n@include bp.loop-breakpoints-up($tiers) using ($name, $prefix) {\n  @include bp.media-breakpoint-up($name, $tiers) { .#{$prefix}project-grid { display: grid; } }\n}"
+          }
+        ],
+        "paragraphs": [
+          "Functions include breakpoint-next/min/max/prefix and css-escape-ident. loop-breakpoints-up supplies name/prefix; down supplies current/next/next-prefix in ascending map order. loop-breakpoints is the pinned down-loop alias, not a reversed iteration. next/only require known keys; min/max/prefix can return null or an empty prefix for missing keys."
+        ]
+      }
+    ],
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/layout-guides.ts"
+    }
+  },
+  {
+    "slug": "layout/containers",
+    "group": "Layout",
+    "title": "Containers",
+    "description": "Center page content with responsive maximum widths and consistent inline padding.",
+    "lead": "Center page content with responsive maximum widths and consistent inline padding.",
+    "sections": [
+      {
+        "heading": "How they work",
+        "paragraphs": [
+          "A container supplies full available width, automatic inline margins, and half a horizontal gutter on each side. The default container gains a maximum width at each configured viewport threshold. Nest rows within a container so their negative margins balance its padding."
+        ]
+      },
+      {
+        "heading": "Default container",
+        "example": "<div class=\"container border rounded p-3\">A centered responsive container</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<main class=\"container\">\n  <h1>Project dashboard</h1>\n</main>"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive containers",
+        "example": "<div class=\"md:container border rounded p-3\" data-layout-demo=\"responsive-container\">Fluid below md; constrained from md upward</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<main class=\"md:container\">\n  <h1>Responsive project content</h1>\n</main>"
+          }
+        ],
+        "table": {
+          "headings": [
+            "Minimum viewport",
+            "Default maximum width after activation"
+          ],
+          "rows": [
+            [
+              "Below chosen tier",
+              "100% (fluid)"
+            ],
+            [
+              "sm: 576px",
+              "540px"
+            ],
+            [
+              "md: 768px",
+              "720px"
+            ],
+            [
+              "lg: 1024px",
+              "960px"
+            ],
+            [
+              "xl: 1280px",
+              "1200px"
+            ],
+            [
+              "2xl: 1536px",
+              "1440px"
+            ]
+          ]
+        },
+        "paragraphs": [
+          "sm:container through 2xl:container are fluid below their viewport threshold, then progress through later configured maximums. container-fluid always remains fluid. There are no xxl, container-md or xs:container aliases."
+        ]
+      },
+      {
+        "heading": "Fluid containers",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"container-fluid\">Full-width content with inline gutters</div>"
+          }
+        ],
+        "paragraphs": [
+          "Fluid does not mean edge-to-edge: the default gutter padding remains. Use deliberate padding overrides if the design requires a full-bleed region."
+        ]
+      },
+      {
+        "heading": "CSS and Sass",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss' with (\n  $container-padding-x: 2rem,\n  $container-max-widths: (md: 740px)\n);"
+          }
+        ],
+        "paragraphs": [
+          "Container padding is half --trm-gutter-x on each side; container-padding-x defaults to grid-gutter-x. Width/max-width are physical, margins/padding logical. Breakpoint and maximum maps must have coherent keys; unmatched keys are not silently ignored.",
+          "Grid-only CSS does not include Reboot. Supply border-box sizing separately. Root palette/color tokens are not part of the focused Grid output."
+        ]
+      },
+      {
+        "heading": "Container mixin",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/layout/containers' as containers;\n.project-frame { @include containers.make-container(); }\n.project-narrow-frame { @include containers.make-container(1rem); }"
+          }
+        ],
+        "paragraphs": [
+          "The explicit layout/containers module owns make-container and emits its own layout styles. The mixin adds width:100%, logical half-gutter padding/margins and gutter tokens, not responsive maximums or query containment. The mixins aggregator is not a CSS-free substitute."
+        ]
+      }
+    ],
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/layout-guides.ts"
+    }
+  },
+  {
+    "slug": "layout/grid",
+    "group": "Layout",
+    "title": "Grid",
+    "description": "Arrange responsive content with a twelve-column Flexbox grid.",
+    "lead": "Arrange responsive content with a twelve-column Flexbox grid.",
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"container\"><div class=\"row g-3\"><div class=\"col\"><div class=\"border rounded p-3\">First column</div></div><div class=\"col\"><div class=\"border rounded p-3\">Second column</div></div><div class=\"col\"><div class=\"border rounded p-3\">Third column</div></div></div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"container\">\n  <div class=\"row g-3\">\n    <div class=\"col\">First column</div>\n    <div class=\"col\">Second column</div>\n    <div class=\"col\">Third column</div>\n  </div>\n</div>"
+          }
+        ]
+      },
+      {
+        "heading": "How it works",
+        "paragraphs": [
+          "A row is a wrapping flex container. Its direct children get column padding and default to full width. Assign col for equal-width columns or col-N for a fraction of the configured column count. Keep nested rows inside a column, not directly beside column content without an enclosing structure."
+        ]
+      },
+      {
+        "heading": "Grid options",
+        "table": {
+          "headings": [
+            "Feature",
+            "Default"
+          ],
+          "rows": [
+            [
+              "Columns",
+              "12"
+            ],
+            [
+              "Horizontal / vertical gutters",
+              "1.5rem / 0"
+            ],
+            [
+              "Breakpoints",
+              "xs, sm, md, lg, xl, 2xl"
+            ],
+            [
+              "Responsive syntax",
+              "md:col-6, lg:offset-2, md:row-cols-3"
+            ],
+            [
+              "Aliases",
+              "No infix or xxl compatibility names"
+            ]
+          ]
+        }
+      },
+      {
+        "heading": "Auto-layout columns",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"row g-3\">\n  <div class=\"col\">Flexible</div>\n  <div class=\"col-auto\">Content-sized</div>\n  <div class=\"col\">Flexible</div>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "col-auto uses the intrinsic width of its content. Long unbroken values can still overflow: test real text, images, and translated labels."
+        ]
+      },
+      {
+        "heading": "Responsive classes",
+        "example": "<div class=\"container\"><div class=\"row g-3\" data-layout-demo=\"responsive\"><div class=\"col-12 md:col-4\"><div class=\"border rounded p-3\">Sidebar</div></div><div class=\"col-12 md:col-8\"><div class=\"border rounded p-3\">Main content</div></div></div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"row g-3\">\n  <aside class=\"col-12 md:col-4\">Sidebar</aside>\n  <section class=\"col-12 md:col-8\">Main content</section>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "Use md:col-6, md:col and md:col-auto. Flexbox classes respond to the viewport; g-col/g-start CSS Grid placement responds to an eligible container. Generated rule order, not HTML class order, resolves competing declarations."
+        ]
+      },
+      {
+        "heading": "Grid-only distribution",
+        "example": "<div class=\"d-flex flex-column md:flex-row gap-3 px-3\" data-layout-demo=\"grid-utilities\"><span>Responsive flex</span><span class=\"md:ms-auto\">Automatic margin</span></div>",
+        "code": [
+          {
+            "language": "javascript",
+            "source": "import 'tremplin/css/reboot'\nimport 'tremplin/css/grid'"
+          },
+          {
+            "language": "html",
+            "source": "<div class=\"d-flex flex-column md:flex-row gap-3 px-3\">\n  <span>Responsive flex</span>\n  <span class=\"md:ms-auto\">Automatic margin</span>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "The focused bundle includes display, order, Grid tracks/flow, gap, Flexbox/alignment and spacing families. It excludes Reboot, components, general color/sizing utilities and full palette/root output. Supply application-wide base styles separately.",
+          "Mapped families support shallow complete replacement, null removal and per-family importance/variant flags. No separate compatibility ordering generator remains. Print/dark variants require explicit opt-in.",
+          "Grid-only CSS deliberately excludes Reboot: pair it with a reset or supply border-box sizing. Breakpoint properties on :root/:host are inspection tokens; overriding them does not change compiled queries."
+        ]
+      },
+      {
+        "heading": "Row columns",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"row row-cols-1 md:row-cols-3 g-3\">\n  <div class=\"col\">First card</div>\n  <div class=\"col\">Second card</div>\n  <div class=\"col\">Third card</div>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "row-cols-N targets direct children only; numbered variants run through grid-row-columns, six by default. A zero limit removes numbered variants while retaining row-cols-auto. The count is independent of grid-columns. Responsive variants use prefixes only."
+        ]
+      },
+      {
+        "heading": "Nesting",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"row g-3\">\n  <div class=\"md:col-8\">\n    <div class=\"row g-2\">\n      <div class=\"col-6\">Nested first half</div>\n      <div class=\"col-6\">Nested second half</div>\n    </div>\n  </div>\n  <div class=\"md:col-4\">Sibling</div>\n</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Sass",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/mixins/grid' as grid;\n.project-row { @include grid.make-row(); > * { @include grid.make-col-ready(); } }\n.project-column { @include grid.make-col(6); }"
+          }
+        ],
+        "paragraphs": [
+          "Import explicit mixins/grid for make-row, make-col-ready, make-col, make-col-auto, make-col-offset and row-cols. Column width is physical; offset/padding are logical. The main entry does not forward every mixin."
+        ]
+      },
+      {
+        "heading": "Grid class generator",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/mixins/grid' as grid;\n.project-row { @include grid.make-row(); > * { @include grid.make-col-ready(); } }\n.project-frame { @include grid.make-grid-columns(4, $breakpoints: (base: 0, compact: 30rem)); }"
+          }
+        ],
+        "paragraphs": [
+          "The generator emits canonical viewport prefixes, column/row-count/offset/gutter classes. Provide row geometry and child preparation separately. Manual calls still emit output when automatic grid classes are disabled.",
+          "The gutter argument remains in the signature but classes use the gutters map; configure that map deliberately. Scope custom generator output to avoid collisions."
+        ]
+      }
+    ],
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/layout-guides.ts"
+    }
+  },
+  {
+    "slug": "layout/columns",
+    "group": "Layout",
+    "title": "Columns",
+    "description": "Align, wrap, reorder, and offset Flexbox columns without changing semantic reading order.",
+    "lead": "Align, wrap, reorder, and offset Flexbox columns without changing semantic reading order.",
+    "sections": [
+      {
+        "heading": "Alignment",
+        "example": "<div class=\"container\"><div class=\"row align-items-center g-3\"><div class=\"col-6\"><div class=\"border rounded p-3\">Short</div></div><div class=\"col-6\"><div class=\"border rounded p-3\">A taller column<br>with another line</div></div></div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"row align-items-center justify-content-between\">\n  <div class=\"col-4\">First</div>\n  <div class=\"col-4 align-self-end\">Second</div>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "Use align-items-* on the row and align-self-* on a column for vertical alignment. Use justify-content-* to distribute remaining horizontal space. A row filled by twelve column units has no extra space to distribute."
+        ]
+      },
+      {
+        "heading": "Column wrapping",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"row\">\n  <div class=\"col-8\">Eight units</div>\n  <div class=\"col-6\">Six units: wraps to the next line</div>\n</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Column breaks",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"row\">\n  <div class=\"col\">First</div>\n  <div class=\"w-100\" aria-hidden=\"true\"></div>\n  <div class=\"col\">Next line</div>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "Prefer a simpler row structure when a decorative break makes the document harder to understand. A break element is not a meaningful content item."
+        ]
+      },
+      {
+        "heading": "Reordering",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"row\">\n  <div class=\"col order-2 md:order-1\">First in the DOM</div>\n  <div class=\"col order-1 md:order-2\">Second in the DOM</div>\n</div>"
+          }
+        ],
+        "callout": "Visual ordering does not change screen-reader or keyboard navigation order. Keep the DOM order usable and avoid visually moving interactive controls into a confusing focus sequence."
+      },
+      {
+        "heading": "Offsetting columns",
+        "example": "<div class=\"container\"><div class=\"row\" data-layout-demo=\"offset\"><div class=\"col-6 offset-3 md:offset-0\"><div class=\"border rounded p-3\">Centered below md; reset at md</div></div></div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"row\">\n  <div class=\"col-6 offset-3 md:offset-0\">Centered below md</div>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "Offsets set logical inline-start margins in LTR and RTL. Reset with md:offset-0. Default offsets run from 0 through 11; full-row offsets and infix aliases are not emitted. Ordering utilities do not change DOM or keyboard order."
+        ]
+      },
+      {
+        "heading": "Standalone column classes",
+        "paragraphs": [
+          "A col-N class sets an explicit width even outside a row, but row-specific gutters and wrapping do not apply. For article text wrapping around media, prefer a dedicated layout rather than assuming a column class supplies an entire grid."
+        ]
+      }
+    ],
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/layout-guides.ts"
+    }
+  },
+  {
+    "slug": "layout/gutters",
+    "group": "Layout",
+    "title": "Gutters",
+    "description": "Control horizontal and vertical column spacing with row gutter variables.",
+    "lead": "Control horizontal and vertical column spacing with row gutter variables.",
+    "sections": [
+      {
+        "heading": "How they work",
+        "paragraphs": [
+          "Horizontal gutters are column padding balanced by negative row margins. Vertical gutters use child block-start margins balanced by a negative row margin. This differs from native CSS Grid gap. Use an enclosing padded container and check wide content for overflow."
+        ]
+      },
+      {
+        "heading": "Horizontal gutters",
+        "example": "<div class=\"container\"><div class=\"row gx-4\"><div class=\"col\"><div class=\"border rounded p-3\">First</div></div><div class=\"col\"><div class=\"border rounded p-3\">Second</div></div></div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"container\">\n  <div class=\"row gx-4\">\n    <div class=\"col\"><div class=\"border p-3\">First</div></div>\n    <div class=\"col\"><div class=\"border p-3\">Second</div></div>\n  </div>\n</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Vertical gutters",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"row row-cols-1 md:row-cols-2 gy-3\">\n  <div class=\"col\">First</div>\n  <div class=\"col\">Second</div>\n  <div class=\"col\">Third</div>\n</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Horizontal and vertical gutters",
+        "example": "<div class=\"container\"><div class=\"row row-cols-1 md:row-cols-2 g-3\" data-layout-demo=\"gutters\"><div class=\"col\"><div class=\"border rounded p-3\">First</div></div><div class=\"col\"><div class=\"border rounded p-3\">Second</div></div><div class=\"col\"><div class=\"border rounded p-3\">Third</div></div><div class=\"col\"><div class=\"border rounded p-3\">Fourth</div></div></div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"row g-2 md:gx-4 md:gy-3\">...</div>"
+          }
+        ],
+        "paragraphs": [
+          "g-* sets both axes, gx-* horizontal and gy-* vertical; responsive names use md:g-4/md:gx-4/md:gy-3. Gutters defaults to the spacer map: keys 0–12, g-3=.5rem, gx-4=.75rem. Base row gutters remain 1.5rem horizontal and 0 vertical."
+        ]
+      },
+      {
+        "heading": "No gutters",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"row g-0\">\n  <div class=\"col-6\">First</div>\n  <div class=\"col-6\">Second</div>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "g-0 removes row gutters, not padding inside a card or the surrounding container. Do not replace it with gap-* on a fixed-width twelve-column Flexbox row: native gap adds space beyond column percentages and can force wrapping."
+        ]
+      },
+      {
+        "heading": "Change the gutters",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss' with (\n  $grid-gutter-x: 2rem,\n  $grid-gutter-y: .5rem,\n  $grid-row-columns: 4,\n  $gutters: (0: 0, 2: .5rem, 3: 1rem, wide: 2rem)\n);"
+          }
+        ],
+        "paragraphs": [
+          "Override --trm-gutter-x/y on rows locally. An explicit gutters map replaces the whole map; use valid lengths and omit unwanted keys. It does not change spacing utilities. Native CSS Grid gap uses --trm-gap with no legacy grid-gap fallback. Container padding, Flexbox gutters and Grid gap remain separate controls."
+        ]
+      }
+    ],
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/layout-guides.ts"
+    }
+  },
+  {
+    "slug": "layout/utilities",
+    "group": "Layout",
+    "title": "Utilities",
+    "description": "Compose responsive layouts with display, Flexbox, spacing, and visibility utilities.",
+    "lead": "Compose responsive layouts with display, Flexbox, spacing, and visibility utilities.",
+    "sections": [
+      {
+        "heading": "Changing display",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-none md:d-block\">Visible from md upward</div>"
+          }
+        ],
+        "paragraphs": [
+          "Display:none removes layout and accessibility-tree participation. Use canonical responsive prefixes. Print variants are not default output; configure the display family explicitly through the Utility API when needed."
+        ]
+      },
+      {
+        "heading": "Flexbox options",
+        "example": "<div class=\"d-flex flex-column md:flex-row gap-3\"><div class=\"border rounded p-3\">First</div><div class=\"border rounded p-3\">Second</div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-flex flex-column md:flex-row md:align-items-center md:justify-content-between gap-3\">\n  <span>Project summary</span>\n  <button class=\"btn-solid theme-inverse\" type=\"button\">Continue</button>\n</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Margin and padding",
+        "paragraphs": [
+          "Use m-* and p-* for every side, x/y for axes, and s/e for logical inline start/end. ms-auto absorbs available inline-start space. Use gap-* for ordinary Flexbox or CSS Grid composition; use gutter classes for the percentage-based row/column grid."
+        ],
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"p-3 lg:p-5\">\n  <p class=\"mb-0\">Content with responsive padding</p>\n</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Toggle visibility",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"invisible\">Space is reserved, content is hidden.</div>\n<div class=\"visible\">Visible content</div>"
+          }
+        ],
+        "paragraphs": [
+          "The native visible/invisible utilities set visibility; invisible preserves geometry but hides content from normal focus/assistive interaction. They do not replace hidden/display semantics. See the Utility API for explicit custom variants."
+        ]
+      }
+    ],
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/layout-guides.ts"
+    }
+  },
+  {
+    "slug": "layout/z-index",
+    "group": "Layout",
+    "title": "Z-index",
+    "description": "Understand stacking contexts before changing the layer order of interface elements.",
+    "lead": "Understand stacking contexts before changing the layer order of interface elements.",
+    "sections": [
+      {
+        "heading": "Stacking order",
+        "paragraphs": [
+          "A z-index value is compared within a stacking context, not across the entire document. Positioning, transforms, opacity, isolation, and other properties can create new contexts. Increasing an arbitrary number may not bring a child above a sibling context."
+        ]
+      },
+      {
+        "heading": "Local scale",
+        "table": {
+          "headings": [
+            "Map key",
+            "Value"
+          ],
+          "rows": [
+            [
+              "n1 / 0 / 1 / 2 / 3",
+              "-1 / 0 / 1 / 2 / 3"
+            ],
+            [
+              "menu",
+              "1000"
+            ],
+            [
+              "sticky",
+              "1010"
+            ],
+            [
+              "fixed",
+              "1020"
+            ],
+            [
+              "drawer",
+              "1030"
+            ],
+            [
+              "dialog",
+              "1040"
+            ],
+            [
+              "popover",
+              "1050"
+            ],
+            [
+              "tooltip",
+              "1060"
+            ],
+            [
+              "toast",
+              "1070"
+            ]
+          ]
+        },
+        "paragraphs": [
+          "zindex-levels owns the shared z-* utilities and --trm-zindex-* tokens. No modal/offcanvas/dropdown/backdrop compatibility keys are added. Native top-layer order is separate from numeric z-index."
+        ]
+      },
+      {
+        "heading": "Native top layer",
+        "paragraphs": [
+          "Native modal dialogs and browser popovers can enter the browser’s top layer. Ordinary z-index values cannot place regular page content above a top-layer modal. Test Dialog, Drawer, Menu, Tooltip, and nested overlays together before changing their layer rules."
+        ]
+      },
+      {
+        "heading": "Sass configuration",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'sass:map';\n@use 'tremplin/scss/config' as config with (\n  $zindex-levels: (n1: -1, 0: 0, 1: 1, 2: 2, 3: 3, menu: 1000, sticky: 1010, fixed: 1020, drawer: 1030, dialog: 1040, popover: 1050, tooltip: 1060, toast: 1070)\n);\n@use 'tremplin/scss';\n.project-tooltip { position: absolute; z-index: map.get(config.$zindex-levels, tooltip); }"
+          }
+        ],
+        "paragraphs": [
+          "This map is replaced, not merged by defaults(). Supply the full coherent scale when changing it. There is no z-index() convenience function; use map.get or the emitted root token."
+        ]
+      }
+    ],
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/layout-guides.ts"
+    }
+  },
+  {
+    "slug": "layout/css-grid",
+    "group": "Layout",
+    "title": "CSS Grid",
+    "description": "Use explicit column spans and native gaps for two-dimensional layouts.",
+    "lead": "Use explicit column spans and native gaps for two-dimensional layouts.",
+    "sections": [
+      {
+        "heading": "How it works",
+        "paragraphs": [
+          "CSS Grid is enabled by default in the Tremplin core. The grid class creates twelve 1fr tracks, one explicit 1fr row, a 1.5rem gap and an inline-size query container. These rules participate in the layout layer.",
+          "Use g-col-N for a literal column span and g-start-N for a start line. Prefixes such as md:g-col-6 query the nearest eligible container, normally the grid, rather than the viewport. Native gap replaces Flexbox gutters and negative margins. Unclassified children use normal Grid auto-placement; there is no full-row child reset."
+        ]
+      },
+      {
+        "heading": "Examples",
+        "example": "<div class=\"grid\" data-layout-demo=\"css-grid\"><div class=\"g-col-4 border rounded p-3\">First</div><div class=\"g-col-4 border rounded p-3\">Second</div><div class=\"g-col-4 border rounded p-3\">Third</div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"grid\">\n  <article class=\"g-col-4\">First</article>\n  <article class=\"g-col-4\">Second</article>\n  <article class=\"g-col-4\">Third</article>\n</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Container-responsive spans",
+        "example": "<div class=\"grid\" data-layout-demo=\"modern-query\" style=\"resize:horizontal;overflow:auto;min-inline-size:12rem;max-inline-size:100%\"><div class=\"g-col-12 sm:g-col-6 border rounded p-3\">First</div><div class=\"g-col-12 sm:g-col-6 border rounded p-3\">Second</div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"grid\">\n  <article class=\"g-col-12 sm:g-col-6\">First</article>\n  <article class=\"g-col-12 sm:g-col-6\">Second</article>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "Resize the grid: these items become half-width at the default sm container minimum of 576px. md uses 768px. Only prefix-style responsive classes are generated. Changing the viewport alone does not cross a container threshold when the grid width stays fixed.",
+          "A responsive-only item such as md:g-col-6 auto-places in one track below md. Add g-col-12 if it must start full-width. A nearer nested query container changes which ancestor is measured."
+        ]
+      },
+      {
+        "heading": "Starts and wrapping",
+        "example": "<div class=\"grid\"><div class=\"g-col-6 g-start-4 border rounded p-3\">Six tracks, starting at line four</div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"grid\">\n  <article class=\"g-col-6 g-start-4 md:g-col-4 md:g-start-5\">Centered content</article>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "With the default twelve columns, spans range from 1 through 12 and starts from 1 through 11. A start-only item has auto end placement. The grid-column shorthand used by g-col resets an earlier start to auto; repeat the start at the same responsive tier when it must persist. Generated CSS order, not HTML class order, determines conflicts.",
+          "Items wrap when the remaining tracks cannot fit their span. A start plus span beyond the configured count can create implicit tracks. Runtime column tokens change track count but do not regenerate or clamp literal placement classes."
+        ]
+      },
+      {
+        "heading": "Containment and intrinsic sizing",
+        "paragraphs": [
+          "Each grid establishes inline-size containment. Give shrink-to-fit or auto-track layouts an appropriate inline size or minimum, and test long content, zoom, RTL and overflow. Plain 1fr tracks retain their automatic minimum; constrain or wrap oversized content deliberately.",
+          "There are no legacy child-span classes or alternate fallback tokens in the strict core. For a nested layout, each grid redeclares its own column, row and gap defaults, and its descendants query that nested container. A container cannot query itself."
+        ]
+      },
+      {
+        "heading": "Nesting",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"grid\">\n  <section class=\"g-col-12 md:g-col-8\">\n    <div class=\"grid\">\n      <article class=\"g-col-12 sm:g-col-6\">Nested first half</article>\n      <article class=\"g-col-12 sm:g-col-6\">Nested second half</article>\n    </div>\n  </section>\n</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Customizing",
+        "code": [
+          {
+            "language": "css",
+            "source": ".project-grid.grid {\n  --trm-columns: 6;\n  --trm-gap: 1.5rem;\n}"
+          },
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss' with (\n  $grid-columns: 6,\n  $enable-cssgrid: true\n);"
+          }
+        ],
+        "table": {
+          "headings": [
+            "Token",
+            "Default"
+          ],
+          "rows": [
+            [
+              "--trm-columns",
+              "Sass grid-columns (12)"
+            ],
+            [
+              "--trm-rows",
+              "1 explicit fractional row"
+            ],
+            [
+              "--trm-gap",
+              "Sass grid-gutter-x (1.5rem)"
+            ]
+          ]
+        },
+        "paragraphs": [
+          "Set tokens on the grid itself, in inline styles or an application rule after the framework. A token inherited from an ancestor does not replace the local declaration. Sass grid-columns changes generated Flexbox fractions and literal Grid span/start ranges; runtime tokens change only the track layout.",
+          "enable-cssgrid: false omits the grid container and its placement classes without disabling Flexbox or mapped Grid/gap utilities. enable-grid-classes controls the Flexbox row/column generator independently."
+        ]
+      },
+      {
+        "heading": "Adding rows",
+        "example": "<div class=\"grid\" data-layout-demo=\"grid-rows\" style=\"--trm-columns:2;--trm-rows:2;--trm-gap:.5rem;height:8rem\"><div class=\"g-col-1 border rounded p-2\">First</div><div class=\"g-col-1 border rounded p-2\">Second</div><div class=\"g-col-1 border rounded p-2\">Third</div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"grid\" style=\"--trm-columns:2;--trm-rows:2;--trm-gap:.5rem;height:8rem\">\n  <article class=\"g-col-1\">First</article>\n  <article class=\"g-col-1\">Second</article>\n  <article class=\"g-col-1\">Third</article>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "rows sets the count of explicit equal 1fr rows. Additional rows are implicit and follow normal CSS Grid sizing; it does not generate row-span/start classes. Positive integer counts are expected. Check overflow in fixed-height layouts rather than assuming every row has unlimited space."
+        ]
+      },
+      {
+        "heading": "Focused Grid bundle",
+        "paragraphs": [
+          "Import tremplin/css/grid for precompiled containers, Flexbox/Grid layouts and selected display, order, alignment, spacing and gap utilities. This entry does not include Reboot, components, color palettes or general helpers. Supply application-wide reset and theme styles separately when required.",
+          "For Sass, configure tremplin/scss/config before loading tremplin/scss/tremplin-grid. The focused entry forwards the utilities map, not shared configuration options. Do not combine full and focused Sass entries in one compilation: loading Grid first filters shared utilities, while loading the full entry first causes a banner configuration error. This is a pinned upstream limitation; choose one entry per stylesheet."
+        ],
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/config' with (\n  $grid-columns: 6,\n  $spacers: (3: .75rem)\n);\n@use 'tremplin/scss/tremplin-grid' with (\n  $utilities: ('order': null)\n);"
+          }
+        ]
+      },
+      {
+        "heading": "Sass generator",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/mixins/grid' as grid;\n@use 'tremplin/scss/layout/breakpoints' as bp;\n\n.project-layout {\n  @include bp.set-container();\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  @include grid.make-cssgrid(4, (base: 0, compact: 30rem));\n}"
+          }
+        ],
+        "paragraphs": [
+          "make-cssgrid accepts a column count and an ordered breakpoint map. It generates placement classes and container queries; callers provide containment and track layout. Scope custom generators to avoid collisions with default classes.",
+          "Pinned limitation: make-cssgrid(1) emits a g-start-0 class because its Sass loop counts down through zero. The core preserves that upstream output. Prefer a coherent multi-column generator until a separately reviewed upstream update changes it."
+        ]
+      }
+    ],
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/layout-guides.ts"
+    }
+  }
+]

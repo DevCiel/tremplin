@@ -1,0 +1,148 @@
+---
+{
+  "title": "Breakpoints",
+  "description": "Build mobile-first layouts with viewport queries and opt-in container queries.",
+  "group": "Layout",
+  "lead": "Build mobile-first layouts with viewport queries and opt-in container queries.",
+  "order": 0
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { layoutExamples as samples } from '../../../data/layout-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Core concepts</h2>
+
+<p>Start with styles that work at the narrowest width, then add changes as space becomes available. Viewport breakpoints measure the browser window. Container queries measure an eligible ancestor, so the same component can adapt differently in a sidebar and a main column.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Available breakpoints</h2>
+
+<p>{"The default Sass map has six keys, with numeric/unit key 2xl, not a duplicate xxl alias. Responsive Flexbox classes use viewport prefixes; CSS Grid placement uses container prefixes. Infix and legacy cq-* names are not emitted."}</p>
+
+<div class="table-responsive"><table class="table">
+<thead><tr><th scope="col">Tier</th><th scope="col">Minimum</th><th scope="col">Prefix</th></tr></thead>
+<tbody>
+<tr><td><span>xs</span></td><td><span>0</span></td><td><span>none</span></td></tr>
+<tr><td><span>sm</span></td><td><span>576px</span></td><td><span>sm:</span></td></tr>
+<tr><td><span>md</span></td><td><span>768px</span></td><td><span>md:</span></td></tr>
+<tr><td><span>lg</span></td><td><span>1024px</span></td><td><span>lg:</span></td></tr>
+<tr><td><span>xl</span></td><td><span>1280px</span></td><td><span>xl:</span></td></tr>
+<tr><td><span>2xl</span></td><td><span>1536px</span></td><td><span>2xl:</span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Media queries</h2>
+
+<p>Range queries use inclusive lower bounds and exclusive upper bounds. There is no .02px subtraction or media-up convenience alias.</p>
+
+<Code sample={samples["layout/breakpoints#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Max-width</h2>
+
+<p>{"down(md) means width < 768px, not the whole md tier. Zero/null upper bounds emit unqueried content; down(xs) is unconditional. A typo can yield a null bound rather than a useful range."}</p>
+
+<Code sample={samples["layout/breakpoints#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Single breakpoint</h2>
+
+<p>{"only(md) spans 768px <= width < 1024px; only(2xl) is unbounded above. Map order determines the next tier. Unknown keys are not coerced to aliases."}</p>
+
+<Code sample={samples["layout/breakpoints#4"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">Between breakpoints</h2>
+
+<p>{"between(md,xl) spans 768px <= width < 1280px. Null bounds are open. Reversed positive bounds are emitted as written, not sorted."}</p>
+
+<Code sample={samples["layout/breakpoints#5"].code[0]} standalone={true} />
+
+<div class="table-responsive"><table class="table">
+<thead><tr><th scope="col">Call</th><th scope="col">Local default interval</th></tr></thead>
+<tbody>
+<tr><td><span>up(md)</span></td><td><span>{"width >= 768px"}</span></td></tr>
+<tr><td><span>down(md)</span></td><td><span>{"width < 768px"}</span></td></tr>
+<tr><td><span>only(md)</span></td><td><span>{"768px <= width < 1024px"}</span></td></tr>
+<tr><td><span>between(md, xl)</span></td><td><span>{"768px <= width < 1280px"}</span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">Custom breakpoints</h2>
+
+<p>Breakpoints replace the entire map. Container maximums merge defaults; remove unmatched default keys explicitly. Unmatched maximum keys can emit an unqueried container maximum in the pin. Keep maps coherent and ordered.</p>
+
+<Code sample={samples["layout/breakpoints#6"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">Migration from previous defaults</h2>
+
+<p>Strict core removes infix aliases, xxl aliases, separate legacy container-breakpoints and the container-widths configuration name. Migrate markup to canonical prefixes and configure container-max-widths. Do not load compatibility CSS into the strict bundle.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">Canonical largest tier</h2>
+
+<p>Only canonical 2xl is present by default. The generated selector escapes its leading digit; HTML keeps the literal 2xl:col-6 spelling. A custom xxl map key is an explicit independent tier, not an automatic alias. Use the actual Sass key type in lookups.</p>
+
+<div class="docs-example"><Html source={samples["layout/breakpoints#8"].example} /></div>
+
+<Code sample={samples["layout/breakpoints#8"].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-9">
+<h2 id="section-9">Container queries</h2>
+
+<p>{"grid establishes inline-size containment. Its descendants use the shared breakpoint map: sm=576px, md=768px. The container cannot query itself; a nearer eligible ancestor changes which size is measured. There are no cq-span-* aliases."}</p>
+
+<Code sample={samples["layout/breakpoints#9"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-10">
+<h2 id="section-10">Container query mixins</h2>
+
+<p>Container range mixins mirror viewport intervals, measuring an eligible named or nearest ancestor. Physical width is queried even in vertical writing. Size containment can affect intrinsic sizing; give shrink-to-fit layouts deliberate dimensions.</p>
+
+<Code sample={samples["layout/breakpoints#10"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-11">
+<h2 id="section-11">Named containers</h2>
+
+<p>A named query selects an eligible ancestor with that name even when a nearer unnamed container exists. Use a matching name in set-container(inline-size, project-frame) and the query mixin. An absent matching ancestor means a bounded query does not apply; an unbounded branch emits ordinary CSS without requiring a container.</p>
+
+<p>The physical width feature uses width; it is not rewritten to inline-size in vertical writing modes. Relative em bounds resolve against the query container’s font size, unlike em media queries, which use the browser’s initial font size. Verify container padding, zoom, nesting, and RTL with real content.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-12">
+<h2 id="section-12">Sass functions and loops</h2>
+
+<p>Functions include breakpoint-next/min/max/prefix and css-escape-ident. loop-breakpoints-up supplies name/prefix; down supplies current/next/next-prefix in ascending map order. loop-breakpoints is the pinned down-loop alias, not a reversed iteration. next/only require known keys; min/max/prefix can return null or an empty prefix for missing keys.</p>
+
+<Code sample={samples["layout/breakpoints#12"].code[0]} standalone={true} />
+
+</section>

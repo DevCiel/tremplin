@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "phase": "safe-local-maintenance-tools",
+  "date": "2026-11-10",
+  "reference": "9062790fdb2379593a2973416dc5a3bfb203e4e3",
+  "buildFiles": [
+    { "path": "build/bundlewatch-fix.mjs", "gitBlob": "2b20e55324cc7ff4d73a20469eb86e3e9410a0bd", "adaptation": "Dry-run default; explicit writes may raise CSS limits only. JS increases require separate approval. No npx or network execution." },
+    { "path": "build/bundlewatch-table.mjs", "gitBlob": "e4759881bac1d93fdc14e21d5a8e513b73642cc5", "adaptation": "Local level-9 gzip measurements from a shared three-file config, reused by the compiler and QA size gate." },
+    { "path": "build/change-version.mjs", "gitBlob": "0c33c43fdc1065a83b60b0363ff987d0e686cae6", "adaptation": "Dry-run default; --apply requires an explicitly cleared release block. Four explicit root-version markers only, with backup and rollback. No npm version, Git or history/baseline replacement." },
+    { "path": "build/check-unused-imports.mjs", "gitBlob": "6ebfa15705614f06e248df5c4c86b6a3a229dc76", "adaptation": "Pinned read-only Sass import heuristic and suppressions, with linked input rejection. For import-only aggregation modules, compile the imported module to distinguish intentional CSS side effects from genuinely unused variable-only imports. Does not rewrite pinned Sass." },
+    { "path": "build/clean-astro.mjs", "gitBlob": "dfe204ca360c333f93a357f5e3ae055d670a7d29", "adaptation": "Dry-run default; --apply deletes only four fixed Astro cache directories after validating all paths; rejects links." },
+    { "path": "build/docs-prep.sh", "gitBlob": "357768abea7aa84bcb98da7bf0d3395a0d7a7fe7", "adaptation": "Safety rewrite to local review staging through a cross-platform QA helper. No branch checkout/reset/pull, deletion, commit, push or deployment." },
+    { "path": "build/html-validate.mjs", "gitBlob": "1ad686efee0826c96b7286d735f90a931491e52c", "adaptation": "Pinned rules and element definitions applied to site-dist HTML; empty matches and unsafe patterns fail. Does not replace Axe or visual gates." }
+  ],
+  "dependencyAdditions": { "html-validate": "11.17.0" },
+  "scriptAdditions": {
+    "bundlewatch": "node build/bundlewatch-table.mjs",
+    "bundlewatch:fix": "node build/bundlewatch-fix.mjs",
+    "change-version": "node build/change-version.mjs",
+    "check:unused-imports": "node build/check-unused-imports.mjs src/scss",
+    "clean:astro": "node build/clean-astro.mjs",
+    "docs:prep": "node tests/tooling/prepare-docs-review.mjs",
+    "validate:html": "node build/html-validate.mjs"
+  },
+  "budgetConfig": ".bundlewatch.config.json",
+  "budgetBytesUnchanged": [56000, 60000, 62000],
+  "historicalCheckpoint": "metadata/build-tooling-relocation.json records the seven missing tools at the previous checkpoint and remains immutable.",
+  "remainingBuildExtras": "Ten required Tremplin compilation/shared helpers remain beyond the eighteen non-example pinned build filenames. Name coverage is not identical script behavior.",
+  "coreSourceChanges": false,
+  "distributionChanges": false,
+  "versionChanged": false,
+  "baselinesChanged": false,
+  "workflowChanges": false,
+  "localOnly": true,
+  "releaseBlocked": true
+}

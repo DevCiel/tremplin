@@ -1,0 +1,6 @@
+---
+import { componentApi } from '../../data/component-api'
+interface Props { name: string }
+const attributes = componentApi(Astro.props.name).definition.dataAttributes
+---
+{attributes.length ? <div class="docs-cluster docs-class-list">{attributes.map(attribute => <code>{attribute}</code>)}</div> : <p>Initialize this component with JavaScript.</p>}

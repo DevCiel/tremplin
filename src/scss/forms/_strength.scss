@@ -1,0 +1,126 @@
+@use "sass:list";
+@use "../functions" as *;
+@use "../mixins/border-radius" as *;
+@use "../mixins/tokens" as *;
+@use "../mixins/transition" as *;
+
+// stylelint-disable custom-property-no-missing-var-function
+$strength-tokens: () !default;
+
+// scss-docs-start strength-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$strength-tokens: defaults(
+  (
+    --trm-strength-height: .375rem,
+    --trm-strength-gap: .25rem,
+    --trm-strength-margin-top: .25rem,
+    --trm-strength-border-radius: var(--trm-radius-pill),
+    --trm-strength-bg: var(--trm-bg-2),
+    --trm-strength-color: var(--trm-bg-2),
+    --trm-strength-weak-color: var(--trm-danger-bg),
+    --trm-strength-fair-color: var(--trm-warning-bg),
+    --trm-strength-good-color: var(--trm-info-bg),
+    --trm-strength-strong-color: var(--trm-success-bg),
+  ),
+  $strength-tokens
+);
+// scss-docs-end strength-tokens
+// stylelint-enable custom-property-no-missing-var-function
+
+// scss-docs-start strength-levels
+$strength-levels: weak, fair, good, strong !default;
+// scss-docs-end strength-levels
+
+// The text sits next to `.strength`, not inside it, so it can't read the meter's
+// `--trm-strength-color`. The `-fg-emphasis` tokens keep enough contrast as text.
+$strength-text-colors: (
+  weak: var(--trm-danger-fg-emphasis),
+  fair: var(--trm-warning-fg-emphasis),
+  good: var(--trm-info-fg-emphasis),
+  strong: var(--trm-success-fg-emphasis)
+) !default;
+
+$strength-transition: background-color .2s ease-in-out, width .3s ease-in-out !default;
+
+@layer forms {
+  // Strength meter container
+  .strength {
+    @include tokens($strength-tokens);
+
+    display: flex;
+    gap: var(--trm-strength-gap);
+    width: 100%;
+    margin-top: var(--trm-strength-margin-top);
+  }
+
+  // Individual strength segments
+  .strength-segment {
+    flex: 1;
+    height: var(--trm-strength-height);
+    background-color: var(--trm-strength-bg);
+    @include border-radius(var(--trm-strength-border-radius));
+    @include transition($strength-transition);
+
+    // Filled state
+    &.active {
+      background-color: var(--trm-strength-color);
+    }
+  }
+
+  @each $level in $strength-levels {
+    .strength[data-trm-strength="#{$level}"] {
+      --trm-strength-color: var(--trm-strength-#{$level}-color);
+    }
+  }
+  // Optional text feedback
+  .strength-text {
+    display: block;
+    margin-top: var(--trm-strength-margin-top);
+    font-size: var(--trm-font-size-xs);
+    color: var(--trm-fg-3);
+    @include transition(color .2s ease-in-out);
+
+    @each $level, $color in $strength-text-colors {
+      &[data-trm-strength="#{$level}"] {
+        color: $color;
+      }
+    }
+
+    // Hide when empty
+    &:empty {
+      display: none;
+    }
+  }
+
+  // Alternative: Single bar variant (like a progress bar)
+  .strength-bar {
+    @include tokens($strength-tokens);
+
+    --trm-strength-color: transparent;
+    --trm-strength-width: 0%;
+
+    width: 100%;
+    height: var(--trm-strength-height);
+    margin-top: var(--trm-strength-margin-top);
+    overflow: hidden;
+    background-color: var(--trm-strength-bg);
+    @include border-radius(var(--trm-strength-border-radius));
+
+    &::after {
+      display: block;
+      width: var(--trm-strength-width);
+      height: 100%;
+      content: "";
+      background-color: var(--trm-strength-color);
+      @include border-radius(var(--trm-strength-border-radius));
+      @include transition($strength-transition);
+    }
+
+    @each $level in $strength-levels {
+      &[data-trm-strength="#{$level}"] {
+        --trm-strength-color: var(--trm-strength-#{$level}-color);
+        --trm-strength-width: #{list.index($strength-levels, $level) * 25%};
+      }
+    }
+  }
+}

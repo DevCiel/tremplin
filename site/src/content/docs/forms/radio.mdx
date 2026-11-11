@@ -1,0 +1,100 @@
+---
+{
+  "title": "Radio",
+  "description": "Choose one option from a named group of native radio controls.",
+  "group": "Forms",
+  "lead": "Use native radio grouping with CSS-drawn state, themes and size modifiers.",
+  "order": 4
+}
+---
+
+import GuideTable from '../../../components/shortcodes/GuideTable.astro'
+import { formsTables } from '../../../data/forms-tables'
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Basic radio"}</h2>
+
+<p>{"radio styles the input itself with appearance:none and a CSS-drawn ::before dot, not an SVG or accent-color treatment. A shared name supplies native mutual exclusion; fieldset/legend names the question."}</p>
+
+<div class="docs-example"><Html source={examples["forms/radio"][0].example} /></div>
+
+<Code sample={examples["forms/radio"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"With form field and description"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/radio"][1].example} /></div>
+
+<Code sample={examples["forms/radio"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Theme colors"}</h2>
+
+<p>{"Apply theme-* directly on radio. These independent checked style specimens have separate names; the billing example above demonstrates actual grouped exclusion."}</p>
+
+<div class="docs-example"><Html source={examples["forms/radio"][2].example} /></div>
+
+<Code sample={examples["forms/radio"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Disabled"}</h2>
+
+<p>{"Native disabled prevents selection and submission without erasing checked state. Disabled selected controls use the configured opacity."}</p>
+
+<div class="docs-example"><Html source={examples["forms/radio"][3].example} /></div>
+
+<Code sample={examples["forms/radio"][3].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Sizes"}</h2>
+
+<p>{"radio-sm/default/radio-lg set the control size; adjacent labels receive the corresponding small/large text rule. These are separate style specimens, not three checked members of one named group."}</p>
+
+<div class="docs-example"><Html source={examples["forms/radio"][4].example} /></div>
+
+<Code sample={examples["forms/radio"][4].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"CSS variables"}</h2>
+
+<p>{"These are source-derived property defaults, not a JavaScript options API. Embedded SVG strings are summarized in the table; inspect the pinned Sass for the exact mask/caret data. Null-valued Sass entries are not emitted as CSS declarations."}</p>
+
+<GuideTable table={{ headings: ["Property","Default"], rows: formsTables["forms/radio#5"], keyboardScroll: true }} labelledby="section-5" />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"Keyboard and submission"}</h2>
+
+<p>{"Tab reaches the selected/eligible member of a native group; arrows choose an enabled radio according to browser/platform direction conventions. Only the checked enabled named radio is successful. Readonly is not a radio state; do not add a custom roving keyboard controller or redundant aria-checked."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Sass customization"}</h2>
+
+<Code sample={examples["forms/radio"][7].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">{"Explicit demo accessibility CSS"}</h2>
+
+<p>{"Copy this scoped application CSS with the example wrappers. It emphasizes feedback/placeholder text, restores a visible plaintext focus outline, and mirrors the otherwise physical select/caret background position for RTL. These are disclosed demo choices; the pinned core defaults remain unchanged."}</p>
+
+<Code sample={examples["forms/radio"][8].code[0]} standalone={true} />
+
+</section>

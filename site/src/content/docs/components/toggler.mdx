@@ -1,0 +1,133 @@
+---
+{
+  "component": "toggler",
+  "title": "Toggler",
+  "description": "Toggler component documentation for Tremplin.",
+  "lead": "Toggle a configured class or attribute without adding disclosure or focus policy.",
+  "variants": [
+    {
+      "title": "Configured class mutation",
+      "description": "Configuration belongs to the target. Toggle a real utility without changing visibility, ARIA or focus."
+    },
+    {
+      "title": "Remove an existing class",
+      "description": "The first activation removes an existing class; the next adds it. No active/pressed state is maintained on the launcher."
+    },
+    {
+      "title": "Self target and multiple targets",
+      "description": "A native button can target itself explicitly. A selector can also match multiple independent configured targets; events fire on each target."
+    },
+    {
+      "title": "Configured attribute mutation",
+      "description": "Non-class attributes compare as strings: an equal value is removed, otherwise the configured value is set. This does not introduce a CSS selector or disclosure policy."
+    },
+    {
+      "title": "Native fieldset state",
+      "description": "A boolean disabled attribute disables native descendants. The outside launcher remains available to remove it; Toggler does not move focus or update pressed state."
+    },
+    {
+      "title": "Disabled trigger",
+      "description": "Native disabled triggers do not activate the delegated data API."
+    },
+    {
+      "title": "Protected id and unset value",
+      "description": "id cannot be changed. A null or missing runtime value performs no mutation. Unless canceled, toggled still fires after these no-op paths; it is not proof of a DOM change."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "The primitive works on a themed surface without inventing a dismissal or keyboard-navigation policy."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Enter / Space",
+      "behavior": "Activate an enabled native trigger. Non-native clickable elements do not gain keyboard semantics automatically."
+    },
+    {
+      "keys": "Escape",
+      "behavior": "No special behavior: targets do not hide and focus does not move."
+    }
+  ],
+  "guidelines": [
+    "Configure value and optional attribute on the actual target, not only the trigger. Without a selector the trigger is its own target.",
+    "Use a single valid class token for class mutation. Multi-target selectors create/retrieve an independent instance on each matching target.",
+    "Non-class values compare as strings. Boolean HTML attributes depend on presence, so setting disabled=false still disables a native control.",
+    "The id attribute is protected; missing/null value is a no-op. A contradictory source comment does not change runtime null acceptance.",
+    "toggle.trm.toggler fires on the target before execution and is cancelable; toggled follows synchronously unless canceled, even when execution does nothing.",
+    "There is no fixed CSS class, Sass token map, className option, autoClose, dismiss, hidden, ARIA synchronization or focus policy.",
+    "Native disabled controls are ignored by the data API. Use native buttons for keyboard activation; the plugin only delegates click.",
+    "Use Collapse or native Dialog/Drawer for disclosure and modal workflows, not a Toggler compatibility shim."
+  ],
+  "events": {
+    "toggle.trm.toggler": "Cancelable start on the configured target, before execution. Canceling prevents execution and toggled.",
+    "toggled.trm.toggler": "Synchronous notification on the target after execution, including protected-id or null-value no-ops; not proof that an attribute changed."
+  }
+}
+---
+
+import TogglerOptions from '../../../components/component/TogglerOptions.astro'
+import { componentApi } from '../../../data/component-api'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("toggler")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="toggler" />
+
+{componentDetail("toggler").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="toggler" />
+</>}
+
+{componentDetail("toggler").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("toggler").sass} standalone={true} />
+</>}
+
+{componentDetail("toggler").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="toggler" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="toggler" />
+
+{documentedComponents.find(component => component.name === "toggler").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="toggler" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("toggler").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("toggler").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<p>The frozen scanner omits the alias-declared TogglerConfig. These source-verified options belong on the target; this authored table does not change the frozen metadata.</p>
+<TogglerOptions />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="toggler" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="toggler" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<p>Configure <code>{"data-trm-attribute"}</code> and <code>{"data-trm-value"}</code> on each target. The delegated trigger uses <code>{"data-trm-toggle=\"toggler\""}</code> and an optional <code>{"data-trm-target"}</code>. The frozen scanner omits the attribute configuration hook.</p>
+<ApiAttributes name="toggler" />
+<p class="mt-4"><a href="/api/toggler/">View the generated {componentApi("toggler").definition.className}{" API reference →"}</a></p>

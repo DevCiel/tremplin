@@ -1,0 +1,49 @@
+@use "../functions" as *;
+
+$form-label-tokens: () !default;
+
+// scss-docs-start form-label-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$form-label-tokens: defaults(
+  (
+    --trm-label-margin-bottom: calc(var(--trm-spacer) / 2),
+    --trm-label-font-size: null,
+    --trm-label-font-style: null,
+    --trm-label-font-weight: null,
+    --trm-label-color: null,
+  ),
+  $form-label-tokens
+);
+// scss-docs-end form-label-tokens
+
+@layer forms {
+  .form-label,
+  .col-form-label {
+    font-size: var(--trm-label-font-size, inherit);
+    font-style: var(--trm-label-font-style, inherit);
+    font-weight: var(--trm-label-font-weight, 500);
+    color: var(--trm-label-color, var(--trm-fg-body));
+  }
+
+  .form-label {
+    margin-bottom: var(--trm-label-margin-bottom, calc(var(--trm-spacer) / 2));
+  }
+
+  // For use with horizontal and inline forms, when you need the label (or legend)
+  // text to align with the form controls.
+  .col-form-label {
+    --trm-label-padding-y: calc(var(--trm-btn-input-padding-y) + var(--trm-border-width));
+    padding-block: var(--trm-label-padding-y);
+    margin-bottom: 0; // Override the `<legend>` default
+  }
+
+  .col-form-label-lg {
+    --trm-label-padding-y: calc(var(--trm-btn-input-lg-padding-y) + var(--trm-border-width));
+    font-size: var(--trm-btn-input-lg-font-size);
+  }
+
+  .col-form-label-sm {
+    --trm-label-padding-y: calc(var(--trm-btn-input-sm-padding-y) + var(--trm-border-width));
+    font-size: var(--trm-btn-input-sm-font-size);
+  }
+}

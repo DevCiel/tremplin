@@ -1,0 +1,111 @@
+import type { ComponentDetail } from './component-docs'
+import { documentedTokens } from './documented-tokens'
+
+export type NavigationTopic = 'button-group' | 'close-button' | 'nav' | 'accordion'
+const dark = (markup: string) => `<div data-trm-theme="dark" dir="rtl" class="p-3 rounded-5 bg-body fg-body">${markup}</div>`
+const row = 'hstack flex-wrap align-items-start gap-3'
+const button = (label: string, classes = 'btn-outline theme-inverse') => `<button type="button" class="${classes}">${label}</button>`
+const group = (label: string, classes = 'btn-group', style = 'btn-outline theme-inverse') => `<div class="${classes}" role="group" aria-label="${label}">${['Start', 'Center', 'End'].map(text => button(text, style)).join('')}</div>`
+const links = '<a class="nav-link active" href="/components/" aria-current="page">Overview</a><a class="nav-link" href="/components/card/">Cards</a><a class="nav-link" href="/components/button/">Buttons</a>'
+const nav = (label: string, classes = 'nav') => `<nav class="${classes}" aria-label="${label}">${links}</nav>`
+const menu = (label: string, id: string, classes: string) => `<button type="button" class="${classes}" id="${id}" data-trm-toggle="menu" aria-haspopup="menu" aria-expanded="false">${label}</button><div class="menu" role="menu" aria-labelledby="${id}"><a class="menu-item" role="menuitem" href="/getting-started/install/">Installation</a><a class="menu-item" role="menuitem" href="/components/menu/">Menu guide</a></div>`
+const chevron = '<svg class="accordion-icon" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m2 5 6 6 6-6"></path></svg>'
+const item = (label: string, body: string, attrs = '') => `<details class="accordion-item" ${attrs}><summary class="accordion-header">${label}${chevron}</summary><div class="accordion-body">${body}</div></details>`
+const accordion = (name: string, label: string, classes = 'accordion') => `<div class="${classes}">${item(label + ' one', 'Content remains normal HTML inside the panel.', `name="${name}" open`)}${item(label + ' two', 'Opening this panel closes its named sibling.', `name="${name}"`)}</div>`
+
+export const navigationClasses: Record<NavigationTopic, string[]> = {
+  'button-group': ['btn-group', 'btn-group-vertical', 'btn-group-divider', 'btn-group-xs', 'btn-group-sm', 'btn-group-lg', 'btn-toolbar', 'btn-check'],
+  'close-button': ['btn-close'],
+  nav: ['nav', 'nav-item', 'nav-link', 'nav-tabs', 'nav-pills', 'nav-pills-vertical', 'nav-underline', 'nav-fill', 'nav-justified'],
+  accordion: ['accordion', 'accordion-item', 'accordion-header', 'accordion-icon', 'accordion-body', 'accordion-sm', 'accordion-flush', 'accordion-gap']
+}
+export const navigationAccessibility: Record<NavigationTopic, string> = {
+  'button-group': 'Name groups and toolbars. Native buttons, checkboxes and same-name radios retain their own keyboard behavior; group CSS does not supply roving focus. Nested menus require Menu JavaScript.',
+  'close-button': 'Use an empty, named native type=button. The CSS mask supplies the icon, not dismissal or focus restoration; connect an explicit supported action. Native disabled prevents user activation.',
+  nav: 'Name navigation landmarks and use aria-current for the current destination. Ordinary links are not ARIA tabs; disabled links need no destination or an actual activation guard. Menus require Menu JavaScript.',
+  accordion: 'Use native details/summary with visible labels. Matching, example-specific name values create exclusive groups; omit name for independent panels. Expanded state and keyboard activation are native, not Collapse JavaScript.'
+}
+export const navigationExamples: Record<NavigationTopic, string> = {
+  'button-group': group('Document actions'),
+  'close-button': '<button class="btn-close" type="button" aria-label="Close example"></button>',
+  nav: nav('Project sections'),
+  accordion: `<div class="accordion">${item('Account settings', 'Update your profile and notification preferences.', 'name="account-guide-main" open')}${item('Security settings', 'Review password and passkey controls.', 'name="account-guide-main"')}</div>`
+}
+
+export const navigationDetails: Record<NavigationTopic, ComponentDetail> = {
+  'button-group': {
+    variants: [
+      { title: 'Structural styles and dividers', description: 'Use real solid, outline or subtle variants. btn-group-divider paints separators between adjacent controls in either orientation.', markup: `<div class="${row}">${group('Solid controls', 'btn-group btn-group-divider', 'btn-solid theme-inverse')}${group('Subtle controls', 'btn-group btn-group-divider', 'btn-subtle theme-inverse')}</div>` },
+      { title: 'Group sizes', description: 'Set xs, sm or lg on each group; the button size generator applies tokens to its direct button-like children. The unmodified group uses the default size.', markup: `<div class="vstack align-items-start gap-3">${(['xs', 'sm', '', 'lg'] as const).map(size => group((size || 'Default') + ' actions', 'btn-group' + (size ? ' btn-group-' + size : ''))).join('')}</div>` },
+      { title: 'Native checkbox group', description: 'Each real checkbox can be selected independently. Put the input inside its btn-check label; no Button plugin or invented group controller is needed.', markup: '<div class="btn-group" role="group" aria-label="Formatting options"><label class="btn-check btn-outline theme-inverse"><input type="checkbox" name="format-bold"> Bold</label><label class="btn-check btn-outline theme-inverse"><input type="checkbox" name="format-italic"> Italic</label><label class="btn-check btn-outline theme-inverse"><input type="checkbox" disabled> Locked</label></div>' },
+      { title: 'Native radio group', description: 'Same-name native radios select one value. Native radio keyboard behavior is separate from Button pressed-state toggles.', markup: '<div class="btn-group" role="group" aria-label="Text alignment"><label class="btn-check btn-outline theme-inverse"><input type="radio" name="group-alignment" value="start" checked> Align start</label><label class="btn-check btn-outline theme-inverse"><input type="radio" name="group-alignment" value="center"> Align center</label><label class="btn-check btn-outline theme-inverse"><input type="radio" name="group-alignment" value="end"> Align end</label></div>' },
+      { title: 'Toolbar and input group', description: 'The toolbar wraps separate groups and a named input group. Its CSS does not implement an editor or roving tabindex.', markup: `<div class="btn-toolbar" role="toolbar" aria-label="Document toolbar"><div class="btn-group" role="group" aria-label="History">${button('Undo')}${button('Redo')}</div><div class="input-group" style="max-inline-size: 14rem"><span class="input-group-text" id="group-page-prefix">Page</span><input class="form-control" type="text" aria-label="Page number" aria-describedby="group-page-prefix" value="1"></div>${button('Save document')}</div>` },
+      { title: 'Nested Menu', description: 'A nested group keeps the join geometry. The named native trigger uses the real Menu data API; group CSS alone does not open or manage the menu.', markup: `<div class="btn-group" role="group" aria-label="Publishing actions">${button('Save draft')}<div class="btn-group" role="group" aria-label="Additional actions">${menu('More actions', 'group-menu-trigger', 'btn-outline theme-inverse')}</div></div>` },
+      { title: 'Vertical group and links', description: 'Vertical groups share edge rounding and optional separators. Link groups remain navigation, with a real current destination.', markup: `<div class="${row}">${group('Vertical actions', 'btn-group-vertical btn-group-divider', 'btn-solid theme-inverse')}<nav class="btn-group" aria-label="Related guides"><a class="btn-outline theme-inverse active" href="/components/button-group/" aria-current="page">Groups</a><a class="btn-outline theme-inverse" href="/components/button/">Buttons</a></nav></div>` },
+      { title: 'Dark mode and RTL', description: 'Logical seams and edge radii follow direction. The inverse theme is chosen deliberately for readable controls.', markup: dark(group('RTL actions')) }
+    ],
+    variables: documentedTokens('button-group'),
+    keyboard: [{ keys: 'Tab / Shift+Tab', behavior: 'Follow native controls in DOM order; group CSS provides no roving tabindex.' }, { keys: 'Enter / Space', behavior: 'Activate native buttons; Space changes native checkbox state. Links retain native Enter navigation.' }, { keys: 'Arrow keys', behavior: 'Native same-name radios supply their browser keyboard behavior. Menu has its own arrow/Escape policy when initialized.' }],
+    guidelines: ['Give groups and toolbars meaningful labels and the appropriate group or toolbar role.', 'Use structural button variants on direct children so the join and sizing selectors match.', 'Configure sizes on every nested group separately; native inputs inside btn-check labels retain checked semantics.', 'Button groups have no independent token map; customize their button tokens before the button module is loaded.', 'Menu behavior belongs to Menu JavaScript. Split-menu patterns are not supported in vertical groups.', 'Keep DOM order meaningful; use native disabled or deliberately guard/remove a disabled link destination.'],
+    sass: `@use 'tremplin/scss/buttons/button' with (
+  $button-tokens: (--trm-btn-border-radius: .5rem)
+);
+@use 'tremplin/scss/buttons/button-group';`
+  },
+  'close-button': {
+    variants: [
+      { title: 'Disabled state', description: 'Native disabled blocks user activation; the pinned CSS reduces opacity and suppresses pointer interaction.', markup: '<button class="btn-close" type="button" aria-label="Unavailable close action" disabled></button>' },
+      { title: 'Dismiss an alert', description: 'The Alert data API removes this alert. The icon class alone has no action, and application code must arrange suitable focus after removal.', markup: '<div class="alert" role="status" id="reference-close-alert"><p>A dismissible example.</p><button class="btn-close ms-auto" type="button" data-trm-dismiss="alert" aria-label="Dismiss example message"></button></div>' },
+      { title: 'Size and opacity tokens', description: 'Customize actual close-control tokens on the control. Leave its content empty; do not add a second text glyph.', markup: '<button class="btn-close" type="button" aria-label="Close larger example" style="--trm-btn-close-size: 1.5rem; --trm-btn-close-opacity: .8"></button>' },
+      { title: 'Dark mode and RTL', description: 'The mask paints with the inherited foreground. Set a suitable local background and foreground as well as the theme; do not assume that theme alone inverts every icon.', markup: dark('<div class="hstack gap-3"><button class="btn-close" type="button" aria-label="Close dark example"></button><button class="btn-close" type="button" aria-label="Unavailable dark close" disabled></button></div>') }
+    ],
+    variables: documentedTokens('close-button'),
+    keyboard: [{ keys: 'Tab / Shift+Tab', behavior: 'Focus an enabled native button. Native disabled removes it from keyboard activation.' }, { keys: 'Enter / Space', behavior: 'Run the assigned action; dismissal needs the corresponding component data API or application handler.' }],
+    guidelines: ['Provide an accessible name for every icon-only control and specify type="button".', 'Keep btn-close empty: its SVG CSS mask is painted with currentColor, not injected pseudo-text.', 'A standalone example demonstrates the control; it does not close the page or invent an overlay controller.', 'Use the correct data-trm-dismiss target for the owning component; focus restoration is not a close-button CSS feature.', 'Custom mask data URLs require an appropriate image CSP; this is separate from the calendar external SVG asset policy.'],
+    sass: `@use 'tremplin/scss/buttons/close' with (
+  $btn-close-tokens: (
+    --trm-btn-close-size: 1.5rem,
+    --trm-btn-close-opacity: .8
+  )
+);`
+  },
+  nav: {
+    variants: [
+      { title: 'List markup and disabled destinations', description: 'Keep the list inside a named navigation landmark. aria-current identifies the current page; the disabled example has no href and is removed from the tab order.', markup: '<nav aria-label="List navigation"><ul class="nav"><li class="nav-item"><a class="nav-link active" href="/components/nav/" aria-current="page">Nav</a></li><li class="nav-item"><a class="nav-link" href="/components/tab/">Tab plugin</a></li><li class="nav-item"><a class="nav-link disabled" role="link" aria-disabled="true" tabindex="-1">Unavailable destination</a></li></ul></nav>' },
+      { title: 'Tabs appearance', description: 'nav-tabs changes appearance only. These are navigation links, not a tablist or a panel-switching widget; use the Tab plugin for that behavior.', markup: nav('Tab-styled links', 'nav nav-tabs') },
+      { title: 'Pills', description: 'Pills compose a real theme for the selected background and contrast foreground. The inverse theme avoids relying on an untested semantic color pair.', markup: nav('Pill links', 'nav nav-pills theme-inverse') },
+      { title: 'Vertical pills and underline', description: 'Use the dedicated vertical-pill modifier, or compose a flex direction on an underline navigation.', markup: `<div class="vstack align-items-start gap-3">${nav('Vertical pill links', 'nav nav-pills nav-pills-vertical theme-inverse')}${nav('Underline links', 'nav nav-underline')}</div>` },
+      { title: 'Fill and justify', description: 'Fill grows items in proportion to their contents; justified links have equal flex bases. Neither class supplies a navigation controller.', markup: '<div class="vstack gap-3"><nav class="nav nav-fill" aria-label="Fill links"><a class="nav-link active" aria-current="page" href="/components/">Overview</a><a class="nav-link" href="/getting-started/install/">Longer installation guide</a></nav><nav class="nav nav-justified" aria-label="Justified links"><a class="nav-link active" aria-current="page" href="/components/">Overview</a><a class="nav-link" href="/getting-started/install/">Longer installation guide</a></nav></div>' },
+      { title: 'Responsive alignment', description: 'Responsive prefix utilities switch the column to a row at sm. Nav already wraps; logical alignment follows document direction.', markup: nav('Responsive links', 'nav flex-column sm:flex-row justify-content-center') },
+      { title: 'Navigation with a Menu', description: 'An ordinary navigation can contain a named Menu trigger. Menu JavaScript supplies opening, keyboard behavior and dismissal; no tab roles are added to navigation links.', markup: `<nav class="nav nav-tabs" aria-label="Navigation with menu"><a class="nav-link active" href="/components/nav/" aria-current="page">Nav guide</a><div class="nav-item">${menu('More sections', 'nav-menu-trigger', 'nav-link')}</div></nav>` },
+      { title: 'Dark mode and RTL', description: 'Logical layout and inherited tokens adapt to the local theme and direction.', markup: dark(nav('Dark RTL links', 'nav nav-pills theme-inverse')) }
+    ],
+    variables: documentedTokens('nav'),
+    keyboard: [{ keys: 'Tab / Shift+Tab', behavior: 'Follow enabled native links and controls; ordinary navigation is not a roving-focus tab widget.' }, { keys: 'Enter', behavior: 'Follow a focused link. Native buttons retain their own activation semantics.' }, { keys: 'Arrow keys / Escape', behavior: 'Only an initialized Menu or Tab widget supplies its corresponding keyboard policy; nav CSS does not.' }],
+    guidelines: ['Name navigation landmarks and identify current destinations with aria-current.', 'Do not put navigation roles on the list itself or ARIA tab roles on ordinary links, even when styled as tabs.', 'A disabled class or aria-disabled is not an activation guard; deliberately remove or guard a disabled destination.', 'Use the actual Tab plugin and its selected/panel semantics for dynamic tabbed regions.', 'Menus require Menu JavaScript. Keep their owning trigger and menu names explicit.', 'Verify long links at narrow widths. Wrapping does not break a single nowrap link into words.'],
+    sass: `@use 'tremplin/scss/nav' with (
+  $nav-tokens: (--trm-nav-link-padding-x: 1rem),
+  $nav-pills-tokens: (--trm-nav-pills-border-radius: .75rem)
+);`
+  },
+  accordion: {
+    variants: [
+      { title: 'Exclusive native groups', description: 'Matching name attributes create native exclusivity. No Collapse classes, controls or JavaScript are required; names must be distinct between separate examples.', markup: `<div class="accordion theme-inverse">${item('Project overview', 'Goals, owners, and delivery milestones.', 'id="project-overview" name="project-guide" open')}${item('Access control', 'Roles and workspace permissions.', 'id="project-access" name="project-guide"')}</div>` },
+      { title: 'Compact accordion', description: 'accordion-sm supplies actual compact padding, radius and font tokens.', markup: accordion('compact-guide', 'Compact item', 'accordion accordion-sm') },
+      { title: 'Flush accordion', description: 'Flush removes the outer inline borders and edge rounding for a parent surface.', markup: accordion('flush-guide', 'Flush item', 'accordion accordion-flush') },
+      { title: 'Gapped accordion', description: 'The gap lives on the flex-column accordion. Each item retains its own border and rounded clipping while the panel changes size.', markup: accordion('gap-guide', 'Gapped item', 'accordion accordion-gap') },
+      { title: 'Independent panels', description: 'Omit name to keep multiple panels open. Native details supports this directly, rather than through a separate always-open plugin.', markup: `<div class="accordion">${item('Independent one', 'This panel can remain open.', 'open')}${item('Independent two', 'Opening this panel does not close its sibling.')}</div>` },
+      { title: 'Nested native groups', description: 'Use a different name for each level so parent and child exclusivity remain independent.', markup: `<div class="accordion">${item('Parent one', 'Child panels belong to a separate named group.' + accordion('nested-inner-guide', 'Child item', 'accordion mt-3'), 'name="nested-outer-guide" open')}${item('Parent two', 'This is the other outer panel.', 'name="nested-outer-guide"')}</div>` },
+      { title: 'Dark mode and RTL', description: 'The decorative chevron uses actual accordion-icon styling and rotates with open. It is excluded from the accessible summary name.', markup: dark(accordion('dark-guide', 'RTL item')) }
+    ],
+    variables: documentedTokens('accordion'),
+    keyboard: [{ keys: 'Tab / Shift+Tab', behavior: 'Focus native summaries and enabled interactive panel content in DOM order.' }, { keys: 'Enter / Space', behavior: 'Toggle the focused native summary; the browser exposes its expanded state.' }],
+    guidelines: ['Use native details with a first-child summary, a visible label and an optional aria-hidden decorative chevron.', 'Matching name values provide exclusivity; omit name for independent panels and use distinct values for nested groups and separate examples.', 'Do not add redundant button roles, aria-expanded, Collapse data attributes or accordion-button/accordion-collapse compatibility classes.', 'Listen for the native toggle event or set the details open property in application code. There is no Accordion JavaScript plugin.', 'Expand-all application code must remove exclusive name grouping before opening every panel; close panels before restoring their shared name.', 'Panel interpolation is a progressive enhancement. Unsupported browsers toggle immediately; reduced-motion behavior remains native/CSS-driven.', 'Keep critical instructions available and test native keyboard and assistive-technology behavior.'],
+    sass: `@use 'tremplin/scss/accordion' with (
+  $accordion-tokens: (
+    --trm-accordion-border-radius: .75rem,
+    --trm-accordion-padding-x: 1rem
+  )
+);`
+  }
+}

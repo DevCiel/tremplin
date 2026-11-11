@@ -1,0 +1,64 @@
+@use "../functions" as *;
+@use "../mixins/tokens" as *;
+
+$form-adorn-tokens: () !default;
+
+// scss-docs-start form-adorn-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$form-adorn-tokens: defaults(
+  (
+    --trm-form-adorn-gap: .375rem,
+    --trm-form-adorn-icon-size: 1rem,
+    --trm-form-adorn-icon-color: var(--trm-fg-2),
+  ),
+  $form-adorn-tokens
+);
+// scss-docs-end form-adorn-tokens
+
+@layer forms {
+  .form-adorn {
+    @include tokens($form-adorn-tokens);
+
+    gap: var(--trm-form-adorn-gap);
+    align-items: center;
+    // The wrapper looks like an input, so it should feel like one everywhere, not only
+    // over the inner `.form-ghost`
+    cursor: text;
+
+    // Prevent default `.form-control` focus
+    &:focus-visible {
+      outline: 0;
+    }
+
+    // Ghost input fills remaining space
+    > .form-ghost {
+      flex: 1;
+      min-width: 0; // Prevent text overflow
+    }
+
+    &.form-adorn-end > .form-ghost {
+      order: -1;
+    }
+  }
+
+  .form-adorn-icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    color: var(--trm-form-adorn-icon-color);
+    pointer-events: none;
+
+    > svg {
+      width: var(--trm-form-adorn-icon-size);
+      height: var(--trm-form-adorn-icon-size);
+    }
+  }
+
+  .form-adorn-text {
+    flex-shrink: 0;
+    color: var(--trm-form-adorn-icon-color);
+    pointer-events: none;
+    user-select: none;
+  }
+}

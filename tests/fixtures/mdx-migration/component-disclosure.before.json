@@ -1,0 +1,317 @@
+[
+  {
+    "name": "accordion",
+    "title": "Accordion",
+    "description": "Accordion component documentation for Tremplin.",
+    "lead": "Build exclusive or independent disclosure groups with native details and summary elements.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Exclusive native groups",
+          "description": "Matching name attributes create native exclusivity. No Collapse classes, controls or JavaScript are required; names must be distinct between separate examples.",
+          "markup": "<div class=\"accordion theme-inverse\"><details class=\"accordion-item\" id=\"project-overview\" name=\"project-guide\" open><summary class=\"accordion-header\">Project overview<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Goals, owners, and delivery milestones.</div></details><details class=\"accordion-item\" id=\"project-access\" name=\"project-guide\"><summary class=\"accordion-header\">Access control<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Roles and workspace permissions.</div></details></div>"
+        },
+        {
+          "title": "Compact accordion",
+          "description": "accordion-sm supplies actual compact padding, radius and font tokens.",
+          "markup": "<div class=\"accordion accordion-sm\"><details class=\"accordion-item\" name=\"compact-guide\" open><summary class=\"accordion-header\">Compact item one<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Content remains normal HTML inside the panel.</div></details><details class=\"accordion-item\" name=\"compact-guide\"><summary class=\"accordion-header\">Compact item two<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Opening this panel closes its named sibling.</div></details></div>"
+        },
+        {
+          "title": "Flush accordion",
+          "description": "Flush removes the outer inline borders and edge rounding for a parent surface.",
+          "markup": "<div class=\"accordion accordion-flush\"><details class=\"accordion-item\" name=\"flush-guide\" open><summary class=\"accordion-header\">Flush item one<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Content remains normal HTML inside the panel.</div></details><details class=\"accordion-item\" name=\"flush-guide\"><summary class=\"accordion-header\">Flush item two<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Opening this panel closes its named sibling.</div></details></div>"
+        },
+        {
+          "title": "Gapped accordion",
+          "description": "The gap lives on the flex-column accordion. Each item retains its own border and rounded clipping while the panel changes size.",
+          "markup": "<div class=\"accordion accordion-gap\"><details class=\"accordion-item\" name=\"gap-guide\" open><summary class=\"accordion-header\">Gapped item one<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Content remains normal HTML inside the panel.</div></details><details class=\"accordion-item\" name=\"gap-guide\"><summary class=\"accordion-header\">Gapped item two<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Opening this panel closes its named sibling.</div></details></div>"
+        },
+        {
+          "title": "Independent panels",
+          "description": "Omit name to keep multiple panels open. Native details supports this directly, rather than through a separate always-open plugin.",
+          "markup": "<div class=\"accordion\"><details class=\"accordion-item\" open><summary class=\"accordion-header\">Independent one<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">This panel can remain open.</div></details><details class=\"accordion-item\" ><summary class=\"accordion-header\">Independent two<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Opening this panel does not close its sibling.</div></details></div>"
+        },
+        {
+          "title": "Nested native groups",
+          "description": "Use a different name for each level so parent and child exclusivity remain independent.",
+          "markup": "<div class=\"accordion\"><details class=\"accordion-item\" name=\"nested-outer-guide\" open><summary class=\"accordion-header\">Parent one<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Child panels belong to a separate named group.<div class=\"accordion mt-3\"><details class=\"accordion-item\" name=\"nested-inner-guide\" open><summary class=\"accordion-header\">Child item one<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Content remains normal HTML inside the panel.</div></details><details class=\"accordion-item\" name=\"nested-inner-guide\"><summary class=\"accordion-header\">Child item two<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Opening this panel closes its named sibling.</div></details></div></div></details><details class=\"accordion-item\" name=\"nested-outer-guide\"><summary class=\"accordion-header\">Parent two<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">This is the other outer panel.</div></details></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "The decorative chevron uses actual accordion-icon styling and rotates with open. It is excluded from the accessible summary name.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"accordion\"><details class=\"accordion-item\" name=\"dark-guide\" open><summary class=\"accordion-header\">RTL item one<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Content remains normal HTML inside the panel.</div></details><details class=\"accordion-item\" name=\"dark-guide\"><summary class=\"accordion-header\">RTL item two<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Opening this panel closes its named sibling.</div></details></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-accordion-padding-x",
+          "defaultValue": "1.25rem",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-padding-y",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-transition-property",
+          "defaultValue": "color, background-color, border-radius",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-transition-timing",
+          "defaultValue": "ease-in-out",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-panel-transition-property",
+          "defaultValue": "content-visibility, block-size",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-panel-transition-duration",
+          "defaultValue": "0.2s",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-panel-transition-timing",
+          "defaultValue": "ease",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-border-radius",
+          "defaultValue": "var(--trm-accordion-radius, var(--trm-radius-7))",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-gap",
+          "defaultValue": "0",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-btn-color",
+          "defaultValue": "var(--trm-fg-2)",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-btn-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-btn-icon-width",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-btn-icon-transform",
+          "defaultValue": "rotate(-180deg)",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-btn-icon-transition",
+          "defaultValue": "transform 0.2s ease-in-out",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-active-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-accordion-active-bg",
+          "defaultValue": "var(--trm-bg-2)",
+          "purpose": "Default exported through $accordion-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Focus native summaries and enabled interactive panel content in DOM order."
+        },
+        {
+          "keys": "Enter / Space",
+          "behavior": "Toggle the focused native summary; the browser exposes its expanded state."
+        }
+      ],
+      "guidelines": [
+        "Use native details with a first-child summary, a visible label and an optional aria-hidden decorative chevron.",
+        "Matching name values provide exclusivity; omit name for independent panels and use distinct values for nested groups and separate examples.",
+        "Do not add redundant button roles, aria-expanded, Collapse data attributes or accordion-button/accordion-collapse compatibility classes.",
+        "Listen for the native toggle event or set the details open property in application code. There is no Accordion JavaScript plugin.",
+        "Expand-all application code must remove exclusive name grouping before opening every panel; close panels before restoring their shared name.",
+        "Panel interpolation is a progressive enhancement. Unsupported browsers toggle immediately; reduced-motion behavior remains native/CSS-driven.",
+        "Keep critical instructions available and test native keyboard and assistive-technology behavior."
+      ],
+      "sass": "@use 'tremplin/scss/accordion' with (\n  $accordion-tokens: (\n    --trm-accordion-border-radius: .75rem,\n    --trm-accordion-padding-x: 1rem\n  )\n);"
+    },
+    "example": "<div class=\"accordion\"><details class=\"accordion-item\" name=\"account-guide-main\" open><summary class=\"accordion-header\">Account settings<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Update your profile and notification preferences.</div></details><details class=\"accordion-item\" name=\"account-guide-main\"><summary class=\"accordion-header\">Security settings<svg class=\"accordion-icon\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 5 6 6 6-6\"></path></svg></summary><div class=\"accordion-body\">Review password and passkey controls.</div></details></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_accordion.scss",
+    "definition": null,
+    "commonMethods": [],
+    "events": {},
+    "moduleImport": "",
+    "javascript": "Accordion uses native details and summary elements, the open property and the native toggle event. There is no Accordion JavaScript plugin and no Collapse dependency."
+  },
+  {
+    "name": "collapse",
+    "title": "Collapse",
+    "description": "Collapse component documentation for Tremplin.",
+    "lead": "Toggle content regions with CSS-owned transitions and Collapse JavaScript.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Disclosure",
+          "description": "Collapse changes show and synchronizes trigger aria-expanded. Padding belongs on inner content, not on the animated wrapper.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"collapse\" data-trm-target=\"#collapse-project\" aria-controls=\"collapse-project\" aria-expanded=\"false\">Project details</button><div class=\"collapse\" id=\"collapse-project\" ><div class=\"card card-body mt-2\">Project ownership and delivery status.</div></div>"
+        },
+        {
+          "title": "Initially open",
+          "description": "The constructor preserves authored state. Add show and an initially expanded trigger; no automatic constructor toggle option is required.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"collapse\" data-trm-target=\"#collapse-open\" aria-controls=\"collapse-open\" aria-expanded=\"true\">Release notes</button><div class=\"collapse show\" id=\"collapse-open\" ><div class=\"card card-body mt-2\">This panel starts open.</div></div>"
+        },
+        {
+          "title": "Horizontal collapse",
+          "description": "The CSS changes inline-size and display. A fixed inline size is set on the immediate child; the outer minimum height is a documentation layout choice.",
+          "markup": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"collapse\" data-trm-target=\"#collapse-horizontal\" aria-controls=\"collapse-horizontal\" aria-expanded=\"false\">Toggle width</button><div style=\"min-block-size: 8rem\"><div class=\"collapse collapse-horizontal\" id=\"collapse-horizontal\"><div class=\"card card-body mt-2\" style=\"inline-size: 14rem\">A compact horizontal panel.</div></div></div>"
+        },
+        {
+          "title": "Multiple controls and targets",
+          "description": "Individual controls and a selector-list control can operate the same targets. ARIA controls names every target; no extra styling hook class is invented.",
+          "markup": "<div class=\"hstack flex-wrap gap-2\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"collapse\" data-trm-target=\"#collapse-first\" aria-controls=\"collapse-first\" aria-expanded=\"false\">Toggle first panel</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"collapse\" data-trm-target=\"#collapse-second\" aria-controls=\"collapse-second\" aria-expanded=\"false\">Toggle second panel</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"collapse\" data-trm-target=\"#collapse-first, #collapse-second\" aria-controls=\"collapse-first collapse-second\" aria-expanded=\"false\">Toggle both panels</button></div><div class=\"collapse\" id=\"collapse-first\" ><div class=\"card card-body mt-2\">First target.</div></div><div class=\"collapse\" id=\"collapse-second\" ><div class=\"card card-body mt-2\">Second target.</div></div>"
+        },
+        {
+          "title": "Parent coordination",
+          "description": "Set parent on target panels. First-level siblings coordinate; this is a Collapse feature, not the native Accordion component.",
+          "markup": "<div id=\"collapse-parent\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"collapse\" data-trm-target=\"#collapse-one\" aria-controls=\"collapse-one\" aria-expanded=\"true\">Account</button><div class=\"collapse show\" id=\"collapse-one\" data-trm-parent=\"#collapse-parent\"><div class=\"card card-body mt-2\">Account preferences.</div></div><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"collapse\" data-trm-target=\"#collapse-two\" aria-controls=\"collapse-two\" aria-expanded=\"false\">Notifications</button><div class=\"collapse\" id=\"collapse-two\" data-trm-parent=\"#collapse-parent\"><div class=\"card card-body mt-2\">Notification preferences.</div></div></div>"
+        },
+        {
+          "title": "Independent nested collapse",
+          "description": "Nested panel state is independent of outer sibling coordination. Closing an ancestor hides its contents without inventing a nested-state reset.",
+          "markup": "<div id=\"collapse-nested-parent\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"collapse\" data-trm-target=\"#collapse-outer-one\" aria-controls=\"collapse-outer-one\" aria-expanded=\"true\">Outer one</button><div class=\"collapse show\" id=\"collapse-outer-one\" data-trm-parent=\"#collapse-nested-parent\"><div class=\"card card-body mt-2\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"collapse\" data-trm-target=\"#collapse-nested-child\" aria-controls=\"collapse-nested-child\" aria-expanded=\"false\">Nested details</button><div class=\"collapse\" id=\"collapse-nested-child\" ><div class=\"card card-body mt-2\">Nested content.</div></div></div></div><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"collapse\" data-trm-target=\"#collapse-outer-two\" aria-controls=\"collapse-outer-two\" aria-expanded=\"false\">Outer two</button><div class=\"collapse\" id=\"collapse-outer-two\" data-trm-parent=\"#collapse-nested-parent\"><div class=\"card card-body mt-2\">Second outer panel.</div></div></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "The logical animation axis and native button semantics remain unchanged in a local dark RTL region.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"collapse\" data-trm-target=\"#collapse-rtl\" aria-controls=\"collapse-rtl\" aria-expanded=\"true\">RTL details</button><div class=\"collapse show\" id=\"collapse-rtl\" ><div class=\"card card-body mt-2\">The project is ready for review.</div></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-transition-fade-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $fade-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-transition-fade-timing",
+          "defaultValue": "linear",
+          "purpose": "Default exported through $fade-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-transition-collapse-property",
+          "defaultValue": "block-size, display",
+          "purpose": "Default exported through $collapse-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-transition-collapse-duration",
+          "defaultValue": "0.35s",
+          "purpose": "Default exported through $collapse-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-transition-collapse-timing",
+          "defaultValue": "ease",
+          "purpose": "Default exported through $collapse-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Enter / Space",
+          "behavior": "Activate a focused native disclosure button. Collapse adds no optional accordion arrow-key policy."
+        },
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Follow enabled triggers and visible content. Applications manage focus if they hide the currently focused region."
+        }
+      ],
+      "guidelines": [
+        "Use native type=button triggers with matching targets, aria-controls and initial aria-expanded state.",
+        "Collapse adds/removes show only; there is no collapsing transition class or collapsed-trigger class synchronization in this pin.",
+        "Keep padding on inner content; horizontal collapse needs an explicit child inline size.",
+        "show and hide start events are cancelable; shown/hidden notify after the transition callback. Await completion before dependent operations; calls during a transition are ignored rather than queued.",
+        "Parent belongs to the target. Shared triggers can open multiple targets; nested panels retain their own state.",
+        "The constructor preserves authored state. Configure parent if needed and call show/hide/toggle explicitly; these methods return completion promises.",
+        "Size interpolation is progressive enhancement, with immediate fallback where unsupported. Verify reduced motion and do not hide critical instructions by default."
+      ],
+      "sass": "@use 'tremplin/scss/transitions' with (\n  $collapse-tokens: (\n    --trm-transition-collapse-duration: .25s,\n    --trm-transition-collapse-timing: ease-out\n  )\n);"
+    },
+    "example": "<button class=\"btn-outline theme-inverse\" type=\"button\" data-trm-toggle=\"collapse\" data-trm-target=\"#details\" aria-controls=\"details\" aria-expanded=\"false\">Show details</button><div class=\"collapse\" id=\"details\" ><div class=\"card card-body mt-2\">Additional project details.</div></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_transitions.scss",
+    "definition": {
+      "name": "collapse",
+      "className": "Collapse",
+      "options": [
+        {
+          "name": "parent",
+          "type": "string | Element | null | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "toggle(): Promise<void>",
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "dispose(): void"
+      ],
+      "events": [
+        "hidden.trm.collapse",
+        "hide.trm.collapse",
+        "show.trm.collapse",
+        "shown.trm.collapse"
+      ],
+      "dataAttributes": [
+        "data-trm-parent",
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"collapse\""
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "show.trm.collapse": "Before adding show; cancel this event to keep the panel closed.",
+      "shown.trm.collapse": "After the show transition callback; a completion notification, not a cancelable start event.",
+      "hide.trm.collapse": "Before removing show; cancel this event to keep the panel open.",
+      "hidden.trm.collapse": "After the hide transition callback; arrange application focus if needed."
+    },
+    "moduleImport": "import Collapse from 'tremplin/collapse'",
+    "javascript": "import Collapse from 'tremplin/collapse'\n\nconst element = document.querySelector('#details')\nconst instance = Collapse.getOrCreateInstance(element)"
+  }
+]

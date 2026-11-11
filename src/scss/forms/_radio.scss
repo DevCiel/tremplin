@@ -1,0 +1,108 @@
+@use "../functions" as *;
+@use "../mixins/focus-ring" as *;
+@use "../mixins/tokens" as *;
+@use "../mixins/transition" as *;
+
+// stylelint-disable custom-property-no-missing-var-function
+$radio-tokens: () !default;
+
+// scss-docs-start radio-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$radio-tokens: defaults(
+  (
+    --trm-radio-size: 1.25rem,
+    --trm-radio-margin-block: .125rem,
+    --trm-radio-bg: var(--trm-bg-body),
+    --trm-radio-border-color: var(--trm-border-color),
+    --trm-radio-checked-bg: var(--trm-control-checked-bg),
+    --trm-radio-checked-border-color: var(--trm-control-checked-border-color),
+    --trm-radio-disabled-bg: var(--trm-control-disabled-bg),
+    --trm-radio-disabled-opacity: var(--trm-control-disabled-opacity),
+  ),
+  $radio-tokens
+);
+// scss-docs-end radio-tokens
+// stylelint-enable custom-property-no-missing-var-function
+
+@layer forms {
+  .radio {
+    @include tokens($radio-tokens);
+
+    position: relative;
+    flex-shrink: 0;
+    width: var(--trm-radio-size);
+    height: var(--trm-radio-size);
+    margin-block: var(--trm-radio-margin-block);
+    appearance: none;
+    background-color: var(--trm-theme-bg, var(--trm-radio-bg));
+    border: 1px solid var(--trm-theme-bg, var(--trm-radio-border-color));
+    // stylelint-disable-next-line property-disallowed-list
+    border-radius: 50%;
+    // `color` is transitioned because the dot paints with `currentcolor`; without
+    // it the dot would snap to the body color as it fades out on uncheck.
+    @include transition(
+      color var(--trm-control-transition-duration) var(--trm-control-transition-timing),
+      background-color var(--trm-control-transition-duration) var(--trm-control-transition-timing),
+      border-color var(--trm-control-transition-duration) var(--trm-control-transition-timing)
+    );
+
+    // Inner dot: always present but scaled/faded out until checked so it pops in.
+    &::before {
+      position: absolute;
+      inset: calc(var(--trm-radio-size) * .25);
+      content: "";
+      background-color: currentcolor;
+      // stylelint-disable-next-line property-disallowed-list
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0);
+      @include transition(
+        opacity var(--trm-control-transition-duration) var(--trm-control-transition-timing),
+        transform var(--trm-control-transition-duration) var(--trm-control-transition-timing)
+      );
+    }
+
+    &:checked {
+      color: var(--trm-theme-contrast, var(--trm-primary-contrast));
+      background-color: var(--trm-theme-bg, var(--trm-radio-checked-bg));
+      border-color: var(--trm-theme-bg, var(--trm-radio-checked-border-color));
+
+      &::before {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    &:disabled {
+      --trm-radio-bg: var(--trm-radio-disabled-bg);
+
+      ~ label {
+        color: var(--trm-secondary-fg);
+        cursor: default;
+      }
+    }
+    &:disabled:checked {
+      opacity: var(--trm-radio-disabled-opacity);
+    }
+
+    &:focus-visible {
+      @include focus-ring(true);
+    }
+  }
+
+  .radio-sm {
+    --trm-radio-size: 1rem;
+
+    + label {
+      font-size: var(--trm-font-size-sm);
+    }
+  }
+  .radio-lg {
+    --trm-radio-size: 1.5rem;
+    --trm-radio-margin-block: .375rem;
+
+    + label {
+      font-size: var(--trm-font-size-lg);
+    }
+  }
+}

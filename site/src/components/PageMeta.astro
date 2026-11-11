@@ -1,0 +1,33 @@
+---
+import { advancedDemoCss } from '../data/advanced-input-docs'
+import { choiceDemoCss } from '../data/choice-input-docs'
+import { paletteDemoCss } from '../data/sheet-command-docs'
+import { formsDemoCss } from '../data/forms-overview-docs'
+import { nativeFormDemoCss, nativeFormTopics } from '../data/native-form-guides'
+import { compositionDemoCss, compositionTopics } from '../data/form-composition-guides'
+import { localPatternTopics } from '../data/local-pattern-docs'
+interface Props { title: string; description: string; noindex?: boolean }
+const { title, description, noindex = false } = Astro.props
+const pathname = Astro.url.pathname
+const hasPalette = pathname === '/components/command-palette/'
+const hasOptionalCss = hasPalette || localPatternTopics.some(topic => pathname === `/components/${topic}/`)
+---
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content={description}>
+  <title>{title} · Tremplin</title>
+  <link rel="preload" href="/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/tremplin.min.css">
+  <link rel="stylesheet" href="/themes/tremplin-ocean.css">
+  <link rel="stylesheet" href="/themes/tremplin-forest.css">
+  <link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+  <link rel="stylesheet" href="/docs.css">
+  {['/components/chips/','/components/combobox/','/forms/chips/','/forms/combobox/'].includes(pathname) && <style is:inline set:html={choiceDemoCss}></style>}
+  {['/components/datepicker/','/forms/datepicker/'].includes(pathname) && <style is:inline set:html={advancedDemoCss}></style>}
+  {hasPalette && <style is:inline set:html={paletteDemoCss}></style>}
+  {['/forms/overview/','/components/forms/'].includes(pathname) && <style is:inline set:html={formsDemoCss}></style>}
+  {nativeFormTopics.some(topic => pathname === `/forms/${topic}/`) && <style is:inline set:html={nativeFormDemoCss}></style>}
+  {compositionTopics.some(topic => pathname === `/forms/${topic}/`) && <style is:inline set:html={compositionDemoCss}></style>}
+  {hasOptionalCss && <link rel="stylesheet" href="/dist/css/tremplin-extensions.min.css">}
+{noindex && <meta name="robots" content="noindex">}

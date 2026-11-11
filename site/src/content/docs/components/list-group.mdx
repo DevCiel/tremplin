@@ -1,0 +1,103 @@
+---
+{
+  "component": "list-group",
+  "title": "List Group",
+  "description": "List Group component documentation for Tremplin.",
+  "lead": "Display flexible lists of content, links, or actions.",
+  "variants": [
+    {
+      "title": "Static and flush lists",
+      "description": "Use real list items for static content; flush removes outer edges for an adjoining surface."
+    },
+    {
+      "title": "Actionable and unavailable items",
+      "description": "Use real links or native buttons. A disabled class alone does not guard keyboard or scripted activation; the unavailable link has no href."
+    },
+    {
+      "title": "Numbered rich content and badges",
+      "description": "Native ordered-list structure and CSS counters accompany readable content; badge counts include context."
+    },
+    {
+      "title": "Container-responsive horizontal group",
+      "description": "The sm prefix follows the containing block, not the viewport. A contains-inline ancestor is required; do not combine horizontal and flush modifiers."
+    },
+    {
+      "title": "Contextual items",
+      "description": "Compose real theme classes rather than retired list-group-item-color aliases. Understandable labels communicate status alongside color."
+    },
+    {
+      "title": "Native checkboxes and radios",
+      "description": "Native inputs own checked state. Use actual check/radio classes with a form-field and associated label, not a list-group selection plugin."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Logical borders and surfaces adapt to direction and theme. Active styles do not automatically update application selection."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Follow native controls in DOM order; static items are not tab stops."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Activate native buttons; links retain Enter navigation and inputs retain native selection behavior."
+    }
+  ],
+  "guidelines": [
+    "Choose native list, navigation or control semantics based on the actual content.",
+    "CSS active state is visual; application selection and dynamic panels are separate concerns. Use the Tab plugin for dynamic list-backed tab panes.",
+    "Use native disabled on buttons and deliberately remove/guard unavailable link destinations.",
+    "Responsive horizontal variants use container queries and require a query container; avoid combining horizontal and flush layouts.",
+    "Use real theme classes and text status labels. Copy the disclosed demo contrast CSS for the customized active/contextual examples.",
+    "Native checkboxes/radios require accessible labels and do not become a custom listbox widget."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import Contrast from '../../../components/component/Contrast.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Contrast />
+
+<Example markup={componentExample("list-group")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="list-group" />
+
+{componentDetail("list-group").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="list-group" />
+</>}
+
+{componentDetail("list-group").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("list-group").sass} standalone={true} />
+</>}
+
+{componentDetail("list-group").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="list-group" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="list-group" />
+
+{documentedComponents.find(component => component.name === "list-group").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="list-group" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>List group styles and native input examples need no List group JavaScript plugin. Use the separate Tab plugin for dynamic list-backed panes.</p>

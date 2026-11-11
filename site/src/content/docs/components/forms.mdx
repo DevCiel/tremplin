@@ -1,0 +1,120 @@
+---
+{
+  "component": "forms",
+  "title": "Forms",
+  "description": "Forms component documentation for Tremplin.",
+  "lead": "Build consistently styled native controls, groups, validation states, and supporting text.",
+  "variants": [
+    {
+      "title": "Native controls and sizes",
+      "description": "Use form-control on inputs, textareas and native selects. form-control-sm/lg change presentation, not input type, validation or keyboard semantics."
+    },
+    {
+      "title": "Disabled and readonly values",
+      "description": "Disabled controls are omitted by native FormData; readonly text controls remain focusable and included. This application button reports only the included field names, never entered values."
+    },
+    {
+      "title": "Disabled fieldset",
+      "description": "Native fieldset disabled affects contained native controls. The first-legend exception is a browser rule; do not put custom links in this example and assume they become disabled."
+    },
+    {
+      "title": "Checks, radios and switches",
+      "description": "Place check/radio on their native inputs. Put switch on a wrapper around a checkbox with role=switch. The browser owns checked state and same-name radio exclusion; no Forms plugin is involved."
+    },
+    {
+      "title": "Floating labels and input groups",
+      "description": "The floating label precedes its control; :has() reacts to focus/value. The input group supplements a persistent label and associates its path prefix as help. Input group Sass is in the components layer, unlike most form styles."
+    },
+    {
+      "title": "Responsive form layout",
+      "description": "Canonical md:col-6 columns share a row from md upward and stack below it. DOM order and visible labels stay unchanged."
+    },
+    {
+      "title": "Application-owned validation and recovery",
+      "description": "This copied handler uses native validity, explicit is-invalid/aria-invalid state, persistent feedback, a focused summary and native reset. The summary uses ordinary border/spacing helpers; there is no core error-summary class."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Set theme/direction on a subtree; native controls remain labelled. The switch thumb uses logical position. Native select popup and validation UI can still vary by browser."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Moves through enabled native controls in DOM order; disabled controls are skipped and readonly text remains focusable."
+    },
+    {
+      "keys": "Space",
+      "behavior": "Toggles a focused checkbox or switch. The switch label remains stable while checked conveys state."
+    },
+    {
+      "keys": "Arrow keys",
+      "behavior": "Changes native radio/select values according to browser/platform conventions; no custom form-wide key handler is installed."
+    },
+    {
+      "keys": "Enter",
+      "behavior": "Can submit a native form from supported controls. These local demos intercept submission after handlers are installed and do not send values."
+    }
+  ],
+  "guidelines": [
+    "Forms is a composition of CSS/native controls, not a Forms class or plugin. Most partials use the forms layer; Input group uses components. Enhanced Chips, Combobox, Datepicker, OTP, Range and Strength have separate component APIs.",
+    "Use form-control for native selects, check and radio on the input, and a switch wrapper for switch styling. Retired form-select/form-check/form-switch aliases are not strict core.",
+    "Provide visible labels and real input types, name/value, autocomplete and constraints appropriate for your application. Placeholder text is a hint, not a label. These examples deliberately use no real account or password submission.",
+    "Use fieldset/legend for related choices. Disabled values are omitted; readonly is only for supported text-like controls, not select/checkbox/radio. Fieldset does not automatically disable links or custom widgets.",
+    "Keep floating labels before their controls. Associate meaningful input-group addons with aria-describedby rather than replacing the visible label or accessible name.",
+    "Visual feedback does not set aria-invalid, generate error text, focus a summary or validate a server request. The copied local demo owns those tasks. data-trm-validate opts into native user-invalid styles; success additionally needs its valid token.",
+    "The representative token table mixes root shared properties with component-local map entries. Root input/button sizing is reused selectively; local defaults can override inheritance. Consult individual form topics for their complete maps.",
+    "Native controls work without framework JavaScript. Demo submission/inspection buttons start disabled until the application handlers are installed; this safety setup is documentation code, not core behavior."
+  ]
+}
+---
+
+import { formsDemoCss, formsDemoJavascript } from '../../../data/forms-overview-docs'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+<div class="docs-callout docs-callout-info"><strong>Native controls and CSS, not a Forms plugin.</strong> Most form partials use the forms layer; Input group uses components. The examples follow the current Tremplin implementation. See <a href="/forms/overview/">Forms overview</a> for the complete topic navigation and shared root variables.</div><p>These local previews use an explicit application handler for submission prevention, status, inspection and error-summary recovery. Submission/inspection buttons start disabled until that handler is installed. No requests or persistence are performed. The CSS below is a deliberate demo contrast choice; it does not change core.</p>
+<Code source={formsDemoCss} standalone={true} plain={true} label="Copy Forms demo contrast CSS" />
+
+<Example markup={componentExample("forms")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="forms" />
+
+{componentDetail("forms").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="forms" />
+</>}
+
+{componentDetail("forms").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("forms").sass} standalone={true} />
+</>}
+
+{componentDetail("forms").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="forms" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="forms" />
+
+{documentedComponents.find(component => component.name === "forms").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="forms" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Forms is CSS/native-control composition, not a Forms JavaScript plugin. Native constraints, checked state and keyboard behavior come from the browser. The separately copied demo handler owns submission interception, summary/status updates and reset; individual enhanced widgets have their own modules.</p>
+
+<h2 id="demo-setup">Explicit application demo setup</h2><p>Copy this handler with the demo markup. It uses native validity and FormData, reports only field names, focuses the summary, and clears application error state on reset. It does not replace server validation or create a framework Forms plugin.</p>
+<Code source={formsDemoJavascript} standalone={true} plain={true} label="Copy Forms application demo handler" />

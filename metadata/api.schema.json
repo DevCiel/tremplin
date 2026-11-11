@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gettremplin.com/schema/api.json",
+  "type": "object",
+  "required": ["framework", "version", "commonMethods", "components"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "framework": { "const": "Tremplin" },
+    "version": { "type": "string" },
+    "commonMethods": { "type": "array", "items": { "type": "string" } },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "className", "options", "methods", "events", "dataAttributes"],
+        "properties": {
+          "name": { "type": "string" },
+          "className": { "type": "string" },
+          "options": { "type": "array", "items": { "type": "object", "required": ["name", "type", "required"], "properties": { "name": { "type": "string" }, "type": { "type": "string" }, "required": { "type": "boolean" } }, "additionalProperties": false } },
+          "methods": { "type": "array", "items": { "type": "string" } },
+          "events": { "type": "array", "items": { "type": "string" } },
+          "dataAttributes": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

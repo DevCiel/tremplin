@@ -1,0 +1,16 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro'
+const examples = [
+  ['Input and navigation controls', '/examples/controls/', 'Runnable Chips, OTP, Range, Strength, Datepicker and NavOverflow examples.'],
+  ['Layout', '/layout/grid/', 'Current responsive CSS Grid and container examples.'],
+  ['Forms', '/forms/overview/', 'Form controls, labels, validation and accessible input patterns.'],
+  ['Components', '/components/', 'Live component examples using the current Tremplin core.'],
+  ['Playground', '/playground/', 'Experiment with the current stylesheet in a script-disabled preview.']
+]
+---
+<DocsLayout title="Examples">
+  <h1>Examples</h1>
+  <p class="lead">Explore Tremplin's current layout, forms and interaction APIs.</p>
+  <p>These maintained examples use the current core. Historical framework demos and archived documentation are no longer published as alternatives.</p>
+  <div class="grid gap-3">{examples.map(([title, href, description]) => <article class="card g-col-12 md:g-col-6"><div class="card-body"><h2>{title}</h2><p>{description}</p><a class="btn-outline theme-accent" href={href}>Open example</a></div></article>)}</div>
+</DocsLayout>

@@ -1,0 +1,10 @@
+
+
+@layer custom {
+  // Tremplin extension: print-only content adjustments.
+  @media print {
+    .prose { max-inline-size: none; }
+    a[href]::after { content: ' (' attr(href) ')'; font-size: .8em; }
+    abbr[title]::after { content: ' (' attr(title) ')'; }
+  }
+}

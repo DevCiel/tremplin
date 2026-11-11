@@ -1,0 +1,56 @@
+---
+{
+  "title": "Theme",
+  "description": "Apply semantic color roles consistently across application surfaces and controls.",
+  "group": "Customize",
+  "lead": "Apply semantic color roles consistently across application surfaces and controls.",
+  "order": 4
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { customizeExamples as samples } from '../../../data/customize-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">How it works</h2>
+
+<p>{"Root role tokens such as --trm-primary-bg, --trm-primary-fg and --trm-primary-border supply theme-primary's contextual --trm-theme-* references. Components opt into the corresponding contextual roles. A theme helper assigns variables; surface utilities paint foreground/background/border separately."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Theme colors</h2>
+
+<p>Use exact role names: fg-emphasis, not text-emphasis. Pair solid backgrounds with contrast, and subtle backgrounds with an appropriate foreground; measure contrast rather than assuming every role combination passes.</p>
+
+<Code sample={samples["customize/theme#1"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Layer colors</h2>
+
+<p>{"Neutral foregrounds are --trm-fg-body and --trm-fg-1 through 4; backgrounds use --trm-bg-body and --trm-bg-1 through 4. Configure theme-fgs, theme-bgs and theme-borders for neutral roles. Theme-reset clears inherited contextual roles with initial, not unset."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Theme utility classes</h2>
+
+<p>{"The eight semantic theme-* helpers are accompanied by theme-muted and theme-contrast. There are no theme-light/theme-dark aliases. Native light/dark color mode selection is independent of contextual semantic themes."}</p>
+
+<p>The pinned primary solid button has approximately 3.56:1 white-on-blue normal-text contrast in light mode. Use a measured existing variant or explicitly configured application roles when required; source parity is not a contrast guarantee.</p>
+
+<Code sample={samples["customize/theme#3"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">Theme Sass map</h2>
+
+<p>Theme-colors merging is shallow: replacing primary replaces its entire role map, not just one nested token. Supply every role you need. Other semantic entries remain unless explicitly removed with null.</p>
+
+<Code sample={samples["customize/theme#4"].code[0]} standalone={true} />
+
+</section>

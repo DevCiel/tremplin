@@ -1,0 +1,138 @@
+import type { ComponentDetail } from './component-docs'
+import { documentedTokens } from './documented-tokens'
+
+export type SheetCommandTopic = 'bottom-sheet' | 'command-palette'
+const button = (label: string, attrs = '') => `<button type="button" class="btn-outline theme-inverse" ${attrs}>${label}</button>`
+const sheet = (id: string, label: string, body: string, classes = '', attrs = '') => `${button('Open '+label, `data-trm-toggle="drawer" data-trm-target="#${id}" aria-controls="${id}"`)}
+<dialog id="${id}" class="drawer drawer-bottom drawer-sheet ${classes}" aria-labelledby="${id}-title" tabindex="-1" ${attrs}>
+  <header class="drawer-header"><h3 id="${id}-title" class="drawer-title h5">${label}</h3><button type="button" class="btn-close" data-trm-dismiss="drawer" aria-label="Close ${label}" autofocus></button></header>
+  <div class="drawer-body">${body}</div>
+  <footer class="drawer-footer">${button('Done', 'data-trm-dismiss="drawer"')}</footer>
+</dialog>`
+const item = (label: string, value: string, attrs = '') => `<div tabindex="-1" class="command-item" data-value="${value}" ${attrs}>${label}</div>`
+const commands = item('Inspect project', 'inspect', 'data-keywords="review workspace"')+item('Preview settings', 'settings', 'data-keywords="preferences configuration"')
+const palette = (id: string, title: string, items = commands, attrs = '') => `${button('Open '+title, `data-trm-toggle="command-palette" data-trm-target="#${id}" aria-controls="${id}"`)}
+<div id="${id}" class="command-palette" data-trm-command-palette data-trm-shortcut="false" hidden aria-labelledby="${id}-title" ${attrs}>
+  <div class="command-palette-dialog">
+    <div class="command-palette-header"><label id="${id}-title" for="${id}-search" class="visually-hidden">${title}</label><input id="${id}-search" class="command-palette-input" placeholder="Search commands" autocomplete="off"><button type="button" class="btn-close" data-trm-dismiss="command-palette" aria-label="Close ${title}"></button></div>
+    <div class="command-palette-list" aria-label="Available commands">${items}</div>
+    <div class="command-palette-empty" hidden>No matching commands. Try another search.</div>
+  </div>
+</div>
+<p id="${id}-result" role="status" class="mt-3 mb-0">No command selected.</p>`
+
+export const sheetCommandClasses: Record<SheetCommandTopic,string[]> = {
+  'bottom-sheet': ['drawer','drawer-bottom','drawer-sheet','drawer-fit-content','drawer-instant','drawer-header','drawer-title','drawer-body','drawer-footer','hiding'],
+  'command-palette': ['command-palette','command-palette-dialog','command-palette-header','command-palette-input','command-palette-list','command-group','command-group-label','command-item','command-shortcut','command-palette-empty','active']
+}
+export const sheetCommandAccessibility: Record<SheetCommandTopic,string> = {
+  'bottom-sheet': 'A Bottom Sheet is a named native Drawer, not another plugin. Default modal focus and background inertness come from showModal; keep an explicit close button. Data-API opening registers visible-opener focus return. Swipe is only an enhancement, not dragging or snap points.',
+  'command-palette': "Optional local extension, separate from the core distribution. It tracks an active descendant and returns focus, but its Tab boundary handler is not native modal inertness or a document-wide focus guard. Give the search a label, keep a close control, and coordinate shortcuts and background focus in your application."
+}
+export const sheetCommandExamples: Record<SheetCommandTopic,string> = {
+  'bottom-sheet': sheet('actions','quick actions','<p>Choose a real documentation destination or dismiss this sheet.</p><nav class="d-flex flex-wrap gap-2" aria-label="Quick actions"><a class="btn-outline theme-inverse" href="/components/">Browse components</a><a class="btn-outline theme-inverse" href="/api/drawer/">Drawer API</a></nav>','','style="--trm-drawer-height: min(55vh, 24rem)"'),
+  'command-palette': palette('commands','commands')
+}
+export const sheetCommandDetails: Record<SheetCommandTopic,ComponentDetail> = {
+  'bottom-sheet': {
+    variants: [
+      {title:'Content-height sheet',description:'An explicit --trm-drawer-height:auto override uses content height. The separate drawer-fit-content class only resets inset-block-end; it is not a sheet height preset.',markup:sheet('sheet-fit','content-height sheet','<p>A short task with a visible close control.</p>','','style="--trm-drawer-height: auto"')},
+      {title:'Scrollable body',description:'The actual drawer-body owns vertical scrolling. This explicit height token is an application choice; headers and final actions remain outside the scroller.',markup:sheet('sheet-scroll','scrollable sheet',Array.from({length:10},(_,i)=>`<p>Review item ${i+1}: confirm the project documentation and access requirements.</p>`).join(''),'','style="--trm-drawer-height: min(65vh, 30rem)"')},
+      {title:'Static backdrop',description:'Set options on the dialog before construction. Backdrop clicks and Escape do not dismiss this example; use the close button. hidePrevented reports rejected attempts.',markup:sheet('sheet-static','protected sheet','<p>This local example has no unsaved data. Close it with either explicit dismissal button.</p>','','data-trm-backdrop="static" data-trm-keyboard="false"')},
+      {title:'Explicit width and instant presentation',description:'drawer-sheet uses a 760px width fallback at lg and above. Override its runtime width property and the real Drawer height/inset tokens; there are no small/large Bottom Sheet aliases.',markup:sheet('sheet-width','compact sheet','<p>No transition is used in this example. Width and height are authored token overrides.</p>','drawer-instant','style="--trm-drawer-sheet-width: 34rem; --trm-drawer-height: 18rem; --trm-drawer-inset: .5rem"')},
+      {title:'Dark RTL sheet',description:'Theme and direction belong on the dialog itself because it enters the native top layer. Bottom placement still swipes downward on supported touch/pointer devices.',markup:sheet('sheet-rtl','RTL sheet','<p dir="rtl" lang="ar">راجع إعدادات المشروع ثم أغلق اللوحة.</p>','','dir="rtl" data-trm-theme="dark"')}
+    ],
+    variables:documentedTokens('drawer'),
+    sass:`@use 'tremplin/scss/drawer' with (\n  $drawer-tokens: (\n    --trm-drawer-height: 22rem,\n    --trm-drawer-border-radius: 1rem\n  )\n);\n\n// Separate runtime fallback, not a Sass-map key:\n.drawer-sheet { --trm-drawer-sheet-width: 42rem; }`,
+    keyboard:[{keys:'Tab / Shift+Tab',behavior:'Native modal focus navigation; only backdrop=false plus scroll=true opens a non-modal Drawer.'},{keys:'Escape',behavior:'Requests hide when keyboard=true. With keyboard=false the modal attempt reports hidePrevented; explicit dismiss buttons still work.'}],
+    guidelines:[
+      'Reuse drawer drawer-bottom drawer-sheet on a native dialog. There is no BottomSheet export, separate Sass map, bottom-sheet class or bottom-sheet size/handle API.',
+      'drawer-sheet sets physical left/right/bottom to zero and a desktop width fallback; other Drawer size constraints still apply. It supplies no automatic safe-area padding or Bottom Sheet height API. The first example explicitly raises the height token for its mobile action links.',
+      'Default options are backdrop=true, keyboard=true and scroll=false. Modal state is backdrop || !scroll; scroll=false locks the root with dialog-open.',
+      'Keep the close control available. Swipe-down dismissal is capability-dependent and has no drag animation or snap-point API.',
+      'show/hide starts can be canceled; shown/hidden follow the transition. Calls during transitions are ignored. resize is an internal listener, not a dispatched lifecycle event.',
+      'For programmatic opening, supply the opener to show(opener), choose initial focus and implement any required focus-return policy; visible data-API triggers register their own return handler.'
+    ]
+  },
+  'command-palette': {
+    variants:[
+      {title:'Grouped results',description:'Groups get generated aria-labelledby references. Visible labels are hidden from the option tree but still supply each group name through that reference. Arrow navigation spans enabled results across groups; keywords are local substring matches, not remote search.',markup:palette('palette-groups','grouped commands',`<div class="command-group"><div class="command-group-label" aria-hidden="true">Projects</div>${commands}</div><div class="command-group"><div class="command-group-label" aria-hidden="true">Help</div>${item('Preview help','help','data-keywords="support manual"')}</div>`)},
+      {title:'Disabled and empty results',description:'Search for “protected” to see a disabled-only match, then an absent word for the empty state. The filter event counts enabled results, while empty-state visibility counts all matches including disabled items.',markup:palette('palette-disabled','availability example',commands+item('Protected project','protected','aria-disabled="true"'))},
+      {title:'Keep open after selection',description:'closeOnSelect=false lets the local status update without closing. Search text persists across hide/show; use the close button when finished.',markup:palette('palette-persistent','persistent commands',commands,'data-trm-close-on-select="false"')},
+      {title:'Dark RTL commands',description:'Logical alignment follows direction. These examples deliberately bind no letter shortcuts; command-shortcut is only a visual label, never a key binding.',markup:palette('palette-rtl','RTL commands',item('<span lang="ar">معاينة المشروع</span>','inspect','data-keywords="project review"')+item('<span lang="ar">معاينة الإعدادات</span>','settings','data-keywords="settings preferences"'),'dir="rtl" data-trm-theme="dark"')}
+    ],
+    variables:documentedTokens('command-palette'),
+    sass:`@use 'tremplin/scss/extensions/command-palette' with (\n  $command-palette-tokens: (\n    --trm-command-palette-width: 44rem,\n    --trm-command-palette-radius: 1rem\n  )\n);`,
+    keyboard:[
+      {keys:'Control/Command + K',behavior:'Default shortcut=true toggles every enabled instance, even from editable controls. All live guide instances opt out to avoid colliding with documentation search.'},
+      {keys:'Arrow Up / Arrow Down',behavior:'Wraps through enabled visible commands, keeping input focus and updating aria-activedescendant.'},
+      {keys:'Home / End',behavior:'Selects first/last enabled result, including when editing the search input; these keys do not move its text caret.'},
+      {keys:'Enter',behavior:'Selects the active result only when the search input is focused. Command selection is pointerdown, not click or automatic link navigation.'},
+      {keys:'Escape',behavior:'Requests hide and focus return; a hide listener can veto closing.'},
+      {keys:'Tab / Shift+Tab',behavior:'Wraps at the first/last focusable control. Options here are div nodes with tabindex=-1, leaving search and close as the boundary controls. Native buttons remain in the extension focusable query even with tabindex=-1; this is not a document focus guard.'}
+    ],
+    guidelines:[
+      'Import both optional CSS and the named CommandPalette extension. Do not import it from the core barrel or load two runtime graphs.',
+      'Use a hidden named div root, a labelled command-palette-input and a command-palette-list. The constructor adds dialog/combobox/listbox roles; it does not call showModal or make the background inert.',
+      'Set shortcut=false on all but a single intentional shortcut owner. The default does not ignore editable targets, key repeats or other palette instances. This guide preserves docs search as the closed-state Ctrl/Command+K owner.',
+      'Filtering trims and lowercases the query, matching the combined visible text and data-keywords by substring. It does not fold accents or tokenize words. Query text persists after closing.',
+      'All emitted CustomEvents bubble and are cancelable, but only show, hide and select read preventDefault. Payloads live in event.detail, unlike core direct event properties.',
+      'select is the veto gate; selected reports the accepted command. closeOnSelect requests hide before selected, but a canceled hide can leave the palette open. Neither event executes business actions automatically.',
+      'Initialize dynamic roots explicitly after insertion. Repeating initCommandPalette on the same scope does not rescan it; its descendant query does not include the supplied root itself.',
+      'dispose closes even when hide would be vetoed and removes instance listeners. Generated roles/IDs remain. This extension has no nested-overlay coordination, native top layer or global focus guard; evaluate those limitations before shipping.'
+    ]
+  }
+}
+export const paletteOptionRows = [
+  {name:'shortcut',type:'boolean',defaultValue:'true',description:'Global Ctrl/Meta+K toggle; false in every guide instance so docs search remains the owner.'},
+  {name:'closeOnSelect',type:'boolean',defaultValue:'true',description:'Requests hide before selected; false keeps the palette open. A hide veto also leaves it open.'}
+]
+export const paletteEvents: Record<string,string> = {
+  'show.trm.command-palette':'Cancelable gate before exposing the root, locking root overflow and focusing search.',
+  'shown.trm.command-palette':'After the immediate show setup and filter notification; not a CSS-transition completion promise.',
+  'hide.trm.command-palette':'Cancelable gate before hiding, overflow restoration and opener focus return.',
+  'hidden.trm.command-palette':'After close cleanup. dispose closes without dispatching this lifecycle pair.',
+  'filter.trm.command-palette':'detail = { query, results }; results counts enabled visible commands. Disabled matches still suppress the empty state.',
+  'select.trm.command-palette':'Cancelable selection gate; detail = { command, value }, with value from data-value or trimmed text. Preventing it blocks the hide request and selected.',
+  'selected.trm.command-palette':'Accepted selection, with the same detail payload, after the optional hide request. Canceling this notification does not undo selection.'
+}
+export const paletteApiJavascript = `import 'tremplin/css'\nimport 'tremplin/css/extensions'\nimport { CommandPalette } from 'tremplin/extensions/command-palette'\n\n// Configure before automatic initialization; data-trm-shortcut="false"\n// on this guide's root also prevents a competing global shortcut.\nconst root = document.querySelector('#commands')\nconst palette = CommandPalette.getOrCreateInstance(root, { shortcut: false })\nroot.addEventListener('selected.trm.command-palette', event => {\n  const { value } = event.detail\n  // Dispatch a known, authorized application action for value here.\n})\n// await palette.show(); await palette.hide(); palette.dispose();`
+
+// Application-level contrast/focus choices: optional extension source is unchanged.
+export const paletteDemoCss = `.command-palette { --trm-command-palette-active-bg: var(--trm-fg-body); --trm-command-palette-active-color: var(--trm-bg-body); }
+.command-palette-input:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.command-palette-input::placeholder { color: var(--trm-fg-2); opacity: 1; }`
+// Copied and executed identically; transient demo status, never business actions.
+export const paletteDemoJavascript = `import { CommandPalette } from 'tremplin/extensions/command-palette'
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-trm-command-palette]').forEach(root => {
+    // Each demo has one known launcher. At the show gate, focus it before
+    // the extension records its opener; native pointer focus differs in WebKit.
+    root.addEventListener('show.trm.command-palette', () => {
+      document.querySelector('[data-trm-toggle="command-palette"][data-trm-target="#' + root.id + '"]')?.focus()
+    })
+    root.addEventListener('selected.trm.command-palette', event => {
+      const messages = { inspect: 'Project preview selected. No project was changed.', settings: 'Settings preview selected. No preferences were saved.', help: 'Help preview selected. No request was sent.' }
+      const result = document.getElementById(root.id + '-result')
+      if (result) result.textContent = messages[event.detail.value] || 'Preview command selected. No action was performed.'
+    })
+  })
+  // Application guard: docs search must not take focus behind an open demo.
+  // No global palette shortcut is enabled; when closed, docs search owns K.
+  document.addEventListener('keydown', event => {
+    if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== 'k') return
+    const open = document.querySelector('[data-trm-command-palette]:not([hidden])')
+    if (!open) return
+    event.preventDefault()
+    event.stopImmediatePropagation()
+    CommandPalette.getInstance(open)?.hide()
+  }, true)
+})`
+
+export const sheetDemoJavascript = `document.addEventListener('DOMContentLoaded', () => {
+  // Application initial-focus policy after Drawer becomes visible.
+  document.querySelectorAll('.docs-example dialog.drawer-sheet').forEach(root => {
+    root.addEventListener('shown.trm.drawer', () => root.querySelector('[autofocus]')?.focus())
+  })
+})`

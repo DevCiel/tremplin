@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          registry-url: https://registry.npmjs.org
+      - run: npm install
+      - name: Verify dependency manifests remain unchanged
+        run: git diff --exit-code -- package.json package-lock.json
+      - name: Prepare verified pinned reference for source and Sass tests
+        run: npm run audit:tremplin -- --fetch --stage --check
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - uses: changesets/action@v1
+        with:
+          publish: npm run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true

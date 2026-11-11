@@ -1,0 +1,43 @@
+---
+{
+  "title": "Components",
+  "description": "Compose interfaces with base classes, modifiers, responsive utilities, and local CSS.",
+  "group": "Customize",
+  "lead": "Compose interfaces with base classes, modifiers, responsive utilities, and local CSS.",
+  "order": 6
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { customizeExamples as samples } from '../../../data/customize-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Base classes</h2>
+
+<Code sample={samples["customize/components#0"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Theme variants</h2>
+
+<p>{"Use base variants such as btn-solid or btn-outline together with theme-inverse, theme-primary or another semantic role. There is no btn-primary compatibility class. Follow each component's contextual-token contract rather than assuming all controls read every token."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Responsive</h2>
+
+<Code sample={samples["customize/components#2"].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Creating your own</h2>
+
+<p>Keep application selectors separate from core classes. Interactive behavior also requires accessible state, keyboard support, lifecycle cleanup and tests.</p>
+
+<Code sample={samples["customize/components#3"].code[0]} standalone={true} />
+
+</section>

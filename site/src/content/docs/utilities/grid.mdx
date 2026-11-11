@@ -1,0 +1,115 @@
+---
+{
+  "title": "Grid",
+  "description": "Set Grid track counts, reuse parent tracks, span the full grid, and choose auto-placement.",
+  "group": "Utilities",
+  "lead": "Set Grid track counts, reuse parent tracks, span the full grid, and choose auto-placement.",
+  "order": 19,
+  "utility": {
+    "category": "Flex and Grid",
+    "classes": [
+      "d-grid",
+      "grid",
+      "g-col-6",
+      "md:g-col-4",
+      "grid-cols-1",
+      "grid-cols-2",
+      "grid-cols-3",
+      "grid-cols-4",
+      "grid-cols-6",
+      "grid-cols-subgrid",
+      "grid-cols-fill",
+      "md:grid-cols-3",
+      "grid-auto-flow-row",
+      "grid-auto-flow-column",
+      "grid-auto-flow-dense",
+      "md:grid-auto-flow-column"
+    ],
+    "notes": "These mapped utilities configure grid-cols and grid-auto-flow. They do not set display themselves; pair them with d-grid. The grid layout container and g-col/g-start placement API remain independent; strict core has no legacy span aliases. Container-responsive g-col/g-start helpers and automatic grid query containers are available separately through the grid layout API; see the CSS Grid guide.",
+    "responsive": true
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/grid"][0].example} /></div>
+
+<Code sample={samples["utilities/grid"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"These mapped utilities configure grid-cols and grid-auto-flow. They do not set display themselves; pair them with d-grid. The grid layout container and g-col/g-start placement API remain independent; strict core has no legacy span aliases. Container-responsive g-col/g-start helpers and automatic grid query containers are available separately through the grid layout API; see the CSS Grid guide."} /></p>
+
+<Code sample={samples["utilities/grid"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Responsive behavior"}</h2>
+
+<p><Html source={"Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Track counts and full-width items"}</h2>
+
+<p><Html source={"grid-cols-1, grid-cols-2, grid-cols-3, grid-cols-4, and grid-cols-6 create equal 1fr tracks, matching the upstream values. There is no default grid-cols-5. Unlike minmax(0, 1fr), a plain 1fr track retains its automatic minimum: long intrinsic content can overflow a narrow box. Use min-w-0, wrapping, and suitable content sizing where needed."} /></p>
+
+<p><Html source={"grid-cols-fill belongs on a grid item and sets grid-column: 1 / -1 across all explicit columns. It is not a column count. Use md:grid-cols-3 for the canonical responsive prefix. Grid utilities use shared viewport breakpoints, not container-query variants; infix aliases are not generated."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Subgrid"}</h2>
+
+<p><Html source={"Place d-grid grid-cols-subgrid on a grid item that spans multiple parent columns to reuse their track lines and column spacing. Add grid-cols-fill to span the entire explicit parent grid. Subgrid is only useful inside a parent Grid; it does not create a standalone set of equal tracks. Check your supported browser versions before depending on it."} /></p>
+
+<div class="docs-example"><Html source={samples["utilities/grid"][4].example} /></div>
+
+<Code sample={samples["utilities/grid"][4].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Auto-placement and reading order"}</h2>
+
+<p><Html source={"grid-auto-flow-row places items by row; grid-auto-flow-column places them by column. Set rows and implicit column sizing as appropriate for column flow. grid-auto-flow-dense enables dense row packing, which can visually move later items into earlier holes. CSS placement does not reorder the DOM, reading order, or keyboard tab order. Avoid dense placement for ordered, interactive content when the visual order would become misleading."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"Utilities versus layout helpers"}</h2>
+
+<p><Html source={"Use d-grid for this utility-first API. The grid layout container defaults to twelve 1fr tracks, a 1.5rem gap and inline-size containment. Ordinary children auto-place normally; g-col/g-start set literal placement. Keep track counts and item spans coherent to avoid implicit tracks. See the CSS Grid guide for container-responsive placement."} /></p>
+
+<p><Html source={"The new utility families remain available when $enable-cssgrid is false; that switch controls only the layout helper module. Utility removal and configuration use the grid-column-counts, grid-columns, and grid-auto-flow map keys. Declarations are not important by default. Set important: true on an individual mapped family when needed; there is no global importance flag."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Custom track counts"}</h2>
+
+<p><Html source={"Replacing a definition is shallow. This example intentionally replaces the default track-count family with a five-column value, while keeping fill and auto-flow as separate families."} /></p>
+
+<Code sample={samples["utilities/grid"][7].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

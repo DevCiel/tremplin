@@ -1,0 +1,168 @@
+---
+{
+  "component": "table",
+  "title": "Table",
+  "description": "Table component documentation for Tremplin.",
+  "lead": "Style semantic tables and responsive table wrappers.",
+  "variants": [
+    {
+      "title": "Striped rows",
+      "description": "Odd tbody rows receive an inset accent layer; headers and any nested table are independently styled."
+    },
+    {
+      "title": "Striped columns",
+      "description": "Even columns receive the accent, including column headers. This is independent from row striping."
+    },
+    {
+      "title": "Themes on tables, rows and cells",
+      "description": "Use theme-* rather than removed table-success aliases. Visible status labels carry meaning independently of color."
+    },
+    {
+      "title": "Hover and active accents",
+      "description": "Hover only styles tbody cells; table-active can highlight a row or a cell. Neither makes a row clickable or selected."
+    },
+    {
+      "title": "Borders and border colors",
+      "description": "table-bordered adds row/cell borders; a border color utility can supply a consistent custom border."
+    },
+    {
+      "title": "Borderless tables",
+      "description": "table-borderless removes the cell and group boundaries without removing native table semantics."
+    },
+    {
+      "title": "Compact tables",
+      "description": "table-sm halves cell padding from .5rem to .25rem; the scoped table remains independently named."
+    },
+    {
+      "title": "Group dividers and footer",
+      "description": "Apply table-group-divider to the actual row group. A real tfoot contains totals, not unrelated page controls."
+    },
+    {
+      "title": "Captions on top",
+      "description": "caption-top changes caption placement without hiding the table name."
+    },
+    {
+      "title": "Vertical alignment",
+      "description": "thead stays bottom-aligned; tbody inherits from the table. Override a row or cell with real alignment utilities."
+    },
+    {
+      "title": "Independent nested tables",
+      "description": "Direct-child selectors isolate outer accents and borders. The inner table resets accent state; inherited theme custom properties still cascade unless explicitly overridden."
+    },
+    {
+      "title": "Card-like tables",
+      "description": "table-card belongs on a wrapper, clips corners and removes the final row border. The utility composition below uses the actual radius class rounded-7."
+    },
+    {
+      "title": "Always horizontally scrollable",
+      "description": "The named focusable wrapper retains all columns. Scroll with a keyboard or pointer; clipping can hide menus and other overflowing widgets."
+    },
+    {
+      "title": "sm:table-responsive",
+      "description": "The prefix controls overflow using a viewport media query in the pinned implementation. It always establishes an inline-size query container; this is not a container-width overflow switch."
+    },
+    {
+      "title": "md:table-responsive",
+      "description": "The prefix controls overflow using a viewport media query in the pinned implementation. It always establishes an inline-size query container; this is not a container-width overflow switch."
+    },
+    {
+      "title": "lg:table-responsive",
+      "description": "The prefix controls overflow using a viewport media query in the pinned implementation. It always establishes an inline-size query container; this is not a container-width overflow switch."
+    },
+    {
+      "title": "xl:table-responsive",
+      "description": "The prefix controls overflow using a viewport media query in the pinned implementation. It always establishes an inline-size query container; this is not a container-width overflow switch."
+    },
+    {
+      "title": "2xl:table-responsive",
+      "description": "The prefix controls overflow using a viewport media query in the pinned implementation. It always establishes an inline-size query container; this is not a container-width overflow switch."
+    },
+    {
+      "title": "Responsive card wrapper",
+      "description": "Combine table-responsive and table-card on the same wrapper, with a keyboard name when overflow is possible."
+    },
+    {
+      "title": "Always stacked rows",
+      "description": "table-stacked always displays row cells as blocks. Real headers remain in a visually hidden thead; data-cell supplies visual labels. Explicit matching table roles help preserve semantics when CSS changes display, but are not manual assistive-technology certification."
+    },
+    {
+      "title": "Container-responsive stacking",
+      "description": "md:table-stacked activates below the wrapper container width of 768px, independent of the viewport. The first td becomes the title; later td elements display their data-cell labels."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Direction and color mode follow the surrounding context; use explicit text rather than colors alone to describe invoice states."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Native controls and the explicitly focusable named scrolling regions enter the tab order. Table rows are not focusable grid items."
+    },
+    {
+      "keys": "Arrow keys",
+      "behavior": "A focused overflowing wrapper can scroll through native browser behavior. No cell-navigation or sorting plugin is installed."
+    }
+  ],
+  "guidelines": [
+    "Table styling is opt-in: use .table. Captions and scoped column/row headers remain the semantic foundation; this is not an ARIA grid.",
+    "Theme classes apply to a table, row or cell. The inset shadow accent cascade prefers state over stripe over theme/base colors; text and borders use corresponding theme tokens.",
+    "Direct-child selectors and reset accent variables keep nested table accents independent. Theme custom properties inherited from an ancestor are not magically erased.",
+    "table-responsive establishes an inline-size query container and horizontal scrolling. Prefixed responsive overflow is controlled by viewport media queries, whereas prefixed table-stacked rules use container queries; do not conflate them.",
+    "Use sm:, md:, lg:, xl: and 2xl: prefixes, not suffix-style table-responsive-md. Stacked tables require a query container and data-cell on td elements for visual labels.",
+    "Stacking changes CSS display but keeps real headers. Generated labels supplement rather than replace header associations; validate real screen readers for your data before release.",
+    "Name and focus overflow regions for keyboard access. Overflow clipping may hide menus/tooltips; do not promise those widgets can escape it.",
+    "Hover and active classes are visual accents, not row selection, sorting or fetching. Those features belong to application code, not a Table plugin."
+  ]
+}
+---
+
+import { tableDemoIsolationCss } from '../../../data/chip-table-docs'
+import Style from '../../../components/component/Style.astro'
+import Contrast from '../../../components/component/Contrast.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+<p>These live examples locally revert the documentation prose-table cell rules so the real framework padding and borders remain visible. This is documentation isolation, not a core CSS change.</p>
+<Style source={tableDemoIsolationCss} />
+<Contrast />
+
+<Example markup={componentExample("table")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="table" />
+
+{componentDetail("table").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="table" />
+</>}
+
+{componentDetail("table").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("table").sass} standalone={true} />
+</>}
+
+{componentDetail("table").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="table" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="table" />
+
+{documentedComponents.find(component => component.name === "table").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="table" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Table is opt-in CSS with native table semantics. There is no Table plugin, automatic sorting, selection, pagination or cell-navigation controller.</p>

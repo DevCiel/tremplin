@@ -1,0 +1,726 @@
+[
+  {
+    "name": "scrollspy",
+    "implementation": "scrollspy",
+    "title": "Scrollspy",
+    "description": "Scrollspy component documentation for Tremplin.",
+    "lead": "Update navigation state as the corresponding document sections enter the viewport.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Scrollable container",
+          "description": "A real named, focusable region with visible sections. The last short section activates at the bottom even if it never reaches the activation line.",
+          "markup": "<div class=\"vstack gap-3\"><nav id=\"guide-spy-nav\" aria-label=\"guide-spy sections\"><div class=\"nav nav-pills theme-inverse\"><a class=\"nav-link\" href=\"#guide-overview\">Overview</a><a class=\"nav-link\" href=\"#guide-details\">Details</a><a class=\"nav-link\" href=\"#guide-launch\">Launch</a></div></nav><div id=\"guide-spy-content\" class=\"border rounded-5 p-3\" style=\"block-size: 14rem; overflow-y: auto\" data-trm-spy=\"scroll\" data-trm-target=\"#guide-spy-nav\" tabindex=\"0\" role=\"region\" aria-label=\"guide-spy scrollable sections\" data-trm-top-margin=\"12%\"><section id=\"guide-overview\" style=\"min-block-size: 12rem\" tabindex=\"-1\"><h3 class=\"h5\">Overview</h3><p>Overview section content for this scrollable example.</p></section><section id=\"guide-details\" style=\"min-block-size: 12rem\" tabindex=\"-1\"><h3 class=\"h5\">Details</h3><p>Details section content for this scrollable example.</p></section><section id=\"guide-launch\" style=\"min-block-size: 5rem\" tabindex=\"-1\"><h3 class=\"h5\">Launch</h3><p>Launch section content for this scrollable example.</p></section></div></div>"
+        },
+        {
+          "title": "Smooth navigation",
+          "description": "After optional smooth navigation settles, the plugin replaces the URL hash and focuses the destination. Reduced-motion users settle immediately; ordinary scroll activation does not move focus.",
+          "markup": "<div class=\"vstack gap-3\"><nav id=\"smooth-spy-nav\" aria-label=\"smooth-spy sections\"><div class=\"nav nav-pills theme-inverse\"><a class=\"nav-link\" href=\"#smooth-intro\">Introduction</a><a class=\"nav-link\" href=\"#smooth-api\">API</a><a class=\"nav-link\" href=\"#smooth-accessibility\">Accessibility</a></div></nav><div id=\"smooth-spy-content\" class=\"border rounded-5 p-3\" style=\"block-size: 14rem; overflow-y: auto\" data-trm-spy=\"scroll\" data-trm-target=\"#smooth-spy-nav\" tabindex=\"0\" role=\"region\" aria-label=\"smooth-spy scrollable sections\" data-trm-smooth-scroll=\"true\"><section id=\"smooth-intro\" style=\"min-block-size: 12rem\" tabindex=\"-1\"><h3 class=\"h5\">Introduction</h3><p>Introduction section content for this scrollable example.</p></section><section id=\"smooth-api\" style=\"min-block-size: 12rem\" tabindex=\"-1\"><h3 class=\"h5\">API</h3><p>API section content for this scrollable example.</p></section><section id=\"smooth-accessibility\" style=\"min-block-size: 5rem\" tabindex=\"-1\"><h3 class=\"h5\">Accessibility</h3><p>Accessibility section content for this scrollable example.</p></section></div></div>"
+        },
+        {
+          "title": "Nested navigation",
+          "description": "Visible nested sections and Nav ancestors demonstrate actual parent active styling, not hidden dummy targets. The plugin does not add aria-current to these links.",
+          "markup": "<nav id=\"nested-spy-nav\" aria-label=\"Nested guide sections\"><div class=\"nav flex-column\"><a class=\"nav-link\" href=\"#nested-start\">Getting started</a><div class=\"nav flex-column ps-3\"><a class=\"nav-link\" href=\"#nested-install\">Install</a><a class=\"nav-link\" href=\"#nested-bundle\">Bundle</a></div></div></nav><div id=\"nested-spy-content\" class=\"border rounded-5 p-3\" style=\"block-size: 14rem; overflow-y: auto\" data-trm-spy=\"scroll\" data-trm-target=\"#nested-spy-nav\" tabindex=\"0\" role=\"region\" aria-label=\"Nested scrollable sections\"><section id=\"nested-start\" style=\"min-block-size: 12rem\" tabindex=\"-1\"><h3 class=\"h5\">Getting started</h3><p>Visible Getting started content.</p></section><section id=\"nested-install\" style=\"min-block-size: 12rem\" tabindex=\"-1\"><h3 class=\"h5\">Install</h3><p>Visible Install content.</p></section><section id=\"nested-bundle\" style=\"min-block-size: 12rem\" tabindex=\"-1\"><h3 class=\"h5\">Bundle</h3><p>Visible Bundle content.</p></section></div>"
+        },
+        {
+          "title": "List-group navigation",
+          "description": "The same observer can style actual list-group anchors; it does not turn them into tab widgets. The copyable active-color tokens explicitly compose body/inverse colors for readable contrast.",
+          "markup": "<div class=\"vstack gap-3\"><nav id=\"list-spy-nav\" aria-label=\"list-spy sections\"><div class=\"list-group theme-inverse\" style=\"--trm-list-group-active-bg: var(--trm-fg-body); --trm-list-group-active-color: var(--trm-bg-body); --trm-list-group-active-border-color: var(--trm-fg-body)\"><a class=\"list-group-item list-group-item-action\" href=\"#list-spy-0\">Design</a><a class=\"list-group-item list-group-item-action\" href=\"#list-spy-1\">Build</a><a class=\"list-group-item list-group-item-action\" href=\"#list-spy-2\">Release</a></div></nav><div id=\"list-spy-content\" class=\"border rounded-5 p-3\" style=\"block-size: 14rem; overflow-y: auto\" data-trm-spy=\"scroll\" data-trm-target=\"#list-spy-nav\" tabindex=\"0\" role=\"region\" aria-label=\"list-spy scrollable sections\" data-trm-smooth-scroll=\"true\"><section id=\"list-spy-0\" style=\"min-block-size: 12rem\" tabindex=\"-1\"><h3 class=\"h5\">Design</h3><p>Design section content for this scrollable example.</p></section><section id=\"list-spy-1\" style=\"min-block-size: 12rem\" tabindex=\"-1\"><h3 class=\"h5\">Build</h3><p>Build section content for this scrollable example.</p></section><section id=\"list-spy-2\" style=\"min-block-size: 5rem\" tabindex=\"-1\"><h3 class=\"h5\">Release</h3><p>Release section content for this scrollable example.</p></section></div></div>"
+        },
+        {
+          "title": "Pixel activation line",
+          "description": "topMargin accepts pixels as well as percentages. The observer rebuilds on resize for pixel lines. Explicit rootMargin takes precedence over topMargin.",
+          "markup": "<div class=\"vstack gap-3\"><nav id=\"pixel-spy-nav\" aria-label=\"pixel-spy sections\"><div class=\"nav nav-pills theme-inverse\"><a class=\"nav-link\" href=\"#pixel-spy-0\">Plan</a><a class=\"nav-link\" href=\"#pixel-spy-1\">Implementation</a><a class=\"nav-link\" href=\"#pixel-spy-2\">Release</a></div></nav><div id=\"pixel-spy-content\" class=\"border rounded-5 p-3\" style=\"block-size: 14rem; overflow-y: auto\" data-trm-spy=\"scroll\" data-trm-target=\"#pixel-spy-nav\" tabindex=\"0\" role=\"region\" aria-label=\"pixel-spy scrollable sections\" data-trm-top-margin=\"48px\"><section id=\"pixel-spy-0\" style=\"min-block-size: 12rem\" tabindex=\"-1\"><h3 class=\"h5\">Plan</h3><p>Plan section content for this scrollable example.</p></section><section id=\"pixel-spy-1\" style=\"min-block-size: 12rem\" tabindex=\"-1\"><h3 class=\"h5\">Implementation</h3><p>Implementation section content for this scrollable example.</p></section><section id=\"pixel-spy-2\" style=\"min-block-size: 5rem\" tabindex=\"-1\"><h3 class=\"h5\">Release</h3><p>Release section content for this scrollable example.</p></section></div></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Real fragment links and visible sections retain direction-independent detection while Nav styling follows logical layout.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"vstack gap-3\"><nav id=\"rtl-spy-nav\" aria-label=\"rtl-spy sections\"><div class=\"nav nav-pills theme-inverse\"><a class=\"nav-link\" href=\"#rtl-spy-0\">Summary</a><a class=\"nav-link\" href=\"#rtl-spy-1\">Details</a></div></nav><div id=\"rtl-spy-content\" class=\"border rounded-5 p-3\" style=\"block-size: 14rem; overflow-y: auto\" data-trm-spy=\"scroll\" data-trm-target=\"#rtl-spy-nav\" tabindex=\"0\" role=\"region\" aria-label=\"rtl-spy scrollable sections\" data-trm-smooth-scroll=\"true\"><section id=\"rtl-spy-0\" style=\"min-block-size: 12rem\" tabindex=\"-1\"><h3 class=\"h5\">Summary</h3><p>Summary section content for this scrollable example.</p></section><section id=\"rtl-spy-1\" style=\"min-block-size: 5rem\" tabindex=\"-1\"><h3 class=\"h5\">Details</h3><p>Details section content for this scrollable example.</p></section></div></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-nav-gap",
+          "defaultValue": "0.125rem",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-gap",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-align",
+          "defaultValue": "center",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-justify",
+          "defaultValue": "center",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-padding-x",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-padding-y",
+          "defaultValue": "0.375rem",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-color",
+          "defaultValue": "var(--trm-fg-2)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-hover-color",
+          "defaultValue": "var(--trm-fg-1)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-hover-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-active-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-active-bg",
+          "defaultValue": "var(--trm-bg-2)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-disabled-color",
+          "defaultValue": "var(--trm-fg-4)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-transition-property",
+          "defaultValue": "color, background-color, border-color",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-transition-timing",
+          "defaultValue": "ease-in-out",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-border-radius",
+          "defaultValue": "var(--trm-radius-5)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-link-hover-border-color",
+          "defaultValue": "var(--trm-border-subtle)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-link-active-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-link-active-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-link-active-border-color",
+          "defaultValue": "var(--trm-border-color) var(--trm-border-color) var(--trm-bg-body)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-padding",
+          "defaultValue": "0.25rem",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-border-radius",
+          "defaultValue": "3rem",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-link-active-color",
+          "defaultValue": "var(--trm-primary-contrast)",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-link-active-bg",
+          "defaultValue": "var(--trm-primary-bg)",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-link-border-radius",
+          "defaultValue": "3rem",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-underline-border-width",
+          "defaultValue": "0.125rem",
+          "purpose": "Default exported through $nav-underline-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-underline-link-active-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $nav-underline-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tab-pane-transition-property",
+          "defaultValue": "opacity",
+          "purpose": "Default exported through $tab-pane-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tab-pane-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $tab-pane-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tab-pane-transition-timing",
+          "defaultValue": "linear",
+          "purpose": "Default exported through $tab-pane-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Follow native navigation links and the authored focus stop on the scrolling region."
+        },
+        {
+          "keys": "Enter",
+          "behavior": "Navigate to a real fragment; smooth mode also settles the URL and destination focus."
+        },
+        {
+          "keys": "Arrow keys / Page Up / Page Down",
+          "behavior": "Scroll the focused region using native browser behavior, not a custom Scrollspy keyboard controller."
+        }
+      ],
+      "guidelines": [
+        "Use unique IDs and real fragment links scoped to visible sections inside the observed element.",
+        "The activation line defaults to topMargin=12%; gaps retain the last active section and the bottom sentinel selects the last section.",
+        "rootMargin overrides topMargin; topMargin pixel values trigger a debounced observer rebuild on resize.",
+        "Call refresh after inserting/reordering sections or revealing an initially hidden container. Hidden targets are ignored at initialization.",
+        "Only active classes are managed; aria-current is not automatically added or updated. If your application supplies it, keep it synchronized yourself.",
+        "Smooth navigation replaces the hash without adding a history entry and focuses the section after settling; passive scroll activation does not move focus.",
+        "Scrollspy has no dedicated Sass partial or component token map. Configure the Nav/List group presentation instead."
+      ],
+      "sass": "@use 'tremplin/scss/nav' with (\n  $nav-tokens: (--trm-nav-link-padding-y: .5rem)\n);"
+    },
+    "example": "<div class=\"vstack gap-3\"><nav id=\"section-nav\" aria-label=\"section sections\"><div class=\"nav nav-pills theme-inverse\"><a class=\"nav-link\" href=\"#overview\">Overview</a><a class=\"nav-link\" href=\"#details\">Details</a></div></nav><div id=\"section-content\" class=\"border rounded-5 p-3\" style=\"block-size: 14rem; overflow-y: auto\" data-trm-spy=\"scroll\" data-trm-target=\"#section-nav\" tabindex=\"0\" role=\"region\" aria-label=\"section scrollable sections\" ><section id=\"overview\" style=\"min-block-size: 12rem\" tabindex=\"-1\"><h3 class=\"h5\">Overview</h3><p>Overview section content for this scrollable example.</p></section><section id=\"details\" style=\"min-block-size: 5rem\" tabindex=\"-1\"><h3 class=\"h5\">Details</h3><p>Details section content for this scrollable example.</p></section></div></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/js/scrollspy.ts",
+    "definition": {
+      "name": "scrollspy",
+      "className": "ScrollSpy",
+      "options": [
+        {
+          "name": "rootMargin",
+          "type": "string | null | undefined",
+          "required": false
+        },
+        {
+          "name": "smoothScroll",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "target",
+          "type": "string | Element | null | undefined",
+          "required": false
+        },
+        {
+          "name": "threshold",
+          "type": "string | number[] | undefined",
+          "required": false
+        },
+        {
+          "name": "topMargin",
+          "type": "string | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "refresh(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "activate.trm.scrollspy",
+        "click.trm.scrollspy",
+        "resize.trm.scrollspy",
+        "scroll.trm.scrollspy",
+        "scrollend.trm.scrollspy"
+      ],
+      "dataAttributes": [
+        "data-trm-root-margin",
+        "data-trm-smooth-scroll",
+        "data-trm-spy",
+        "data-trm-target",
+        "data-trm-threshold",
+        "data-trm-toggle",
+        "data-trm-top-margin"
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "activate.trm.scrollspy": "On the observed scrolling element after changing active classes; relatedTarget is the active link. No aria-current update is supplied.",
+      "click.trm.scrollspy": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "resize.trm.scrollspy": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "scroll.trm.scrollspy": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "scrollend.trm.scrollspy": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event."
+    },
+    "moduleImport": "import ScrollSpy from 'tremplin/scrollspy'",
+    "javascript": "import ScrollSpy from 'tremplin/scrollspy'\n\nconst element = document.querySelector('[data-trm-spy=\"scroll\"]')\nconst instance = ScrollSpy.getOrCreateInstance(element)"
+  },
+  {
+    "name": "toast",
+    "implementation": "toast",
+    "title": "Toast",
+    "description": "Toast component documentation for Tremplin.",
+    "lead": "Display transient, non-blocking notifications in an appropriate live region.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Header and body",
+          "description": "Persistent static presentation uses authored show and autohide=false. Dismissal hides the toast without removing it or restoring focus automatically.",
+          "markup": "<div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Tremplin</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Your project was saved successfully.</div></div>"
+        },
+        {
+          "title": "Live notification",
+          "description": "An existing polite live-region wrapper contains an initially hidden toast. The button uses the application JavaScript shown below, not a framework toast show-toggle attribute.",
+          "markup": "<button class=\"btn-outline theme-inverse\" id=\"show-live-toast\" type=\"button\" data-docs-toast-show=\"#demo-live-toast\">Show live toast</button><div aria-live=\"polite\" aria-atomic=\"true\" class=\"mt-3\"><div class=\"toast\" id=\"demo-live-toast\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-delay=\"5000\"><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Notification</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss live notification\"></button></div><div class=\"toast-body\">A live update is ready.</div></div></div>"
+        },
+        {
+          "title": "Contextual notifications",
+          "description": "Theme classes accompany understandable status text; reserve assertive alert announcements for urgent messages.",
+          "markup": "<div class=\"vstack gap-3\"><div class=\"toast show toast-instant theme-success\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Saved</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Changes saved successfully.</div></div><div class=\"toast show toast-instant theme-danger\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Upload issue</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Upload failed. Review the persistent error details.</div></div></div>"
+        },
+        {
+          "title": "Persistent notification with links",
+          "description": "autohide=false gives users time to follow a real destination. Never depend on an ephemeral toast as the only place to recover important information.",
+          "markup": "<div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Tremplin</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\"><p>Review the installation instructions when convenient.</p><a class=\"fg-body\" href=\"/getting-started/install/\">Open installation guide</a></div></div>"
+        },
+        {
+          "title": "Stacked region",
+          "description": "toast-container adds spacing; position-static keeps this demonstration in document flow. Application code owns the queue, count and insertion policy.",
+          "markup": "<div aria-live=\"polite\" aria-atomic=\"true\"><div class=\"toast-container position-static\"><div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Team update</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Ana joined the project.</div></div><div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Review update</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Review requested.</div></div></div></div>"
+        },
+        {
+          "title": "Translucent and instant",
+          "description": "toast-translucent adds backdrop filtering. toast-instant removes the transition wait; no animation option or showing/hide state classes are used.",
+          "markup": "<div class=\"toast show toast-instant toast-translucent\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Instant notification</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Backdrop blur with immediate state changes.</div></div>"
+        },
+        {
+          "title": "Contained placement",
+          "description": "Utility positioning belongs to the application. This absolute toast container stays inside the named relative example instead of covering the whole documentation page.",
+          "markup": "<div class=\"position-relative border rounded-5\" style=\"min-block-size: 12rem\"><div class=\"toast-container bottom-0 end-0 p-3\"><div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Placement</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Positioned inside this example.</div></div></div></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Named empty close masks and logical spacing retain native dismissal behavior in a dark RTL region.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Saved in RTL</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Your project changes were saved.</div></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-toast-zindex",
+          "defaultValue": "var(--trm-z-toast)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-padding-x",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-padding-y",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-spacing",
+          "defaultValue": "1.5rem",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-max-width",
+          "defaultValue": "350px",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-font-size",
+          "defaultValue": "var(--trm-font-size-sm)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-border-color",
+          "defaultValue": "var(--trm-border-color-translucent)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-box-shadow",
+          "defaultValue": "var(--trm-box-shadow)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-header-color",
+          "defaultValue": "var(--trm-fg-3)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-header-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-header-border-color",
+          "defaultValue": "var(--trm-border-color-translucent)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-transition-property",
+          "defaultValue": "opacity, display",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-transition-timing",
+          "defaultValue": "linear",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Follow native actions; an initialized toast pauses autohide while it has keyboard focus."
+        },
+        {
+          "keys": "Enter / Space",
+          "behavior": "Activate a focused native button. Links use Enter for ordinary navigation."
+        }
+      ],
+      "guidelines": [
+        "Toasts are opt-in: construct/get an instance and call show explicitly. data-trm-dismiss=\"toast\" supplies dismissal, not automatic showing.",
+        "Create the live region before inserting/updating a notification. Static page examples do not prove a screen reader announced a live update.",
+        "Use polite status for routine feedback and assertive alert only for urgent information; retain persistent alternatives.",
+        "autohide defaults to true with delay=5000ms. Initialized instances pause during hover/focus and schedule a full delay after interaction leaves.",
+        "Persistent/actionable notifications need autohide=false and named dismissal controls. Applications decide where focus goes if a focused toast is hidden.",
+        "show/hide starts are cancelable; shown/hidden occur after the CSS callback. Hiding keeps the node; dispose clears the timer and instance.",
+        "Use toast-instant to skip transitions; there is no animation option, showing class or separate hide class in this pin."
+      ],
+      "sass": "@use 'tremplin/scss/toasts' with (\n  $toast-tokens: (\n    --trm-toast-max-width: 24rem,\n    --trm-toast-transition-duration: .2s\n  )\n);"
+    },
+    "example": "<div class=\"toast-container position-static\"><div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" id=\"example-toast\"><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Saved</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss\"></button></div><div class=\"toast-body\">Your changes were saved.</div></div></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_toasts.scss",
+    "definition": {
+      "name": "toast",
+      "className": "Toast",
+      "options": [
+        {
+          "name": "autohide",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "delay",
+          "type": "number | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "dispose(): void",
+        "isShown(): boolean"
+      ],
+      "events": [
+        "focusin.trm.toast",
+        "focusout.trm.toast",
+        "hidden.trm.toast",
+        "hide.trm.toast",
+        "mouseout.trm.toast",
+        "mouseover.trm.toast",
+        "show.trm.toast",
+        "shown.trm.toast"
+      ],
+      "dataAttributes": [
+        "data-trm-autohide",
+        "data-trm-delay",
+        "data-trm-target",
+        "data-trm-toggle=\"toast\""
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "focusin.trm.toast": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "focusout.trm.toast": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "hidden.trm.toast": "After the hide callback; the node remains in the DOM and focus is application-managed.",
+      "hide.trm.toast": "Cancelable start before removing show.",
+      "mouseout.trm.toast": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "mouseover.trm.toast": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "show.trm.toast": "Cancelable start before adding show.",
+      "shown.trm.toast": "After the show callback, before scheduling autohide."
+    },
+    "moduleImport": "import Toast from 'tremplin/toast'",
+    "javascript": "import Toast from 'tremplin/toast'\n\n// Application wiring for the documented button, not a framework show attribute.\nconst trigger = document.querySelector('[data-docs-toast-show]')\nconst element = document.querySelector('#demo-live-toast')\nconst notification = Toast.getOrCreateInstance(element)\ntrigger.addEventListener('click', () => notification.show())"
+  },
+  {
+    "name": "toasts",
+    "implementation": "toast",
+    "title": "Toasts",
+    "description": "Toasts component documentation for Tremplin.",
+    "lead": "Display transient, non-blocking notifications in an appropriate live region.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Header and body",
+          "description": "Persistent static presentation uses authored show and autohide=false. Dismissal hides the toast without removing it or restoring focus automatically.",
+          "markup": "<div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Tremplin</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Your project was saved successfully.</div></div>"
+        },
+        {
+          "title": "Live notification",
+          "description": "An existing polite live-region wrapper contains an initially hidden toast. The button uses the application JavaScript shown below, not a framework toast show-toggle attribute.",
+          "markup": "<button class=\"btn-outline theme-inverse\" id=\"show-live-toast\" type=\"button\" data-docs-toast-show=\"#demo-live-toast\">Show live toast</button><div aria-live=\"polite\" aria-atomic=\"true\" class=\"mt-3\"><div class=\"toast\" id=\"demo-live-toast\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-delay=\"5000\"><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Notification</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss live notification\"></button></div><div class=\"toast-body\">A live update is ready.</div></div></div>"
+        },
+        {
+          "title": "Contextual notifications",
+          "description": "Theme classes accompany understandable status text; reserve assertive alert announcements for urgent messages.",
+          "markup": "<div class=\"vstack gap-3\"><div class=\"toast show toast-instant theme-success\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Saved</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Changes saved successfully.</div></div><div class=\"toast show toast-instant theme-danger\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Upload issue</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Upload failed. Review the persistent error details.</div></div></div>"
+        },
+        {
+          "title": "Persistent notification with links",
+          "description": "autohide=false gives users time to follow a real destination. Never depend on an ephemeral toast as the only place to recover important information.",
+          "markup": "<div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Tremplin</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\"><p>Review the installation instructions when convenient.</p><a class=\"fg-body\" href=\"/getting-started/install/\">Open installation guide</a></div></div>"
+        },
+        {
+          "title": "Stacked region",
+          "description": "toast-container adds spacing; position-static keeps this demonstration in document flow. Application code owns the queue, count and insertion policy.",
+          "markup": "<div aria-live=\"polite\" aria-atomic=\"true\"><div class=\"toast-container position-static\"><div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Team update</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Ana joined the project.</div></div><div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Review update</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Review requested.</div></div></div></div>"
+        },
+        {
+          "title": "Translucent and instant",
+          "description": "toast-translucent adds backdrop filtering. toast-instant removes the transition wait; no animation option or showing/hide state classes are used.",
+          "markup": "<div class=\"toast show toast-instant toast-translucent\" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Instant notification</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Backdrop blur with immediate state changes.</div></div>"
+        },
+        {
+          "title": "Contained placement",
+          "description": "Utility positioning belongs to the application. This absolute toast container stays inside the named relative example instead of covering the whole documentation page.",
+          "markup": "<div class=\"position-relative border rounded-5\" style=\"min-block-size: 12rem\"><div class=\"toast-container bottom-0 end-0 p-3\"><div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Placement</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Positioned inside this example.</div></div></div></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Named empty close masks and logical spacing retain native dismissal behavior in a dark RTL region.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" ><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Saved in RTL</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss notification\"></button></div><div class=\"toast-body\">Your project changes were saved.</div></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-toast-zindex",
+          "defaultValue": "var(--trm-z-toast)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-padding-x",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-padding-y",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-spacing",
+          "defaultValue": "1.5rem",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-max-width",
+          "defaultValue": "350px",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-font-size",
+          "defaultValue": "var(--trm-font-size-sm)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-border-color",
+          "defaultValue": "var(--trm-border-color-translucent)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-box-shadow",
+          "defaultValue": "var(--trm-box-shadow)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-header-color",
+          "defaultValue": "var(--trm-fg-3)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-header-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-header-border-color",
+          "defaultValue": "var(--trm-border-color-translucent)",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-transition-property",
+          "defaultValue": "opacity, display",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-toast-transition-timing",
+          "defaultValue": "linear",
+          "purpose": "Default exported through $toast-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Follow native actions; an initialized toast pauses autohide while it has keyboard focus."
+        },
+        {
+          "keys": "Enter / Space",
+          "behavior": "Activate a focused native button. Links use Enter for ordinary navigation."
+        }
+      ],
+      "guidelines": [
+        "Toasts are opt-in: construct/get an instance and call show explicitly. data-trm-dismiss=\"toast\" supplies dismissal, not automatic showing.",
+        "Create the live region before inserting/updating a notification. Static page examples do not prove a screen reader announced a live update.",
+        "Use polite status for routine feedback and assertive alert only for urgent information; retain persistent alternatives.",
+        "autohide defaults to true with delay=5000ms. Initialized instances pause during hover/focus and schedule a full delay after interaction leaves.",
+        "Persistent/actionable notifications need autohide=false and named dismissal controls. Applications decide where focus goes if a focused toast is hidden.",
+        "show/hide starts are cancelable; shown/hidden occur after the CSS callback. Hiding keeps the node; dispose clears the timer and instance.",
+        "Use toast-instant to skip transitions; there is no animation option, showing class or separate hide class in this pin."
+      ],
+      "sass": "@use 'tremplin/scss/toasts' with (\n  $toast-tokens: (\n    --trm-toast-max-width: 24rem,\n    --trm-toast-transition-duration: .2s\n  )\n);"
+    },
+    "example": "<div class=\"toast-container position-static\"><div class=\"toast show toast-instant \" role=\"status\" aria-live=\"polite\" aria-atomic=\"true\" data-trm-autohide=\"false\" id=\"example-toast\"><div class=\"toast-header\"><strong class=\"me-auto fg-body\">Saved</strong><button class=\"btn-close\" type=\"button\" data-trm-dismiss=\"toast\" aria-label=\"Dismiss\"></button></div><div class=\"toast-body\">Your changes were saved.</div></div></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_toasts.scss",
+    "definition": {
+      "name": "toast",
+      "className": "Toast",
+      "options": [
+        {
+          "name": "autohide",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "delay",
+          "type": "number | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "dispose(): void",
+        "isShown(): boolean"
+      ],
+      "events": [
+        "focusin.trm.toast",
+        "focusout.trm.toast",
+        "hidden.trm.toast",
+        "hide.trm.toast",
+        "mouseout.trm.toast",
+        "mouseover.trm.toast",
+        "show.trm.toast",
+        "shown.trm.toast"
+      ],
+      "dataAttributes": [
+        "data-trm-autohide",
+        "data-trm-delay",
+        "data-trm-target",
+        "data-trm-toggle=\"toast\""
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "focusin.trm.toast": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "focusout.trm.toast": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "hidden.trm.toast": "After the hide callback; the node remains in the DOM and focus is application-managed.",
+      "hide.trm.toast": "Cancelable start before removing show.",
+      "mouseout.trm.toast": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "mouseover.trm.toast": "Internal namespaced DOM listener; not a dispatched plugin lifecycle event.",
+      "show.trm.toast": "Cancelable start before adding show.",
+      "shown.trm.toast": "After the show callback, before scheduling autohide."
+    },
+    "moduleImport": "import Toast from 'tremplin/toast'",
+    "javascript": "import Toast from 'tremplin/toast'\n\n// Application wiring for the documented button, not a framework show attribute.\nconst trigger = document.querySelector('[data-docs-toast-show]')\nconst element = document.querySelector('#demo-live-toast')\nconst notification = Toast.getOrCreateInstance(element)\ntrigger.addEventListener('click', () => notification.show())"
+  }
+]

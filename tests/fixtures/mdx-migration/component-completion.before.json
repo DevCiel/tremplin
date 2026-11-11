@@ -1,0 +1,1268 @@
+[
+  {
+    "name": "chip",
+    "title": "Chip",
+    "description": "Chip component documentation for Tremplin.",
+    "lead": "Display compact values, filters, or removable selections.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Static labels",
+          "description": "CSS-only chips do not register dismiss behavior. Prefer Badge for purely informational labels; these spans demonstrate the primitive without making them controls.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"d-flex flex-wrap align-items-center gap-2\"><span class=\"chip\">Design</span><span class=\"chip\">Engineering</span></div>\n</div>"
+        },
+        {
+          "title": "Images and icons",
+          "description": "Use the real chip-img and chip-icon classes. An adjacent visible identity makes these local illustrations decorative.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"d-flex flex-wrap align-items-center gap-2\"><span class=\"chip\"><img class=\"chip-img\" src=\"/img/avatar-demo.svg\" width=\"20\" height=\"20\" alt=\"\">Alex Brooks</span><span class=\"chip\"><span class=\"chip-icon\"><svg viewBox=\"0 0 16 16\" fill=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6\"/></svg></span>Project team</span></div>\n</div>"
+        },
+        {
+          "title": "Theme inheritance",
+          "description": "Themes can belong to the group or an individual chip. This demonstration retains the disclosed contrast customization, not changed core defaults.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"d-flex flex-wrap align-items-center gap-2\"><span class=\"chip theme-primary\">primary</span><span class=\"chip theme-success\">success</span><span class=\"chip theme-danger\">danger</span><span class=\"chip theme-warning\">warning</span><span class=\"chip theme-info\">info</span><span class=\"chip theme-inverse\">inverse</span></div><div class=\"theme-success mt-3\"><span class=\"chip\">Inherited success theme</span></div>\n</div>"
+        },
+        {
+          "title": "Active presentation",
+          "description": "active changes presentation only. These text samples are not toggle controls and have no pressed or selection API.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"d-flex flex-wrap align-items-center gap-2\"><span class=\"chip theme-primary\">Default</span><span class=\"chip theme-primary active\">Active appearance</span></div>\n</div>"
+        },
+        {
+          "title": "Application-owned filter",
+          "description": "Native buttons provide Enter/Space activation. Copy the application handler below to synchronize aria-pressed and active; focus-ring explicitly restores a visible keyboard outline omitted by bare Chip styling.",
+          "markup": "<div class=\"demo-contrast\">\n<div role=\"group\" aria-label=\"Project filters\" class=\"d-flex flex-wrap gap-2\"><button class=\"chip theme-primary focus-ring\" type=\"button\" aria-pressed=\"false\" data-demo-chip-toggle>Design filter</button><button class=\"chip theme-primary active focus-ring\" type=\"button\" aria-pressed=\"true\" data-demo-chip-toggle>Engineering filter</button></div>\n</div>"
+        },
+        {
+          "title": "Application-owned removal",
+          "description": "The nested dismiss control belongs inside a non-interactive span, never inside another button or link. The supplied application handler removes the chip, updates status text and moves focus to a surviving native link.",
+          "markup": "<div class=\"demo-contrast\">\n<div id=\"chip-removal-example\"><span class=\"chip\" id=\"removable-design-chip\">Design<button class=\"chip-dismiss\" type=\"button\" aria-label=\"Remove Design filter\" data-demo-chip-dismiss><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m4 4 8 8m0-8-8 8\"/></svg></button></span><a class=\"chip focus-ring ms-2\" id=\"chip-removal-next\" href=\"/components/\">Browse components</a><p id=\"chip-removal-status\" role=\"status\" class=\"mt-2\">One removable filter.</p></div>\n</div>"
+        },
+        {
+          "title": "Disabled native control",
+          "description": "A real disabled button is not focusable or activatable. The disabled class is visual/pointer styling only and cannot disable an anchor or remove its keyboard destination.",
+          "markup": "<div class=\"demo-contrast\">\n<button class=\"chip theme-primary\" type=\"button\" disabled aria-pressed=\"false\">Unavailable filter</button>\n</div>"
+        },
+        {
+          "title": "Custom dimensions",
+          "description": "Chip has one built-in size. Override its actual tokens rather than inventing chip-sm, chip-lg or chip-avatar classes.",
+          "markup": "<div class=\"demo-contrast\">\n<span class=\"chip\" style=\"--trm-chip-height: 2.25rem; --trm-chip-padding-x: .875rem; --trm-chip-img-size: 1.5rem\"><img class=\"chip-img\" src=\"/img/avatar-demo.svg\" width=\"24\" height=\"24\" alt=\"\">Alex Brooks</span>\n</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Logical image margins and gaps follow direction; the native link keeps meaningful navigation without claiming a Chip controller.",
+          "markup": "<div class=\"demo-contrast\">\n<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"d-flex flex-wrap align-items-center gap-2\"><span class=\"chip\"><img class=\"chip-img\" src=\"/img/avatar-demo.svg\" width=\"20\" height=\"20\" alt=\"\">Alex Brooks</span><a class=\"chip focus-ring\" href=\"/forms/chips/\">Editable Chips guide</a></div></div>\n</div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-chip-height",
+          "defaultValue": "1.75rem",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-padding-x",
+          "defaultValue": "0.625rem",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-gap",
+          "defaultValue": "0.3125rem",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-border-radius",
+          "defaultValue": "var(--trm-radius-pill)",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-img-size",
+          "defaultValue": "1.25rem",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-icon-size",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-dismiss-size",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-dismiss-opacity",
+          "defaultValue": "0.65",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-dismiss-hover-opacity",
+          "defaultValue": "1",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-color",
+          "defaultValue": "var(--trm-theme-fg, var(--trm-fg-body))",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-bg",
+          "defaultValue": "var(--trm-theme-bg-subtle, var(--trm-bg-2))",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-border-color",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-selected-color",
+          "defaultValue": "var(--trm-theme-contrast, var(--trm-primary-contrast))",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-selected-bg",
+          "defaultValue": "var(--trm-theme-bg, var(--trm-primary-bg))",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-selected-border-color",
+          "defaultValue": "var(--trm-theme-bg, var(--trm-primary-bg))",
+          "purpose": "Default exported through $chip-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Enter / Space",
+          "behavior": "Native buttons activate the explicitly supplied application handler. Standalone spans have no keyboard behavior."
+        },
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Visits enabled native controls and links. Add focus-ring to actionable chips; the primitive removes its own focus-visible outline."
+        },
+        {
+          "keys": "Escape / Arrows / Delete",
+          "behavior": "No standalone Chip behavior. Editable chip-input collections use the separate Chips plugin."
+        }
+      ],
+      "guidelines": [
+        "The upstream standalone Chip primitive is documented in forms/chips, not a separate components/chip page. This retained URL does not create a Chip plugin.",
+        "Chip CSS sets a pointer cursor and hover appearance even on a span; that alone does not make text interactive. Prefer Badge for plain status labels.",
+        "Keep aria-pressed and active synchronized in your application; CSS active alone exposes no selected state.",
+        "Use named native dismiss controls with SVGs hidden from assistive technology. Do not nest interactive controls.",
+        "The supplied removal example owns its status message and focus return; neither is automatically supplied by standalone Chip CSS.",
+        "Use the existing focus-ring helper for visible keyboard focus on native actionable chips. disabled class is not a substitute for native disabled.",
+        "Chip has one size; customize $chip-tokens or runtime tokens. There is no chip-remove, chip-avatar, chip-group, chip-sm or chip-lg class.",
+        "Use Chips for editable collections and built-in add/remove/selection events; standalone examples do not initialize data-trm-chips."
+      ],
+      "sass": "@use 'tremplin/scss/chip' with (\n  $chip-tokens: (\n    --trm-chip-height: 2rem,\n    --trm-chip-gap: .5rem,\n    --trm-chip-img-size: 1.5rem\n  )\n);"
+    },
+    "example": "<div class=\"demo-contrast\">\n<span class=\"chip\">Design</span>\n</div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_chip.scss",
+    "applicationJavascript": "document.querySelectorAll('[data-demo-chip-toggle]').forEach(button => {\n  button.addEventListener('click', () => {\n    const selected = button.getAttribute('aria-pressed') !== 'true'\n    button.setAttribute('aria-pressed', String(selected))\n    button.classList.toggle('active', selected)\n  })\n})\ndocument.querySelectorAll('[data-demo-chip-dismiss]').forEach(button => {\n  button.addEventListener('click', () => {\n    const chip = button.closest('.chip')\n    const next = document.querySelector('#chip-removal-next')\n    if (!chip || !next) return\n    chip.remove()\n    document.querySelector('#chip-removal-status').textContent = 'Design filter removed.'\n    next.focus()\n  })\n})",
+    "javascriptBehavior": "Chip is a CSS primitive, not a standalone plugin. The toggle/removal examples below use explicit application code; editable chip-input collections use the separate Chips plugin."
+  },
+  {
+    "name": "command-palette",
+    "title": "Command Palette",
+    "description": "Command Palette component documentation for Tremplin.",
+    "lead": "Offer fast keyboard access to application commands as an optional Tremplin extension.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Grouped results",
+          "description": "Groups get generated aria-labelledby references. Visible labels are hidden from the option tree but still supply each group name through that reference. Arrow navigation spans enabled results across groups; keywords are local substring matches, not remote search.",
+          "markup": "<button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-toggle=\"command-palette\" data-trm-target=\"#palette-groups\" aria-controls=\"palette-groups\">Open grouped commands</button>\n<div id=\"palette-groups\" class=\"command-palette\" data-trm-command-palette data-trm-shortcut=\"false\" hidden aria-labelledby=\"palette-groups-title\" >\n  <div class=\"command-palette-dialog\">\n    <div class=\"command-palette-header\"><label id=\"palette-groups-title\" for=\"palette-groups-search\" class=\"visually-hidden\">grouped commands</label><input id=\"palette-groups-search\" class=\"command-palette-input\" placeholder=\"Search commands\" autocomplete=\"off\"><button type=\"button\" class=\"btn-close\" data-trm-dismiss=\"command-palette\" aria-label=\"Close grouped commands\"></button></div>\n    <div class=\"command-palette-list\" aria-label=\"Available commands\"><div class=\"command-group\"><div class=\"command-group-label\" aria-hidden=\"true\">Projects</div><div tabindex=\"-1\" class=\"command-item\" data-value=\"inspect\" data-keywords=\"review workspace\">Inspect project</div><div tabindex=\"-1\" class=\"command-item\" data-value=\"settings\" data-keywords=\"preferences configuration\">Preview settings</div></div><div class=\"command-group\"><div class=\"command-group-label\" aria-hidden=\"true\">Help</div><div tabindex=\"-1\" class=\"command-item\" data-value=\"help\" data-keywords=\"support manual\">Preview help</div></div></div>\n    <div class=\"command-palette-empty\" hidden>No matching commands. Try another search.</div>\n  </div>\n</div>\n<p id=\"palette-groups-result\" role=\"status\" class=\"mt-3 mb-0\">No command selected.</p>"
+        },
+        {
+          "title": "Disabled and empty results",
+          "description": "Search for “protected” to see a disabled-only match, then an absent word for the empty state. The filter event counts enabled results, while empty-state visibility counts all matches including disabled items.",
+          "markup": "<button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-toggle=\"command-palette\" data-trm-target=\"#palette-disabled\" aria-controls=\"palette-disabled\">Open availability example</button>\n<div id=\"palette-disabled\" class=\"command-palette\" data-trm-command-palette data-trm-shortcut=\"false\" hidden aria-labelledby=\"palette-disabled-title\" >\n  <div class=\"command-palette-dialog\">\n    <div class=\"command-palette-header\"><label id=\"palette-disabled-title\" for=\"palette-disabled-search\" class=\"visually-hidden\">availability example</label><input id=\"palette-disabled-search\" class=\"command-palette-input\" placeholder=\"Search commands\" autocomplete=\"off\"><button type=\"button\" class=\"btn-close\" data-trm-dismiss=\"command-palette\" aria-label=\"Close availability example\"></button></div>\n    <div class=\"command-palette-list\" aria-label=\"Available commands\"><div tabindex=\"-1\" class=\"command-item\" data-value=\"inspect\" data-keywords=\"review workspace\">Inspect project</div><div tabindex=\"-1\" class=\"command-item\" data-value=\"settings\" data-keywords=\"preferences configuration\">Preview settings</div><div tabindex=\"-1\" class=\"command-item\" data-value=\"protected\" aria-disabled=\"true\">Protected project</div></div>\n    <div class=\"command-palette-empty\" hidden>No matching commands. Try another search.</div>\n  </div>\n</div>\n<p id=\"palette-disabled-result\" role=\"status\" class=\"mt-3 mb-0\">No command selected.</p>"
+        },
+        {
+          "title": "Keep open after selection",
+          "description": "closeOnSelect=false lets the local status update without closing. Search text persists across hide/show; use the close button when finished.",
+          "markup": "<button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-toggle=\"command-palette\" data-trm-target=\"#palette-persistent\" aria-controls=\"palette-persistent\">Open persistent commands</button>\n<div id=\"palette-persistent\" class=\"command-palette\" data-trm-command-palette data-trm-shortcut=\"false\" hidden aria-labelledby=\"palette-persistent-title\" data-trm-close-on-select=\"false\">\n  <div class=\"command-palette-dialog\">\n    <div class=\"command-palette-header\"><label id=\"palette-persistent-title\" for=\"palette-persistent-search\" class=\"visually-hidden\">persistent commands</label><input id=\"palette-persistent-search\" class=\"command-palette-input\" placeholder=\"Search commands\" autocomplete=\"off\"><button type=\"button\" class=\"btn-close\" data-trm-dismiss=\"command-palette\" aria-label=\"Close persistent commands\"></button></div>\n    <div class=\"command-palette-list\" aria-label=\"Available commands\"><div tabindex=\"-1\" class=\"command-item\" data-value=\"inspect\" data-keywords=\"review workspace\">Inspect project</div><div tabindex=\"-1\" class=\"command-item\" data-value=\"settings\" data-keywords=\"preferences configuration\">Preview settings</div></div>\n    <div class=\"command-palette-empty\" hidden>No matching commands. Try another search.</div>\n  </div>\n</div>\n<p id=\"palette-persistent-result\" role=\"status\" class=\"mt-3 mb-0\">No command selected.</p>"
+        },
+        {
+          "title": "Dark RTL commands",
+          "description": "Logical alignment follows direction. These examples deliberately bind no letter shortcuts; command-shortcut is only a visual label, never a key binding.",
+          "markup": "<button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-toggle=\"command-palette\" data-trm-target=\"#palette-rtl\" aria-controls=\"palette-rtl\">Open RTL commands</button>\n<div id=\"palette-rtl\" class=\"command-palette\" data-trm-command-palette data-trm-shortcut=\"false\" hidden aria-labelledby=\"palette-rtl-title\" dir=\"rtl\" data-trm-theme=\"dark\">\n  <div class=\"command-palette-dialog\">\n    <div class=\"command-palette-header\"><label id=\"palette-rtl-title\" for=\"palette-rtl-search\" class=\"visually-hidden\">RTL commands</label><input id=\"palette-rtl-search\" class=\"command-palette-input\" placeholder=\"Search commands\" autocomplete=\"off\"><button type=\"button\" class=\"btn-close\" data-trm-dismiss=\"command-palette\" aria-label=\"Close RTL commands\"></button></div>\n    <div class=\"command-palette-list\" aria-label=\"Available commands\"><div tabindex=\"-1\" class=\"command-item\" data-value=\"inspect\" data-keywords=\"project review\"><span lang=\"ar\">معاينة المشروع</span></div><div tabindex=\"-1\" class=\"command-item\" data-value=\"settings\" data-keywords=\"settings preferences\"><span lang=\"ar\">معاينة الإعدادات</span></div></div>\n    <div class=\"command-palette-empty\" hidden>No matching commands. Try another search.</div>\n  </div>\n</div>\n<p id=\"palette-rtl-result\" role=\"status\" class=\"mt-3 mb-0\">No command selected.</p>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-command-palette-z-index",
+          "defaultValue": "1110",
+          "purpose": "Default exported through $command-palette-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-extension-shadow",
+          "defaultValue": "0 1rem 3rem rgba(0, 0, 0, 0.18)",
+          "purpose": "Default exported through $command-palette-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-command-palette-width",
+          "defaultValue": "40rem",
+          "purpose": "Default exported through $command-palette-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-command-palette-offset",
+          "defaultValue": "min(12vh, 6rem)",
+          "purpose": "Default exported through $command-palette-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-command-palette-backdrop",
+          "defaultValue": "rgba(5, 7, 12, 0.64)",
+          "purpose": "Default exported through $command-palette-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-command-palette-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $command-palette-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-command-palette-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $command-palette-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-command-palette-radius",
+          "defaultValue": "var(--trm-radius-8)",
+          "purpose": "Default exported through $command-palette-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-command-palette-list-height",
+          "defaultValue": "min(55vh, 25rem)",
+          "purpose": "Default exported through $command-palette-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-command-palette-active-bg",
+          "defaultValue": "var(--trm-primary-base)",
+          "purpose": "Default exported through $command-palette-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-command-palette-active-color",
+          "defaultValue": "var(--trm-primary-contrast)",
+          "purpose": "Default exported through $command-palette-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "sass": "@use 'tremplin/scss/extensions/command-palette' with (\n  $command-palette-tokens: (\n    --trm-command-palette-width: 44rem,\n    --trm-command-palette-radius: 1rem\n  )\n);",
+      "keyboard": [
+        {
+          "keys": "Control/Command + K",
+          "behavior": "Default shortcut=true toggles every enabled instance, even from editable controls. All live guide instances opt out to avoid colliding with documentation search."
+        },
+        {
+          "keys": "Arrow Up / Arrow Down",
+          "behavior": "Wraps through enabled visible commands, keeping input focus and updating aria-activedescendant."
+        },
+        {
+          "keys": "Home / End",
+          "behavior": "Selects first/last enabled result, including when editing the search input; these keys do not move its text caret."
+        },
+        {
+          "keys": "Enter",
+          "behavior": "Selects the active result only when the search input is focused. Command selection is pointerdown, not click or automatic link navigation."
+        },
+        {
+          "keys": "Escape",
+          "behavior": "Requests hide and focus return; a hide listener can veto closing."
+        },
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Wraps at the first/last focusable control. Options here are div nodes with tabindex=-1, leaving search and close as the boundary controls. Native buttons remain in the extension focusable query even with tabindex=-1; this is not a document focus guard."
+        }
+      ],
+      "guidelines": [
+        "Import both optional CSS and the named CommandPalette extension. Do not import it from the core barrel or load two runtime graphs.",
+        "Use a hidden named div root, a labelled command-palette-input and a command-palette-list. The constructor adds dialog/combobox/listbox roles; it does not call showModal or make the background inert.",
+        "Set shortcut=false on all but a single intentional shortcut owner. The default does not ignore editable targets, key repeats or other palette instances. This guide preserves docs search as the closed-state Ctrl/Command+K owner.",
+        "Filtering trims and lowercases the query, matching the combined visible text and data-keywords by substring. It does not fold accents or tokenize words. Query text persists after closing.",
+        "All emitted CustomEvents bubble and are cancelable, but only show, hide and select read preventDefault. Payloads live in event.detail, unlike core direct event properties.",
+        "select is the veto gate; selected reports the accepted command. closeOnSelect requests hide before selected, but a canceled hide can leave the palette open. Neither event executes business actions automatically.",
+        "Initialize dynamic roots explicitly after insertion. Repeating initCommandPalette on the same scope does not rescan it; its descendant query does not include the supplied root itself.",
+        "dispose closes even when hide would be vetoed and removes instance listeners. Generated roles/IDs remain. This extension has no nested-overlay coordination, native top layer or global focus guard; evaluate those limitations before shipping."
+      ]
+    },
+    "example": "<button type=\"button\" class=\"btn-outline theme-inverse\" data-trm-toggle=\"command-palette\" data-trm-target=\"#commands\" aria-controls=\"commands\">Open commands</button>\n<div id=\"commands\" class=\"command-palette\" data-trm-command-palette data-trm-shortcut=\"false\" hidden aria-labelledby=\"commands-title\" >\n  <div class=\"command-palette-dialog\">\n    <div class=\"command-palette-header\"><label id=\"commands-title\" for=\"commands-search\" class=\"visually-hidden\">commands</label><input id=\"commands-search\" class=\"command-palette-input\" placeholder=\"Search commands\" autocomplete=\"off\"><button type=\"button\" class=\"btn-close\" data-trm-dismiss=\"command-palette\" aria-label=\"Close commands\"></button></div>\n    <div class=\"command-palette-list\" aria-label=\"Available commands\"><div tabindex=\"-1\" class=\"command-item\" data-value=\"inspect\" data-keywords=\"review workspace\">Inspect project</div><div tabindex=\"-1\" class=\"command-item\" data-value=\"settings\" data-keywords=\"preferences configuration\">Preview settings</div></div>\n    <div class=\"command-palette-empty\" hidden>No matching commands. Try another search.</div>\n  </div>\n</div>\n<p id=\"commands-result\" role=\"status\" class=\"mt-3 mb-0\">No command selected.</p>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/extensions/_command-palette.scss",
+    "applicationJavascript": "import { CommandPalette } from 'tremplin/extensions/command-palette'\n\ndocument.addEventListener('DOMContentLoaded', () => {\n  document.querySelectorAll('[data-trm-command-palette]').forEach(root => {\n    // Each demo has one known launcher. At the show gate, focus it before\n    // the extension records its opener; native pointer focus differs in WebKit.\n    root.addEventListener('show.trm.command-palette', () => {\n      document.querySelector('[data-trm-toggle=\"command-palette\"][data-trm-target=\"#' + root.id + '\"]')?.focus()\n    })\n    root.addEventListener('selected.trm.command-palette', event => {\n      const messages = { inspect: 'Project preview selected. No project was changed.', settings: 'Settings preview selected. No preferences were saved.', help: 'Help preview selected. No request was sent.' }\n      const result = document.getElementById(root.id + '-result')\n      if (result) result.textContent = messages[event.detail.value] || 'Preview command selected. No action was performed.'\n    })\n  })\n  // Application guard: docs search must not take focus behind an open demo.\n  // No global palette shortcut is enabled; when closed, docs search owns K.\n  document.addEventListener('keydown', event => {\n    if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== 'k') return\n    const open = document.querySelector('[data-trm-command-palette]:not([hidden])')\n    if (!open) return\n    event.preventDefault()\n    event.stopImmediatePropagation()\n    CommandPalette.getInstance(open)?.hide()\n  }, true)\n})",
+    "definition": {
+      "name": "command-palette",
+      "className": "CommandPalette",
+      "options": [
+        {
+          "name": "shortcut",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "closeOnSelect",
+          "type": "boolean | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "toggle(): Promise<void>",
+        "dispose(): void"
+      ],
+      "events": [
+        "filter.trm.command-palette",
+        "hidden.trm.command-palette",
+        "hide.trm.command-palette",
+        "select.trm.command-palette",
+        "selected.trm.command-palette",
+        "show.trm.command-palette",
+        "shown.trm.command-palette"
+      ],
+      "dataAttributes": [
+        "data-trm-close-on-select",
+        "data-trm-command-palette",
+        "data-trm-dismiss",
+        "data-trm-shortcut",
+        "data-trm-target",
+        "data-trm-toggle",
+        "data-trm-toggle=\"command-palette\""
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "moduleImport": "import { CommandPalette } from 'tremplin/extensions/command-palette'",
+    "javascript": "import 'tremplin/css'\nimport 'tremplin/css/extensions'\nimport { CommandPalette } from 'tremplin/extensions/command-palette'\n\n// Configure before automatic initialization; data-trm-shortcut=\"false\"\n// on this guide's root also prevents a competing global shortcut.\nconst root = document.querySelector('#commands')\nconst palette = CommandPalette.getOrCreateInstance(root, { shortcut: false })\nroot.addEventListener('selected.trm.command-palette', event => {\n  const { value } = event.detail\n  // Dispatch a known, authorized application action for value here.\n})\n// await palette.show(); await palette.hide(); palette.dispose();",
+    "sourceOptions": [
+      {
+        "name": "shortcut",
+        "type": "boolean",
+        "defaultValue": "true",
+        "description": "Global Ctrl/Meta+K toggle; false in every guide instance so docs search remains the owner."
+      },
+      {
+        "name": "closeOnSelect",
+        "type": "boolean",
+        "defaultValue": "true",
+        "description": "Requests hide before selected; false keeps the palette open. A hide veto also leaves it open."
+      }
+    ],
+    "demoCss": ".command-palette { --trm-command-palette-active-bg: var(--trm-fg-body); --trm-command-palette-active-color: var(--trm-bg-body); }\n.command-palette-input:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }\n.command-palette-input::placeholder { color: var(--trm-fg-2); opacity: 1; }",
+    "events": {
+      "filter.trm.command-palette": "detail = { query, results }; results counts enabled visible commands. Disabled matches still suppress the empty state.",
+      "hidden.trm.command-palette": "After close cleanup. dispose closes without dispatching this lifecycle pair.",
+      "hide.trm.command-palette": "Cancelable gate before hiding, overflow restoration and opener focus return.",
+      "select.trm.command-palette": "Cancelable selection gate; detail = { command, value }, with value from data-value or trimmed text. Preventing it blocks the hide request and selected.",
+      "selected.trm.command-palette": "Accepted selection, with the same detail payload, after the optional hide request. Canceling this notification does not undo selection.",
+      "show.trm.command-palette": "Cancelable gate before exposing the root, locking root overflow and focusing search.",
+      "shown.trm.command-palette": "After the immediate show setup and filter notification; not a CSS-transition completion promise."
+    }
+  },
+  {
+    "name": "data-table",
+    "title": "Data Table",
+    "description": "Data Table component documentation for Tremplin.",
+    "lead": "Compose native tables with optional local styling and explicit application-owned controls.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Toolbar and sortable columns",
+          "description": "The copyable application demo filters and sorts its two existing rows without network access. aria-sort appears only on the currently sorted header, not the button.",
+          "markup": "<section class=\"data-table\" aria-labelledby=\"members-title\" data-demo-members><div class=\"data-table-toolbar\"><h3 class=\"data-table-title\" id=\"members-title\">Team members</h3><div class=\"data-table-actions\"><label for=\"member-search\">Search</label><input class=\"form-control\" id=\"member-search\" type=\"search\" aria-describedby=\"members-help\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-demo-clear-search>Clear search</button></div></div><p id=\"members-help\">Search this example's two members by name or role. No network request is made.</p><div class=\"data-table-scroll focus-ring\" role=\"region\" aria-label=\"Searchable team members\" tabindex=\"0\"><table class=\"table\"><caption>Team members and roles</caption><thead><tr><th scope=\"col\" aria-sort=\"ascending\"><button class=\"data-table-sort\" type=\"button\" aria-label=\"Name\" data-demo-sort=\"0\">Name</button></th><th scope=\"col\"><button class=\"data-table-sort\" type=\"button\" aria-label=\"Role\" data-demo-sort=\"1\">Role</button></th></tr></thead><tbody><tr data-demo-member><th scope=\"row\">Ana</th><td>Designer</td></tr><tr data-demo-member><th scope=\"row\">Noah</th><td>Developer</td></tr><tr hidden data-demo-empty-row><td class=\"data-table-empty\" colspan=\"2\">No members match this search.</td></tr></tbody></table></div><div class=\"data-table-footer\"><span role=\"status\">2 matching members.</span><span>Local demo; no paging or remote data.</span></div></section>"
+        },
+        {
+          "title": "Selectable rows",
+          "description": "Native checkboxes own selection semantics. The supplied change handler mirrors checked state into the core table-active visual class and a count; it does not turn this plain table into a grid.",
+          "markup": "<section class=\"data-table\" aria-label=\"Release selection example\" data-demo-selection><table class=\"table\"><caption>Release candidates</caption><thead><tr><th scope=\"col\">Select</th><th scope=\"col\">Release</th><th scope=\"col\">Status</th></tr></thead><tbody><tr class=\"table-active\"><td><input class=\"data-table-select\" type=\"checkbox\" checked aria-label=\"Select release 0.8\"></td><th scope=\"row\">0.8</th><td>Ready</td></tr><tr><td><input class=\"data-table-select\" type=\"checkbox\" aria-label=\"Select release 0.9\"></td><th scope=\"row\">0.9</th><td>Review</td></tr></tbody></table><p role=\"status\">1 release selected.</p></section>"
+        },
+        {
+          "title": "Responsive sticky table",
+          "description": "The actual named scroll region contains both horizontal and vertical overflow. The optional extension pins header cells, not the caption or toolbar.",
+          "markup": "<section class=\"data-table data-table-sticky\" aria-label=\"Revenue example\"><div class=\"data-table-scroll focus-ring\" id=\"data-table-sticky-demo\" role=\"region\" aria-label=\"Quarterly revenue\" tabindex=\"0\" style=\"max-block-size: 12rem\"><table class=\"table\" style=\"min-inline-size: 48rem\"><caption>Quarterly revenue by product</caption><thead><tr><th scope=\"col\">Product</th><th scope=\"col\">Q1</th><th scope=\"col\">Q2</th><th scope=\"col\">Q3</th><th scope=\"col\">Q4</th></tr></thead><tbody><tr><th scope=\"row\">Product 1</th><td>$24k</td><td>$27k</td><td>$31k</td><td>$36k</td></tr><tr><th scope=\"row\">Product 2</th><td>$24k</td><td>$27k</td><td>$31k</td><td>$36k</td></tr><tr><th scope=\"row\">Product 3</th><td>$24k</td><td>$27k</td><td>$31k</td><td>$36k</td></tr><tr><th scope=\"row\">Product 4</th><td>$24k</td><td>$27k</td><td>$31k</td><td>$36k</td></tr><tr><th scope=\"row\">Product 5</th><td>$24k</td><td>$27k</td><td>$31k</td><td>$36k</td></tr><tr><th scope=\"row\">Product 6</th><td>$24k</td><td>$27k</td><td>$31k</td><td>$36k</td></tr><tr><th scope=\"row\">Product 7</th><td>$24k</td><td>$27k</td><td>$31k</td><td>$36k</td></tr><tr><th scope=\"row\">Product 8</th><td>$24k</td><td>$27k</td><td>$31k</td><td>$36k</td></tr><tr><th scope=\"row\">Product 9</th><td>$24k</td><td>$27k</td><td>$31k</td><td>$36k</td></tr><tr><th scope=\"row\">Product 10</th><td>$24k</td><td>$27k</td><td>$31k</td><td>$36k</td></tr></tbody></table></div></section>"
+        },
+        {
+          "title": "Empty results and footer",
+          "description": "Keep real headers and an explanatory spanning cell. Recovery is an actual catalog link; CSS does not fetch results or implement pagination.",
+          "markup": "<section class=\"data-table\" aria-labelledby=\"orders-title\"><h3 class=\"data-table-title\" id=\"orders-title\">Orders</h3><div class=\"data-table-scroll focus-ring\" role=\"region\" aria-label=\"Empty orders table\" tabindex=\"0\"><table class=\"table\"><caption>Filtered orders</caption><thead><tr><th scope=\"col\">Order</th><th scope=\"col\">Customer</th></tr></thead><tbody><tr><td class=\"data-table-empty\" colspan=\"2\">No orders match the current filters.</td></tr></tbody></table></div><div class=\"data-table-footer\"><span>0 results</span><a class=\"btn-outline theme-inverse\" href=\"/components/\">Browse all components</a></div></section>"
+        },
+        {
+          "title": "Custom presentation",
+          "description": "Only real data-table tokens customize this root. Native row/column relationships remain unchanged.",
+          "markup": "<section class=\"data-table\" aria-label=\"Custom spacing example\" style=\"--trm-data-table-gap: 1.25rem\"><div class=\"data-table-toolbar\"><h3 class=\"data-table-title\">Custom spacing</h3><a href=\"/content/tables/\">Read table foundations</a></div><div class=\"data-table-scroll focus-ring\" role=\"region\" aria-label=\"Custom team table\" tabindex=\"0\"><table class=\"table\"><caption>Custom team members</caption><thead><tr><th scope=\"col\">Name</th><th scope=\"col\">Role</th></tr></thead><tbody><tr><th scope=\"row\">Ana</th><td>Designer</td></tr><tr><th scope=\"row\">Noah</th><td>Developer</td></tr></tbody></table></div></section>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Ordinary native table semantics and destinations remain valid in the surrounding direction. Localized data and application sort order are separate concerns.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><section class=\"data-table\" aria-label=\"Localized team example\"><div class=\"data-table-toolbar\"><h3 class=\"data-table-title\">Team members</h3></div><div class=\"data-table-scroll focus-ring\" role=\"region\" aria-label=\"Localized team table\" tabindex=\"0\"><table class=\"table\"><caption>Localized team members</caption><thead><tr><th scope=\"col\">Name</th><th scope=\"col\">Role</th></tr></thead><tbody><tr><th scope=\"row\">Ana</th><td>Designer</td></tr><tr><th scope=\"row\">Noah</th><td>Developer</td></tr></tbody></table></div></section></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-data-table-gap",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $data-table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-data-table-toolbar-margin",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $data-table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-data-table-sort-gap",
+          "defaultValue": "0.35rem",
+          "purpose": "Default exported through $data-table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-data-table-selected-bg",
+          "defaultValue": "color-mix(in srgb, var(--trm-primary-base) 10%, transparent)",
+          "purpose": "Default exported through $data-table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-data-table-sticky-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $data-table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-data-table-empty-color",
+          "defaultValue": "var(--trm-fg-2)",
+          "purpose": "Default exported through $data-table-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Visits labelled native search, sort, checkbox and recovery controls plus explicitly focusable scrolling regions."
+        },
+        {
+          "keys": "Enter / Space",
+          "behavior": "Native buttons activate the copied application sorter; Space changes a checkbox. Links activate with Enter."
+        },
+        {
+          "keys": "Arrow keys",
+          "behavior": "Native scrolling within the focused overflow element, not grid-cell movement."
+        }
+      ],
+      "guidelines": [
+        "This optional local CSS extension has no DataTable JavaScript class or fetch API. Import optional CSS explicitly after core.",
+        "The copied handler owns local filtering, sort order, aria-sort, checkbox styling and status counts. It preserves native table semantics and never adds grid roles.",
+        "Place aria-sort on only the currently sorted th. Name actual buttons and preserve focus while rearranging rows; filter hidden rows without destroying their data.",
+        "Checkbox checked state is the selection source of truth. These plain-table demos use table-active for color, not aria-selected. The extension selected-bg token only drives its optional aria-selected CSS hook; that hook does not justify adding grid semantics.",
+        "Name and focus the actual data-table-scroll region. Sticky headers require actual vertical overflow; the toolbar/caption are not pinned by this extension.",
+        "Empty cells use colspan to preserve column structure, with count/recovery controls outside the table. The pattern supplies no automatic pagination or remote results."
+      ],
+      "sass": "@use 'tremplin/scss/extensions/data-table' with ($data-table-tokens: (--trm-data-table-gap: 1rem, --trm-data-table-selected-bg: color-mix(in srgb, var(--trm-primary-base) 15%, transparent)));"
+    },
+    "example": "<section class=\"data-table\" aria-label=\"Basic team table\"><div class=\"data-table-scroll focus-ring\" role=\"region\" aria-label=\"Team table scroll region\" tabindex=\"0\"><table class=\"table\"><caption>Team members</caption><thead><tr><th scope=\"col\">Name</th><th scope=\"col\">Role</th></tr></thead><tbody><tr><th scope=\"row\">Ana</th><td>Designer</td></tr><tr><th scope=\"row\">Noah</th><td>Developer</td></tr></tbody></table></div></section>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/extensions/_data-table.scss",
+    "applicationJavascript": "document.querySelectorAll('[data-demo-members]').forEach(root => {\n  const input = root.querySelector('input[type=\"search\"]')\n  const body = root.querySelector('tbody')\n  const rows = Array.from(body.querySelectorAll('[data-demo-member]'))\n  const empty = body.querySelector('[data-demo-empty-row]')\n  const update = () => {\n    const query = input.value.trim().toLocaleLowerCase('en')\n    rows.forEach(row => { row.hidden = !row.textContent.toLocaleLowerCase('en').includes(query) })\n    const count = rows.filter(row => !row.hidden).length\n    empty.hidden = count !== 0\n    root.querySelector('[role=\"status\"]').textContent = count + (count === 1 ? ' matching member.' : ' matching members.')\n  }\n  input.addEventListener('input', update)\n  root.querySelector('[data-demo-clear-search]').addEventListener('click', () => { input.value = ''; update() })\n  root.querySelectorAll('[data-demo-sort]').forEach(button => {\n    button.addEventListener('click', () => {\n      const header = button.closest('th')\n      const descending = header.getAttribute('aria-sort') === 'ascending'\n      root.querySelectorAll('th[aria-sort]').forEach(th => th.removeAttribute('aria-sort'))\n      header.setAttribute('aria-sort', descending ? 'descending' : 'ascending')\n      const column = Number(button.dataset.demoSort)\n      rows.sort((a, b) => (descending ? -1 : 1) * a.cells[column].textContent.trim().localeCompare(b.cells[column].textContent.trim(), 'en'))\n      rows.forEach(row => body.append(row))\n      update()\n    })\n  })\n})\ndocument.querySelectorAll('[data-demo-selection]').forEach(root => {\n  root.querySelectorAll('input[type=\"checkbox\"]').forEach(input => {\n    input.addEventListener('change', () => {\n      input.closest('tr').classList.toggle('table-active', input.checked)\n      const count = root.querySelectorAll('input:checked').length\n      root.querySelector('[role=\"status\"]').textContent = count + (count === 1 ? ' release selected.' : ' releases selected.')\n    })\n  })\n})",
+    "isolationCss": ".docs-main .docs-example .table > :not(caption) > * > * {\n  padding: revert-layer;\n  border-block-end: revert-layer;\n  text-align: revert-layer;\n}",
+    "javascriptBehavior": "This optional CSS extension has no matching core JavaScript plugin. Any demonstrated dynamic action is application-owned and is disclosed below."
+  },
+  {
+    "name": "divider",
+    "title": "Divider",
+    "description": "Divider component documentation for Tremplin.",
+    "lead": "Separate content with an optional local CSS pattern and deliberate decorative or structural semantics.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Decorative divider",
+          "description": "A decorative break is hidden from assistive technology; its label is not a section heading.",
+          "markup": "<p>Sign in with your organization account.</p><div class=\"divider\" aria-hidden=\"true\">or</div><p>Continue with a personal account.</p>"
+        },
+        {
+          "title": "Label alignment",
+          "description": "Start/end remove the corresponding logical line; they do not alter reading order.",
+          "markup": "<div class=\"divider divider-start\" aria-hidden=\"true\">Project details</div><div class=\"divider divider-end\" aria-hidden=\"true\">End of results</div>"
+        },
+        {
+          "title": "Semantic separator",
+          "description": "A meaningful, named horizontal boundary is structural rather than interactive.",
+          "markup": "<section aria-labelledby=\"summary-heading\"><h3 id=\"summary-heading\">Summary</h3><p>Three tasks are ready.</p></section><div class=\"divider divider-strong\" role=\"separator\" aria-label=\"Summary and details\" aria-orientation=\"horizontal\"></div><section aria-labelledby=\"details-heading\"><h3 id=\"details-heading\">Details</h3><p>Review the assigned tasks below.</p></section>"
+        },
+        {
+          "title": "Vertical divider",
+          "description": "Set vertical orientation when a meaningful boundary divides adjacent summaries; it is not a draggable splitter.",
+          "markup": "<div class=\"d-flex align-items-stretch\"><div><strong>12</strong><br>Open</div><div class=\"divider divider-vertical\" role=\"separator\" aria-orientation=\"vertical\" aria-label=\"Open and closed totals\"></div><div><strong>28</strong><br>Closed</div></div>"
+        },
+        {
+          "title": "Custom spacing",
+          "description": "Use actual extension tokens rather than adding another separator plugin.",
+          "markup": "<div class=\"divider divider-strong\" aria-hidden=\"true\" style=\"--trm-divider-gap: 1.25rem; --trm-divider-margin-y: 1.5rem\">Next section</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Logical start/end behavior follows direction without adding interactive semantics.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"divider divider-start\" aria-hidden=\"true\">Additional options</div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-divider-gap",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $divider-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-divider-color",
+          "defaultValue": "var(--trm-fg-2)",
+          "purpose": "Default exported through $divider-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-divider-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $divider-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-divider-border-width",
+          "defaultValue": "1px",
+          "purpose": "Default exported through $divider-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-divider-margin-y",
+          "defaultValue": "1rem",
+          "purpose": "Default exported through $divider-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "None",
+          "behavior": "Decorative and semantic separators are not focusable splitters. No dragging or keyboard-resize behavior is implemented."
+        }
+      ],
+      "guidelines": [
+        "This optional local extension is separate from the Menu divider class.",
+        "Hide purely decorative separators with aria-hidden=true; use a named separator role only when the boundary is meaningful.",
+        "Set aria-orientation=vertical on meaningful vertical separators. Never add tabindex unless implementing a complete splitter separately.",
+        "Use real headings for sections; generated lines and short divider labels do not establish document headings.",
+        "Start/end reflect logical direction; they do not reorder content.",
+        "CSS only supplies lines, labels and spacing. There is no resize, focus or dismissal controller."
+      ],
+      "sass": "@use 'tremplin/scss/extensions/divider' with ($divider-tokens: (--trm-divider-gap: 1rem, --trm-divider-border-width: 2px));"
+    },
+    "example": "<div class=\"divider\" aria-hidden=\"true\">or</div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/extensions/_divider.scss",
+    "javascriptBehavior": "This optional CSS extension has no matching core JavaScript plugin. Any demonstrated dynamic action is application-owned and is disclosed below."
+  },
+  {
+    "name": "empty-state",
+    "title": "Empty State",
+    "description": "Empty State component documentation for Tremplin.",
+    "lead": "Explain absent content with an optional local presentation pattern and real recovery actions.",
+    "detail": {
+      "variants": [
+        {
+          "title": "First-use state",
+          "description": "This independent example creates only a transient in-page demonstration. The copied application handler owns status and focus, not the extension CSS.",
+          "markup": "<div id=\"empty-first-use-demo\" data-demo-empty-root><section class=\"empty-state\" aria-labelledby=\"empty-first-use-demo-title\"><svg class=\"empty-state-icon\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M6 12h14l4 5h18v23H6z\"/><path d=\"M24 23v11m-5-5h10\"/></svg><h3 id=\"empty-first-use-demo-title\">No projects yet</h3><p>Create a temporary project in this example only.</p><div class=\"empty-state-actions\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-demo-create-project>Create project</button></div></section><p hidden data-demo-created-project><a href=\"/components/\">Demo project: browse components</a></p><p role=\"status\">No demo projects.</p></div>"
+        },
+        {
+          "title": "No search results",
+          "description": "Provide an actual recovery destination. This link navigates to the component catalog; no fake filtering service is implied.",
+          "markup": "<section class=\"empty-state empty-state-compact\" aria-labelledby=\"search-empty-title\"><h3 id=\"search-empty-title\">No matching results</h3><p>Browse the full catalog or try a broader search term.</p><div class=\"empty-state-actions\"><a class=\"btn-outline theme-inverse\" href=\"/components/\">Browse all components</a></div></section>"
+        },
+        {
+          "title": "Borderless and start aligned",
+          "description": "Borderless makes the border transparent; it does not remove its width. Start alignment changes placement and text direction.",
+          "markup": "<section class=\"empty-state empty-state-borderless empty-state-start\" aria-labelledby=\"inbox-empty-title\"><h3 id=\"inbox-empty-title\">Inbox cleared</h3><p>You have reviewed every notification.</p><a class=\"btn-text theme-inverse\" href=\"/components/timeline/\">View activity pattern</a></section>"
+        },
+        {
+          "title": "Multiple next steps",
+          "description": "Offer real links, with one clear path and useful supporting guidance.",
+          "markup": "<section class=\"empty-state\" aria-labelledby=\"team-empty-title\"><h3 id=\"team-empty-title\">No teammates invited</h3><p>Explore interface components or read the framework approach.</p><div class=\"empty-state-actions\"><a class=\"btn-outline theme-inverse\" href=\"/components/\">Explore components</a><a class=\"btn-text theme-inverse\" href=\"/getting-started/approach/\">Read the approach</a></div></section>"
+        },
+        {
+          "title": "Compact presentation",
+          "description": "Compact sets minimum height to zero and smaller padding/icon tokens; it is not an automatic responsive breakpoint.",
+          "markup": "<section class=\"empty-state empty-state-compact\" aria-labelledby=\"compact-empty-title\"><svg class=\"empty-state-icon\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M6 12h14l4 5h18v23H6z\"/><path d=\"M24 23v11m-5-5h10\"/></svg><h3 id=\"compact-empty-title\">Nothing in the archive</h3><p>Completed work will appear here.</p></section>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Use explicit text and a real destination; decorative artwork adds no redundant accessible name.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><section class=\"empty-state empty-state-start\" aria-labelledby=\"rtl-empty-title\"><svg class=\"empty-state-icon\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M6 12h14l4 5h18v23H6z\"/><path d=\"M24 23v11m-5-5h10\"/></svg><h3 id=\"rtl-empty-title\">No saved projects</h3><p>Browse the components to begin.</p><div class=\"empty-state-actions\"><a class=\"btn-outline theme-inverse\" href=\"/components/\">Browse components</a></div></section></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-empty-state-min-height",
+          "defaultValue": "15rem",
+          "purpose": "Default exported through $empty-state-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-empty-state-gap",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $empty-state-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-empty-state-padding",
+          "defaultValue": "2rem",
+          "purpose": "Default exported through $empty-state-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-empty-state-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $empty-state-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-empty-state-bg",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $empty-state-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-empty-state-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $empty-state-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-empty-state-border-radius",
+          "defaultValue": "var(--trm-radius-6)",
+          "purpose": "Default exported through $empty-state-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-empty-state-icon-size",
+          "defaultValue": "3rem",
+          "purpose": "Default exported through $empty-state-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-empty-state-icon-color",
+          "defaultValue": "var(--trm-fg-2)",
+          "purpose": "Default exported through $empty-state-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Visits native action links/buttons, not the empty-state container or decorative artwork."
+        },
+        {
+          "keys": "Enter / Space",
+          "behavior": "Enter activates links; Enter or Space activates native buttons. Space is not a link activation shortcut."
+        }
+      ],
+      "guidelines": [
+        "This optional local extension provides presentation, not a data-fetching controller.",
+        "Name the section with a real heading and explain why content is absent. Loading, errors and successful emptiness are different states.",
+        "Use real links or implement the advertised native-button action. Do not publish inert Create/Clear controls or unresolved fragment links.",
+        "The supplied creation handler simulates a transient project in the page only; it performs no network call, persistence or account mutation.",
+        "When a focused empty state is removed, the application arranges focus on a surviving useful control and updates the pre-existing status text.",
+        "Hide decorative SVGs and retain unique heading IDs. Compact and borderless only affect presentation."
+      ],
+      "sass": "@use 'tremplin/scss/extensions/empty-state' with ($empty-state-tokens: (--trm-empty-state-min-height: 12rem, --trm-empty-state-padding: 1.5rem));"
+    },
+    "example": "<div id=\"empty-project-demo\" data-demo-empty-root><section class=\"empty-state\" aria-labelledby=\"empty-project-demo-title\"><svg class=\"empty-state-icon\" viewBox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M6 12h14l4 5h18v23H6z\"/><path d=\"M24 23v11m-5-5h10\"/></svg><h3 id=\"empty-project-demo-title\">No projects yet</h3><p>Create a temporary project in this example only.</p><div class=\"empty-state-actions\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-demo-create-project>Create project</button></div></section><p hidden data-demo-created-project><a href=\"/components/\">Demo project: browse components</a></p><p role=\"status\">No demo projects.</p></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/extensions/_empty-state.scss",
+    "applicationJavascript": "document.querySelectorAll('[data-demo-create-project]').forEach(button => {\n  button.addEventListener('click', () => {\n    const root = button.closest('[data-demo-empty-root]')\n    const result = root.querySelector('[data-demo-created-project]')\n    root.querySelector('.empty-state').remove()\n    result.hidden = false\n    root.querySelector('[role=\"status\"]').textContent = 'Demo project created in this page only.'\n    result.querySelector('a').focus()\n  })\n})",
+    "javascriptBehavior": "This optional CSS extension has no matching core JavaScript plugin. Any demonstrated dynamic action is application-owned and is disclosed below."
+  },
+  {
+    "name": "forms",
+    "title": "Forms",
+    "description": "Forms component documentation for Tremplin.",
+    "lead": "Build consistently styled native controls, groups, validation states, and supporting text.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Native controls and sizes",
+          "description": "Use form-control on inputs, textareas and native selects. form-control-sm/lg change presentation, not input type, validation or keyboard semantics.",
+          "markup": "<div data-docs-forms><div class=\"vstack gap-3\">\n  <div class=\"form-field\"><label class=\"form-label\" for=\"forms-controls-role\">Project role</label><select class=\"form-control\" id=\"forms-controls-role\" name=\"role\"><option value=\"designer\">Designer</option><option value=\"developer\">Developer</option></select></div>\n  <div class=\"form-field\"><label class=\"form-label\" for=\"forms-controls-notes\">Project notes</label><textarea class=\"form-control\" id=\"forms-controls-notes\" name=\"notes\" rows=\"3\" aria-describedby=\"forms-controls-notes-help\"></textarea><p class=\"form-text mb-0\" id=\"forms-controls-notes-help\">Keep personal information out of this preview.</p></div>\n  <div class=\"form-field\"><label class=\"form-label\" for=\"forms-controls-small\">Small control</label><input class=\"form-control form-control-sm\" id=\"forms-controls-small\" type=\"text\"></div>\n  <div class=\"form-field\"><label class=\"form-label\" for=\"forms-controls-large\">Large control</label><input class=\"form-control form-control-lg\" id=\"forms-controls-large\" type=\"text\"></div>\n</div></div>"
+        },
+        {
+          "title": "Disabled and readonly values",
+          "description": "Disabled controls are omitted by native FormData; readonly text controls remain focusable and included. This application button reports only the included field names, never entered values.",
+          "markup": "<div data-docs-forms><form id=\"forms-state\" data-docs-forms-values class=\"vstack gap-3\">\n  <div class=\"form-field\"><label class=\"form-label\" for=\"forms-state-readonly\">Readonly account</label><input class=\"form-control\" id=\"forms-state-readonly\" name=\"account\" readonly value=\"example-account\"></div>\n  <div class=\"form-field\"><label class=\"form-label\" for=\"forms-state-disabled\">Disabled account note</label><input class=\"form-control\" id=\"forms-state-disabled\" name=\"note\" disabled value=\"Not submitted\"></div>\n  <div><button class=\"btn-outline theme-inverse\" type=\"button\" data-docs-forms-inspect disabled>Inspect included field names</button></div>\n  <p class=\"form-text mb-0\" role=\"status\" data-docs-forms-status>No inspection attempted.</p>\n</form></div>"
+        },
+        {
+          "title": "Disabled fieldset",
+          "description": "Native fieldset disabled affects contained native controls. The first-legend exception is a browser rule; do not put custom links in this example and assume they become disabled.",
+          "markup": "<div data-docs-forms><fieldset disabled class=\"vstack gap-3\">\n  <legend>Unavailable settings</legend>\n  <div class=\"form-field\"><label class=\"form-label\" for=\"forms-disabled-name\">Disabled display name</label><input class=\"form-control\" id=\"forms-disabled-name\" type=\"text\" name=\"displayName\" value=\"Unavailable\"></div>\n  <div class=\"form-field\"><label class=\"form-label\" for=\"forms-disabled-select\">Disabled role</label><select class=\"form-control\" id=\"forms-disabled-select\" name=\"role\"><option>Viewer</option><option>Editor</option></select></div>\n  <div class=\"form-field\"><input class=\"check\" type=\"checkbox\" id=\"forms-disabled-updates\" name=\"updates\" checked><label for=\"forms-disabled-updates\">Managed updates</label></div>\n  <div><button class=\"btn-outline theme-inverse\" type=\"button\">Save unavailable settings</button></div>\n</fieldset></div>"
+        },
+        {
+          "title": "Checks, radios and switches",
+          "description": "Place check/radio on their native inputs. Put switch on a wrapper around a checkbox with role=switch. The browser owns checked state and same-name radio exclusion; no Forms plugin is involved.",
+          "markup": "<div data-docs-forms><div class=\"vstack gap-3\">\n  <div class=\"form-field\"><input class=\"check\" type=\"checkbox\" id=\"forms-choice-updates\" ><label for=\"forms-choice-updates\">Receive a weekly summary</label></div>\n  <fieldset class=\"form-group\"><legend>Billing schedule</legend><div class=\"form-field\"><input class=\"radio\" type=\"radio\" id=\"forms-choice-monthly\" name=\"forms-choice-billing\" value=\"monthly\" checked><label for=\"forms-choice-monthly\">Monthly</label></div><div class=\"form-field\"><input class=\"radio\" type=\"radio\" id=\"forms-choice-yearly\" name=\"forms-choice-billing\" value=\"yearly\"><label for=\"forms-choice-yearly\">Yearly</label></div></fieldset>\n  <div class=\"form-field\"><span class=\"switch\"><input type=\"checkbox\" role=\"switch\" id=\"forms-choice-notices\"></span><label for=\"forms-choice-notices\">Enable project notices</label></div>\n</div></div>"
+        },
+        {
+          "title": "Floating labels and input groups",
+          "description": "The floating label precedes its control; :has() reacts to focus/value. The input group supplements a persistent label and associates its path prefix as help. Input group Sass is in the components layer, unlike most form styles.",
+          "markup": "<div data-docs-forms><div class=\"vstack gap-3\">\n  <div class=\"form-floating\"><label for=\"forms-composition-workspace\">Workspace name</label><input class=\"form-control\" id=\"forms-composition-workspace\" name=\"workspace\" placeholder=\"Workspace name\" autocomplete=\"off\"></div>\n  <div><label class=\"form-label\" for=\"forms-composition-path\">Project path</label><div class=\"input-group\"><span class=\"input-group-text\" id=\"forms-composition-prefix\">/projects/</span><input class=\"form-control\" id=\"forms-composition-path\" name=\"path\" aria-describedby=\"forms-composition-prefix\" value=\"demo\"></div></div>\n</div></div>"
+        },
+        {
+          "title": "Responsive form layout",
+          "description": "Canonical md:col-6 columns share a row from md upward and stack below it. DOM order and visible labels stay unchanged.",
+          "markup": "<div data-docs-forms><div class=\"row g-3\"><div class=\"col-12 md:col-6\"><div class=\"form-field\"><label class=\"form-label\" for=\"forms-layout-demo-first\">First name</label><input class=\"form-control\" id=\"forms-layout-demo-first\" name=\"firstName\" autocomplete=\"given-name\"></div></div><div class=\"col-12 md:col-6\"><div class=\"form-field\"><label class=\"form-label\" for=\"forms-layout-demo-last\">Last name</label><input class=\"form-control\" id=\"forms-layout-demo-last\" name=\"lastName\" autocomplete=\"family-name\"></div></div></div></div>"
+        },
+        {
+          "title": "Application-owned validation and recovery",
+          "description": "This copied handler uses native validity, explicit is-invalid/aria-invalid state, persistent feedback, a focused summary and native reset. The summary uses ordinary border/spacing helpers; there is no core error-summary class.",
+          "markup": "<div data-docs-forms><form id=\"forms-validation\" data-docs-forms-validation novalidate class=\"vstack gap-3\">\n  <div class=\"border rounded-5 p-3 focus-ring\" tabindex=\"-1\" role=\"alert\" data-docs-forms-summary hidden><p><strong>Check the required details.</strong></p><ul class=\"mb-0\"><li><a href=\"#forms-validation-email\">Enter a valid email address.</a></li><li><a href=\"#forms-validation-code\">Use six uppercase letters or digits for the project code.</a></li></ul></div>\n  <div class=\"form-field\"><label class=\"form-label\" for=\"forms-validation-email\">Email address (required)</label><input class=\"form-control\" type=\"email\" name=\"email\" id=\"forms-validation-email\" required autocomplete=\"email\" aria-describedby=\"forms-validation-email-error\"><p class=\"invalid-feedback mb-0\" id=\"forms-validation-email-error\">Enter a valid email address.</p></div>\n  <div class=\"form-field\"><label class=\"form-label\" for=\"forms-validation-code\">Project code (required)</label><input class=\"form-control\" name=\"code\" id=\"forms-validation-code\" required pattern=\"[A-Z0-9]{6}\" maxlength=\"6\" aria-describedby=\"forms-validation-code-help forms-validation-code-error\"><p class=\"form-text mb-0\" id=\"forms-validation-code-help\">Use exactly six uppercase letters or digits.</p><p class=\"invalid-feedback mb-0\" id=\"forms-validation-code-error\">Enter a six-character code such as ABC123.</p></div>\n  <div class=\"d-flex flex-wrap gap-2\"><button class=\"btn-outline theme-inverse\" type=\"submit\" data-docs-forms-submit disabled>Check details locally</button><button class=\"btn-outline theme-inverse\" type=\"reset\">Reset validation</button></div>\n  <p class=\"form-text mb-0\" role=\"status\" data-docs-forms-status>No submission attempted.</p>\n</form></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Set theme/direction on a subtree; native controls remain labelled. The switch thumb uses logical position. Native select popup and validation UI can still vary by browser.",
+          "markup": "<div data-docs-forms><div data-trm-theme=\"dark\" dir=\"rtl\" lang=\"ar\" class=\"bg-body fg-body rounded-5 p-3 vstack gap-3\"><div class=\"form-field\"><label class=\"form-label\" for=\"forms-rtl-message\">رسالة المشروع</label><textarea class=\"form-control\" id=\"forms-rtl-message\" rows=\"3\" aria-describedby=\"forms-rtl-help\"></textarea><p class=\"form-text mb-0\" id=\"forms-rtl-help\">هذا مثال محلي ولا يتم إرسال الرسالة.</p></div><div class=\"form-field\"><span class=\"switch\"><input type=\"checkbox\" role=\"switch\" id=\"forms-rtl-notices\"></span><label for=\"forms-rtl-notices\">تفعيل إشعارات المشروع</label></div></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-control-checked-bg",
+          "defaultValue": "var(--trm-primary-base)",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-checked-border-color",
+          "defaultValue": "var(--trm-control-checked-bg)",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-active-bg",
+          "defaultValue": "var(--trm-primary-base)",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-active-border-color",
+          "defaultValue": "var(--trm-control-active-bg)",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-disabled-bg",
+          "defaultValue": "var(--trm-bg-3)",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-disabled-opacity",
+          "defaultValue": "0.65",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-transition-timing",
+          "defaultValue": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-input-fg",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-input-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-input-gap",
+          "defaultValue": "0.375rem",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-input-min-height",
+          "defaultValue": "2.375rem",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-input-padding-y",
+          "defaultValue": "0.375rem",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-input-padding-x",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-input-font-size",
+          "defaultValue": "var(--trm-body-font-size)",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-input-font-weight",
+          "defaultValue": "var(--trm-font-weight-normal)",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-input-line-height",
+          "defaultValue": "var(--trm-body-line-height)",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-input-border-radius",
+          "defaultValue": "var(--trm-radius-5)",
+          "purpose": "Default exported through $root-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-border-radius",
+          "defaultValue": "var(--trm-radius-5)",
+          "purpose": "Default exported through $form-control-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-placeholder-color",
+          "defaultValue": "var(--trm-fg-3)",
+          "purpose": "Default exported through $form-control-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-form-text-color",
+          "defaultValue": "var(--trm-fg-2)",
+          "purpose": "Default exported through $form-text-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-form-floating-height",
+          "defaultValue": "calc(3.75rem + var(--trm-border-width) * 2)",
+          "purpose": "Default exported through $form-floating-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "sass": "@use 'tremplin/scss/root' with (\n  $root-tokens: (--trm-btn-input-padding-x: .875rem)\n);\n@use 'tremplin/scss/forms/form-control' with (\n  $form-control-tokens: (--trm-control-border-radius: .75rem)\n);\n@use 'tremplin/scss';",
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Moves through enabled native controls in DOM order; disabled controls are skipped and readonly text remains focusable."
+        },
+        {
+          "keys": "Space",
+          "behavior": "Toggles a focused checkbox or switch. The switch label remains stable while checked conveys state."
+        },
+        {
+          "keys": "Arrow keys",
+          "behavior": "Changes native radio/select values according to browser/platform conventions; no custom form-wide key handler is installed."
+        },
+        {
+          "keys": "Enter",
+          "behavior": "Can submit a native form from supported controls. These local demos intercept submission after handlers are installed and do not send values."
+        }
+      ],
+      "guidelines": [
+        "Forms is a composition of CSS/native controls, not a Forms class or plugin. Most partials use the forms layer; Input group uses components. Enhanced Chips, Combobox, Datepicker, OTP, Range and Strength have separate component APIs.",
+        "Use form-control for native selects, check and radio on the input, and a switch wrapper for switch styling. Retired form-select/form-check/form-switch aliases are not strict core.",
+        "Provide visible labels and real input types, name/value, autocomplete and constraints appropriate for your application. Placeholder text is a hint, not a label. These examples deliberately use no real account or password submission.",
+        "Use fieldset/legend for related choices. Disabled values are omitted; readonly is only for supported text-like controls, not select/checkbox/radio. Fieldset does not automatically disable links or custom widgets.",
+        "Keep floating labels before their controls. Associate meaningful input-group addons with aria-describedby rather than replacing the visible label or accessible name.",
+        "Visual feedback does not set aria-invalid, generate error text, focus a summary or validate a server request. The copied local demo owns those tasks. data-trm-validate opts into native user-invalid styles; success additionally needs its valid token.",
+        "The representative token table mixes root shared properties with component-local map entries. Root input/button sizing is reused selectively; local defaults can override inheritance. Consult individual form topics for their complete maps.",
+        "Native controls work without framework JavaScript. Demo submission/inspection buttons start disabled until the application handlers are installed; this safety setup is documentation code, not core behavior."
+      ]
+    },
+    "example": "<div data-docs-forms><form id=\"forms-example\" data-docs-forms-preview class=\"vstack gap-3\">\n  <div class=\"form-field\"><label class=\"form-label\" for=\"forms-example-email\">Email address (required)</label><input class=\"form-control\" id=\"forms-example-email\" type=\"email\" name=\"email\" required autocomplete=\"email\" aria-describedby=\"forms-example-email-help\"><p class=\"form-text mb-0\" id=\"forms-example-email-help\">Use an example address for this local preview.</p></div>\n  <div class=\"form-field\"><label class=\"form-label\" for=\"forms-example-project\">Project name (required)</label><input class=\"form-control\" id=\"forms-example-project\" type=\"text\" name=\"project\" required autocomplete=\"off\"></div>\n  <div class=\"form-field\"><input class=\"check\" type=\"checkbox\" id=\"forms-example-updates\" name=\"updates\" value=\"yes\"><label for=\"forms-example-updates\">Include project updates</label></div>\n  <div class=\"d-flex flex-wrap gap-2\"><button class=\"btn-outline theme-inverse\" type=\"submit\" data-docs-forms-submit disabled>Check locally</button><button class=\"btn-outline theme-inverse\" type=\"reset\">Reset</button></div>\n  <p class=\"form-text mb-0\" role=\"status\" data-docs-forms-status>No submission attempted.</p>\n</form></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/forms/index.scss",
+    "applicationJavascript": "document.addEventListener('DOMContentLoaded', () => {\n  document.querySelectorAll('[data-docs-forms-preview]').forEach(form => {\n    const status = form.querySelector('[data-docs-forms-status]')\n    form.addEventListener('submit', event => {\n      event.preventDefault()\n      status.textContent = 'Valid locally. Nothing was sent or saved.'\n    })\n    form.addEventListener('reset', () => { status.textContent = 'No submission attempted.' })\n    form.querySelector('[data-docs-forms-submit]').disabled = false\n  })\n  document.querySelectorAll('[data-docs-forms-values]').forEach(form => {\n    const inspect = form.querySelector('[data-docs-forms-inspect]')\n    form.addEventListener('submit', event => event.preventDefault())\n    inspect.addEventListener('click', () => {\n      const names = [...new Set(new FormData(form).keys())]\n      form.querySelector('[data-docs-forms-status]').textContent = 'Included field names: ' + names.join(', ') + '. Disabled fields are omitted.'\n    })\n    inspect.disabled = false\n  })\n  document.querySelectorAll('[data-docs-forms-validation]').forEach(form => {\n    const fields = [...form.querySelectorAll('input')]\n    const summary = form.querySelector('[data-docs-forms-summary]')\n    const status = form.querySelector('[data-docs-forms-status]')\n    form.addEventListener('submit', event => {\n      event.preventDefault()\n      const invalid = fields.filter(field => !field.validity.valid)\n      fields.forEach(field => {\n        field.classList.toggle('is-invalid', !field.validity.valid)\n        field.setAttribute('aria-invalid', String(!field.validity.valid))\n      })\n      summary.querySelectorAll('li').forEach(item => {\n        const id = item.querySelector('a').getAttribute('href').slice(1)\n        item.hidden = !invalid.some(field => field.id === id)\n      })\n      summary.hidden = invalid.length === 0\n      status.textContent = invalid.length ? '' : 'Valid locally. Nothing was sent or saved.'\n      if (invalid.length) summary.focus()\n    })\n    form.addEventListener('reset', () => {\n      fields.forEach(field => { field.classList.remove('is-invalid'); field.removeAttribute('aria-invalid') })\n      summary.hidden = true\n      status.textContent = 'No submission attempted.'\n    })\n    form.querySelector('[data-docs-forms-submit]').disabled = false\n  })\n})",
+    "demoCss": "[data-docs-forms] { --trm-danger-fg: var(--trm-danger-fg-emphasis); }\n[data-docs-forms] .form-control { --trm-control-placeholder-color: var(--trm-fg-2); }",
+    "javascriptBehavior": "Forms is CSS/native-control composition, not a Forms JavaScript plugin. Native constraints, checked state and keyboard behavior come from the browser. The separately copied demo handler owns submission interception, summary/status updates and reset; individual enhanced widgets have their own modules."
+  },
+  {
+    "name": "status",
+    "title": "Status",
+    "description": "Status component documentation for Tremplin.",
+    "lead": "Pair readable state text with optional local status-dot styling and application-owned updates.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Semantic statuses",
+          "description": "Text conveys the meaning. The CSS-generated dot is decorative, not an independently labelled control.",
+          "markup": "<div class=\"d-flex flex-wrap align-items-center gap-3\"><span class=\"status status-success\">Operational</span><span class=\"status status-warning\">Maintenance</span><span class=\"status status-danger\">Outage</span><span class=\"status status-secondary\">Offline</span></div>"
+        },
+        {
+          "title": "Sizes",
+          "description": "These modifiers change the dot, not text size. Runtime tokens can also customize a subtree.",
+          "markup": "<div class=\"d-flex flex-wrap align-items-center gap-3\"><span class=\"status status-sm status-success\">Compact</span><span class=\"status status-info\">Default</span><span class=\"status status-lg status-warning\">Prominent</span></div>"
+        },
+        {
+          "title": "Live service update",
+          "description": "The existing polite live region is updated only by the copied application handler below. These buttons simulate a service state; no service is polled.",
+          "markup": "<div data-demo-status-root><p role=\"status\" id=\"service-demo-status\"><span class=\"status status-success\">All systems operational</span></p><div class=\"d-flex flex-wrap gap-2\"><button class=\"btn-outline theme-inverse\" type=\"button\" data-demo-status-state=\"warning\" data-demo-status-message=\"Demo service degraded; review in progress.\">Simulate degraded service</button><button class=\"btn-outline theme-inverse\" type=\"button\" data-demo-status-state=\"success\" data-demo-status-message=\"All systems operational\">Restore demo service</button></div></div>"
+        },
+        {
+          "title": "Pulsing activity",
+          "description": "Pulse is decorative, not a loading-completion signal. Reduced motion removes the animation.",
+          "markup": "<span class=\"status status-info status-pulse\" style=\"--trm-status-pulse-duration: 2s\">Processing import</span>"
+        },
+        {
+          "title": "Standalone decorative dot",
+          "description": "Do not put status-dot inside status: the latter already generates a dot. A standalone dot needs its own explicit token context and adjacent readable text.",
+          "markup": "<div class=\"d-flex flex-wrap align-items-center gap-3\"><span class=\"status-dot\" aria-hidden=\"true\" style=\"--trm-status-dot-size: .55rem; --trm-status-color: var(--trm-fg-2); --trm-status-ring-color: var(--trm-bg-body)\"></span><span>Manual review required</span></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "No automatic translation, update announcements or semantic mirroring is added by CSS.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"d-flex flex-wrap align-items-center gap-3\"><span class=\"status status-success\">Available</span><span class=\"status status-danger\">Unavailable</span></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-status-gap",
+          "defaultValue": "0.4rem",
+          "purpose": "Default exported through $status-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-status-dot-size",
+          "defaultValue": "0.55rem",
+          "purpose": "Default exported through $status-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-status-color",
+          "defaultValue": "var(--trm-fg-2)",
+          "purpose": "Default exported through $status-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-status-ring-color",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $status-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-status-pulse-duration",
+          "defaultValue": "1.5s",
+          "purpose": "Default exported through $status-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "None",
+          "behavior": "Static status text/dots are not focusable."
+        },
+        {
+          "keys": "Enter / Space",
+          "behavior": "Activates the native demo buttons. The application updates the pre-existing live region; CSS supplies no service controller."
+        }
+      ],
+      "guidelines": [
+        "This is an optional local extension in the custom layer, separate from the core distribution. Import tremplin/css/extensions after the core CSS.",
+        "Use visible text for every state. CSS-generated dots have empty content; motion/color never carries the only meaning.",
+        "Create role=status before updates and use ordinary textContent changes. Initial markup is not a guaranteed announcement.",
+        "Reduced motion disables status pulse; changing its duration does not create a completion or service-update mechanism.",
+        "status-dot has no token initialization of its own; use an appropriate token context. Do not add a second dot inside status.",
+        "The copied handler is a local simulation, not a Status API, server monitor or background polling task."
+      ],
+      "sass": "@use 'tremplin/scss/extensions/status' with ($status-tokens: (--trm-status-dot-size: .65rem, --trm-status-pulse-duration: 2s));"
+    },
+    "example": "<span class=\"status status-success\">Operational</span>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/extensions/_status.scss",
+    "applicationJavascript": "document.querySelectorAll('[data-demo-status-state]').forEach(button => {\n  button.addEventListener('click', () => {\n    const output = button.closest('[data-demo-status-root]').querySelector('.status')\n    output.classList.remove('status-success', 'status-warning')\n    output.classList.add('status-' + button.dataset.demoStatusState)\n    output.textContent = button.dataset.demoStatusMessage\n  })\n})",
+    "javascriptBehavior": "This optional CSS extension has no matching core JavaScript plugin. Any demonstrated dynamic action is application-owned and is disclosed below."
+  },
+  {
+    "name": "table",
+    "title": "Table",
+    "description": "Table component documentation for Tremplin.",
+    "lead": "Style semantic tables and responsive table wrappers.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Striped rows",
+          "description": "Odd tbody rows receive an inset accent layer; headers and any nested table are independently styled.",
+          "markup": "<div class=\"demo-contrast\">\n<table class=\"table table-striped\" ><caption>Recent invoices</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table>\n</div>"
+        },
+        {
+          "title": "Striped columns",
+          "description": "Even columns receive the accent, including column headers. This is independent from row striping.",
+          "markup": "<div class=\"demo-contrast\">\n<table class=\"table table-striped-columns\" ><caption>Column striping</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table>\n</div>"
+        },
+        {
+          "title": "Themes on tables, rows and cells",
+          "description": "Use theme-* rather than removed table-success aliases. Visible status labels carry meaning independently of color.",
+          "markup": "<div class=\"demo-contrast\">\n<table class=\"table theme-success\" ><caption>Themed invoice table</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table><table class=\"table \" ><caption>Row and cell themes</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr class=\"theme-warning\"><th scope=\"row\">#1044</th><td>Review pending</td><td>$380</td></tr><tr><th scope=\"row\">#1045</th><td class=\"theme-danger\">Payment failed</td><td>$120</td></tr><tr class=\"theme-info\"><th scope=\"row\">#1046</th><td>Processing</td><td>$90</td></tr></tbody></table>\n</div>"
+        },
+        {
+          "title": "Hover and active accents",
+          "description": "Hover only styles tbody cells; table-active can highlight a row or a cell. Neither makes a row clickable or selected.",
+          "markup": "<div class=\"demo-contrast\">\n<table class=\"table table-striped table-hover\" ><caption>Invoice accent states</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr class=\"table-active\"><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td class=\"table-active\">$560</td></tr></tbody></table>\n</div>"
+        },
+        {
+          "title": "Borders and border colors",
+          "description": "table-bordered adds row/cell borders; a border color utility can supply a consistent custom border.",
+          "markup": "<div class=\"demo-contrast\">\n<table class=\"table table-bordered border-primary\" ><caption>Bordered invoices</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table>\n</div>"
+        },
+        {
+          "title": "Borderless tables",
+          "description": "table-borderless removes the cell and group boundaries without removing native table semantics.",
+          "markup": "<div class=\"demo-contrast\">\n<table class=\"table table-borderless\" ><caption>Borderless invoices</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table>\n</div>"
+        },
+        {
+          "title": "Compact tables",
+          "description": "table-sm halves cell padding from .5rem to .25rem; the scoped table remains independently named.",
+          "markup": "<div class=\"demo-contrast\">\n<table class=\"table table-sm table-bordered\" ><caption>Compact invoices</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table>\n</div>"
+        },
+        {
+          "title": "Group dividers and footer",
+          "description": "Apply table-group-divider to the actual row group. A real tfoot contains totals, not unrelated page controls.",
+          "markup": "<div class=\"demo-contrast\">\n<table class=\"table\"><caption>Invoice totals</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody class=\"table-group-divider\"><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody><tfoot class=\"table-group-divider\"><tr><th scope=\"row\" colspan=\"2\">Total billed</th><td>$800</td></tr></tfoot></table>\n</div>"
+        },
+        {
+          "title": "Captions on top",
+          "description": "caption-top changes caption placement without hiding the table name.",
+          "markup": "<div class=\"demo-contrast\">\n<table class=\"table caption-top\" ><caption>Invoice register (top caption)</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table>\n</div>"
+        },
+        {
+          "title": "Vertical alignment",
+          "description": "thead stays bottom-aligned; tbody inherits from the table. Override a row or cell with real alignment utilities.",
+          "markup": "<div class=\"demo-contrast\">\n<table class=\"table align-middle\"><caption>Cell alignment</caption><thead><tr><th scope=\"col\">Service</th><th scope=\"col\">Notes</th></tr></thead><tbody><tr><th scope=\"row\">API</th><td>Middle alignment inherited from the table.<br>Additional detail keeps this row tall.</td></tr><tr class=\"align-bottom\"><th scope=\"row\">Web</th><td>Bottom alignment from the row.<br>Deployment review in progress.</td></tr><tr><th scope=\"row\" class=\"align-top\">Queue</th><td>Top alignment on this row header.<br>Background work is ready.</td></tr></tbody></table>\n</div>"
+        },
+        {
+          "title": "Independent nested tables",
+          "description": "Direct-child selectors isolate outer accents and borders. The inner table resets accent state; inherited theme custom properties still cascade unless explicitly overridden.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"table-responsive focus-ring\" role=\"region\" aria-label=\"Nested invoice tables\" tabindex=\"0\" ><table class=\"table table-striped table-bordered\" id=\"outer-invoice-table\"><caption>Invoice batches</caption><thead><tr><th scope=\"col\">Batch</th><th scope=\"col\">Contents</th></tr></thead><tbody><tr><th scope=\"row\">November</th><td><table class=\"table mb-0\" ><caption>Nested batch invoices</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table></td></tr></tbody></table></div>\n</div>"
+        },
+        {
+          "title": "Card-like tables",
+          "description": "table-card belongs on a wrapper, clips corners and removes the final row border. The utility composition below uses the actual radius class rounded-7.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"table-card\"><table class=\"table table-striped\" ><caption>Invoice card</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table></div><div class=\"border rounded-7 overflow-hidden\"><table class=\"table table-striped mb-0\" ><caption>Utility-composed invoice card</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table></div>\n</div>"
+        },
+        {
+          "title": "Always horizontally scrollable",
+          "description": "The named focusable wrapper retains all columns. Scroll with a keyboard or pointer; clipping can hide menus and other overflowing widgets.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"table-responsive focus-ring\" role=\"region\" aria-label=\"Quarterly revenue table\" tabindex=\"0\" id=\"table-scroll-demo\"><table class=\"table table-striped\" style=\"min-inline-size: 58rem\"><caption>Quarterly revenue by product</caption><thead><tr><th scope=\"col\">Product</th><th scope=\"col\">Q1</th><th scope=\"col\">Q2</th><th scope=\"col\">Q3</th><th scope=\"col\">Q4</th><th scope=\"col\">Forecast</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr><th scope=\"row\">Platform</th><td>$24k</td><td>$27k</td><td>$31k</td><td>$36k</td><td>$40k</td><td>Ana Brooks</td></tr><tr><th scope=\"row\">Services</th><td>$8k</td><td>$11k</td><td>$12k</td><td>$14k</td><td>$18k</td><td>Lee Martin</td></tr></tbody></table></div>\n</div>"
+        },
+        {
+          "title": "sm:table-responsive",
+          "description": "The prefix controls overflow using a viewport media query in the pinned implementation. It always establishes an inline-size query container; this is not a container-width overflow switch.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"sm:table-responsive focus-ring\" role=\"region\" aria-label=\"sm responsive invoice region\" tabindex=\"0\" ><table class=\"table \" ><caption>sm responsive invoices</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table></div>\n</div>"
+        },
+        {
+          "title": "md:table-responsive",
+          "description": "The prefix controls overflow using a viewport media query in the pinned implementation. It always establishes an inline-size query container; this is not a container-width overflow switch.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"md:table-responsive focus-ring\" role=\"region\" aria-label=\"md responsive invoice region\" tabindex=\"0\" ><table class=\"table \" ><caption>md responsive invoices</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table></div>\n</div>"
+        },
+        {
+          "title": "lg:table-responsive",
+          "description": "The prefix controls overflow using a viewport media query in the pinned implementation. It always establishes an inline-size query container; this is not a container-width overflow switch.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"lg:table-responsive focus-ring\" role=\"region\" aria-label=\"lg responsive invoice region\" tabindex=\"0\" ><table class=\"table \" ><caption>lg responsive invoices</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table></div>\n</div>"
+        },
+        {
+          "title": "xl:table-responsive",
+          "description": "The prefix controls overflow using a viewport media query in the pinned implementation. It always establishes an inline-size query container; this is not a container-width overflow switch.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"xl:table-responsive focus-ring\" role=\"region\" aria-label=\"xl responsive invoice region\" tabindex=\"0\" ><table class=\"table \" ><caption>xl responsive invoices</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table></div>\n</div>"
+        },
+        {
+          "title": "2xl:table-responsive",
+          "description": "The prefix controls overflow using a viewport media query in the pinned implementation. It always establishes an inline-size query container; this is not a container-width overflow switch.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"2xl:table-responsive focus-ring\" role=\"region\" aria-label=\"2xl responsive invoice region\" tabindex=\"0\" ><table class=\"table \" ><caption>2xl responsive invoices</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table></div>\n</div>"
+        },
+        {
+          "title": "Responsive card wrapper",
+          "description": "Combine table-responsive and table-card on the same wrapper, with a keyboard name when overflow is possible.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"table-responsive table-card focus-ring\" role=\"region\" aria-label=\"Scrollable revenue card\" tabindex=\"0\" ><table class=\"table table-striped\" style=\"min-inline-size: 58rem\"><caption>Revenue card</caption><thead><tr><th scope=\"col\">Product</th><th scope=\"col\">Q1</th><th scope=\"col\">Q2</th><th scope=\"col\">Q3</th><th scope=\"col\">Q4</th><th scope=\"col\">Forecast</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr><th scope=\"row\">Platform</th><td>$24k</td><td>$27k</td><td>$31k</td><td>$36k</td><td>$40k</td><td>Ana Brooks</td></tr><tr><th scope=\"row\">Services</th><td>$8k</td><td>$11k</td><td>$12k</td><td>$14k</td><td>$18k</td><td>Lee Martin</td></tr></tbody></table></div>\n</div>"
+        },
+        {
+          "title": "Always stacked rows",
+          "description": "table-stacked always displays row cells as blocks. Real headers remain in a visually hidden thead; data-cell supplies visual labels. Explicit matching table roles help preserve semantics when CSS changes display, but are not manual assistive-technology certification.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"table-responsive focus-ring\" role=\"region\" aria-label=\"Always stacked team region\" tabindex=\"0\" ><table class=\"table table-stacked\" role=\"table\"><caption>Always stacked team</caption><thead role=\"rowgroup\"><tr role=\"row\"><th role=\"columnheader\" scope=\"col\">Name</th><th role=\"columnheader\" scope=\"col\">Role</th><th role=\"columnheader\" scope=\"col\">Status</th></tr></thead><tbody role=\"rowgroup\"><tr role=\"row\"><td role=\"cell\" data-cell=\"Name\">Ana</td><td role=\"cell\" data-cell=\"Role\">Designer</td><td role=\"cell\" data-cell=\"Status\">Available</td></tr><tr role=\"row\"><td role=\"cell\" data-cell=\"Name\">Lee</td><td role=\"cell\" data-cell=\"Role\">Developer</td><td role=\"cell\" data-cell=\"Status\">Reviewing</td></tr></tbody></table></div>\n</div>"
+        },
+        {
+          "title": "Container-responsive stacking",
+          "description": "md:table-stacked activates below the wrapper container width of 768px, independent of the viewport. The first td becomes the title; later td elements display their data-cell labels.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"table-responsive focus-ring\" role=\"region\" aria-label=\"Responsive stacked team region\" tabindex=\"0\" id=\"table-stack-demo\" style=\"max-inline-size: 60rem\"><table class=\"table md:table-stacked\" role=\"table\"><caption>Responsive stacked team</caption><thead role=\"rowgroup\"><tr role=\"row\"><th role=\"columnheader\" scope=\"col\">Name</th><th role=\"columnheader\" scope=\"col\">Role</th><th role=\"columnheader\" scope=\"col\">Status</th></tr></thead><tbody role=\"rowgroup\"><tr role=\"row\"><td role=\"cell\" data-cell=\"Name\">Ana</td><td role=\"cell\" data-cell=\"Role\">Designer</td><td role=\"cell\" data-cell=\"Status\">Available</td></tr><tr role=\"row\"><td role=\"cell\" data-cell=\"Name\">Lee</td><td role=\"cell\" data-cell=\"Role\">Developer</td><td role=\"cell\" data-cell=\"Status\">Reviewing</td></tr></tbody></table></div>\n</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Direction and color mode follow the surrounding context; use explicit text rather than colors alone to describe invoice states.",
+          "markup": "<div class=\"demo-contrast\">\n<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><table class=\"table table-striped table-hover\" ><caption>Localized invoice register</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table></div>\n</div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-table-cell-padding-y",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-cell-padding-x",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-cell-vertical-align",
+          "defaultValue": "top",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-accent-bg",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-group-separator-color",
+          "defaultValue": "currentcolor",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-striped-color",
+          "defaultValue": "var(--trm-table-color)",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-striped-bg-factor",
+          "defaultValue": "5%",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-active-color",
+          "defaultValue": "var(--trm-table-color)",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-active-bg-factor",
+          "defaultValue": "10%",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-hover-color",
+          "defaultValue": "var(--trm-table-color)",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-table-hover-bg-factor",
+          "defaultValue": "7.5%",
+          "purpose": "Default exported through $table-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Native controls and the explicitly focusable named scrolling regions enter the tab order. Table rows are not focusable grid items."
+        },
+        {
+          "keys": "Arrow keys",
+          "behavior": "A focused overflowing wrapper can scroll through native browser behavior. No cell-navigation or sorting plugin is installed."
+        }
+      ],
+      "guidelines": [
+        "Table styling is opt-in: use .table. Captions and scoped column/row headers remain the semantic foundation; this is not an ARIA grid.",
+        "Theme classes apply to a table, row or cell. The inset shadow accent cascade prefers state over stripe over theme/base colors; text and borders use corresponding theme tokens.",
+        "Direct-child selectors and reset accent variables keep nested table accents independent. Theme custom properties inherited from an ancestor are not magically erased.",
+        "table-responsive establishes an inline-size query container and horizontal scrolling. Prefixed responsive overflow is controlled by viewport media queries, whereas prefixed table-stacked rules use container queries; do not conflate them.",
+        "Use sm:, md:, lg:, xl: and 2xl: prefixes, not suffix-style table-responsive-md. Stacked tables require a query container and data-cell on td elements for visual labels.",
+        "Stacking changes CSS display but keeps real headers. Generated labels supplement rather than replace header associations; validate real screen readers for your data before release.",
+        "Name and focus overflow regions for keyboard access. Overflow clipping may hide menus/tooltips; do not promise those widgets can escape it.",
+        "Hover and active classes are visual accents, not row selection, sorting or fetching. Those features belong to application code, not a Table plugin."
+      ],
+      "sass": "@use 'tremplin/scss/content/tables' with (\n  $table-tokens: (\n    --trm-table-cell-padding-x: .75rem,\n    --trm-table-striped-bg-factor: 8%,\n    --trm-table-hover-bg-factor: 12%\n  ),\n  $table-striped-order: even,\n  $table-striped-columns-order: odd\n);"
+    },
+    "example": "<div class=\"demo-contrast\">\n<table class=\"table \" ><caption>Recent invoices</caption><thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Customer</th><th scope=\"col\">Total</th></tr></thead><tbody><tr><th scope=\"row\">#1042</th><td>Acme Studio</td><td>$240</td></tr><tr><th scope=\"row\">#1043</th><td>Northstar</td><td>$560</td></tr></tbody></table>\n</div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/content/_tables.scss",
+    "isolationCss": ".docs-main .docs-example .table > :not(caption) > * > * {\n  padding: revert-layer;\n  border-block-end: revert-layer;\n  text-align: revert-layer;\n}",
+    "javascriptBehavior": "Table is opt-in CSS with native table semantics. There is no Table plugin, automatic sorting, selection, pagination or cell-navigation controller."
+  },
+  {
+    "name": "timeline",
+    "title": "Timeline",
+    "description": "Timeline component documentation for Tremplin.",
+    "lead": "Present chronological list content with an optional local timeline layout.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Chronological history",
+          "description": "An ordered list preserves sequence; role=list explicitly preserves the list contract when list-style is removed. time supplies machine-readable values.",
+          "markup": "<ol class=\"timeline\" role=\"list\" aria-label=\"Project history\"><li class=\"timeline-item\"><h3 class=\"timeline-title\">Project created</h3><time class=\"timeline-time\" datetime=\"2026-10-24T09:30:00+05:30\">24 October, 09:30</time><div class=\"timeline-content\"><p>The workspace was created.</p></div></li><li class=\"timeline-item\"><h3 class=\"timeline-title\">Review requested</h3><time class=\"timeline-time\" datetime=\"2026-10-25T11:15:00+05:30\">25 October, 11:15</time><div class=\"timeline-content\"><p>A review was requested.</p></div></li></ol>"
+        },
+        {
+          "title": "Semantic events",
+          "description": "Marker colors supplement explicit event text, not independent state announcements. DOM order remains chronological.",
+          "markup": "<ol class=\"timeline\" role=\"list\" aria-label=\"Deployment history\"><li class=\"timeline-item timeline-item-success\"><h3 class=\"timeline-title\">Build passed</h3><p>Checks completed.</p></li><li class=\"timeline-item timeline-item-warning\"><h3 class=\"timeline-title\">Approval pending</h3><p>Waiting for a reviewer.</p></li><li class=\"timeline-item timeline-item-danger\"><h3 class=\"timeline-title\">Release blocked</h3><p>A migration needs attention.</p></li></ol>"
+        },
+        {
+          "title": "Compact activity",
+          "description": "Compact reduces gap, offset and marker size; it does not collapse events or fetch further activity.",
+          "markup": "<ol class=\"timeline timeline-compact\" role=\"list\" aria-label=\"Recent activity\"><li class=\"timeline-item\"><strong>Amélie</strong> updated the brief</li><li class=\"timeline-item\"><strong>Noah</strong> added a comment</li><li class=\"timeline-item\"><strong>Lina</strong> approved the design</li></ol>"
+        },
+        {
+          "title": "Horizontal milestones",
+          "description": "The list itself owns overflow, so it is the named, focusable scroll target. The border line spans the box, not an endlessly extending canvas. No roving arrow-key controller is supplied.",
+          "markup": "<ol class=\"timeline timeline-horizontal focus-ring\" role=\"list\" aria-label=\"Release milestones\" tabindex=\"0\" id=\"horizontal-timeline-demo\"><li class=\"timeline-item\"><h3 class=\"timeline-title\">Plan</h3><time class=\"timeline-time\" datetime=\"2026-07\">July</time></li><li class=\"timeline-item\"><h3 class=\"timeline-title\">Design</h3><time class=\"timeline-time\" datetime=\"2026-08\">August</time></li><li class=\"timeline-item\"><h3 class=\"timeline-title\">Build</h3><time class=\"timeline-time\" datetime=\"2026-09\">September</time></li><li class=\"timeline-item\"><h3 class=\"timeline-title\">Review</h3><time class=\"timeline-time\" datetime=\"2026-10\">October</time></li><li class=\"timeline-item\"><h3 class=\"timeline-title\">Launch</h3><time class=\"timeline-time\" datetime=\"2026-11\">November</time></li></ol>"
+        },
+        {
+          "title": "Custom spacing and native links",
+          "description": "Token changes affect presentation only. An actual native link provides navigation; events are not made focusable just to look interactive.",
+          "markup": "<ol class=\"timeline\" role=\"list\" aria-label=\"Linked project history\" style=\"--trm-timeline-gap: 2rem\"><li class=\"timeline-item\"><h3 class=\"timeline-title\"><a href=\"/guides/quickstart/\">Read the quickstart</a></h3><div class=\"timeline-content\"><p>Prepare your first application.</p></div></li></ol>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Logical line/marker positions follow direction while the DOM and time ordering stay unchanged.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><ol class=\"timeline\" role=\"list\" aria-label=\"Localized project history\"><li class=\"timeline-item\"><h3 class=\"timeline-title\">Project created</h3><time class=\"timeline-time\" datetime=\"2026-10-24T09:30:00+05:30\">24 October, 09:30</time><div class=\"timeline-content\"><p>The workspace was created.</p></div></li><li class=\"timeline-item\"><h3 class=\"timeline-title\">Review requested</h3><time class=\"timeline-time\" datetime=\"2026-10-25T11:15:00+05:30\">25 October, 11:15</time><div class=\"timeline-content\"><p>A review was requested.</p></div></li></ol></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-timeline-gap",
+          "defaultValue": "1.5rem",
+          "purpose": "Default exported through $timeline-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-timeline-offset",
+          "defaultValue": "1.5rem",
+          "purpose": "Default exported through $timeline-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-timeline-line-width",
+          "defaultValue": "2px",
+          "purpose": "Default exported through $timeline-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-timeline-line-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $timeline-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-timeline-marker-size",
+          "defaultValue": "0.8rem",
+          "purpose": "Default exported through $timeline-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-timeline-marker-bg",
+          "defaultValue": "var(--trm-primary-base)",
+          "purpose": "Default exported through $timeline-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-timeline-marker-ring",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $timeline-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-timeline-time-color",
+          "defaultValue": "var(--trm-fg-2)",
+          "purpose": "Default exported through $timeline-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Visits real links and the explicitly focusable scrolling list. Events are not roving-tabindex widgets."
+        },
+        {
+          "keys": "Arrow keys",
+          "behavior": "Native scrolling on the focused horizontal list; no event-selection controller is supplied."
+        }
+      ],
+      "guidelines": [
+        "This optional local extension provides CSS, not an activity API.",
+        "Use chronological DOM order, meaningful headings and valid time datetime values. Direction does not reverse the data sequence.",
+        "role=list preserves list intent when presentation removes native markers; do not add arbitrary tabindex to events.",
+        "Make the actual horizontal scrolling element named and focusable. Focusing an outer non-scrolling div is not sufficient.",
+        "The horizontal connector follows the element box, not every offscreen event; do not promise a virtualized infinite connector.",
+        "Use links for real destinations. CSS has no fetch, expand, keyboard-selection or automatic live-update policy."
+      ],
+      "sass": "@use 'tremplin/scss/extensions/timeline' with ($timeline-tokens: (--trm-timeline-gap: 2rem, --trm-timeline-marker-bg: var(--trm-success-base)));"
+    },
+    "example": "<ol class=\"timeline\" role=\"list\" aria-label=\"Project chronology\"><li class=\"timeline-item\"><h3 class=\"timeline-title\">Project created</h3><time class=\"timeline-time\" datetime=\"2026-10-24T09:30:00+05:30\">24 October, 09:30</time><div class=\"timeline-content\"><p>The workspace was created.</p></div></li><li class=\"timeline-item\"><h3 class=\"timeline-title\">Review requested</h3><time class=\"timeline-time\" datetime=\"2026-10-25T11:15:00+05:30\">25 October, 11:15</time><div class=\"timeline-content\"><p>A review was requested.</p></div></li></ol>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/extensions/_timeline.scss",
+    "javascriptBehavior": "This optional CSS extension has no matching core JavaScript plugin. Any demonstrated dynamic action is application-owned and is disclosed below."
+  }
+]

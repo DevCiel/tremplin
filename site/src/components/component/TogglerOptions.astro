@@ -1,0 +1,4 @@
+---
+import { togglerOptionRows } from '../../data/adaptive-navigation-docs'
+---
+<div class="table-responsive" tabindex="0" role="region" aria-label="Scrollable Toggler options"><table class="table"><thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Purpose</th></tr></thead><tbody>{togglerOptionRows.map(option => <tr><td><code>{option.name}</code></td><td><code>{option.type}</code></td><td><code>{option.defaultValue}</code></td><td>{option.description}</td></tr>)}</tbody></table></div>

@@ -1,0 +1,145 @@
+@use "functions" as *;
+@use "mixins/border-radius" as *;
+@use "mixins/focus-ring" as *;
+@use "mixins/tokens" as *;
+
+$chip-tokens: () !default;
+
+// stylelint-disable custom-property-no-missing-var-function
+// scss-docs-start chip-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$chip-tokens: defaults(
+  (
+    --trm-chip-height: 1.75rem,
+    --trm-chip-padding-x: .625rem,
+    --trm-chip-gap: .3125rem,
+    --trm-chip-border-radius: var(--trm-radius-pill),
+    --trm-chip-img-size: 1.25rem,
+    --trm-chip-icon-size: 1rem,
+    --trm-chip-dismiss-size: 1rem,
+    --trm-chip-dismiss-opacity: .65,
+    --trm-chip-dismiss-hover-opacity: 1,
+    --trm-chip-color: var(--trm-theme-fg, var(--trm-fg-body)),
+    --trm-chip-bg: var(--trm-theme-bg-subtle, var(--trm-bg-2)),
+    --trm-chip-border-color: transparent,
+    --trm-chip-selected-color: var(--trm-theme-contrast, var(--trm-primary-contrast)),
+    --trm-chip-selected-bg: var(--trm-theme-bg, var(--trm-primary-bg)),
+    --trm-chip-selected-border-color: var(--trm-theme-bg, var(--trm-primary-bg)),
+  ),
+  $chip-tokens
+);
+// scss-docs-end chip-tokens
+// stylelint-enable custom-property-no-missing-var-function
+
+@layer components {
+  .chip {
+    @include tokens($chip-tokens);
+
+    display: inline-flex;
+    gap: var(--trm-chip-gap);
+    align-items: center;
+    height: var(--trm-chip-height);
+    padding-inline: var(--trm-chip-padding-x);
+    font-size: var(--trm-chip-font-size, var(--trm-font-size-sm));
+    font-weight: var(--trm-chip-font-weight, var(--trm-font-weight-base));
+    line-height: var(--trm-chip-line-height, 1.25rem);
+    color: var(--trm-chip-color);
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: var(--trm-chip-bg);
+    border: var(--trm-border-width) solid var(--trm-chip-border-color);
+    @include border-radius(var(--trm-chip-border-radius));
+
+    &:hover {
+      --trm-chip-bg: var(--trm-theme-bg-muted, var(--trm-bg-3));
+    }
+
+    &:focus-visible {
+      outline: 0;
+    }
+
+    &.active {
+      --trm-chip-color: var(--trm-chip-selected-color);
+      --trm-chip-bg: var(--trm-chip-selected-bg);
+      --trm-chip-border-color: var(--trm-chip-selected-border-color);
+
+      &:hover {
+        --trm-chip-bg: var(--trm-chip-selected-bg);
+        opacity: .9;
+      }
+    }
+
+    &.disabled,
+    &:disabled {
+      pointer-events: none;
+      opacity: .65;
+    }
+  }
+
+  .chip-img {
+    width: var(--trm-chip-img-size);
+    height: var(--trm-chip-img-size);
+    @include border-radius(50%);
+
+    &:first-child {
+      margin-inline-start: -.375rem;
+    }
+  }
+
+  // Chip icon (left side)
+  .chip-icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    margin-inline-start: calc(var(--trm-chip-gap) * -.25);
+
+    > svg {
+      display: block; // Prevents baseline alignment issues
+      width: var(--trm-chip-icon-size);
+      height: var(--trm-chip-icon-size);
+    }
+
+    > img {
+      width: var(--trm-chip-icon-size);
+      height: var(--trm-chip-icon-size);
+      object-fit: cover;
+      @include border-radius(50%);
+    }
+  }
+
+  // Dismiss button (right side)
+  .chip-dismiss {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: var(--trm-chip-dismiss-size);
+    height: var(--trm-chip-dismiss-size);
+    padding: 0;
+    margin-inline-end: calc(var(--trm-chip-padding-x) * -.25);
+    color: inherit;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    opacity: var(--trm-chip-dismiss-opacity);
+
+    &:hover {
+      opacity: var(--trm-chip-dismiss-hover-opacity);
+    }
+
+    &:focus-visible {
+      outline: 0;
+      opacity: 1;
+      @include focus-ring();
+    }
+
+    > svg {
+      display: block; // Prevents baseline alignment issues
+      width: var(--trm-chip-dismiss-size);
+      height: var(--trm-chip-dismiss-size);
+    }
+  }
+}

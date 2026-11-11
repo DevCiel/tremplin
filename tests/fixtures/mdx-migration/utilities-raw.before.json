@@ -1,0 +1,2835 @@
+[
+  {
+    "slug": "utilities/api",
+    "group": "Utilities",
+    "title": "Utility API",
+    "description": "Generate and customize utility families with the Tremplin Sass API.",
+    "lead": "Configure utility families with Sass maps, canonical prefixes and explicit composition properties.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "API explained",
+        "paragraphs": [
+          "Tremplin generates utility families from its configurable Sass map. Configure the utilities map before loading an entry. Custom family definitions replace existing definitions shallowly; they do not merge every nested option automatically.",
+          "Both the full entry and the focused utilities entry accept the utilities map. The focused entry includes root tokens, helpers and mapped utilities, not Reboot or components. Configure the shared config module first when changing breakpoint or spacing maps. This guide describes the pinned source, including limitations rather than compatibility aliases."
+        ]
+      },
+      {
+        "heading": "Options",
+        "table": {
+          "keyboardScroll": true,
+          "headings": [
+            "Key",
+            "Type / default",
+            "Meaning"
+          ],
+          "rows": [
+            [
+              "property",
+              "Required string, list or map",
+              "Properties to assign; maps supply per-property defaults."
+            ],
+            [
+              "values",
+              "Required scalar, list or map",
+              "Utility values and optional class suffix keys."
+            ],
+            [
+              "class",
+              "Optional",
+              "Explicit class prefix; scalar/list properties otherwise use their first property. Null makes value keys the class names."
+            ],
+            [
+              "selector",
+              "class",
+              "class, attr-starts or attr-includes."
+            ],
+            [
+              "child-selector",
+              "Unset",
+              "Appended selector wrapped together with its parent in :where()."
+            ],
+            [
+              "variables",
+              "Unset",
+              "Static variable map or variable names receiving each value; see the namespace limitation below."
+            ],
+            [
+              "responsive",
+              "false",
+              "Generate viewport breakpoint prefixes."
+            ],
+            [
+              "state",
+              "Empty list",
+              "Explicit pseudo-class names such as hover focus-visible. Not a boolean switch."
+            ],
+            [
+              "print",
+              "false",
+              "Generate print-prefixed classes in print media."
+            ],
+            [
+              "dark",
+              "false",
+              "Generate dark-prefixed classes in the OS color-scheme media query."
+            ],
+            [
+              "important",
+              "false",
+              "Add importance to this family only."
+            ],
+            [
+              "enabled",
+              "true",
+              "False suppresses all family output and property registration."
+            ]
+          ]
+        },
+        "paragraphs": [
+          "Missing required keys, invalid selector modes and malformed boolean flags produce Sass errors when the family is generated. Unknown keys warn. State identifiers and attribute patterns are not fully validated: use trusted build-time configuration and inspect generated CSS. A disabled family is omitted before those generator checks."
+        ]
+      },
+      {
+        "heading": "Canonical variant names",
+        "example": "<div class=\"d-flex flex-column md:flex-row gap-2 md:gap-3\" data-utility-api-demo=\"responsive\"><span class=\"border rounded p-2\">Stacked below md</span><span class=\"border rounded p-2\">Inline from md</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-flex flex-column md:flex-row gap-2 md:gap-3\">\n  <span>Stacked below md</span><span>Inline from md</span>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "Write colons literally in HTML; CSS selectors escape them. md:d-flex uses the 768px viewport minimum. The canonical default tiers are xs, sm, md, lg, xl and 2xl. Infix forms and xxl aliases are not generated.",
+          "Variants exist only when the family enables them. Display is responsive by default but has no default print variants. Opacity does not have automatic hover/focus variants. A custom family with state: hover focus-visible can generate hover:project-fade-50 and md:focus-visible:project-fade-50. Use an empty list to omit states; true and false generate literal unusable pseudo-class names rather than expanding to hover/focus.",
+          "Base and viewport rules are emitted first, print follows, and OS-dark rules come last. dark: uses prefers-color-scheme, independently of data-trm-theme. These are viewport/media variants, not container queries."
+        ]
+      },
+      {
+        "heading": "Property and value formats",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/tremplin-utilities' with (\n  $utilities: (\n    'inline-padding': (property: padding-inline-start padding-inline-end, class: project-px, values: (2: .5rem)),\n    'cursor': (property: cursor, values: pointer wait),\n    'type-size': (property: (font-size: 1rem, line-height: 1.5), class: project-type, values: (small: (font-size: .875rem)))\n  )\n);"
+          }
+        ],
+        "paragraphs": [
+          "A property list receives the same value on every property. A property map supplies defaults overridden by per-value property maps. A scalar value or null value key has no suffix; an explicit null class uses the value key as the class name.",
+          "A named null value does not universally remove a class: property-map defaults are still emitted at this pin. Scalar-property nulls omit their declaration. Remove a whole family with null or replace its values map deliberately rather than assuming a null value erases every generated rule."
+        ]
+      },
+      {
+        "heading": "Composition properties",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/tremplin-utilities' with (\n  $utilities: (\n    'project-tone': (\n      property: ('--project-tone': null, color: var(--project-tone)),\n      class: project-tone, values: (brand: #075985)\n    )\n  )\n);"
+          },
+          {
+            "language": "html",
+            "source": "<p class=\"project-tone-brand\">Composed color</p>"
+          }
+        ],
+        "paragraphs": [
+          "Explicit custom property names in property are preserved exactly. Assigned custom properties are registered globally once with syntax: \"*\" and inherits: false; referenced root/theme tokens are not registered merely because they appear in a value. Normal color still inherits into descendants even when the private composition property does not.",
+          "Use explicit property maps when matching emitted names to non-inheriting registrations matters. This pattern avoids the separate variables helper namespace mismatch."
+        ]
+      },
+      {
+        "heading": "Variables helper limitation",
+        "table": {
+          "keyboardScroll": true,
+          "headings": [
+            "Definition",
+            "Emitted name",
+            "Registered name"
+          ],
+          "rows": [
+            [
+              "property: --project-tone",
+              "--project-tone",
+              "--project-tone"
+            ],
+            [
+              "variables: project-tone",
+              "--trm-project-tone",
+              "--project-tone"
+            ],
+            [
+              "variables: --project-tone",
+              "--trm---project-tone",
+              "----project-tone"
+            ]
+          ]
+        },
+        "paragraphs": [
+          "The variables helper always prefixes emitted names with --trm-, while its registration pass prepends only -- to the supplied key. These names disagree at this pin. Actual helper-emitted variables can therefore inherit; do not assume the registration isolates them. Pre-prefixed or empty keys are not normalized or rejected consistently.",
+          "A variables map emits static values; a scalar/list receives the current utility value. This guide records that behavior rather than silently patching the clone. Prefer the explicit property-map example above for predictable composition and keep variable names non-empty trusted literals."
+        ]
+      },
+      {
+        "heading": "Attribute selectors",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/tremplin-utilities' with (\n  $utilities: (\n    'project-pattern': (\n      selector: attr-starts, class: 'project-card-',\n      property: padding-inline-start, values: 6px\n    )\n  )\n);"
+          }
+        ],
+        "paragraphs": [
+          "attr-starts matches the start of the entire class attribute. A different class written first prevents a match. attr-includes matches a substring anywhere, including within another class name; neither is a whitespace-separated class-token selector. Value suffixes and responsive/print/dark prefixes do not change the attribute pattern itself.",
+          "A class key is required, but empty/null patterns and attribute-state combinations are not rejected semantically. Attribute states produce an unrelated empty-name class selector, not a useful state-qualified attribute rule. Use class selector mode for states.",
+          "Patterns are interpolated into CSS without automatic double-quote escaping. A literal double quote can cause a Sass selector parse error; backslashes require deliberate Sass/CSS escaping. Avoid complex or untrusted patterns instead of relying on validation the pin does not provide."
+        ]
+      },
+      {
+        "heading": "Child selectors",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/tremplin-utilities' with (\n  $utilities: (\n    'project-space': (\n      property: margin-block-start, class: project-space,\n      child-selector: '> * + *', responsive: true, state: hover,\n      values: (3: 1rem)\n    )\n  )\n);"
+          }
+        ],
+        "paragraphs": [
+          "The entire selector is wrapped in :where(), including compound prefixes and pseudo-classes, for zero selector specificity. This targets the requested children rather than the parent. Normal cascade layers, importance and source order still apply. Do not assume HTML class order chooses a winner."
+        ]
+      },
+      {
+        "heading": "Add utilities",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/tremplin-utilities' with (\n  $utilities: (\n    'project-cursor': (property: cursor, class: project-cursor, responsive: true, values: (pointer: pointer)),\n    'project-fade': (property: opacity, class: project-fade, responsive: true, print: true, dark: true, state: hover focus-visible, values: (50: .5))\n  )\n);"
+          },
+          {
+            "language": "html",
+            "source": "<!-- Compile the custom map above before using these classes. -->\n<button class=\"md:project-cursor-pointer hover:project-fade-50\" type=\"button\">Custom utility example</button>\n<p class=\"print:project-fade-50 dark:project-fade-50\">Explicit print and dark variants</p>"
+          }
+        ],
+        "paragraphs": [
+          "Custom definitions join the default map. Supply explicit state names and opt into print/dark as needed. CSS opacity affects the entire element, including text and focus indicators; check contrast and do not use opacity to communicate status by itself."
+        ]
+      },
+      {
+        "heading": "Override and remove utilities",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/tremplin-utilities' with (\n  $utilities: (\n    'float': null,\n    'opacity': (property: opacity, class: opacity, state: hover, values: (50: .5, 100: 1)),\n    'cursor': (enabled: false)\n  )\n);"
+          }
+        ],
+        "paragraphs": [
+          "A family replacement is shallow: include property, values and every desired flag. This example removes floats, replaces opacity values and states, and omits the disabled cursor family. Null, false and disabled definitions do not emit registration or variant output."
+        ]
+      },
+      {
+        "heading": "Importance",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/tremplin-utilities' with (\n  $utilities: (\n    'project-display': (property: display, class: project-display, important: true, values: (flex: flex))\n  )\n);"
+          }
+        ],
+        "paragraphs": [
+          "Utility property declarations have normal priority by default. important: true applies to property declarations in the selected family in every generated mode. Declarations emitted through the separate variables helper remain normal; explicit property-map assignments obey the property importance flag. There is no global enable-important-utilities switch. Helper/Reboot declarations have their own contracts, so this option is not a framework-wide removal of importance."
+        ]
+      },
+      {
+        "heading": "Motion and preferences",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/tremplin-utilities' with (\n  $utilities: (\n    'project-motion': (property: animation, class: project-motion, responsive: true, state: hover, values: (pop: animation-pop .3s ease both))\n  )\n);"
+          },
+          {
+            "language": "html",
+            "source": "<div class=\"project-motion-demo hover:project-motion-pop\">Optional decorative motion</div>"
+          },
+          {
+            "language": "css",
+            "source": "/* Application preference rule for the normal-priority example above. */\n@media (prefers-reduced-motion: reduce) {\n  .project-motion-demo { animation: none !important; }\n}"
+          }
+        ],
+        "paragraphs": [
+          "The pinned automatic reduced-motion guard names only the flat animation-shake and animation-pop classes. It does not automatically cancel renamed custom classes or higher-specificity state variants. Add an explicit application preference rule to each animated element, as shown, rather than claiming those variants are universally protected.",
+          "This example uses normal utility importance. If you opt into important animation declarations, review layer order and selector specificity again. Turning enable-reduced-motion off opts out of the built-in guard; it is not an accessibility improvement."
+        ]
+      },
+      {
+        "heading": "Verify your build",
+        "paragraphs": [
+          "Compile the documented maps, inspect selectors and registrations, and test computed styles at real boundaries. Check screen/print, OS-dark versus explicit theme, keyboard states, reduced motion, RTL and narrow content. The examples describe the fixed source revision; they do not certify every possible custom map.",
+          "Related utility-family guides are being migrated separately. Do not infer aliases, variants or old APIs from a guide that has not yet been updated."
+        ],
+        "code": [
+          {
+            "language": "shell",
+            "source": "# Framework repository\nnpm.cmd run test:sass:utility-api\nnpm.cmd run build:css\nnpm.cmd run check:size"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/colors",
+    "group": "Utilities",
+    "title": "Colors",
+    "description": "Use colors utilities from the configured Tremplin utility map.",
+    "lead": "Use colors utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"bg-subtle-primary fg-emphasis-primary border rounded p-3\">A deliberately paired foreground and surface.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"bg-subtle-primary fg-emphasis-primary border rounded p-3\">A deliberately paired foreground and surface.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Semantic foregrounds reference --trm-{name}-fg, emphasis and contrast roles. Neutral levels use --trm-fg-body and --trm-fg-1 through -4. The eight semantic names are primary, accent, secondary, success, danger, warning, info and inverse; old text-primary/light/dark aliases are not generated."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "fg-primary\nfg-secondary\nfg-success\nfg-danger\nfg-warning\nfg-info\nfg-accent\nfg-inverse\nfg-emphasis-primary\nfg-contrast-primary\nfg-body\nfg-1\nfg-2\nfg-3\nfg-4\nfg-bg\nfg-white\nfg-black\nfg-reset\nfg-10\nfg-50\nfg-100"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Opacity and inheritance",
+        "paragraphs": [
+          "fg-* assigns the non-inheriting --trm-fg composition token. fg-50 mixes that local role with transparent; there is no currentcolor fallback, so pair it with a role. Ordinary CSS color still inherits. fg-reset explicitly inherits the composition token; it is not a hard-coded body color. Lower alpha and weaker role levels can fail text contrast."
+        ]
+      },
+      {
+        "heading": "Configure foreground roles",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/theme' with (\n  $theme-colors: (brand: (base: #253a76, fg: #253a76, bg: #dce6ff, contrast: #17213b))\n);\n@use 'tremplin/scss/tremplin-utilities';"
+          }
+        ],
+        "paragraphs": [
+          "Configure the owning theme module before the entry. Theme maps merge shallowly at their top level: replacing one color replaces its whole role map. Use null to remove an exact map key; numeric and quoted string keys are distinct. Test actual pairs in light/dark and forced colors; the pin adds no special CanvasText reminting."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/background",
+    "group": "Utilities",
+    "title": "Background",
+    "description": "Use background utilities from the configured Tremplin utility map.",
+    "lead": "Use background utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"bg-body fg-body border rounded p-3\">A neutral surface with its body foreground.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"bg-body fg-body border rounded p-3\">A neutral surface with its body foreground.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Background roles assign --trm-bg and paint background-color. Subtle and muted role families are separate. Neutral body/1–4, foreground, white, black and transparent values come from the theme maps. There are no bg-light/bg-dark or bg-inherit aliases."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "bg-primary\nbg-secondary\nbg-success\nbg-danger\nbg-warning\nbg-info\nbg-accent\nbg-inverse\nbg-subtle-primary\nbg-muted-primary\nbg-body\nbg-1\nbg-2\nbg-3\nbg-4\nbg-fg\nbg-white\nbg-black\nbg-transparent\nbg-10\nbg-50\nbg-100\nbg-gradient"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Opacity and pairing",
+        "paragraphs": [
+          "bg-50 requires a companion background role because the opacity expression has no fallback for --trm-bg. It changes the background alpha, not child opacity or text color. Choose foregrounds independently; a background class is not a contrast guarantee."
+        ]
+      },
+      {
+        "heading": "Configure surface roles",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/theme' with ($theme-bgs: (panel: #e6efff));\n@use 'tremplin/scss/tremplin-utilities';"
+          }
+        ]
+      },
+      {
+        "heading": "Gradient configuration and mixins",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/config' with ($gradient: linear-gradient(135deg, #e6efff, #fff));\n@use 'tremplin/scss/mixins/gradients' as gradient;\n@use 'tremplin/scss/tremplin-utilities';\n.three-color-x { @include gradient.gradient-x-three-colors(red, gold, 40%, blue); }\n.three-color-y { @include gradient.gradient-y-three-colors(red, gold, 60%, blue); }"
+          }
+        ],
+        "paragraphs": [
+          "bg-gradient reads --trm-gradient. The enable-gradients switch controls gradient-bg() consumers, not this explicit utility. The pin does not add a forced-colors gradient reset; review decorative backgrounds on supported platforms."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/color-scheme",
+    "group": "Utilities",
+    "title": "Color scheme",
+    "description": "Use color scheme utilities from the configured Tremplin utility map.",
+    "lead": "Use color scheme utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"color-scheme-auto bg-body fg-body border rounded p-3\">Native color-scheme selection.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"color-scheme-auto bg-body fg-body border rounded p-3\">Native color-scheme selection.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "These classes set color-scheme to light, dark or light dark. They influence native controls and light-dark() colors, not an application theme toggle. A local scheme does not by itself update the separate root shadow-strength number."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "color-scheme-light\ncolor-scheme-dark\ncolor-scheme-auto"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/theme",
+    "group": "Utilities",
+    "title": "Theme",
+    "description": "Use theme utilities from the configured Tremplin utility map.",
+    "lead": "Use theme utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"theme-inverse theme-contrast theme-border rounded p-3\">A coordinated inverse surface.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"theme-inverse theme-contrast theme-border rounded p-3\">A coordinated inverse surface.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "theme-{name} supplies inheriting contextual references from --trm-{name}-{role}. Add theme-contrast, theme-subtle, theme-muted or theme-border for paint. These normal-priority utilities are distinct from helper foreground reminting. No theme-color compatibility alias or light/dark color modifier is generated."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "theme-primary\ntheme-secondary\ntheme-success\ntheme-danger\ntheme-warning\ntheme-info\ntheme-accent\ntheme-inverse\ntheme-reset\ntheme-contrast\ntheme-subtle\ntheme-muted\ntheme-border"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Reset and contextual links",
+        "paragraphs": [
+          "theme-reset sets the union of configured context keys to initial, not unset. It removes inherited context rather than repainting a surface. theme-contrast and theme-muted also remint inheriting foreground tokens in the helpers layer; removing a paint utility does not remove that helper rule. Native Reboot links use the contextual foreground when present."
+        ]
+      },
+      {
+        "heading": "Custom theme classes",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/theme' with (\n  $theme-colors: (brand: (base: #253a76, fg: #253a76, bg: #dce6ff, contrast: #17213b))\n);\n@use 'tremplin/scss/tremplin-utilities';"
+          }
+        ]
+      },
+      {
+        "heading": "Configure surface utilities",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/tremplin-utilities' with (\n  $utilities: ('theme-subtle': null, 'theme-border': (enabled: false))\n);"
+          }
+        ],
+        "paragraphs": [
+          "Color modifier names and surface roles do not establish accessibility conformance. The pin primary solid background with white normal-size text can be below 4.5:1; this live example uses inverse. Existing disclosed application contrast customization remains separate from core defaults."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/aspect-ratio",
+    "group": "Utilities",
+    "title": "Aspect ratio",
+    "description": "Use aspect ratio utilities from the configured Tremplin utility map.",
+    "lead": "Use aspect ratio utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"ratio-16x9 border rounded p-3\" style=\"width:100%\">A native 16:9 box.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"ratio-16x9 border rounded p-3\" style=\"width:100%\">A native 16:9 box.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "ratio-* sets the non-inheriting --trm-ratio token; the upstream [class*=ratio-] selector applies aspect-ratio. This is native sizing, not the old positioned iframe-wrapper helper. Content and min-size constraints can still grow a box; unrelated class names containing ratio- also match the substring selector."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "ratio-auto\nratio-1x1\nratio-4x3\nratio-16x9\nratio-21x9"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Configure ratios",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/config' with ($aspect-ratios: (square: '1 / 1'));\n@use 'tremplin/scss/tremplin-utilities';"
+          }
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/container-queries",
+    "group": "Utilities",
+    "title": "Container queries",
+    "description": "Use container queries utilities from the configured Tremplin utility map.",
+    "lead": "Use container queries utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"contains-inline border rounded p-3\">This box establishes inline-size containment.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"contains-inline border rounded p-3\">This box establishes inline-size containment.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "contains-inline and contains-size establish native query containers. They do not generate hidden cq-* display/span rules. Add a real application container query or use the documented container-responsive Grid/stack helpers. A container cannot query itself."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "contains-inline\ncontains-size"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Application query",
+        "code": [
+          {
+            "language": "css",
+            "source": ".project-frame { container-type: inline-size; }\n@container (width >= 30rem) {\n  .project-items { display: flex; }\n}"
+          }
+        ],
+        "paragraphs": [
+          "Give contained layouts a useful available size and test intrinsic sizing. Viewport utility prefixes still query the browser window."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/display",
+    "group": "Utilities",
+    "title": "Display",
+    "description": "Use display utilities from the configured Tremplin utility map.",
+    "lead": "Use display utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"d-flex flex-wrap gap-2\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-flex flex-wrap gap-2\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Display includes inline, inline-block, block, grid, inline-grid, table, table-row, table-cell, flex, inline-flex, contents, flow-root and none. Default variants are viewport prefixes only; no infix or print aliases are emitted."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "d-none\nd-block\nd-inline-block\nd-flex\nd-inline-flex\nd-grid\nd-inline-grid\nd-table\nd-table-row\nd-table-cell\nd-contents\nd-flow-root\nmd:d-inline-grid"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Contents and accessibility",
+        "paragraphs": [
+          "display: contents removes the wrapper box, not its descendants. Test semantics in the supported browser/assistive-technology combinations. display: none removes content from layout and the accessibility tree. Native table elements remain necessary for tabular semantics."
+        ]
+      },
+      {
+        "heading": "Opt into print display",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/tremplin-utilities' with (\n  $utilities: ('display': (property: display, class: d, responsive: true, print: true, values: (block: block, none: none)))\n);"
+          }
+        ],
+        "paragraphs": [
+          "This replaces the display family and intentionally keeps only block/none. print:d-none is available only after compiling this opt-in map."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/float",
+    "group": "Utilities",
+    "title": "Float",
+    "description": "Use float utilities from the configured Tremplin utility map.",
+    "lead": "Use float utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"border rounded p-3\" style=\"display:flow-root\"><span class=\"float-start border p-2 me-2\">Media</span>Text wraps beside the floated region.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"border rounded p-3\" style=\"display:flow-root\"><span class=\"float-start border p-2 me-2\">Media</span>Text wraps beside the floated region.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Logical inline-start/end floats support viewport prefixes. Floats do not position flex/grid items. Enclose floats with a formatting context such as flow-root when their parent should contain them."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "float-start\nfloat-end\nfloat-none\nmd:float-end"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/object-fit",
+    "group": "Utilities",
+    "title": "Object fit",
+    "description": "Use object fit utilities from the configured Tremplin utility map.",
+    "lead": "Use object fit utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<img class=\"object-fit-cover rounded\" src=\"/content-sample.svg\" width=\"240\" height=\"120\" style=\"width:15rem;height:7.5rem;max-width:100%\" alt=\"Abstract blue panels cropped into a wide box\">",
+        "code": [
+          {
+            "language": "html",
+            "source": "<img class=\"object-fit-cover rounded\" src=\"/content-sample.svg\" width=\"240\" height=\"120\" style=\"width:15rem;height:7.5rem;max-width:100%\" alt=\"Abstract blue panels cropped into a wide box\">"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Supply the image box dimensions separately. The scale class maps to scale-down. Fit modes support viewport prefixes. Cropping must not remove essential information; keep useful alternative text."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "object-fit-cover\nobject-fit-contain\nobject-fit-fill\nobject-fit-scale\nobject-fit-none\nmd:object-fit-cover"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/overflow",
+    "group": "Utilities",
+    "title": "Overflow",
+    "description": "Use overflow utilities from the configured Tremplin utility map.",
+    "lead": "Use overflow utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div tabindex=\"0\" role=\"region\" aria-label=\"Overflow example\" class=\"overflow-auto border rounded p-3\" style=\"max-height:5rem\">Scrollable content remains keyboard reachable.<br>Check long content at narrow sizes.<br>Keep focus indicators visible.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div tabindex=\"0\" role=\"region\" aria-label=\"Overflow example\" class=\"overflow-auto border rounded p-3\" style=\"max-height:5rem\">Scrollable content remains keyboard reachable.<br>Check long content at narrow sizes.<br>Keep focus indicators visible.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Neither the overall nor axis overflow families are responsive by default. Name and keyboard-enable genuinely scrollable regions. Hidden overflow can clip menus, focus outlines or essential content."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "overflow-auto\noverflow-hidden\noverflow-visible\noverflow-scroll\noverflow-x-auto\noverflow-y-auto"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/position",
+    "group": "Utilities",
+    "title": "Position",
+    "description": "Use position utilities from the configured Tremplin utility map.",
+    "lead": "Use position utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"position-relative border rounded\" style=\"height:5rem\"><span class=\"position-absolute top-0 start-0 p-2\">Positioned at the start.</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"position-relative border rounded\" style=\"height:5rem\"><span class=\"position-absolute top-0 start-0 p-2\">Positioned at the start.</span></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Position utilities are not responsive by default. Top/bottom are physical; start/end are logical inline edges. translate-middle uses physical transforms and does not automatically reverse with RTL. Absolute/fixed placement leaves normal flow; preserve layout space and focus visibility."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "position-static\nposition-relative\nposition-absolute\nposition-fixed\nposition-sticky\ntop-0\nbottom-0\nstart-0\nend-0\ntranslate-middle\ntranslate-middle-x\ntranslate-middle-y"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/visibility",
+    "group": "Utilities",
+    "title": "Visibility",
+    "description": "Use visibility utilities from the configured Tremplin utility map.",
+    "lead": "Use visibility utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"border rounded p-3\"><span class=\"invisible\">Reserved space</span><span>Visible sibling</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"border rounded p-3\"><span class=\"invisible\">Reserved space</span><span>Visible sibling</span></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "visible and invisible set visibility. Invisible content retains layout space but is normally absent from the accessibility tree. Old visibility-visible/invisible names are not generated. This is not a data-protection boundary."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "visible\ninvisible"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/z-index",
+    "group": "Utilities",
+    "title": "Z-index",
+    "description": "Use z-index utilities from the configured Tremplin utility map.",
+    "lead": "Use z-index utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"position-relative z-3 border rounded p-3\">Layer 3 within this stacking context.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"position-relative z-3 border rounded p-3\">Layer 3 within this stacking context.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Default levels are n1=-1, 0–3, menu=1000, sticky=1010, fixed=1020, drawer=1030, dialog=1040, popover=1050, tooltip=1060 and toast=1070. No dropdown/modal/offcanvas aliases are generated. Ordinary z-index does not escape an ancestor stacking context or outrank the native top layer."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "z-n1\nz-0\nz-1\nz-2\nz-3\nz-menu\nz-sticky\nz-fixed\nz-drawer\nz-dialog\nz-popover\nz-tooltip\nz-toast"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Replace the layer map",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/config' with ($zindex-levels: (menu: 1000, dialog: 1200));\n@use 'tremplin/scss/tremplin-utilities';"
+          }
+        ],
+        "paragraphs": [
+          "This map is replaced, not automatically extended. Keep every key required by the application and its component layer tokens."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/align-content",
+    "group": "Utilities",
+    "title": "Align content",
+    "description": "Use align content utilities from the configured Tremplin utility map.",
+    "lead": "Use align content utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"d-flex flex-wrap align-content-center gap-2 border p-2\" style=\"min-height:10rem;max-width:14rem\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-flex flex-wrap align-content-center gap-2 border p-2\" style=\"min-height:10rem;max-width:14rem\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Distribute wrapped flex lines or Grid tracks along the cross axis; a single flex line is not enough to demonstrate align-content. Viewport prefixes are enabled; generated CSS order decides conflicting classes."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "align-content-start\nalign-content-center\nalign-content-between\nmd:align-content-center"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/align-items",
+    "group": "Utilities",
+    "title": "Align items",
+    "description": "Use align items utilities from the configured Tremplin utility map.",
+    "lead": "Use align items utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"d-flex align-items-center gap-2 border p-2\" style=\"min-height:7rem\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-flex align-items-center gap-2 border p-2\" style=\"min-height:7rem\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Choose cross-axis alignment on a real flex/Grid container with available space. Viewport prefixes are enabled; generated CSS order decides conflicting classes."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "align-items-start\nalign-items-center\nalign-items-end\nmd:align-items-center"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/align-self",
+    "group": "Utilities",
+    "title": "Align self",
+    "description": "Use align self utilities from the configured Tremplin utility map.",
+    "lead": "Use align self utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"d-flex gap-2 border p-2\" style=\"min-height:7rem\"><span class=\"align-self-start border p-2\">Start</span><span class=\"align-self-end border p-2\">End</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-flex gap-2 border p-2\" style=\"min-height:7rem\"><span class=\"align-self-start border p-2\">Start</span><span class=\"align-self-end border p-2\">End</span></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Override alignment for one item inside its supporting layout. Viewport prefixes are enabled; generated CSS order decides conflicting classes."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "align-self-auto\nalign-self-start\nalign-self-center\nmd:align-self-end"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/flex",
+    "group": "Utilities",
+    "title": "Flex",
+    "description": "Use flex utilities from the configured Tremplin utility map.",
+    "lead": "Use flex utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"d-flex flex-column md:flex-row gap-2\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-flex flex-column md:flex-row gap-2\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Apply d-flex before direction/wrap/grow/shrink controls. Prefixes query the viewport. Reversing visual order does not change reading or keyboard order. flex-fill does not guarantee equal widths when intrinsic content differs."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "flex-row\nflex-column\nflex-wrap\nflex-fill\nflex-grow-1\nflex-shrink-0\nmd:flex-row"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/gap",
+    "group": "Utilities",
+    "title": "Gap",
+    "description": "Control both gaps together or space rows and columns independently.",
+    "lead": "Control both gaps together or space rows and columns independently.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"d-flex flex-wrap row-gap-2 column-gap-3\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-flex flex-wrap row-gap-2 column-gap-3\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "gap-*, row-gap-*, and column-gap-* use the configured spacer scale: key 2 is .375rem, key 3 is .5rem, and key 4 is .75rem. They work with native Grid and Flexbox and support canonical viewport prefixes such as md:gap-4; infix aliases are not generated. Use row gutters for the percentage-based Flexbox grid; adding a native gap to columns already totaling 100% can cause wrapping."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "gap-0\ngap-2\ngap-3\nmd:gap-4\nrow-gap-0\nrow-gap-2\nmd:row-gap-4\ncolumn-gap-0\ncolumn-gap-3\nmd:column-gap-4"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Independent row and column spacing",
+        "paragraphs": [
+          "gap-3 sets both axes. row-gap-2 and column-gap-4 change the axes independently. In the default scale these are .375rem and .75rem. For a row-oriented flex container, column-gap separates items and row-gap separates wrapped lines. The browser maps Grid rows and columns to the writing mode; the class names do not imply fixed physical x/y axes."
+        ],
+        "example": "<div class=\"d-grid grid-cols-2 row-gap-2 column-gap-4\"><div class=\"border rounded p-2\">First</div><div class=\"border rounded p-2\">Second</div><div class=\"border rounded p-2\">Third</div><div class=\"border rounded p-2\">Fourth</div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-grid grid-cols-2 row-gap-2 column-gap-4 md:row-gap-4\">\n  <div>First</div><div>Second</div><div>Third</div><div>Fourth</div>\n</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive gaps",
+        "paragraphs": [
+          "md:row-gap-4 applies at the default md minimum viewport width of 768px. Only prefix-style responsive names are generated. Each gap family is responsive by default; print, dark, and state variants require a family override. With equal importance and specificity, the generated cascade order decides the result, not class order in the HTML. Base axis controls follow base gap shorthands, but a wider responsive shorthand can replace both axes; override that axis at the same breakpoint when needed."
+        ]
+      },
+      {
+        "heading": "Gap configuration",
+        "paragraphs": [
+          "The gap family now uses the same configurable utility map as row-gap and column-gap. Remove a family with null, disable it with enabled: false, or replace its definition. No handwritten gap-* rules are left behind. Definitions are replaced shallowly: supply property, class, values, and any desired flags. The shared spacer map also affects other spacing and gutter helpers. Utilities are not important by default; opt in with important: true on a family, not a global flag."
+        ],
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss' with (\n  $spacers: (2: .75rem),\n  $utilities: (\n    'column-gap': (\n      property: column-gap, class: column-gap, responsive: true,\n      important: false, values: (tight: .25rem)\n    )\n  )\n);"
+          }
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/grid",
+    "group": "Utilities",
+    "title": "Grid",
+    "description": "Set Grid track counts, reuse parent tracks, span the full grid, and choose auto-placement.",
+    "lead": "Set Grid track counts, reuse parent tracks, span the full grid, and choose auto-placement.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"d-grid grid-cols-2 md:grid-cols-3 gap-2\"><div class=\"border rounded p-2\">First</div><div class=\"border rounded p-2\">Second</div><div class=\"border rounded p-2\">Third</div><div class=\"grid-cols-fill border rounded p-2\">Full explicit row</div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-grid grid-cols-2 md:grid-cols-3 gap-2\"><div class=\"border rounded p-2\">First</div><div class=\"border rounded p-2\">Second</div><div class=\"border rounded p-2\">Third</div><div class=\"grid-cols-fill border rounded p-2\">Full explicit row</div></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "These mapped utilities configure grid-cols and grid-auto-flow. They do not set display themselves; pair them with d-grid. The grid layout container and g-col/g-start placement API remain independent; strict core has no legacy span aliases. Container-responsive g-col/g-start helpers and automatic grid query containers are available separately through the grid layout API; see the CSS Grid guide."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "d-grid\ngrid\ng-col-6\nmd:g-col-4\ngrid-cols-1\ngrid-cols-2\ngrid-cols-3\ngrid-cols-4\ngrid-cols-6\ngrid-cols-subgrid\ngrid-cols-fill\nmd:grid-cols-3\ngrid-auto-flow-row\ngrid-auto-flow-column\ngrid-auto-flow-dense\nmd:grid-auto-flow-column"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Track counts and full-width items",
+        "paragraphs": [
+          "grid-cols-1, grid-cols-2, grid-cols-3, grid-cols-4, and grid-cols-6 create equal 1fr tracks, matching the upstream values. There is no default grid-cols-5. Unlike minmax(0, 1fr), a plain 1fr track retains its automatic minimum: long intrinsic content can overflow a narrow box. Use min-w-0, wrapping, and suitable content sizing where needed.",
+          "grid-cols-fill belongs on a grid item and sets grid-column: 1 / -1 across all explicit columns. It is not a column count. Use md:grid-cols-3 for the canonical responsive prefix. Grid utilities use shared viewport breakpoints, not container-query variants; infix aliases are not generated."
+        ]
+      },
+      {
+        "heading": "Subgrid",
+        "paragraphs": [
+          "Place d-grid grid-cols-subgrid on a grid item that spans multiple parent columns to reuse their track lines and column spacing. Add grid-cols-fill to span the entire explicit parent grid. Subgrid is only useful inside a parent Grid; it does not create a standalone set of equal tracks. Check your supported browser versions before depending on it."
+        ],
+        "example": "<div class=\"d-grid grid-cols-2 column-gap-3 row-gap-2\"><span class=\"border p-2\">Parent first</span><span class=\"border p-2\">Parent second</span><div class=\"d-grid grid-cols-fill grid-cols-subgrid\"><span class=\"border p-2\">Aligned first</span><span class=\"border p-2\">Aligned second</span></div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-grid grid-cols-2 column-gap-3\">\n  <div class=\"d-grid grid-cols-fill grid-cols-subgrid\">\n    <div>Aligned first</div><div>Aligned second</div>\n  </div>\n</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Auto-placement and reading order",
+        "paragraphs": [
+          "grid-auto-flow-row places items by row; grid-auto-flow-column places them by column. Set rows and implicit column sizing as appropriate for column flow. grid-auto-flow-dense enables dense row packing, which can visually move later items into earlier holes. CSS placement does not reorder the DOM, reading order, or keyboard tab order. Avoid dense placement for ordered, interactive content when the visual order would become misleading."
+        ]
+      },
+      {
+        "heading": "Utilities versus layout helpers",
+        "paragraphs": [
+          "Use d-grid for this utility-first API. The grid layout container defaults to twelve 1fr tracks, a 1.5rem gap and inline-size containment. Ordinary children auto-place normally; g-col/g-start set literal placement. Keep track counts and item spans coherent to avoid implicit tracks. See the CSS Grid guide for container-responsive placement.",
+          "The new utility families remain available when $enable-cssgrid is false; that switch controls only the layout helper module. Utility removal and configuration use the grid-column-counts, grid-columns, and grid-auto-flow map keys. Declarations are not important by default. Set important: true on an individual mapped family when needed; there is no global importance flag."
+        ]
+      },
+      {
+        "heading": "Custom track counts",
+        "paragraphs": [
+          "Replacing a definition is shallow. This example intentionally replaces the default track-count family with a five-column value, while keeping fill and auto-flow as separate families."
+        ],
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss' with (\n  $utilities: (\n    'grid-column-counts': (\n      property: grid-template-columns, class: grid-cols,\n      responsive: true, values: (5: repeat(5, 1fr))\n    )\n  )\n);"
+          }
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/justify-content",
+    "group": "Utilities",
+    "title": "Justify content",
+    "description": "Use justify content utilities from the configured Tremplin utility map.",
+    "lead": "Use justify content utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"d-flex justify-content-between gap-2 border p-2\"><span>Start</span><span>End</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-flex justify-content-between gap-2 border p-2\"><span>Start</span><span>End</span></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Distribute available main-axis space; behavior depends on the layout direction. Viewport prefixes are enabled; generated CSS order decides conflicting classes."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "justify-content-start\njustify-content-center\njustify-content-between\nmd:justify-content-end"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/justify-items",
+    "group": "Utilities",
+    "title": "Justify items",
+    "description": "Use justify items utilities from the configured Tremplin utility map.",
+    "lead": "Use justify items utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"d-grid grid-cols-2 justify-items-center gap-2 border p-2\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-grid grid-cols-2 justify-items-center gap-2 border p-2\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Align Grid items or override one item with justify-self. These controls are not a replacement for Flexbox main-axis distribution. Viewport prefixes are enabled; generated CSS order decides conflicting classes."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "justify-items-start\njustify-items-end\njustify-items-center\njustify-items-stretch\nmd:justify-items-center\njustify-self-start\njustify-self-center\nmd:justify-self-end"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/place-items",
+    "group": "Utilities",
+    "title": "Place items",
+    "description": "Use place items utilities from the configured Tremplin utility map.",
+    "lead": "Use place items utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"d-grid grid-cols-2 place-items-center gap-2 border p-2\" style=\"min-height:8rem\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-grid grid-cols-2 place-items-center gap-2 border p-2\" style=\"min-height:8rem\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Set combined Grid item alignment using place-items. Use a Grid layout so both axes have meaningful alignment. Viewport prefixes are enabled; generated CSS order decides conflicting classes."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "place-items-start\nplace-items-end\nplace-items-center\nplace-items-stretch\nmd:place-items-center"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/width",
+    "group": "Utilities",
+    "title": "Width",
+    "description": "Use width utilities from the configured Tremplin utility map.",
+    "lead": "Use width utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"border rounded p-2\"><div class=\"w-50 border rounded p-2\">Half the parent width.</div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"border rounded p-2\"><div class=\"w-50 border rounded p-2\">Half the parent width.</div></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Width utilities use physical width, not inline-size, and are not responsive by default. Fixed size-map widths, percentages, auto and intrinsic min/max/fit values are available. Canonical constraints are max-w/min-w, not mw. Viewport units can exceed a padded parent; viewport demos are code-only."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "w-1\nw-2\nw-25\nw-50\nw-75\nw-100\nw-auto\nw-min\nw-max\nw-fit\nmax-w-100\nmin-w-0\nmin-w-100\nvw-100\nmin-vw-100\ndvw-100\nmin-dvw-100"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Sizing maps and reserved values",
+        "paragraphs": [
+          "The sizes map contributes to width only, not height. Reserved percentage/auto/min/max/fit width values are merged afterward and win over sizes keys. Configure a whole utility family to replace those values or opt into responsive modes. Physical dimensions do not swap in vertical writing."
+        ]
+      },
+      {
+        "heading": "Local sizing configuration",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/tremplin-utilities' with (\n  $utilities: (\n    'width': (property: width, class: w, values: (min: 10rem, 100: 100%)),\n    'height': (property: height, class: h, values: (min: 10rem, 100: 100%))\n  )\n);"
+          }
+        ],
+        "paragraphs": [
+          "These shallow replacements remove fit while changing min to 10rem in each family. They do not claim a shared intrinsic sizing map."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/height",
+    "group": "Utilities",
+    "title": "Height",
+    "description": "Use height utilities from the configured Tremplin utility map.",
+    "lead": "Use height utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"border rounded\" style=\"height:8rem\"><div class=\"h-50 border p-2\">Half the definite parent height.</div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"border rounded\" style=\"height:8rem\"><div class=\"h-50 border p-2\">Half the definite parent height.</div></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Height uses physical height and a fixed percentage/auto/intrinsic family, not the numeric sizes map. Percentage heights need a definite containing height. max-h/min-h are canonical; mh aliases and default viewport prefixes are absent. Dynamic viewport units follow changing browser chrome, not just the initial viewport."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "h-25\nh-50\nh-75\nh-100\nh-auto\nh-min\nh-max\nh-fit\nmax-h-100\nmin-h-0\nmin-h-100\nvh-100\nmin-vh-100\ndvh-100\nmin-dvh-100"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Shrinkable content",
+        "paragraphs": [
+          "min-h-0 or min-w-0 can let flex/Grid items shrink below an automatic minimum. Preserve a usable way to read overflowed content rather than clipping essential text."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/margin",
+    "group": "Utilities",
+    "title": "Margin",
+    "description": "Use margin utilities from the configured Tremplin utility map.",
+    "lead": "Use margin utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"border rounded p-3\"><div class=\"ms-3 border p-2\">Logical inline-start margin.</div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"border rounded p-3\"><div class=\"ms-3 border p-2\">Logical inline-start margin.</div></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Use m/side/x/y prefixes with the shared spacer scale. x/y are logical axes and s/e are inline start/end. Auto margins include responsive prefixes. Negative defaults are only ms--1/me--1 (-.25rem) and ms--2/me--2 (-.5rem), not generic m--*/mx--* or old n spellings."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "m-0\nmt-3\nms-3\nme-3\nmx-auto\nms--1\nme--2\nmd:m-3\nmd:ms-auto"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Spacer defaults",
+        "paragraphs": [
+          "Keys 0–12 are 0, .25, .375, .5, .75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5 and 3rem. Runtime tokens are --trm-spacer-*. The negative-spacers map is independent of positive spacers."
+        ]
+      },
+      {
+        "heading": "Configure spacing",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/config' with ($spacers: (3: 1rem), $negative-spacers: ('-2': -.75rem));\n@use 'tremplin/scss/tremplin-utilities';"
+          }
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/padding",
+    "group": "Utilities",
+    "title": "Padding",
+    "description": "Use padding utilities from the configured Tremplin utility map.",
+    "lead": "Use padding utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"border rounded p-3\">Padding inside the box.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"border rounded p-3\">Padding inside the box.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Padding uses the same positive spacer scale as margin. Axes and inline sides are logical; no negative padding is generated. Normal-priority viewport prefixes use md:p-4 rather than infix aliases."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "p-0\np-3\npx-4\npy-2\nps-3\npe-3\nmd:p-4"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/space",
+    "group": "Utilities",
+    "title": "Space",
+    "description": "Use space utilities from the configured Tremplin utility map.",
+    "lead": "Use space utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"d-flex space-x-3\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-flex space-x-3\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "space-x applies margin-inline-end and space-y margin-block-end to direct children except :last-child. The complete child selector is zero-specificity :where(). This is different from native gap when items wrap or are hidden; match your layout and DOM structure."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "space-x-0\nspace-x-3\nmd:space-x-2\nspace-y-0\nspace-y-3\nmd:space-y-2"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/font-family",
+    "group": "Utilities",
+    "title": "Font family",
+    "description": "Use font family utilities from the configured Tremplin utility map.",
+    "lead": "Use font family utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<p class=\"font-monospace\">A monospace identifier.</p>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<p class=\"font-monospace\">A monospace identifier.</p>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "font-body reads --trm-body-font-family; font-monospace reads --trm-font-mono. These are not responsive by default. Actual glyph coverage and metrics depend on installed fonts; do not use typography alone to communicate meaning."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "font-body\nfont-monospace"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/font-size",
+    "group": "Utilities",
+    "title": "Font size",
+    "description": "Use font size utilities from the configured Tremplin utility map.",
+    "lead": "Use font size utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<p class=\"text-lg\">A text-size preset with coordinated line height.</p>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<p class=\"text-lg\">A text-size preset with coordinated line height.</p>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Named fs-* classes set font-size; text-* size presets set font-size and line-height together. Defaults use named tiers, not old numeric fs-1 through fs-6 aliases. Larger tiers can be fluid clamp() expressions. Test zoom, translated labels and available space."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "fs-xs\nfs-sm\nfs-md\nfs-lg\nfs-xl\ntext-sm\ntext-md\ntext-lg"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/font-style",
+    "group": "Utilities",
+    "title": "Font style",
+    "description": "Use font style utilities from the configured Tremplin utility map.",
+    "lead": "Use font style utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<p class=\"fst-italic\">An italic visual treatment.</p>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<p class=\"fst-italic\">An italic visual treatment.</p>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Use semantic emphasis when text is genuinely emphasized. Font-style utilities are visual controls and are not responsive by default."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "fst-italic\nfst-normal"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/font-weight",
+    "group": "Utilities",
+    "title": "Font weight",
+    "description": "Use font weight utilities from the configured Tremplin utility map.",
+    "lead": "Use font weight utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<p class=\"fw-semibold\">A semibold visual treatment.</p>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<p class=\"fw-semibold\">A semibold visual treatment.</p>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Use strong for semantic importance. Available font faces determine whether a weight is native or synthesized. These weight classes are not responsive by default."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "fw-light\nfw-normal\nfw-medium\nfw-semibold\nfw-bold"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/line-height",
+    "group": "Utilities",
+    "title": "Line height",
+    "description": "Use line height utilities from the configured Tremplin utility map.",
+    "lead": "Use line height utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<p class=\"lh-lg\">Comfortable line spacing for this example.<br>Readability still depends on content and font metrics.</p>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<p class=\"lh-lg\">Comfortable line spacing for this example.<br>Readability still depends on content and font metrics.</p>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Line-height controls use 1, sm, md and lg. There is no lh-base alias. Tight line heights can clip or overlap enlarged text; test actual content and zoom."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "lh-1\nlh-sm\nlh-md\nlh-lg"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/link",
+    "group": "Utilities",
+    "title": "Link",
+    "description": "Use link utilities from the configured Tremplin utility map.",
+    "lead": "Use link utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<a class=\"link-100\" style=\"--trm-link-color:var(--trm-primary-fg-emphasis)\" href=\"/utilities/api/\">Read the Utility API</a>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<a class=\"link-100\" style=\"--trm-link-color:var(--trm-primary-fg-emphasis)\" href=\"/utilities/api/\">Read the Utility API</a>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Link opacity mixes --trm-link-color in ten-step percentages. Only hover states are generated by default; focus and old hyphen-state aliases are absent. This example explicitly uses the emphasized link-color token for readable text; lower alpha is not a contrast guarantee."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "link-10\nlink-20\nlink-30\nlink-40\nlink-50\nlink-60\nlink-70\nlink-80\nlink-90\nlink-100\nhover:link-100"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/text-alignment",
+    "group": "Utilities",
+    "title": "Text alignment",
+    "description": "Use text alignment utilities from the configured Tremplin utility map.",
+    "lead": "Use text alignment utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<p class=\"text-start md:text-end\">Logical text alignment.</p>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<p class=\"text-start md:text-end\">Logical text alignment.</p>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Start/end follow writing direction. Alignment is responsive by default and does not change DOM or reading order."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "text-start\ntext-center\ntext-end\nmd:text-end"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/text-decoration",
+    "group": "Utilities",
+    "title": "Text decoration",
+    "description": "Use text decoration utilities from the configured Tremplin utility map.",
+    "lead": "Use text decoration utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<a class=\"fg-emphasis-primary text-decoration-underline underline-primary underline-offset-2 underline-thickness-2\" href=\"/utilities/api/\">A visibly underlined destination</a>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<a class=\"fg-emphasis-primary text-decoration-underline underline-primary underline-offset-2 underline-thickness-2\" href=\"/utilities/api/\">A visibly underlined destination</a>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Underline offset uses .125/.25/.375em and thickness uses 1–5px. Color assigns the configured foreground-role expression to --trm-underline-color; opacity has a currentcolor fallback. Offset/opacity/thickness have hover states only by default. These controls do not independently change text color."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "text-decoration-none\ntext-decoration-underline\ntext-decoration-line-through\nunderline-offset-1\nunderline-offset-2\nunderline-offset-3\nunderline-primary\nunderline-secondary\nunderline-success\nunderline-danger\nunderline-warning\nunderline-info\nunderline-accent\nunderline-inverse\nunderline-10\nunderline-50\nunderline-100\nunderline-thickness-1\nunderline-thickness-2\nunderline-thickness-3\nunderline-thickness-4\nunderline-thickness-5\nhover:underline-offset-3\nhover:underline-100\nhover:underline-thickness-3"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Customize underline families",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/tremplin-utilities' with (\n  $utilities: ('underline-thickness': (property: text-decoration-thickness, class: underline-thickness, state: hover focus-visible, values: (4: 4px)))\n);"
+          }
+        ],
+        "paragraphs": [
+          "The explicit list adds keyboard focus-visible and shallowly replaces the thickness scale. Preserve a usable text/link contrast and do not remove essential link affordances."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/text-transform",
+    "group": "Utilities",
+    "title": "Text transform",
+    "description": "Use text transform utilities from the configured Tremplin utility map.",
+    "lead": "Use text transform utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<p class=\"text-uppercase\">A visual case transformation.</p>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<p class=\"text-uppercase\">A visual case transformation.</p>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Case transformation does not change the DOM text. Language-specific casing and pronunciation vary; keep accessible names and content understandable."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "text-lowercase\ntext-uppercase\ntext-capitalize"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/text-wrapping",
+    "group": "Utilities",
+    "title": "Text wrapping",
+    "description": "Use text wrapping utilities from the configured Tremplin utility map.",
+    "lead": "Use text wrapping utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<p class=\"text-break\" style=\"max-width:100%\">AnUnbrokenIdentifierThatCanWrapInsteadOfClippingAtNarrowWidths</p>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<p class=\"text-break\" style=\"max-width:100%\">AnUnbrokenIdentifierThatCanWrapInsteadOfClippingAtNarrowWidths</p>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "The pin uses native text-wrap values, not a parallel white-space generator. text-break sets word-wrap and word-break to break-word. text-truncate is a separate single-line helper requiring a constrained block/inline-block box. Browser support varies; CSS.supports can detect pretty wrapping and unsupported engines fall back to ordinary wrapping."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "text-wrap\ntext-nowrap\ntext-balance\ntext-pretty\ntext-break\ntext-truncate"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/vertical-align",
+    "group": "Utilities",
+    "title": "Vertical align",
+    "description": "Use vertical align utilities from the configured Tremplin utility map.",
+    "lead": "Use vertical align utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<p>Inline text <span class=\"align-middle\" style=\"font-size:1.5rem\">aligned in the middle</span>.</p>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<p>Inline text <span class=\"align-middle\" style=\"font-size:1.5rem\">aligned in the middle</span>.</p>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Vertical-align affects inline-level and table-cell boxes, not flex/Grid alignment. The example uses align-middle with a deliberately larger inline font so the baseline relationship is visible."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "align-baseline\nalign-top\nalign-middle\nalign-bottom\nalign-text-top\nalign-text-bottom"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/border",
+    "group": "Utilities",
+    "title": "Border",
+    "description": "Use border utilities from the configured Tremplin utility map.",
+    "lead": "Use border utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"border border-2 rounded p-3\">A two-pixel border.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"border border-2 rounded p-3\">A two-pixel border.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Border top/bottom use logical block edges and start/end use logical inline edges; x/y control inline/block axes. Values 1–5 set physical border-width in pixels. border-keyline reads --trm-border-width-keyline. Paint uses the root border width/style/color tokens."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "border\nborder-0\nborder-top\nborder-top-0\nborder-bottom\nborder-bottom-0\nborder-start\nborder-start-0\nborder-end\nborder-end-0\nborder-x\nborder-x-0\nborder-y\nborder-y-0\nborder-keyline\nborder-1\nborder-2\nborder-3\nborder-4\nborder-5"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Configure border widths",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/config' with ($border-width: 2px, $border-style: dashed, $border-widths: (3: 6px));\n@use 'tremplin/scss/tremplin-utilities';"
+          }
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/border-color",
+    "group": "Utilities",
+    "title": "Border color",
+    "description": "Use border color utilities from the configured Tremplin utility map.",
+    "lead": "Use border color utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"border border-primary rounded p-3\">Boundary color independent of text color.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"border border-primary rounded p-3\">Boundary color independent of text color.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Semantic border colors use the theme background role; border-subtle uses the boundary role. Neutral colors reference --trm-border-*. Opacity requires the isolated --trm-bc assignment and has no root-border-color fallback. These classes do not add border width/style by themselves."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "border-primary\nborder-secondary\nborder-success\nborder-danger\nborder-warning\nborder-info\nborder-accent\nborder-inverse\nborder-subtle-primary\nborder-body\nborder-muted\nborder-subtle\nborder-emphasized\nborder-white\nborder-black\nborder-bg\nborder-10\nborder-50\nborder-100"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Configure border roles",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/theme' with ($theme-borders: (panel: #253a76));\n@use 'tremplin/scss/tremplin-utilities';"
+          }
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/border-radius",
+    "group": "Utilities",
+    "title": "Border radius",
+    "description": "Use border radius utilities from the configured Tremplin utility map.",
+    "lead": "Use border radius utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"border rounded-5 p-3\">Numeric radius scale.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"border rounded-5 p-3\">Numeric radius scale.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "The numeric 0–9 scale emits literal values into isolated --trm-rounded-size; the base class uses key 5. Circle/pill and logical directional controls are separate. There are no sm/base/lg/xl/xxl aliases. rounded-size changes composition without painting all corners."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "rounded\nrounded-0\nrounded-1\nrounded-2\nrounded-3\nrounded-4\nrounded-5\nrounded-6\nrounded-7\nrounded-8\nrounded-9\nrounded-circle\nrounded-pill\nrounded-size-9\nrounded-top\nrounded-top-0\nrounded-end\nrounded-bottom\nrounded-start"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Configure the radius scale",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/config' with ($radii: (9: 2rem));\n@use 'tremplin/scss/tremplin-utilities';"
+          }
+        ],
+        "paragraphs": [
+          "Sass changes regenerate literal utility values. Changing a root --trm-radius-* token alone does not rewrite those literals; directional fallbacks and explicit local --trm-rounded-size have separate effects."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/divide",
+    "group": "Utilities",
+    "title": "Divide",
+    "description": "Use divide utilities from the configured Tremplin utility map.",
+    "lead": "Use divide utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"d-flex divide-x\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"d-flex divide-x\"><span class=\"border rounded p-2\">First</span><span class=\"border rounded p-2\">Second</span><span class=\"border rounded p-2\">Third</span></div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Dividers target direct children except :first-child through zero-specificity :where(). x uses border-inline-start and y uses border-block-start. The zero value removes that edge; no new first-child border appears."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "divide-x\ndivide-x-0\nmd:divide-x\ndivide-y\ndivide-y-0\nmd:divide-y-0"
+          }
+        ]
+      },
+      {
+        "heading": "Responsive behavior",
+        "paragraphs": [
+          "Only canonical colon-prefixed viewport names are generated. The default tiers are xs, sm, md, lg, xl and 2xl. Print, OS-dark and state variants exist only when a family opts into them. Normal priority is the default; see Utility API before replacing a family."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/pointer-events",
+    "group": "Utilities",
+    "title": "Pointer events",
+    "description": "Use pointer events utilities from the configured Tremplin utility map.",
+    "lead": "Use pointer events utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"border rounded p-3\">Pointer hit-testing is separate from keyboard and semantics.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"border rounded p-3\">Pointer hit-testing is separate from keyboard and semantics.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Pointer-events none does not disable keyboard focus, form submission or script activation. Use native disabled controls and proper semantics for unavailable actions; never use CSS hit-testing as authorization."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "pe-none\npe-auto"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/user-select",
+    "group": "Utilities",
+    "title": "User select",
+    "description": "Use user select utilities from the configured Tremplin utility map.",
+    "lead": "Use user select utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<p class=\"user-select-text\">A selectable identifier: project-2026</p>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<p class=\"user-select-text\">A selectable identifier: project-2026</p>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Selection behavior is not an application security boundary. A text-selectable descendant can override a selection-disabled ancestor where supported. Do not unnecessarily prevent copying important information."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "user-select-all\nuser-select-auto\nuser-select-text\nuser-select-none"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/motion",
+    "group": "Utilities",
+    "title": "Motion",
+    "description": "Use motion utilities from the configured Tremplin utility map.",
+    "lead": "Use motion utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"animation-none border rounded p-3\">Static preview; motion is not required.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"animation-none border rounded p-3\">Static preview; motion is not required.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Built-in shake/pop keyframes are decorative. A flat reduced-motion rule disables the stock classes with normal priority. Renamed/custom/state variants need an explicit application preference rule as documented in the Utility API."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "transition-none\nanimation-none\nanimation-shake\nanimation-pop"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Remove mapped animations",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/tremplin-utilities' with ($utilities: ('animation': null));"
+          }
+        ],
+        "paragraphs": [
+          "The pin checks whether the animation key exists, so null/disabled/renamed definitions still emit global keyframes and flat guards. Only a build that removes the key entirely, such as the filtered Grid entry, omits them. enable-reduced-motion: false removes the guard, not the keyframes."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/opacity",
+    "group": "Utilities",
+    "title": "Opacity",
+    "description": "Use opacity utilities from the configured Tremplin utility map.",
+    "lead": "Use opacity utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"opacity-100 border rounded p-3\">A fully opaque readable preview.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"opacity-100 border rounded p-3\">A fully opaque readable preview.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Opacity affects the entire element and its descendants, including text and focus indicators. The default family has no responsive/state/print/dark variants. Zero opacity can leave invisible interactive controls; use suitable hiding or disabled semantics instead."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "opacity-0\nopacity-25\nopacity-50\nopacity-75\nopacity-100"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "utilities/shadows",
+    "group": "Utilities",
+    "title": "Shadows",
+    "description": "Use shadows utilities from the configured Tremplin utility map.",
+    "lead": "Use shadows utilities from the configured Tremplin utility map.",
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/utilities-guides.ts"
+    },
+    "sections": [
+      {
+        "heading": "Example",
+        "example": "<div class=\"shadow-sm border rounded p-3\">A composable decorative shadow.</div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"shadow-sm border rounded p-3\">A composable decorative shadow.</div>"
+          }
+        ]
+      },
+      {
+        "heading": "Supported classes",
+        "paragraphs": [
+          "Shadow utilities emit literal oklch relative-color expressions rather than reading an old shadow runtime alias. Isolated --trm-sc selects color and --trm-so controls strength: opacity-50 means multiplier 1 and opacity-100 means 2. Global --trm-shadow-color remains an inheriting fallback; theme dark strength is 2.4 versus light 1."
+        ],
+        "code": [
+          {
+            "language": "text",
+            "source": "shadow\nshadow-xs\nshadow-sm\nshadow-lg\nshadow-xl\nshadow-none\nshadow-primary\nshadow-secondary\nshadow-success\nshadow-danger\nshadow-warning\nshadow-info\nshadow-accent\nshadow-inverse\nshadow-current\nshadow-black\nshadow-white\nshadow-opacity-10\nshadow-opacity-50\nshadow-opacity-100"
+          }
+        ]
+      },
+      {
+        "heading": "Configuration and limits",
+        "paragraphs": [
+          "Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."
+        ]
+      },
+      {
+        "heading": "Customize a composable shadow",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/config' with (\n  $shadows: (null: 0 .25rem .75rem rgb(0 0 0 / .18), sm: 0 .125rem .25rem rgb(0 0 0 / .12))\n);\n@use 'tremplin/scss/tremplin-utilities';"
+          }
+        ],
+        "paragraphs": [
+          "The shadows map is replaced and uses null for the suffixless class, not base. The enable-shadows mixin switch does not remove these literal utilities. Native forced-color adjustment and relative-color support need platform testing; the pin adds no blanket forced-color reset."
+        ]
+      },
+      {
+        "heading": "Verification",
+        "paragraphs": [
+          "Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees.",
+          "Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."
+        ]
+      }
+    ]
+  }
+]

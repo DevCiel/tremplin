@@ -1,0 +1,91 @@
+@use "functions" as *;
+@use "mixins/border-radius" as *;
+@use "mixins/mask-icon" as *;
+@use "mixins/transition" as *;
+@use "mixins/tokens" as *;
+
+$breadcrumb-tokens: () !default;
+
+// scss-docs-start breadcrumb-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$breadcrumb-tokens: defaults(
+  (
+    --trm-breadcrumb-font-size: inherit,
+    --trm-breadcrumb-bg: transparent,
+    --trm-breadcrumb-border-radius: var(--trm-radius-5),
+    --trm-breadcrumb-divider-margin-x: calc(var(--trm-breadcrumb-link-padding-x) / 4),
+    --trm-breadcrumb-divider-color: var(--trm-fg-4),
+    --trm-breadcrumb-divider-icon: #{escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 16'><path fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M2 2l4 6-4 6'/></svg>"))},
+    --trm-breadcrumb-divider-width: .375rem,
+    --trm-breadcrumb-divider-height: .75rem,
+    --trm-breadcrumb-link-padding-x: .75rem,
+    --trm-breadcrumb-link-padding-y: .25rem,
+    --trm-breadcrumb-link-color: var(--trm-fg-3),
+    --trm-breadcrumb-link-hover-color: var(--trm-fg-2),
+    --trm-breadcrumb-link-hover-bg: var(--trm-bg-1),
+    --trm-breadcrumb-link-active-color: var(--trm-fg-1),
+    --trm-breadcrumb-link-border-radius: var(--trm-radius-7),
+  ),
+  $breadcrumb-tokens
+);
+// scss-docs-end breadcrumb-tokens
+
+@layer components {
+  .breadcrumb {
+    @include tokens($breadcrumb-tokens);
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: var(--trm-breadcrumb-padding-y, 0) var(--trm-breadcrumb-padding-x, 0);
+    margin-bottom: 0;
+    font-size: var(--trm-breadcrumb-font-size);
+    list-style-type: "";
+    background-color: var(--trm-breadcrumb-bg);
+    @include border-radius(var(--trm-breadcrumb-border-radius));
+  }
+
+  .breadcrumb-item {
+    display: flex;
+  }
+
+  .breadcrumb-divider {
+    margin-inline: var(--trm-breadcrumb-divider-margin-x);
+    color: var(--trm-breadcrumb-divider-color);
+
+    // Render a default chevron, painted with `currentcolor` via a mask, when the
+    // divider has no explicit content. Any content (an inline SVG, a text
+    // character, etc.) added to the element overrides this default.
+    &:empty::before {
+      display: block;
+      width: var(--trm-breadcrumb-divider-width);
+      height: var(--trm-breadcrumb-divider-height);
+      content: "";
+      background-color: currentcolor;
+      @include mask-icon(var(--trm-breadcrumb-divider-icon));
+    }
+  }
+
+  .breadcrumb-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.25rem;
+    padding: var(--trm-breadcrumb-link-padding-y) var(--trm-breadcrumb-link-padding-x);
+    color: var(--trm-breadcrumb-link-color);
+    text-decoration: none;
+    @include border-radius(var(--trm-breadcrumb-link-border-radius));
+    @include transition(.1s text-decoration-color ease-in-out);
+
+    &:hover {
+      z-index: 2;
+      color: var(--trm-breadcrumb-link-hover-color);
+      background-color: var(--trm-breadcrumb-link-hover-bg);
+    }
+
+    &.active {
+      color: var(--trm-breadcrumb-link-active-color);
+    }
+  }
+}

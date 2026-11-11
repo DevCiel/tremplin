@@ -1,0 +1,35 @@
+// Tremplin extension: chronological content layout.
+@use '../config' as *;
+@use '../mixins/tokens' as *;
+@use '../theme' as *;
+
+$timeline-colors: theme-color-values("base") !default;
+
+$timeline-tokens: () !default;
+$timeline-tokens: defaults((
+  --trm-timeline-gap: 1.5rem,
+  --trm-timeline-offset: 1.5rem,
+  --trm-timeline-line-width: 2px,
+  --trm-timeline-line-color: var(--trm-border-color),
+  --trm-timeline-marker-size: .8rem,
+  --trm-timeline-marker-bg: var(--trm-primary-base),
+  --trm-timeline-marker-ring: var(--trm-bg-body),
+  --trm-timeline-time-color: var(--trm-fg-2),
+), $timeline-tokens);
+
+@layer custom {
+  .timeline { @include tokens($timeline-tokens); position: relative; padding: 0; padding-inline-start: var(--trm-timeline-offset); margin: 0; list-style: none; }
+  .timeline::before { position: absolute; inset-block: .25rem; inset-inline-start: calc(var(--trm-timeline-marker-size) / 2); border-inline-start: var(--trm-timeline-line-width) solid var(--trm-timeline-line-color); content: ''; }
+  .timeline-item { position: relative; padding-block-end: var(--trm-timeline-gap); }
+  .timeline-item::before { position: absolute; inset-block-start: .35rem; inset-inline-start: calc(-1 * var(--trm-timeline-offset)); inline-size: var(--trm-timeline-marker-size); block-size: var(--trm-timeline-marker-size); border-radius: 50%; background-color: var(--trm-timeline-marker-bg); box-shadow: 0 0 0 2px var(--trm-timeline-marker-ring), 0 0 0 calc(2px + var(--trm-timeline-line-width)) var(--trm-timeline-marker-bg); content: ''; }
+  .timeline-item:last-child { padding-block-end: 0; }
+  .timeline-title { margin: 0; font-weight: 700; }
+  .timeline-time { color: var(--trm-timeline-time-color); font-size: .875em; }
+  .timeline-content > :last-child { margin-block-end: 0; }
+  .timeline-compact { --trm-timeline-gap: .75rem; --trm-timeline-offset: 1.25rem; --trm-timeline-marker-size: .6rem; }
+  @each $name, $color in $timeline-colors { .timeline-item-#{$name} { --trm-timeline-marker-bg: var(--trm-#{$name}-base, #{$color}); } }
+  .timeline-horizontal { display: flex; padding: 0; padding-block-start: var(--trm-timeline-offset); overflow-x: auto; }
+  .timeline-horizontal::before { inset-block: calc(var(--trm-timeline-marker-size) / 2) auto; inset-inline: .25rem; border-block-start: var(--trm-timeline-line-width) solid var(--trm-timeline-line-color); border-inline-start: 0; }
+  .timeline-horizontal .timeline-item { min-inline-size: 10rem; flex: 1 0 10rem; padding: 0; padding-inline-end: var(--trm-timeline-gap); }
+  .timeline-horizontal .timeline-item::before { inset-block-start: calc(-1 * var(--trm-timeline-offset)); inset-inline-start: 0; }
+}

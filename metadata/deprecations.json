@@ -1,0 +1,5 @@
+{
+  "$schema": "./deprecations.schema.json",
+  "framework": "Tremplin",
+  "deprecations": []
+}

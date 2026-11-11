@@ -1,0 +1,415 @@
+[
+  {
+    "name": "button-group",
+    "title": "Button Group",
+    "description": "Button Group component documentation for Tremplin.",
+    "lead": "Group related button actions horizontally, vertically, or in a wrapping toolbar.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Structural styles and dividers",
+          "description": "Use real solid, outline or subtle variants. btn-group-divider paints separators between adjacent controls in either orientation.",
+          "markup": "<div class=\"hstack flex-wrap align-items-start gap-3\"><div class=\"btn-group btn-group-divider\" role=\"group\" aria-label=\"Solid controls\"><button type=\"button\" class=\"btn-solid theme-inverse\">Start</button><button type=\"button\" class=\"btn-solid theme-inverse\">Center</button><button type=\"button\" class=\"btn-solid theme-inverse\">End</button></div><div class=\"btn-group btn-group-divider\" role=\"group\" aria-label=\"Subtle controls\"><button type=\"button\" class=\"btn-subtle theme-inverse\">Start</button><button type=\"button\" class=\"btn-subtle theme-inverse\">Center</button><button type=\"button\" class=\"btn-subtle theme-inverse\">End</button></div></div>"
+        },
+        {
+          "title": "Group sizes",
+          "description": "Set xs, sm or lg on each group; the button size generator applies tokens to its direct button-like children. The unmodified group uses the default size.",
+          "markup": "<div class=\"vstack align-items-start gap-3\"><div class=\"btn-group btn-group-xs\" role=\"group\" aria-label=\"xs actions\"><button type=\"button\" class=\"btn-outline theme-inverse\">Start</button><button type=\"button\" class=\"btn-outline theme-inverse\">Center</button><button type=\"button\" class=\"btn-outline theme-inverse\">End</button></div><div class=\"btn-group btn-group-sm\" role=\"group\" aria-label=\"sm actions\"><button type=\"button\" class=\"btn-outline theme-inverse\">Start</button><button type=\"button\" class=\"btn-outline theme-inverse\">Center</button><button type=\"button\" class=\"btn-outline theme-inverse\">End</button></div><div class=\"btn-group\" role=\"group\" aria-label=\"Default actions\"><button type=\"button\" class=\"btn-outline theme-inverse\">Start</button><button type=\"button\" class=\"btn-outline theme-inverse\">Center</button><button type=\"button\" class=\"btn-outline theme-inverse\">End</button></div><div class=\"btn-group btn-group-lg\" role=\"group\" aria-label=\"lg actions\"><button type=\"button\" class=\"btn-outline theme-inverse\">Start</button><button type=\"button\" class=\"btn-outline theme-inverse\">Center</button><button type=\"button\" class=\"btn-outline theme-inverse\">End</button></div></div>"
+        },
+        {
+          "title": "Native checkbox group",
+          "description": "Each real checkbox can be selected independently. Put the input inside its btn-check label; no Button plugin or invented group controller is needed.",
+          "markup": "<div class=\"btn-group\" role=\"group\" aria-label=\"Formatting options\"><label class=\"btn-check btn-outline theme-inverse\"><input type=\"checkbox\" name=\"format-bold\"> Bold</label><label class=\"btn-check btn-outline theme-inverse\"><input type=\"checkbox\" name=\"format-italic\"> Italic</label><label class=\"btn-check btn-outline theme-inverse\"><input type=\"checkbox\" disabled> Locked</label></div>"
+        },
+        {
+          "title": "Native radio group",
+          "description": "Same-name native radios select one value. Native radio keyboard behavior is separate from Button pressed-state toggles.",
+          "markup": "<div class=\"btn-group\" role=\"group\" aria-label=\"Text alignment\"><label class=\"btn-check btn-outline theme-inverse\"><input type=\"radio\" name=\"group-alignment\" value=\"start\" checked> Align start</label><label class=\"btn-check btn-outline theme-inverse\"><input type=\"radio\" name=\"group-alignment\" value=\"center\"> Align center</label><label class=\"btn-check btn-outline theme-inverse\"><input type=\"radio\" name=\"group-alignment\" value=\"end\"> Align end</label></div>"
+        },
+        {
+          "title": "Toolbar and input group",
+          "description": "The toolbar wraps separate groups and a named input group. Its CSS does not implement an editor or roving tabindex.",
+          "markup": "<div class=\"btn-toolbar\" role=\"toolbar\" aria-label=\"Document toolbar\"><div class=\"btn-group\" role=\"group\" aria-label=\"History\"><button type=\"button\" class=\"btn-outline theme-inverse\">Undo</button><button type=\"button\" class=\"btn-outline theme-inverse\">Redo</button></div><div class=\"input-group\" style=\"max-inline-size: 14rem\"><span class=\"input-group-text\" id=\"group-page-prefix\">Page</span><input class=\"form-control\" type=\"text\" aria-label=\"Page number\" aria-describedby=\"group-page-prefix\" value=\"1\"></div><button type=\"button\" class=\"btn-outline theme-inverse\">Save document</button></div>"
+        },
+        {
+          "title": "Nested Menu",
+          "description": "A nested group keeps the join geometry. The named native trigger uses the real Menu data API; group CSS alone does not open or manage the menu.",
+          "markup": "<div class=\"btn-group\" role=\"group\" aria-label=\"Publishing actions\"><button type=\"button\" class=\"btn-outline theme-inverse\">Save draft</button><div class=\"btn-group\" role=\"group\" aria-label=\"Additional actions\"><button type=\"button\" class=\"btn-outline theme-inverse\" id=\"group-menu-trigger\" data-trm-toggle=\"menu\" aria-haspopup=\"menu\" aria-expanded=\"false\">More actions</button><div class=\"menu\" role=\"menu\" aria-labelledby=\"group-menu-trigger\"><a class=\"menu-item\" role=\"menuitem\" href=\"/getting-started/install/\">Installation</a><a class=\"menu-item\" role=\"menuitem\" href=\"/components/menu/\">Menu guide</a></div></div></div>"
+        },
+        {
+          "title": "Vertical group and links",
+          "description": "Vertical groups share edge rounding and optional separators. Link groups remain navigation, with a real current destination.",
+          "markup": "<div class=\"hstack flex-wrap align-items-start gap-3\"><div class=\"btn-group-vertical btn-group-divider\" role=\"group\" aria-label=\"Vertical actions\"><button type=\"button\" class=\"btn-solid theme-inverse\">Start</button><button type=\"button\" class=\"btn-solid theme-inverse\">Center</button><button type=\"button\" class=\"btn-solid theme-inverse\">End</button></div><nav class=\"btn-group\" aria-label=\"Related guides\"><a class=\"btn-outline theme-inverse active\" href=\"/components/button-group/\" aria-current=\"page\">Groups</a><a class=\"btn-outline theme-inverse\" href=\"/components/button/\">Buttons</a></nav></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Logical seams and edge radii follow direction. The inverse theme is chosen deliberately for readable controls.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"btn-group\" role=\"group\" aria-label=\"RTL actions\"><button type=\"button\" class=\"btn-outline theme-inverse\">Start</button><button type=\"button\" class=\"btn-outline theme-inverse\">Center</button><button type=\"button\" class=\"btn-outline theme-inverse\">End</button></div></div>"
+        }
+      ],
+      "variables": [],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Follow native controls in DOM order; group CSS provides no roving tabindex."
+        },
+        {
+          "keys": "Enter / Space",
+          "behavior": "Activate native buttons; Space changes native checkbox state. Links retain native Enter navigation."
+        },
+        {
+          "keys": "Arrow keys",
+          "behavior": "Native same-name radios supply their browser keyboard behavior. Menu has its own arrow/Escape policy when initialized."
+        }
+      ],
+      "guidelines": [
+        "Give groups and toolbars meaningful labels and the appropriate group or toolbar role.",
+        "Use structural button variants on direct children so the join and sizing selectors match.",
+        "Configure sizes on every nested group separately; native inputs inside btn-check labels retain checked semantics.",
+        "Button groups have no independent token map; customize their button tokens before the button module is loaded.",
+        "Menu behavior belongs to Menu JavaScript. Split-menu patterns are not supported in vertical groups.",
+        "Keep DOM order meaningful; use native disabled or deliberately guard/remove a disabled link destination."
+      ],
+      "sass": "@use 'tremplin/scss/buttons/button' with (\n  $button-tokens: (--trm-btn-border-radius: .5rem)\n);\n@use 'tremplin/scss/buttons/button-group';"
+    },
+    "example": "<div class=\"btn-group\" role=\"group\" aria-label=\"Document actions\"><button type=\"button\" class=\"btn-outline theme-inverse\">Start</button><button type=\"button\" class=\"btn-outline theme-inverse\">Center</button><button type=\"button\" class=\"btn-outline theme-inverse\">End</button></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/buttons/_button-group.scss",
+    "javascript": "Button group layout is CSS-only. Native checkbox and radio examples need no group plugin; the nested Menu example requires Menu JavaScript."
+  },
+  {
+    "name": "close-button",
+    "title": "Close Button",
+    "description": "Close Button component documentation for Tremplin.",
+    "lead": "Provide a named close control and connect it to an explicit action.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Disabled state",
+          "description": "Native disabled blocks user activation; the pinned CSS reduces opacity and suppresses pointer interaction.",
+          "markup": "<button class=\"btn-close\" type=\"button\" aria-label=\"Unavailable close action\" disabled></button>"
+        },
+        {
+          "title": "Dismiss an alert",
+          "description": "The Alert data API removes this alert. The icon class alone has no action, and application code must arrange suitable focus after removal.",
+          "markup": "<div class=\"alert\" role=\"status\" id=\"reference-close-alert\"><p>A dismissible example.</p><button class=\"btn-close ms-auto\" type=\"button\" data-trm-dismiss=\"alert\" aria-label=\"Dismiss example message\"></button></div>"
+        },
+        {
+          "title": "Size and opacity tokens",
+          "description": "Customize actual close-control tokens on the control. Leave its content empty; do not add a second text glyph.",
+          "markup": "<button class=\"btn-close\" type=\"button\" aria-label=\"Close larger example\" style=\"--trm-btn-close-size: 1.5rem; --trm-btn-close-opacity: .8\"></button>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "The mask paints with the inherited foreground. Set a suitable local background and foreground as well as the theme; do not assume that theme alone inverts every icon.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"hstack gap-3\"><button class=\"btn-close\" type=\"button\" aria-label=\"Close dark example\"></button><button class=\"btn-close\" type=\"button\" aria-label=\"Unavailable dark close\" disabled></button></div></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-btn-close-size",
+          "defaultValue": "1.25rem",
+          "purpose": "Default exported through $btn-close-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-close-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $btn-close-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-close-icon",
+          "defaultValue": "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath d='M12 0a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4zm-.646 4.646a.5.5 0 0 0-.707 0L8 7.293 5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.647a.5.5 0 1 0 .708.707L8 8.707l2.647 2.646a.5.5 0 1 0 .707-.707L8.707 8l2.646-2.646a.5.5 0 0 0 0-.708z'/%3e%3c/svg%3e\")",
+          "purpose": "Default exported through $btn-close-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-close-opacity",
+          "defaultValue": "0.5",
+          "purpose": "Default exported through $btn-close-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-close-hover-opacity",
+          "defaultValue": "0.75",
+          "purpose": "Default exported through $btn-close-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-close-focus-opacity",
+          "defaultValue": "0.85",
+          "purpose": "Default exported through $btn-close-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-btn-close-disabled-opacity",
+          "defaultValue": "0.25",
+          "purpose": "Default exported through $btn-close-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Focus an enabled native button. Native disabled removes it from keyboard activation."
+        },
+        {
+          "keys": "Enter / Space",
+          "behavior": "Run the assigned action; dismissal needs the corresponding component data API or application handler."
+        }
+      ],
+      "guidelines": [
+        "Provide an accessible name for every icon-only control and specify type=\"button\".",
+        "Keep btn-close empty: its SVG CSS mask is painted with currentColor, not injected pseudo-text.",
+        "A standalone example demonstrates the control; it does not close the page or invent an overlay controller.",
+        "Use the correct data-trm-dismiss target for the owning component; focus restoration is not a close-button CSS feature.",
+        "Custom mask data URLs require an appropriate image CSP; this is separate from the calendar external SVG asset policy."
+      ],
+      "sass": "@use 'tremplin/scss/buttons/close' with (\n  $btn-close-tokens: (\n    --trm-btn-close-size: 1.5rem,\n    --trm-btn-close-opacity: .8\n  )\n);"
+    },
+    "example": "<button class=\"btn-close\" type=\"button\" aria-label=\"Close example\"></button>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/buttons/_close.scss",
+    "javascript": "The close icon is CSS-only and has no action by itself. The dismissible Alert example requires Alert JavaScript; application code arranges suitable focus after removal."
+  },
+  {
+    "name": "nav",
+    "title": "Nav",
+    "description": "Nav component documentation for Tremplin.",
+    "lead": "Style ordinary navigation separately from panel-switching Tab behavior.",
+    "detail": {
+      "variants": [
+        {
+          "title": "List markup and disabled destinations",
+          "description": "Keep the list inside a named navigation landmark. aria-current identifies the current page; the disabled example has no href and is removed from the tab order.",
+          "markup": "<nav aria-label=\"List navigation\"><ul class=\"nav\"><li class=\"nav-item\"><a class=\"nav-link active\" href=\"/components/nav/\" aria-current=\"page\">Nav</a></li><li class=\"nav-item\"><a class=\"nav-link\" href=\"/components/tab/\">Tab plugin</a></li><li class=\"nav-item\"><a class=\"nav-link disabled\" role=\"link\" aria-disabled=\"true\" tabindex=\"-1\">Unavailable destination</a></li></ul></nav>"
+        },
+        {
+          "title": "Tabs appearance",
+          "description": "nav-tabs changes appearance only. These are navigation links, not a tablist or a panel-switching widget; use the Tab plugin for that behavior.",
+          "markup": "<nav class=\"nav nav-tabs\" aria-label=\"Tab-styled links\"><a class=\"nav-link active\" href=\"/components/\" aria-current=\"page\">Overview</a><a class=\"nav-link\" href=\"/components/card/\">Cards</a><a class=\"nav-link\" href=\"/components/button/\">Buttons</a></nav>"
+        },
+        {
+          "title": "Pills",
+          "description": "Pills compose a real theme for the selected background and contrast foreground. The inverse theme avoids relying on an untested semantic color pair.",
+          "markup": "<nav class=\"nav nav-pills theme-inverse\" aria-label=\"Pill links\"><a class=\"nav-link active\" href=\"/components/\" aria-current=\"page\">Overview</a><a class=\"nav-link\" href=\"/components/card/\">Cards</a><a class=\"nav-link\" href=\"/components/button/\">Buttons</a></nav>"
+        },
+        {
+          "title": "Vertical pills and underline",
+          "description": "Use the dedicated vertical-pill modifier, or compose a flex direction on an underline navigation.",
+          "markup": "<div class=\"vstack align-items-start gap-3\"><nav class=\"nav nav-pills nav-pills-vertical theme-inverse\" aria-label=\"Vertical pill links\"><a class=\"nav-link active\" href=\"/components/\" aria-current=\"page\">Overview</a><a class=\"nav-link\" href=\"/components/card/\">Cards</a><a class=\"nav-link\" href=\"/components/button/\">Buttons</a></nav><nav class=\"nav nav-underline\" aria-label=\"Underline links\"><a class=\"nav-link active\" href=\"/components/\" aria-current=\"page\">Overview</a><a class=\"nav-link\" href=\"/components/card/\">Cards</a><a class=\"nav-link\" href=\"/components/button/\">Buttons</a></nav></div>"
+        },
+        {
+          "title": "Fill and justify",
+          "description": "Fill grows items in proportion to their contents; justified links have equal flex bases. Neither class supplies a navigation controller.",
+          "markup": "<div class=\"vstack gap-3\"><nav class=\"nav nav-fill\" aria-label=\"Fill links\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/components/\">Overview</a><a class=\"nav-link\" href=\"/getting-started/install/\">Longer installation guide</a></nav><nav class=\"nav nav-justified\" aria-label=\"Justified links\"><a class=\"nav-link active\" aria-current=\"page\" href=\"/components/\">Overview</a><a class=\"nav-link\" href=\"/getting-started/install/\">Longer installation guide</a></nav></div>"
+        },
+        {
+          "title": "Responsive alignment",
+          "description": "Responsive prefix utilities switch the column to a row at sm. Nav already wraps; logical alignment follows document direction.",
+          "markup": "<nav class=\"nav flex-column sm:flex-row justify-content-center\" aria-label=\"Responsive links\"><a class=\"nav-link active\" href=\"/components/\" aria-current=\"page\">Overview</a><a class=\"nav-link\" href=\"/components/card/\">Cards</a><a class=\"nav-link\" href=\"/components/button/\">Buttons</a></nav>"
+        },
+        {
+          "title": "Navigation with a Menu",
+          "description": "An ordinary navigation can contain a named Menu trigger. Menu JavaScript supplies opening, keyboard behavior and dismissal; no tab roles are added to navigation links.",
+          "markup": "<nav class=\"nav nav-tabs\" aria-label=\"Navigation with menu\"><a class=\"nav-link active\" href=\"/components/nav/\" aria-current=\"page\">Nav guide</a><div class=\"nav-item\"><button type=\"button\" class=\"nav-link\" id=\"nav-menu-trigger\" data-trm-toggle=\"menu\" aria-haspopup=\"menu\" aria-expanded=\"false\">More sections</button><div class=\"menu\" role=\"menu\" aria-labelledby=\"nav-menu-trigger\"><a class=\"menu-item\" role=\"menuitem\" href=\"/getting-started/install/\">Installation</a><a class=\"menu-item\" role=\"menuitem\" href=\"/components/menu/\">Menu guide</a></div></div></nav>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Logical layout and inherited tokens adapt to the local theme and direction.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><nav class=\"nav nav-pills theme-inverse\" aria-label=\"Dark RTL links\"><a class=\"nav-link active\" href=\"/components/\" aria-current=\"page\">Overview</a><a class=\"nav-link\" href=\"/components/card/\">Cards</a><a class=\"nav-link\" href=\"/components/button/\">Buttons</a></nav></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-nav-gap",
+          "defaultValue": "0.125rem",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-gap",
+          "defaultValue": "0.5rem",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-align",
+          "defaultValue": "center",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-justify",
+          "defaultValue": "center",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-padding-x",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-padding-y",
+          "defaultValue": "0.375rem",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-color",
+          "defaultValue": "var(--trm-fg-2)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-hover-color",
+          "defaultValue": "var(--trm-fg-1)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-hover-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-active-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-active-bg",
+          "defaultValue": "var(--trm-bg-2)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-disabled-color",
+          "defaultValue": "var(--trm-fg-4)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-transition-property",
+          "defaultValue": "color, background-color, border-color",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-link-transition-timing",
+          "defaultValue": "ease-in-out",
+          "purpose": "Default exported through $nav-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-border-radius",
+          "defaultValue": "var(--trm-radius-5)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-link-hover-border-color",
+          "defaultValue": "var(--trm-border-subtle)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-link-active-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-link-active-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-tabs-link-active-border-color",
+          "defaultValue": "var(--trm-border-color) var(--trm-border-color) var(--trm-bg-body)",
+          "purpose": "Default exported through $nav-tabs-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-padding",
+          "defaultValue": "0.25rem",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-border-radius",
+          "defaultValue": "3rem",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-link-active-color",
+          "defaultValue": "var(--trm-primary-contrast)",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-link-active-bg",
+          "defaultValue": "var(--trm-primary-bg)",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-pills-link-border-radius",
+          "defaultValue": "3rem",
+          "purpose": "Default exported through $nav-pills-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-underline-border-width",
+          "defaultValue": "0.125rem",
+          "purpose": "Default exported through $nav-underline-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-nav-underline-link-active-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $nav-underline-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tab-pane-transition-property",
+          "defaultValue": "opacity",
+          "purpose": "Default exported through $tab-pane-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tab-pane-transition-duration",
+          "defaultValue": "0.15s",
+          "purpose": "Default exported through $tab-pane-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-tab-pane-transition-timing",
+          "defaultValue": "linear",
+          "purpose": "Default exported through $tab-pane-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Follow enabled native links and controls; ordinary navigation is not a roving-focus tab widget."
+        },
+        {
+          "keys": "Enter",
+          "behavior": "Follow a focused link. Native buttons retain their own activation semantics."
+        },
+        {
+          "keys": "Arrow keys / Escape",
+          "behavior": "Only an initialized Menu or Tab widget supplies its corresponding keyboard policy; nav CSS does not."
+        }
+      ],
+      "guidelines": [
+        "Name navigation landmarks and identify current destinations with aria-current.",
+        "Do not put navigation roles on the list itself or ARIA tab roles on ordinary links, even when styled as tabs.",
+        "A disabled class or aria-disabled is not an activation guard; deliberately remove or guard a disabled destination.",
+        "Use the actual Tab plugin and its selected/panel semantics for dynamic tabbed regions.",
+        "Menus require Menu JavaScript. Keep their owning trigger and menu names explicit.",
+        "Verify long links at narrow widths. Wrapping does not break a single nowrap link into words."
+      ],
+      "sass": "@use 'tremplin/scss/nav' with (\n  $nav-tokens: (--trm-nav-link-padding-x: 1rem),\n  $nav-pills-tokens: (--trm-nav-pills-border-radius: .75rem)\n);"
+    },
+    "example": "<nav class=\"nav\" aria-label=\"Project sections\"><a class=\"nav-link active\" href=\"/components/\" aria-current=\"page\">Overview</a><a class=\"nav-link\" href=\"/components/card/\">Cards</a><a class=\"nav-link\" href=\"/components/button/\">Buttons</a></nav>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_nav.scss",
+    "javascript": "Nav styles and ordinary navigation links are CSS-only. The Menu example requires Menu JavaScript; dynamic tab panels require the separate Tab plugin."
+  }
+]

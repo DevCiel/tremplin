@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm install
+      - name: Verify dependency manifests remain unchanged
+        run: git diff --exit-code -- package.json package-lock.json
+      - name: Prepare verified pinned reference for source and Sass tests
+        run: npm run audit:tremplin -- --fetch --stage --check
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run check
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tremplin-build
+          path: |
+            dist
+            site-dist
+      - name: Upload test failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tremplin-test-diagnostics
+          path: |
+            test-results
+            playwright-report
+          if-no-files-found: ignore
+          retention-days: 7

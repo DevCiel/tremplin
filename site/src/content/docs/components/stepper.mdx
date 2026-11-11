@@ -1,0 +1,100 @@
+---
+{
+  "component": "stepper",
+  "title": "Stepper",
+  "description": "Stepper component documentation for Tremplin.",
+  "lead": "Communicate progress through an ordered multi-step process.",
+  "variants": [
+    {
+      "title": "Current and completed steps",
+      "description": "Both completed and current items use active. aria-current and visible status text distinguish the current step; there is no separate complete class."
+    },
+    {
+      "title": "Descriptions",
+      "description": "Group additional content in one item child so the generated counter and text occupy the two intended grid columns."
+    },
+    {
+      "title": "Responsive horizontal layout",
+      "description": "Vertical is the default. A query container and sm:stepper-horizontal switch to horizontal based on the available container width, not the viewport."
+    },
+    {
+      "title": "Horizontal overflow",
+      "description": "The optional overflow wrapper contains a long horizontal sequence. Keyboard users can focus and scroll the labelled region."
+    },
+    {
+      "title": "Unavailable future step",
+      "description": "Static future items describe prerequisites in text. There is no invented disabled-step plugin or automatic wizard navigation."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Logical connectors adapt to direction. The inverse theme is an explicit accessible counter-color choice in these examples, not a change to the primary core default."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Static list items are not tab stops. Native links/buttons, if authored, participate in normal focus order; the overflow region is focusable."
+    },
+    {
+      "keys": "Arrow keys",
+      "behavior": "Scroll a focused overflow wrapper using native browser scrolling. Stepper supplies no roving-focus or wizard behavior."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Enter activates a native link; Enter or Space activates a native button. The application must implement any step transition."
+    }
+  ],
+  "guidelines": [
+    "Use an ordered list and put stepper-item on each direct item. The CSS counter and connecting track are generated on that class.",
+    "Apply active to completed items and the current item, and put aria-current=\"step\" on exactly one current item.",
+    "Explain completion, current and unavailable states in text; color alone is insufficient.",
+    "Vertical layout needs no extra modifier. Use stepper-horizontal, responsive prefixes with contains-inline, or stepper-overflow deliberately.",
+    "The inverse theme used here composes existing theme tokens for counter contrast. It does not change the framework defaults.",
+    "This is CSS presentation, not a multi-step form controller. Validate data and implement navigation in the application."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("stepper")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="stepper" />
+
+{componentDetail("stepper").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="stepper" />
+</>}
+
+{componentDetail("stepper").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("stepper").sass} standalone={true} />
+</>}
+
+{componentDetail("stepper").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="stepper" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="stepper" />
+
+{documentedComponents.find(component => component.name === "stepper").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="stepper" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>This is a CSS component and does not require Tremplin JavaScript.</p>

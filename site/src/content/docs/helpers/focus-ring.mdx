@@ -1,0 +1,62 @@
+---
+{
+  "title": "Focus ring",
+  "description": "Customize visible keyboard focus with inherited root and contextual theme tokens.",
+  "group": "Helpers",
+  "lead": "Customize visible keyboard focus with inherited root and contextual theme tokens.",
+  "order": 0
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { helpersExamples as samples } from '../../../data/helpers-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<p><Html source={"Use focus-ring on a native link or button. It styles focus-visible but does not make a generic element interactive. Reach this example with the keyboard to see its outline."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/focus-ring"][0].example} /></div>
+
+<Code sample={samples["helpers/focus-ring"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Variants and custom colors"}</h2>
+
+<p><Html source={"The outline uses --trm-focus-ring-width and chooses --trm-theme-focus-ring before --trm-focus-ring-color. A theme modifier therefore takes priority over a custom default focus color. There is no legacy focus-color fallback or generated focus-ring-primary class."} /></p>
+
+<p><Html source={"Root defaults are a 3px width, a 1px offset token and a color referencing --trm-primary-focus-ring. The helper class does not itself apply outline-offset; add that declaration explicitly when desired. The focus mixin can apply it through its first argument."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/focus-ring"][1].example} /></div>
+
+<Code sample={samples["helpers/focus-ring"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Root token configuration"}</h2>
+
+<p><Html source={"Preload the root token map before the full entry. Geometry is not configured through standalone focus-ring-width or focus-ring-offset Sass options on the main entry. Local CSS custom properties can override the root values without recompiling."} /></p>
+
+<Code sample={samples["helpers/focus-ring"][2].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Sass"}</h2>
+
+<p><Html source={"Import the mixin from its owning module. focus-ring($offset: false, $color: null) uses the runtime width token when an explicit color is supplied; otherwise it uses --trm-focus-ring. The first argument opts into the offset token. Load framework root styles separately when consuming these tokens."} /></p>
+
+<Code sample={samples["helpers/focus-ring"][3].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Verification"}</h2>
+
+<p><Html source={"Check keyboard focus, zoom, adjacent surfaces, clipping and forced colors. The pinned helper does not add a forced-colors Highlight override; native browser behavior still needs testing. Do not remove an outline without providing an equally usable focus indicator."} /></p>
+
+</section>

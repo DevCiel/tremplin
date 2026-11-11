@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Documentation and local setup
+    url: https://github.com/DevCiel/tremplin#quick-start
+    about: Read the repository quick start before reporting setup problems.
+  - name: Private security reporting
+    url: https://github.com/DevCiel/tremplin/blob/main/SECURITY.md
+    about: Follow the security policy rather than reporting vulnerabilities publicly.

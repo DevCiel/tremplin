@@ -1,0 +1,13 @@
+---
+import integrity from '../../../dist/integrity.json'
+const recommendedAssets = ['css/tremplin.min.css', 'css/tremplin-grid.min.css', 'css/tremplin-reboot.min.css', 'css/tremplin-utilities.min.css', 'js/tremplin.min.js', 'js/tremplin.bundle.min.js']
+const assets = recommendedAssets.map(path => ({ path, ...integrity.assets[path as keyof typeof integrity.assets] })).filter(asset => asset.integrity)
+---
+<section class="docs-section" aria-labelledby="release-assets">
+    <h2 id="release-assets">Release assets</h2>
+    <div class="table-responsive"><table class="table table-bordered">
+      <thead><tr><th scope="col">Asset</th><th scope="col">Bytes</th><th scope="col">SHA-384 integrity</th></tr></thead>
+      <tbody>{assets.map(asset => <tr><td><a href={`/dist/${asset.path}`} download>{asset.path}</a></td><td>{asset.bytes.toLocaleString()}</td><td><code>{asset.integrity}</code></td></tr>)}</tbody>
+    </table></div>
+    <p><a href="/dist/integrity.json" download>Download the complete integrity manifest</a></p>
+</section>

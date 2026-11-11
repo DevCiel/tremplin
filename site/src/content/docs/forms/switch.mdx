@@ -1,0 +1,111 @@
+---
+{
+  "title": "Switch",
+  "description": "Present a native checkbox as an on/off preference with an explicit label.",
+  "group": "Forms",
+  "lead": "Use the custom Switch wrapper around a native checkbox while preserving accessible state.",
+  "order": 5
+}
+---
+
+import GuideTable from '../../../components/shortcodes/GuideTable.astro'
+import { formsTables } from '../../../data/forms-tables'
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { formsExamples as examples } from '../../../data/forms-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Basic switch"}</h2>
+
+<p>{"Put switch on a wrapper and role=switch on its checkbox input. The input overlays the CSS indicator; checked remains native. Keep a stable visible label rather than renaming it On/Off. The optional switch attribute is a progressive browser hint, not a guarantee of native rendering or haptics on every platform."}</p>
+
+<div class="docs-example"><Html source={examples["forms/switch"][0].example} /></div>
+
+<Code sample={examples["forms/switch"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"With form field and description"}</h2>
+
+<div class="docs-example"><Html source={examples["forms/switch"][1].example} /></div>
+
+<Code sample={examples["forms/switch"][1].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Theme colors"}</h2>
+
+<p>{"Apply theme-* to the switch wrapper. Setting it only on the transparent input does not supply the wrapper background/indicator variables."}</p>
+
+<div class="docs-example"><Html source={examples["forms/switch"][2].example} /></div>
+
+<Code sample={examples["forms/switch"][2].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Disabled"}</h2>
+
+<p>{"Set disabled on the input, not the wrapper. The checked state remains intact and the native input is not successful or keyboard-operable."}</p>
+
+<div class="docs-example"><Html source={examples["forms/switch"][3].example} /></div>
+
+<Code sample={examples["forms/switch"][3].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Sizes"}</h2>
+
+<p>{"switch-sm/default/switch-lg change wrapper height and derived geometry. Adjacent labels receive size rules."}</p>
+
+<div class="docs-example"><Html source={examples["forms/switch"][4].example} /></div>
+
+<Code sample={examples["forms/switch"][4].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-5">
+<h2 id="section-5">{"Custom width"}</h2>
+
+<p>{"These real wrapper properties change the track and indicator independently. Logical inset-inline-start moves the thumb with document direction."}</p>
+
+<div class="docs-example"><Html source={examples["forms/switch"][5].example} /></div>
+
+<Code sample={examples["forms/switch"][5].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-6">
+<h2 id="section-6">{"CSS variables"}</h2>
+
+<p>{"These are source-derived property defaults, not a JavaScript options API. Embedded SVG strings are summarized in the table; inspect the pinned Sass for the exact mask/caret data. Null-valued Sass entries are not emitted as CSS declarations."}</p>
+
+<GuideTable table={{ headings: ["Property","Default"], rows: formsTables["forms/switch#6"], keyboardScroll: true }} labelledby="section-6" />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-7">
+<h2 id="section-7">{"Keyboard and state"}</h2>
+
+<p>{"Space toggles the focused native checkbox. The wrapper has focus-within styling and is not an extra tab stop; do not duplicate checked with aria-checked or implement a second switch controller. No Switch JavaScript plugin is required. Disabled and checked visual rules are distinct; readonly does not apply."}</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-8">
+<h2 id="section-8">{"Sass customization"}</h2>
+
+<Code sample={examples["forms/switch"][8].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-9">
+<h2 id="section-9">{"Explicit demo accessibility CSS"}</h2>
+
+<p>{"Copy this scoped application CSS with the example wrappers. It emphasizes feedback/placeholder text, restores a visible plaintext focus outline, and mirrors the otherwise physical select/caret background position for RTL. These are disclosed demo choices; the pinned core defaults remain unchanged."}</p>
+
+<Code sample={examples["forms/switch"][9].code[0]} standalone={true} />
+
+</section>

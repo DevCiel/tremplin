@@ -1,0 +1,505 @@
+[
+  {
+    "name": "chips",
+    "title": "Chips",
+    "description": "Chips component documentation for Tremplin.",
+    "lead": "Edit a collection of values with keyboard selection, cancellation and dismiss controls.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Editable collection",
+          "description": "Enter adds a trimmed value. Generated dismiss controls are named Remove; existing authored controls may have value-specific labels.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"skills-input\">Skills</label><div id=\"skills\" class=\"chip-input\" data-trm-chips data-trm-max-chips=\"5\"><span class=\"chip\" data-trm-chip-value=\"Design\">Design<button class=\"chip-dismiss\" type=\"button\" aria-label=\"Remove Design\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m4 4 8 8m0-8-8 8\"/></svg></button></span><input id=\"skills-input\" class=\"form-ghost\" type=\"text\" placeholder=\"Type a value and press Enter\" aria-describedby=\"skills-help\" ></div><p class=\"form-text\" id=\"skills-help\">Enter adds text; Backspace on an empty input first selects a chip.</p></div>\n</div>"
+        },
+        {
+          "title": "Maximum values",
+          "description": "The maximum includes the initial Design chip. Rejected Enter/blur attempts still clear input text; provide application feedback when rejection matters.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"technologies-input\">Technology</label><div id=\"technologies\" class=\"chip-input\" data-trm-chips data-trm-max-chips=\"3\"><span class=\"chip\" data-trm-chip-value=\"Design\">Design<button class=\"chip-dismiss\" type=\"button\" aria-label=\"Remove Design\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m4 4 8 8m0-8-8 8\"/></svg></button></span><input id=\"technologies-input\" class=\"form-ghost\" type=\"text\" placeholder=\"Type a value and press Enter\" aria-describedby=\"technologies-help\" ></div><p class=\"form-text\" id=\"technologies-help\">Enter adds text; Backspace on an empty input first selects a chip.</p></div>\n</div>"
+        },
+        {
+          "title": "Duplicate values",
+          "description": "Repeated values are allowed explicitly; string equality is case-sensitive. The approved removal fix preserves remaining DOM/value order.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"duplicate-tags-input\">Repeated tags</label><div id=\"duplicate-tags\" class=\"chip-input\" data-trm-chips data-trm-allow-duplicates=\"true\"><span class=\"chip\" data-trm-chip-value=\"Design\">Design<button class=\"chip-dismiss\" type=\"button\" aria-label=\"Remove Design\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m4 4 8 8m0-8-8 8\"/></svg></button></span><input id=\"duplicate-tags-input\" class=\"form-ghost\" type=\"text\" placeholder=\"Type a value and press Enter\" aria-describedby=\"duplicate-tags-help\" ></div><p class=\"form-text\" id=\"duplicate-tags-help\">Enter adds text; Backspace on an empty input first selects a chip.</p></div>\n</div>"
+        },
+        {
+          "title": "Validation state",
+          "description": "This authored error is an application state, not automatic Chips validation. Put invalid state and descriptions on the actual editable input.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"reviewers-input\">Reviewers</label><div id=\"reviewers\" class=\"chip-input\" data-trm-chips ><span class=\"chip\" data-trm-chip-value=\"Design\">Design<button class=\"chip-dismiss\" type=\"button\" aria-label=\"Remove Design\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m4 4 8 8m0-8-8 8\"/></svg></button></span><input id=\"reviewers-input\" class=\"form-ghost\" type=\"text\" placeholder=\"Type a value and press Enter\" aria-describedby=\"reviewers-help reviewers-error\" aria-invalid=\"true\" ></div><p class=\"form-text\" id=\"reviewers-help\">Enter adds text; Backspace on an empty input first selects a chip.</p><p class=\"form-text\" id=\"reviewers-error\">These reviewers need application validation.</p></div>\n</div>"
+        },
+        {
+          "title": "Literal values and no blur creation",
+          "description": "null disables separator splitting, and false prevents blur creation. Neither option disables Enter or keyboard removal.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"literal-tags-input\">Literal tags</label><div id=\"literal-tags\" class=\"chip-input\" data-trm-chips data-trm-separator=\"null\" data-trm-create-on-blur=\"false\" data-trm-dismissible=\"false\"><input id=\"literal-tags-input\" class=\"form-ghost\" type=\"text\" placeholder=\"Type a value and press Enter\" aria-describedby=\"literal-tags-help\" ></div><p class=\"form-text\" id=\"literal-tags-help\">Enter adds text; Backspace on an empty input first selects a chip.</p></div>\n</div>"
+        },
+        {
+          "title": "Themed collection",
+          "description": "Theme inheritance and actual chip-input tokens customize presentation. The explicit demo contrast CSS is not a changed core default.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"themed-tags-input\">Approved tags</label><div id=\"themed-tags\" class=\"chip-input theme-success\" data-trm-chips style=\"--trm-chip-input-gap: .75rem\"><span class=\"chip\" data-trm-chip-value=\"Design\">Design<button class=\"chip-dismiss\" type=\"button\" aria-label=\"Remove Design\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m4 4 8 8m0-8-8 8\"/></svg></button></span><input id=\"themed-tags-input\" class=\"form-ghost\" type=\"text\" placeholder=\"Type a value and press Enter\" aria-describedby=\"themed-tags-help\" ></div><p class=\"form-text\" id=\"themed-tags-help\">Enter adds text; Backspace on an empty input first selects a chip.</p></div>\n</div>"
+        },
+        {
+          "title": "Custom dismiss icon",
+          "description": "This authored SVG option is sanitized when new dismiss buttons are created. Existing authored controls are not replaced.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"custom-icon-tags-input\">Custom icon tags</label><div id=\"custom-icon-tags\" class=\"chip-input\" data-trm-chips data-trm-dismiss-icon=\"&lt;svg viewBox=&quot;0 0 16 16&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;m4 4 8 8m0-8-8 8&quot;/&gt;&lt;/svg&gt;\"><input id=\"custom-icon-tags-input\" class=\"form-ghost\" type=\"text\" placeholder=\"Type a value and press Enter\" aria-describedby=\"custom-icon-tags-help\" ></div><p class=\"form-text\" id=\"custom-icon-tags-help\">Enter adds text; Backspace on an empty input first selects a chip.</p></div>\n</div>"
+        },
+        {
+          "title": "Disabled empty input",
+          "description": "An empty native disabled input cannot receive user typing. Disabling it does not freeze the programmatic API or provide a complete existing-chip keyboard lock.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"disabled-tags-input\">Unavailable tags</label><div id=\"disabled-tags\" class=\"chip-input\" data-trm-chips ><input id=\"disabled-tags-input\" class=\"form-ghost\" type=\"text\" placeholder=\"Type a value and press Enter\" aria-describedby=\"disabled-tags-help\" disabled></div><p class=\"form-text\" id=\"disabled-tags-help\">Enter adds text; Backspace on an empty input first selects a chip.</p></div>\n</div>"
+        },
+        {
+          "title": "Explicit submitted array",
+          "description": "The copied application handler updates this hidden JSON field from change events. Chip spans and the unnamed ghost input do not serialize themselves.",
+          "markup": "<div class=\"demo-contrast\">\n<form id=\"submitted-tags-form\" data-demo-chip-form><div class=\"form-field\"><label class=\"form-label\" for=\"submitted-tags-input\">Submitted project tags</label><div id=\"submitted-tags\" class=\"chip-input\" data-trm-chips ><span class=\"chip\" data-trm-chip-value=\"Design\">Design<button class=\"chip-dismiss\" type=\"button\" aria-label=\"Remove Design\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m4 4 8 8m0-8-8 8\"/></svg></button></span><input id=\"submitted-tags-input\" class=\"form-ghost\" type=\"text\" placeholder=\"Type a value and press Enter\" aria-describedby=\"submitted-tags-help\" ></div><p class=\"form-text\" id=\"submitted-tags-help\">Enter adds text; Backspace on an empty input first selects a chip.</p></div><input type=\"hidden\" name=\"project-tags\" value=\"[&quot;Design&quot;]\"><p role=\"status\">Current values: Design. Hidden JSON is ready.</p></form>\n</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Layout follows direction, but chip ArrowLeft/Right navigation follows DOM indices and is not reversed for RTL.",
+          "markup": "<div class=\"demo-contrast\">\n<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"form-field\"><label class=\"form-label\" for=\"rtl-tags-input\">Tags</label><div id=\"rtl-tags\" class=\"chip-input\" data-trm-chips ><span class=\"chip\" data-trm-chip-value=\"Design\">Design<button class=\"chip-dismiss\" type=\"button\" aria-label=\"Remove Design\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m4 4 8 8m0-8-8 8\"/></svg></button></span><input id=\"rtl-tags-input\" class=\"form-ghost\" type=\"text\" placeholder=\"Type a value and press Enter\" aria-describedby=\"rtl-tags-help\" ></div><p class=\"form-text\" id=\"rtl-tags-help\">Enter adds text; Backspace on an empty input first selects a chip.</p></div></div>\n</div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-chip-input-padding-y",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $chip-input-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-input-padding-x",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $chip-input-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-input-gap",
+          "defaultValue": "0.375rem",
+          "purpose": "Default exported through $chip-input-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-chip-input-ghost-min-width",
+          "defaultValue": "5rem",
+          "purpose": "Default exported through $chip-input-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-fg",
+          "defaultValue": "var(--trm-btn-input-fg)",
+          "purpose": "Default exported through $chip-input-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-bg",
+          "defaultValue": "var(--trm-btn-input-bg)",
+          "purpose": "Default exported through $chip-input-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $chip-input-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $chip-input-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-control-border-radius",
+          "defaultValue": "var(--trm-radius-5)",
+          "purpose": "Default exported through $chip-input-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Enter / separator / paste",
+          "behavior": "Enter attempts one value; a configured separator splits typed/pasted input. Rejected Enter/blur attempts clear nonempty input."
+        },
+        {
+          "keys": "Backspace / Delete on empty input",
+          "behavior": "Selects and focuses the last chip first; a subsequent delete removes selected chips unless a remove event is canceled."
+        },
+        {
+          "keys": "ArrowLeft / ArrowRight / Home / End on chips",
+          "behavior": "Moves real focus/selection through DOM order; Right past the last chip or End returns to the input. Shift extends a range."
+        },
+        {
+          "keys": "Ctrl/Cmd+A on a chip",
+          "behavior": "Selects all chips; this is not an input-level select-all override."
+        },
+        {
+          "keys": "Escape",
+          "behavior": "From a chip: clears selection and focuses input. From input: clears input/selection and blurs it."
+        }
+      ],
+      "guidelines": [
+        "Use getValues() for a copied array, not a .values property. A supplied ghost input needs a real label and a deliberate placeholder.",
+        "Chips has no automatic submitted array, live region, role=option or aria-selected synchronization. The JSON example and focus/contrast CSS are explicitly application-owned.",
+        "clear() removes all chips directly and emits change, bypassing per-chip remove cancellation. removeSelected() uses remove() and respects each veto.",
+        "Duplicate matching is case-sensitive. Initial seeded chips are initialized rather than revalidated against duplicates/maxChips; rejected Enter/blur attempts can discard the attempted text.",
+        "Generated dismiss buttons use aria-label=Remove and tabindex=-1; authored controls keep their own labels and tab order. The chip itself handles keyboard removal.",
+        "Native disabled input styling does not freeze existing-chip keyboard handlers or programmatic add/remove. dismissible=false is not read-only mode.",
+        "RTL changes layout but not physical ArrowLeft/Right DOM-index navigation. Do not advertise a roving ARIA listbox or automatic selection announcements.",
+        "Preserve approved icon sanitization and the duplicate-order removal fix. Dispose removes input listeners/base instance state, not generated markup or tabindex; callers own DOM cleanup."
+      ],
+      "sass": "@use 'tremplin/scss/chip' with ($chip-tokens: (--trm-chip-height: 2rem));\n@use 'tremplin/scss/forms/chip-input' with ($chip-input-tokens: (--trm-chip-input-gap: .5rem));"
+    },
+    "example": "<div class=\"demo-contrast\">\n<div class=\"form-field\"><label class=\"form-label\" for=\"tags-input\">Project tags</label><div id=\"tags\" class=\"chip-input\" data-trm-chips ><span class=\"chip\" data-trm-chip-value=\"Design\">Design<button class=\"chip-dismiss\" type=\"button\" aria-label=\"Remove Design\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m4 4 8 8m0-8-8 8\"/></svg></button></span><input id=\"tags-input\" class=\"form-ghost\" type=\"text\" placeholder=\"Type a value and press Enter\" aria-describedby=\"tags-help\" ></div><p class=\"form-text\" id=\"tags-help\">Enter adds text; Backspace on an empty input first selects a chip.</p></div>\n</div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/forms/_chip-input.scss",
+    "definition": {
+      "name": "chips",
+      "className": "Chips",
+      "options": [
+        {
+          "name": "separator",
+          "type": "string | null | undefined",
+          "required": false
+        },
+        {
+          "name": "allowDuplicates",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "maxChips",
+          "type": "number | null | undefined",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "dismissible",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "dismissIcon",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "createOnBlur",
+          "type": "boolean | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "add(value: string): HTMLElement | null",
+        "remove(chipOrValue: string | HTMLElement): boolean",
+        "removeSelected(): void",
+        "getValues(): string[]",
+        "getSelectedValues(): string[]",
+        "clear(): void",
+        "clearSelection(): void",
+        "selectChip(chip: HTMLElement, options?: { addToSelection?: boolean; rangeSelect?: boolean; }): void",
+        "focus(): void",
+        "dispose(): void"
+      ],
+      "events": [
+        "add.trm.chips",
+        "change.trm.chips",
+        "remove.trm.chips",
+        "select.trm.chips"
+      ],
+      "dataAttributes": [
+        "data-trm-allow-duplicates",
+        "data-trm-chip-value",
+        "data-trm-chips",
+        "data-trm-create-on-blur",
+        "data-trm-dismiss-icon",
+        "data-trm-dismissible",
+        "data-trm-max-chips",
+        "data-trm-placeholder",
+        "data-trm-separator"
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "add.trm.chips": "Cancelable wrapper event after trimming/duplicate/limit checks, before insertion. value and relatedTarget are direct event properties.",
+      "change.trm.chips": "Wrapper notification after accepted add/remove or clear(), with a copied values array. Not a cancelable mutation gate or automatic form serialization.",
+      "remove.trm.chips": "Cancelable wrapper event before remove(), with value, chip and relatedTarget. clear() bypasses this gate.",
+      "select.trm.chips": "Wrapper selection notification with selected values. Clear/focus paths can emit an empty selection first; DOM mutation is not implied."
+    },
+    "moduleImport": "import Chips from 'tremplin/chips'",
+    "javascript": "import Chips from 'tremplin/chips'\n\n// Use the matching guide markup; getOrCreateInstance does not reconfigure it.\nconst chips = Chips.getOrCreateInstance('#tags')\nconst values = chips.getValues() // copied array; serialize deliberately",
+    "sourceOptions": [
+      {
+        "name": "separator",
+        "type": "string | null",
+        "defaultValue": "','",
+        "description": "Split typed/pasted text. null disables splitting; Enter still adds a value."
+      },
+      {
+        "name": "allowDuplicates",
+        "type": "boolean",
+        "defaultValue": "false",
+        "description": "Exact case-sensitive duplicates are rejected by default."
+      },
+      {
+        "name": "maxChips",
+        "type": "number | null",
+        "defaultValue": "null",
+        "description": "Maximum includes existing initialized chips; null is unlimited."
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "defaultValue": "''",
+        "description": "Placeholder only for an input the plugin creates. Author a placeholder on a supplied input."
+      },
+      {
+        "name": "dismissible",
+        "type": "boolean",
+        "defaultValue": "true",
+        "description": "Adds missing dismiss buttons; false does not disable keyboard removal or remove authored controls."
+      },
+      {
+        "name": "dismissIcon",
+        "type": "string",
+        "defaultValue": "SVG close icon",
+        "description": "Icon HTML is passed through the approved icon sanitizer/Trusted Types sink; never disable that boundary."
+      },
+      {
+        "name": "createOnBlur",
+        "type": "boolean",
+        "defaultValue": "true",
+        "description": "Attempts creation on input blur, except when focus moves into a chip."
+      }
+    ],
+    "demoCss": "[data-trm-chips] > .chip:focus-visible {\n  outline: var(--trm-focus-ring-width) solid var(--trm-focus-ring-color);\n  outline-offset: 2px;\n}\n.combobox-placeholder, .combobox-no-results { color: var(--trm-fg-2); }",
+    "applicationJavascript": "document.querySelectorAll('[data-demo-chip-form]').forEach(form => {\n  const collection = form.querySelector('[data-trm-chips]')\n  collection.addEventListener('change.trm.chips', event => {\n    form.querySelector('input[type=\"hidden\"]').value = JSON.stringify(event.values)\n    form.querySelector('[role=\"status\"]').textContent = 'Current values: ' + (event.values.join(', ') || 'none') + '. Hidden JSON updated.'\n  })\n})"
+  },
+  {
+    "name": "combobox",
+    "title": "Combobox",
+    "description": "Combobox component documentation for Tremplin.",
+    "lead": "Search and select values with a Menu-backed trigger, focused options and optional submitted values.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Search and select",
+          "description": "The adjacent Menu contains a separately labelled search input and listbox. Options receive real focus, not aria-activedescendant tracking.",
+          "markup": "<div class=\"form-field\"><span class=\"form-label\" id=\"guide-city-label\">City</span>\n  <button class=\"form-control combobox-toggle\" type=\"button\" id=\"guide-city\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"guide-city-options\" aria-labelledby=\"guide-city-label guide-city-value\" data-trm-toggle=\"combobox\" data-trm-search=\"true\" data-trm-name=\"guide-city\" data-trm-placeholder=\"Choose a value\"><span class=\"combobox-value\" id=\"guide-city-value\">Choose a value</span><svg class=\"combobox-caret\" width=\"10\" height=\"16\" viewBox=\"0 0 10 16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m1 6 4 4 4-4\"/></svg></button>\n  <div class=\"menu\" id=\"guide-city-menu\"><div class=\"combobox-search\"><input class=\"form-control combobox-search-input\" type=\"search\" aria-label=\"Search City\" placeholder=\"Search\" autocomplete=\"off\"></div><div role=\"listbox\" id=\"guide-city-options\" aria-labelledby=\"guide-city-label\"><button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"par\">Paris<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lon\">London<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lis\">Lisbon<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button></div><div class=\"combobox-no-results d-none\" role=\"status\">No matching values</div></div></div>"
+        },
+        {
+          "title": "Multiple selections",
+          "description": "Selections stay open and the display counts two or more values. The named hidden input contains a comma-separated string, not repeated form fields.",
+          "markup": "<div class=\"form-field\"><span class=\"form-label\" id=\"guide-offices-label\">Offices</span>\n  <button class=\"form-control combobox-toggle\" type=\"button\" id=\"guide-offices\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"guide-offices-options\" aria-labelledby=\"guide-offices-label guide-offices-value\" data-trm-toggle=\"combobox\" data-trm-search=\"true\" data-trm-name=\"guide-offices\" data-trm-placeholder=\"Choose a value\" data-trm-multiple=\"true\"><span class=\"combobox-value\" id=\"guide-offices-value\">Choose a value</span><svg class=\"combobox-caret\" width=\"10\" height=\"16\" viewBox=\"0 0 10 16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m1 6 4 4 4-4\"/></svg></button>\n  <div class=\"menu\" id=\"guide-offices-menu\"><div class=\"combobox-search\"><input class=\"form-control combobox-search-input\" type=\"search\" aria-label=\"Search Offices\" placeholder=\"Search\" autocomplete=\"off\"></div><div role=\"listbox\" id=\"guide-offices-options\" aria-labelledby=\"guide-offices-label\" aria-multiselectable=\"true\"><button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"par\">Paris<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lon\">London<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lis\">Lisbon<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button></div><div class=\"combobox-no-results d-none\" role=\"status\">No matching values</div></div></div>"
+        },
+        {
+          "title": "Disabled option",
+          "description": "A disabled native option is skipped by keyboard selection. It can still count as a text filter match, so matching only unavailable options is not the same as no results.",
+          "markup": "<div class=\"form-field\"><span class=\"form-label\" id=\"guide-plan-label\">Plan</span>\n  <button class=\"form-control combobox-toggle\" type=\"button\" id=\"guide-plan\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"guide-plan-options\" aria-labelledby=\"guide-plan-label guide-plan-value\" data-trm-toggle=\"combobox\" data-trm-search=\"true\" data-trm-name=\"guide-plan\" data-trm-placeholder=\"Choose a value\"><span class=\"combobox-value\" id=\"guide-plan-value\">Choose a value</span><svg class=\"combobox-caret\" width=\"10\" height=\"16\" viewBox=\"0 0 10 16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m1 6 4 4 4-4\"/></svg></button>\n  <div class=\"menu\" id=\"guide-plan-menu\"><div class=\"combobox-search\"><input class=\"form-control combobox-search-input\" type=\"search\" aria-label=\"Search Plan\" placeholder=\"Search\" autocomplete=\"off\"></div><div role=\"listbox\" id=\"guide-plan-options\" aria-labelledby=\"guide-plan-label\"><button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"starter\">Starter<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"enterprise\" disabled aria-disabled=\"true\">Enterprise - contact sales<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button></div><div class=\"combobox-no-results d-none\" role=\"status\">No matching values</div></div></div>"
+        },
+        {
+          "title": "No results",
+          "description": "Use an absent query to reveal the authored status. The demo opts into emphasized message/placeholder text; core styling is unchanged.",
+          "markup": "<div class=\"form-field\"><span class=\"form-label\" id=\"guide-country-label\">Destination</span>\n  <button class=\"form-control combobox-toggle\" type=\"button\" id=\"guide-country\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"guide-country-options\" aria-labelledby=\"guide-country-label guide-country-value\" data-trm-toggle=\"combobox\" data-trm-search=\"true\" data-trm-name=\"guide-country\" data-trm-placeholder=\"Choose a value\"><span class=\"combobox-value\" id=\"guide-country-value\">Choose a value</span><svg class=\"combobox-caret\" width=\"10\" height=\"16\" viewBox=\"0 0 10 16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m1 6 4 4 4-4\"/></svg></button>\n  <div class=\"menu\" id=\"guide-country-menu\"><div class=\"combobox-search\"><input class=\"form-control combobox-search-input\" type=\"search\" aria-label=\"Search Destination\" placeholder=\"Search\" autocomplete=\"off\"></div><div role=\"listbox\" id=\"guide-country-options\" aria-labelledby=\"guide-country-label\"><button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"par\">Paris<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lon\">London<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lis\">Lisbon<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button></div><div class=\"combobox-no-results d-none\" role=\"status\">No matching values</div></div></div>"
+        },
+        {
+          "title": "Preselected value and no search",
+          "description": "selected and aria-selected=true seed the initial display and hidden value. No search input is authored in this variant.",
+          "markup": "<div class=\"form-field\"><span class=\"form-label\" id=\"selected-city-label\">Preselected city</span>\n  <button class=\"form-control combobox-toggle\" type=\"button\" id=\"selected-city\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"selected-city-options\" aria-labelledby=\"selected-city-label selected-city-value\" data-trm-toggle=\"combobox\" data-trm-search=\"false\" data-trm-name=\"selected-city\" data-trm-placeholder=\"Choose a value\"><span class=\"combobox-value\" id=\"selected-city-value\">Choose a value</span><svg class=\"combobox-caret\" width=\"10\" height=\"16\" viewBox=\"0 0 10 16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m1 6 4 4 4-4\"/></svg></button>\n  <div class=\"menu\" id=\"selected-city-menu\"><div role=\"listbox\" id=\"selected-city-options\" aria-labelledby=\"selected-city-label\"><button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"par\">Paris<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item selected\" type=\"button\" role=\"option\" aria-selected=\"true\" data-trm-value=\"lon\">London<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lis\">Lisbon<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button></div><div class=\"combobox-no-results d-none\" role=\"status\">No matching values</div></div></div>"
+        },
+        {
+          "title": "Accent-normalized search",
+          "description": "With normalization enabled, Sao matches São Paulo. Filtering is local textContent matching, not remote search.",
+          "markup": "<div class=\"form-field\"><span class=\"form-label\" id=\"normalized-city-label\">Accent city</span>\n  <button class=\"form-control combobox-toggle\" type=\"button\" id=\"normalized-city\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"normalized-city-options\" aria-labelledby=\"normalized-city-label normalized-city-value\" data-trm-toggle=\"combobox\" data-trm-search=\"true\" data-trm-name=\"normalized-city\" data-trm-placeholder=\"Choose a value\" data-trm-search-normalize=\"true\"><span class=\"combobox-value\" id=\"normalized-city-value\">Choose a value</span><svg class=\"combobox-caret\" width=\"10\" height=\"16\" viewBox=\"0 0 10 16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m1 6 4 4 4-4\"/></svg></button>\n  <div class=\"menu\" id=\"normalized-city-menu\"><div class=\"combobox-search\"><input class=\"form-control combobox-search-input\" type=\"search\" aria-label=\"Search Accent city\" placeholder=\"Search\" autocomplete=\"off\"></div><div role=\"listbox\" id=\"normalized-city-options\" aria-labelledby=\"normalized-city-label\"><button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"sao\">São Paulo<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"mun\">München<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"par\">Paris<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button></div><div class=\"combobox-no-results d-none\" role=\"status\">No matching values</div></div></div>"
+        },
+        {
+          "title": "Grouped descriptions and checks",
+          "description": "Semantic groups and visible headers are authored. The first label span becomes the display text; descriptions remain in searchable textContent. Group headers do not automatically disappear when their options are filtered.",
+          "markup": "<div class=\"form-field\"><span class=\"form-label\" id=\"grouped-plan-label\">Grouped plan</span>\n  <button class=\"form-control combobox-toggle\" type=\"button\" id=\"grouped-plan\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"grouped-plan-options\" aria-labelledby=\"grouped-plan-label grouped-plan-value\" data-trm-toggle=\"combobox\" data-trm-search=\"true\" data-trm-name=\"grouped-plan\" data-trm-placeholder=\"Choose a value\"><span class=\"combobox-value\" id=\"grouped-plan-value\">Choose a value</span><svg class=\"combobox-caret\" width=\"10\" height=\"16\" viewBox=\"0 0 10 16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m1 6 4 4 4-4\"/></svg></button>\n  <div class=\"menu\" id=\"grouped-plan-menu\"><div class=\"combobox-search\"><input class=\"form-control combobox-search-input\" type=\"search\" aria-label=\"Search Grouped plan\" placeholder=\"Search\" autocomplete=\"off\"></div><div role=\"listbox\" id=\"grouped-plan-options\" aria-labelledby=\"grouped-plan-label\"><div role=\"group\" aria-label=\"Personal\"><div class=\"menu-header\" aria-hidden=\"true\">Personal</div><button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"basic\"><span class=\"menu-item-content\"><span>Basic</span><small class=\"menu-item-description\">For small teams</small></span><svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n</div><div role=\"group\" aria-label=\"Business\"><div class=\"menu-header\" aria-hidden=\"true\">Business</div><button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"pro\"><span class=\"menu-item-content\"><span>Professional</span><small class=\"menu-item-description\">For growing teams</small></span><svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"enterprise\"><span class=\"menu-item-content\"><span>Enterprise</span><small class=\"menu-item-description\">Managed access</small></span><svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button></div></div><div class=\"combobox-no-results d-none\" role=\"status\">No matching values</div></div></div>"
+        },
+        {
+          "title": "Native sizes",
+          "description": "Use actual form-control sizing on each trigger. There is no Combobox size option or generated input shim.",
+          "markup": "<div class=\"form-field\"><span class=\"form-label\" id=\"small-city-label\">Small city</span>\n  <button class=\"form-control form-control-sm combobox-toggle\" type=\"button\" id=\"small-city\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"small-city-options\" aria-labelledby=\"small-city-label small-city-value\" data-trm-toggle=\"combobox\" data-trm-search=\"false\" data-trm-name=\"small-city\" data-trm-placeholder=\"Choose a value\"><span class=\"combobox-value\" id=\"small-city-value\">Choose a value</span><svg class=\"combobox-caret\" width=\"10\" height=\"16\" viewBox=\"0 0 10 16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m1 6 4 4 4-4\"/></svg></button>\n  <div class=\"menu\" id=\"small-city-menu\"><div role=\"listbox\" id=\"small-city-options\" aria-labelledby=\"small-city-label\"><button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"par\">Paris<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lon\">London<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lis\">Lisbon<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button></div><div class=\"combobox-no-results d-none\" role=\"status\">No matching values</div></div></div><div class=\"form-field\"><span class=\"form-label\" id=\"large-city-label\">Large city</span>\n  <button class=\"form-control form-control-lg combobox-toggle\" type=\"button\" id=\"large-city\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"large-city-options\" aria-labelledby=\"large-city-label large-city-value\" data-trm-toggle=\"combobox\" data-trm-search=\"false\" data-trm-name=\"large-city\" data-trm-placeholder=\"Choose a value\"><span class=\"combobox-value\" id=\"large-city-value\">Choose a value</span><svg class=\"combobox-caret\" width=\"10\" height=\"16\" viewBox=\"0 0 10 16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m1 6 4 4 4-4\"/></svg></button>\n  <div class=\"menu\" id=\"large-city-menu\"><div role=\"listbox\" id=\"large-city-options\" aria-labelledby=\"large-city-label\"><button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"par\">Paris<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lon\">London<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lis\">Lisbon<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button></div><div class=\"combobox-no-results d-none\" role=\"status\">No matching values</div></div></div>"
+        },
+        {
+          "title": "Disabled trigger",
+          "description": "A native disabled button prevents opening. A separately generated hidden input is not disabled automatically; your form policy must handle submission deliberately.",
+          "markup": "<div class=\"form-field\"><span class=\"form-label\" id=\"disabled-city-label\">Unavailable city</span>\n  <button class=\"form-control combobox-toggle\" type=\"button\" id=\"disabled-city\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"disabled-city-options\" aria-labelledby=\"disabled-city-label disabled-city-value\" data-trm-toggle=\"combobox\" data-trm-search=\"true\" data-trm-name=\"disabled-city\" data-trm-placeholder=\"Choose a value\" disabled><span class=\"combobox-value\" id=\"disabled-city-value\">Choose a value</span><svg class=\"combobox-caret\" width=\"10\" height=\"16\" viewBox=\"0 0 10 16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m1 6 4 4 4-4\"/></svg></button>\n  <div class=\"menu\" id=\"disabled-city-menu\"><div class=\"combobox-search\"><input class=\"form-control combobox-search-input\" type=\"search\" aria-label=\"Search Unavailable city\" placeholder=\"Search\" autocomplete=\"off\"></div><div role=\"listbox\" id=\"disabled-city-options\" aria-labelledby=\"disabled-city-label\"><button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"par\">Paris<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lon\">London<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lis\">Lisbon<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button></div><div class=\"combobox-no-results d-none\" role=\"status\">No matching values</div></div></div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Keep authored names/roles and actual Menu focus semantics. Localization and application value validation remain separate concerns.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><div class=\"form-field\"><span class=\"form-label\" id=\"guide-rtl-project-label\">Project</span>\n  <button class=\"form-control combobox-toggle\" type=\"button\" id=\"guide-rtl-project\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"guide-rtl-project-options\" aria-labelledby=\"guide-rtl-project-label guide-rtl-project-value\" data-trm-toggle=\"combobox\" data-trm-search=\"true\" data-trm-name=\"guide-rtl-project\" data-trm-placeholder=\"Choose a value\"><span class=\"combobox-value\" id=\"guide-rtl-project-value\">Choose a value</span><svg class=\"combobox-caret\" width=\"10\" height=\"16\" viewBox=\"0 0 10 16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m1 6 4 4 4-4\"/></svg></button>\n  <div class=\"menu\" id=\"guide-rtl-project-menu\"><div class=\"combobox-search\"><input class=\"form-control combobox-search-input\" type=\"search\" aria-label=\"Search Project\" placeholder=\"Search\" autocomplete=\"off\"></div><div role=\"listbox\" id=\"guide-rtl-project-options\" aria-labelledby=\"guide-rtl-project-label\"><button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"web\">Website redesign<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"mobile\">Mobile application<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button></div><div class=\"combobox-no-results d-none\" role=\"status\">No matching values</div></div></div></div>"
+        }
+      ],
+      "variables": [],
+      "keyboard": [
+        {
+          "keys": "Enter / Space on trigger",
+          "behavior": "Opens the Menu. Search focus is deferred to an animation frame when a search field exists."
+        },
+        {
+          "keys": "ArrowDown / ArrowUp",
+          "behavior": "Navigates enabled visible options with real focus. From a searchable trigger, deferred search focus can supersede the initial option focus; use ArrowDown from search."
+        },
+        {
+          "keys": "Home / End",
+          "behavior": "Moves to first/last visible enabled option, including when pressed in search; not ordinary text-caret behavior."
+        },
+        {
+          "keys": "Enter / Space on option",
+          "behavior": "Selects; single mode hides and focuses trigger, multiple mode keeps the Menu open."
+        },
+        {
+          "keys": "Escape / Tab",
+          "behavior": "Escape requests hide and focuses the trigger; Tab requests hide and follows native focus order. Cancellation can keep the Menu open."
+        }
+      ],
+      "guidelines": [
+        "Put data-trm-toggle=combobox on a named native trigger, include combobox-value, and follow it with the actual Menu. The wrapper form-field is a layout helper, not an invented combobox CSS class.",
+        "Author labelled listbox/options and a separate labelled search input. Options receive real focus, not aria-activedescendant tracking. The pin binds any supplied search input even if search=false, and does not generate one from search=true.",
+        "Set data-trm-name for a generated hidden input. Single mode stores an identifier; multiple mode joins identifiers with commas. Validate delimiter-sensitive values and native form reset/disabled policies in your application.",
+        "There is no getValue/setValue API or free-text display/input contract. Initial selected items seed display and hidden value; labels/descriptions are not the submitted identifier.",
+        "The known owned-Menu registry notice is preserved. Combobox shown/hidden and returned promises do not await Menu transitions; observe shown.trm.menu/hidden.trm.menu for settled state.",
+        "Events expose value/item directly, not event.detail. change is post-mutation; only show/hide are read as cancellation gates. Outside dismissal may occur through Menu without Combobox hide/hidden notifications.",
+        "Use native disabled options; filtering can count their text while keyboard navigation excludes them. Group labels/no-results elements are authored, not generated or automatically regrouped.",
+        "Combobox has no own configurable Sass token map. It reuses form-control and Menu tokens; the sibling Menu rule sets max height 300px. The copied focus/contrast CSS is a demo choice, not a core patch."
+      ],
+      "sass": "@use 'tremplin/scss/forms/combobox';\n@use 'tremplin/scss/menu' with ($menu-tokens: (--trm-menu-padding-x: .5rem));"
+    },
+    "example": "<div class=\"form-field\"><span class=\"form-label\" id=\"city-label\">City</span>\n  <button class=\"form-control combobox-toggle\" type=\"button\" id=\"city\" role=\"combobox\" aria-haspopup=\"listbox\" aria-expanded=\"false\" aria-controls=\"city-options\" aria-labelledby=\"city-label city-value\" data-trm-toggle=\"combobox\" data-trm-search=\"true\" data-trm-name=\"city\" data-trm-placeholder=\"Choose a value\"><span class=\"combobox-value\" id=\"city-value\">Choose a value</span><svg class=\"combobox-caret\" width=\"10\" height=\"16\" viewBox=\"0 0 10 16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m1 6 4 4 4-4\"/></svg></button>\n  <div class=\"menu\" id=\"city-menu\"><div class=\"combobox-search\"><input class=\"form-control combobox-search-input\" type=\"search\" aria-label=\"Search City\" placeholder=\"Search\" autocomplete=\"off\"></div><div role=\"listbox\" id=\"city-options\" aria-labelledby=\"city-label\"><button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"par\">Paris<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lon\">London<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button>\n<button class=\"menu-item\" type=\"button\" role=\"option\" aria-selected=\"false\" data-trm-value=\"lis\">Lisbon<svg class=\"menu-item-check\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m2 7 4 5 8-8\"/></svg></button></div><div class=\"combobox-no-results d-none\" role=\"status\">No matching values</div></div></div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/forms/_combobox.scss",
+    "definition": {
+      "name": "combobox",
+      "className": "Combobox",
+      "options": [
+        {
+          "name": "boundary",
+          "type": "string | Element | undefined",
+          "required": false
+        },
+        {
+          "name": "multiple",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string | null | undefined",
+          "required": false
+        },
+        {
+          "name": "offset",
+          "type": "FloatingOffsetOption | undefined",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "placement",
+          "type": "string | undefined",
+          "required": false
+        },
+        {
+          "name": "search",
+          "type": "boolean | undefined",
+          "required": false
+        },
+        {
+          "name": "searchNormalize",
+          "type": "boolean | undefined",
+          "required": false
+        }
+      ],
+      "methods": [
+        "toggle(): Promise<void>",
+        "show(): Promise<void>",
+        "hide(): Promise<void>",
+        "dispose(): void"
+      ],
+      "events": [
+        "change.trm.combobox",
+        "hidden.trm.combobox",
+        "hide.trm.combobox",
+        "show.trm.combobox",
+        "shown.trm.combobox"
+      ],
+      "dataAttributes": [
+        "data-trm-boundary",
+        "data-trm-multiple",
+        "data-trm-name",
+        "data-trm-offset",
+        "data-trm-placeholder",
+        "data-trm-placement",
+        "data-trm-search",
+        "data-trm-search-normalize",
+        "data-trm-toggle",
+        "data-trm-value"
+      ]
+    },
+    "commonMethods": [
+      "getInstance(element)",
+      "getOrCreateInstance(element, options?)",
+      "dispose()"
+    ],
+    "events": {
+      "change.trm.combobox": "Trigger notification after updating selected classes, aria-selected, display and hidden input. value and item are direct event properties, not event.detail; preventing this event does not undo selection.",
+      "hidden.trm.combobox": "Trigger notification after calling Menu hide(), not after its async transition. Observe Menu completion for settled visibility.",
+      "hide.trm.combobox": "Cancelable trigger event before calling the owned Menu hide(). Outside dismissal may run through Menu directly.",
+      "show.trm.combobox": "Cancelable trigger event before calling the owned Menu show().",
+      "shown.trm.combobox": "Trigger notification immediately after calling Menu show(), before its transition or deferred search focus necessarily completes. Not proof a canceled Menu opened."
+    },
+    "moduleImport": "import Combobox from 'tremplin/combobox'",
+    "javascript": "import Combobox from 'tremplin/combobox'\n\n// Use the matching button + adjacent Menu from the guide.\nconst combo = Combobox.getOrCreateInstance('#city')\ncombo.show() // Observe shown.trm.menu for settled Menu completion.",
+    "sourceOptions": [
+      {
+        "name": "boundary",
+        "type": "string | Element",
+        "defaultValue": "clippingParents",
+        "description": "Forwarded to Menu/Floating UI."
+      },
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "defaultValue": "false",
+        "description": "Toggle selections and keep the Menu open; display a count above one selection."
+      },
+      {
+        "name": "name",
+        "type": "string | null",
+        "defaultValue": "null",
+        "description": "Creates a separate hidden input before the trigger. null creates none."
+      },
+      {
+        "name": "offset",
+        "type": "FloatingOffsetOption",
+        "defaultValue": "[0, 2]",
+        "description": "Forwarded to Menu; supports the actual array/string/function type."
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "defaultValue": "''",
+        "description": "Text when no items are selected; blank does not erase arbitrary authored display text."
+      },
+      {
+        "name": "placement",
+        "type": "string",
+        "defaultValue": "bottom-start",
+        "description": "Menu placement, using the source direction/positioning behavior."
+      },
+      {
+        "name": "search",
+        "type": "boolean",
+        "defaultValue": "false",
+        "description": "Documented search flag. This pin binds a pre-authored search input whenever it exists; it does not generate one or use this flag as a listener gate."
+      },
+      {
+        "name": "searchNormalize",
+        "type": "boolean",
+        "defaultValue": "false",
+        "description": "NFD normalization removes combining marks for accent-insensitive local text matching."
+      }
+    ],
+    "demoCss": "[data-trm-chips] > .chip:focus-visible {\n  outline: var(--trm-focus-ring-width) solid var(--trm-focus-ring-color);\n  outline-offset: 2px;\n}\n.combobox-placeholder, .combobox-no-results { color: var(--trm-fg-2); }"
+  }
+]

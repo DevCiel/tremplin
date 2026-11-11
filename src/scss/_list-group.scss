@@ -1,0 +1,190 @@
+@use "config" as *;
+@use "functions" as *;
+@use "mixins/border-radius" as *;
+@use "layout/breakpoints" as *;
+@use "mixins/tokens" as *;
+
+$list-group-tokens: () !default;
+
+// scss-docs-start list-group-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$list-group-tokens: defaults(
+  (
+    --trm-list-group-color: var(--trm-fg-body),
+    --trm-list-group-bg: var(--trm-bg-body),
+    --trm-list-group-border-color: var(--trm-border-color),
+    --trm-list-group-border-width: var(--trm-border-width),
+    --trm-list-group-border-radius: var(--trm-radius-5),
+    --trm-list-group-item-padding-x: var(--trm-spacer),
+    --trm-list-group-item-padding-y: var(--trm-spacer-2),
+    --trm-list-group-action-color: var(--trm-fg-2),
+    --trm-list-group-action-hover-color: var(--trm-fg-1),
+    --trm-list-group-action-hover-bg: var(--trm-bg-1),
+    --trm-list-group-action-active-color: var(--trm-fg-body),
+    --trm-list-group-action-active-bg: var(--trm-bg-2),
+    --trm-list-group-disabled-color: var(--trm-fg-3),
+    --trm-list-group-disabled-bg: var(--trm-bg-body),
+    --trm-list-group-active-color: var(--trm-primary-contrast),
+    --trm-list-group-active-bg: var(--trm-primary-bg),
+    --trm-list-group-active-border-color: var(--trm-primary-bg),
+  ),
+  $list-group-tokens
+);
+// scss-docs-end list-group-tokens
+
+@layer components {
+  .list-group {
+    @include tokens($list-group-tokens);
+
+    display: flex;
+    flex-direction: column;
+
+    // No need to set list-style-type: ""; since .list-group-item is block level
+    padding-inline-start: 0; // reset padding because ul and ol
+    margin-bottom: 0;
+    @include border-radius(var(--trm-list-group-border-radius));
+  }
+
+  .list-group-numbered {
+    list-style-type: none;
+    counter-reset: section;
+
+    > .list-group-item::before {
+      // Increments only this instance of the section counter
+      content: counters(section, ".") ". ";
+      counter-increment: section;
+    }
+  }
+
+  // Individual list items
+  //
+  // Use on `li`s or `div`s within the `.list-group` parent.
+
+  .list-group-item {
+    position: relative;
+    display: block;
+    padding: var(--trm-list-group-item-padding-y) var(--trm-list-group-item-padding-x);
+    color: var(--trm-theme-fg, var(--trm-list-group-color));
+    text-decoration: none;
+    background-color: var(--trm-theme-bg-subtle, var(--trm-list-group-bg));
+    border: var(--trm-list-group-border-width) solid var(--trm-theme-border, var(--trm-list-group-border-color));
+
+    &:first-child {
+      @include border-top-radius(inherit);
+    }
+
+    &:last-child {
+      @include border-bottom-radius(inherit);
+    }
+
+    &.disabled,
+    &:disabled {
+      color: var(--trm-list-group-disabled-color);
+      pointer-events: none;
+      background-color: var(--trm-list-group-disabled-bg);
+    }
+
+    // Include both here for `<a>`s and `<button>`s
+    &.active {
+      z-index: 2; // Place active items above their siblings for proper border styling
+      color: var(--trm-list-group-active-color);
+      background-color: var(--trm-list-group-active-bg);
+      border-color: var(--trm-list-group-active-border-color);
+    }
+
+    // stylelint-disable-next-line scss/selector-no-redundant-nesting-selector
+    & + .list-group-item {
+      border-block-start-width: 0;
+
+      &.active {
+        margin-top: calc(-1 * var(--trm-list-group-border-width));
+        border-block-start-width: var(--trm-list-group-border-width);
+      }
+    }
+  }
+
+  // Interactive list items
+  //
+  // Use anchor or button elements instead of `li`s or `div`s to create interactive
+  // list items. Includes an extra `.active` modifier class for selected items.
+
+  .list-group-item-action {
+    width: 100%; // For `<button>`s (anchors become 100% by default though)
+    color: var(--trm-theme-fg, var(--trm-list-group-action-color));
+    text-align: inherit; // For `<button>`s (anchors inherit)
+    text-decoration: none;
+
+    &:not(.active) {
+      // Hover state
+      &:hover,
+      &:focus {
+        z-index: 1; // Place hover/focus items above their siblings for proper border styling
+        color: var(--trm-theme-fg-emphasis, var(--trm-list-group-action-hover-color));
+        text-decoration: none;
+        background-color: var(--trm-theme-bg-muted, var(--trm-list-group-action-hover-bg));
+      }
+
+      &:active {
+        color: var(--trm-theme-fg-emphasis, var(--trm-list-group-action-active-color));
+        background-color: var(--trm-theme-bg-muted, var(--trm-list-group-action-active-bg));
+      }
+    }
+  }
+
+  // Horizontal
+  //
+  // Change the layout of list group items from vertical (default) to horizontal.
+  // The responsive variants use container queries, so wrap the list group in a
+  // query container (e.g., the `.contains-inline` utility) for them to take effect.
+
+  @include loop-breakpoints-up() using ($breakpoint, $prefix) {
+    .#{$prefix}list-group-horizontal {
+      @include container-breakpoint-up($breakpoint) {
+        flex-direction: row;
+
+        > .list-group-item {
+          &:first-child:not(:last-child) {
+            @include border-bottom-start-radius(var(--trm-list-group-border-radius));
+            @include border-top-end-radius(0);
+          }
+
+          &:last-child:not(:first-child) {
+            @include border-top-end-radius(var(--trm-list-group-border-radius));
+            @include border-bottom-start-radius(0);
+          }
+
+          &.active {
+            margin-top: 0;
+          }
+
+          + .list-group-item {
+            border-block-start-width: var(--trm-list-group-border-width);
+            border-inline-start-width: 0;
+
+            &.active {
+              margin-inline-start: calc(-1 * var(--trm-list-group-border-width));
+              border-inline-start-width: var(--trm-list-group-border-width);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Flush list items
+  //
+  // Remove borders and border-radius to keep list group items edge-to-edge. Most
+  // useful within other components (e.g., cards).
+
+  .list-group-flush {
+    @include border-radius(0);
+
+    > .list-group-item {
+      border-width: 0 0 var(--trm-list-group-border-width);
+
+      &:last-child {
+        border-block-end-width: 0;
+      }
+    }
+  }
+}

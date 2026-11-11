@@ -1,0 +1,4 @@
+---
+import { paletteOptionRows } from '../../data/sheet-command-docs'
+---
+<div class="table-responsive focus-ring" tabindex="0" role="region" aria-label="Source-verified option defaults"><table class="table"><thead><tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Behavior</th></tr></thead><tbody>{paletteOptionRows.map(option => <tr><td><code>{option.name}</code></td><td>{option.type}</td><td><code>{option.defaultValue}</code></td><td>{option.description}</td></tr>)}</tbody></table></div>

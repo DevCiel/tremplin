@@ -1,0 +1,57 @@
+{
+  "phase": "component-choice-authored-mdx",
+  "names": [
+    "chips",
+    "combobox"
+  ],
+  "canonical": [
+    "chips",
+    "combobox"
+  ],
+  "remaining": 13,
+  "previousPolicy": {
+    "file": "metadata/component-media-mdx.json",
+    "sha256": "1dfafe1fa1708dd0a1e2f0d0ac73f93b6916016ee0bf7e32fb23f900a8926a41"
+  },
+  "historicalSources": {
+    "site/src/data/component-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-docs.before-choice.ts.txt",
+      "sha256": "3d22d382a21b875b5fe0edde4d2fd60a0e0c630720b98def23f659da2a309789"
+    },
+    "site/src/data/strict-control-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/strict-control-docs.before-choice.ts.txt",
+      "sha256": "1e3c99e0e528d6ebb1345f706a1ffc36576413af8336fcae95b489ab8231f6e3"
+    },
+    "site/src/data/choice-input-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/choice-input-docs.before-choice.ts.txt",
+      "sha256": "e348241b0dc2ce2c57a37b57aae1d20c0a8874aecfb79157324ced0338fbe3f8"
+    },
+    "site/src/data/component-api.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-api.before-choice.ts.txt",
+      "sha256": "3eb17c76b8ebb9056ae22e450a88c39e8fe96d4c880dc0df95929e0d26e636ae"
+    },
+    "site/src/libs/component-mdx.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-mdx.before-choice.ts.txt",
+      "sha256": "6b4c556313519c300dc704d1579fc8357f6c4b5203aa29102e0b66cb85e70a03"
+    },
+    "site/src/pages/components/[slug].astro": {
+      "snapshot": "tests/fixtures/mdx-migration/component-page.before-choice.astro.txt",
+      "sha256": "ed3f6fda76f70fb6b2c465e9c6921aed5a150663294d4d453905f4571525a150"
+    }
+  },
+  "expectation": {
+    "snapshot": "tests/fixtures/mdx-migration/component-choice.before.json",
+    "sha256": "517794fb62261616068ddaf9630f1853340ffbacfa764417a9fe08c89326be9f"
+  },
+  "sources": {
+    "site/src/components/component/ChoiceOptions.astro": "95b02f6350401f53d718de7b1c477ef87dfe8002880015ba60b11f5079ef4be1",
+    "site/src/content/docs/components/chips.mdx": "a491abeae428db9289d645b6f2a19bd56411cd98d11030aca6a604988825f3f7",
+    "site/src/content/docs/components/combobox.mdx": "25d8c01815904138776ebd5572353f927f08536accf8f5c2002022cdb11606a1",
+    "site/src/data/choice-input-docs.ts": "616d07af4b041e2324a994d462fa92744ebc7cc32f202ed1cbfe3594cc460c58",
+    "site/src/data/component-api.ts": "70a04f16ec43c270ee365e191d49e010115d0b6ed827e31de8c4c5af3008b045",
+    "site/src/data/component-docs.ts": "3000727f2b6f898d3ff6a4a2917e17d91991ee77160d7bf1fbc72ee9f4e1737f",
+    "site/src/data/strict-control-docs.ts": "7ebec166e0013e09f91cbb4797a4bc3e984ee4a1709f8a6250184876be9bde0d",
+    "site/src/libs/component-mdx.ts": "689171a095a4765d678f2ad201d07924ce0cb06009018aa67d12573cd3296d45",
+    "site/src/pages/components/[slug].astro": "567ba70a110824d7dfffb490dabeb7f644e1734bfef2f31988cc833984de46b5"
+  }
+}

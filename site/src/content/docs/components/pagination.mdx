@@ -1,0 +1,99 @@
+---
+{
+  "component": "pagination",
+  "title": "Pagination",
+  "description": "Pagination component documentation for Tremplin.",
+  "lead": "Navigate between related pages of content.",
+  "variants": [
+    {
+      "title": "Current and disabled pages",
+      "description": "Mark one current destination and remove the unavailable boundary href. CSS disabled styling is not an activation guard."
+    },
+    {
+      "title": "Small and large sizes",
+      "description": "Size the whole pagination control with sm or lg; the real size generator uses button/input sizing tokens."
+    },
+    {
+      "title": "Icons and accessible labels",
+      "description": "Arrow glyphs are decorative; explicit labels supply the actual previous/next meaning."
+    },
+    {
+      "title": "Alignment and wrapping",
+      "description": "Compose real flex utilities for alignment and a wrapping window of links when space is limited. There is no pagination-gap token."
+    },
+    {
+      "title": "Noninteractive current item",
+      "description": "A current span can replace a self-link. Current context is still supplied explicitly in this example."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Logical seams follow direction. Localize words and icon shapes deliberately; the CSS is not a data or localization controller."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Follow enabled native page links; unavailable no-href links and current spans are not tab stops."
+    },
+    {
+      "keys": "Enter",
+      "behavior": "Navigate through the focused real page URL. No arrow-key or data-fetching controller is supplied."
+    }
+  ],
+  "guidelines": [
+    "Give each result navigation a meaningful label and mark exactly one current page.",
+    "Use page-item wrappers for seam and radius rules and page-link for the actual surface.",
+    "Remove or guard disabled destinations; aria-disabled and tabindex alone do not prevent all activation.",
+    "Provide names for icon-only links and hide decorative glyphs from assistive technology.",
+    "Example query URLs demonstrate destinations only; your application must provide result data and render the corresponding current state.",
+    "Use the actual size and padding/radius tokens; the pinned source has no pagination-gap token. Test custom colors and copy the disclosed demo contrast CSS when using customized examples."
+  ]
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import Contrast from '../../../components/component/Contrast.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Contrast />
+
+<Example markup={componentExample("pagination")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="pagination" />
+
+{componentDetail("pagination").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="pagination" />
+</>}
+
+{componentDetail("pagination").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("pagination").sass} standalone={true} />
+</>}
+
+{componentDetail("pagination").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="pagination" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="pagination" />
+
+{documentedComponents.find(component => component.name === "pagination").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="pagination" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Pagination is CSS-only. Your application supplies destinations, result data and current-page state.</p>

@@ -1,0 +1,58 @@
+---
+{
+  "title": "Z-index",
+  "description": "Understand stacking contexts before changing the layer order of interface elements.",
+  "group": "Layout",
+  "lead": "Understand stacking contexts before changing the layer order of interface elements.",
+  "order": 6
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { layoutExamples as samples } from '../../../data/layout-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Stacking order</h2>
+
+<p>A z-index value is compared within a stacking context, not across the entire document. Positioning, transforms, opacity, isolation, and other properties can create new contexts. Increasing an arbitrary number may not bring a child above a sibling context.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">Local scale</h2>
+
+<p>{"zindex-levels owns the shared z-* utilities and --trm-zindex-* tokens. No modal/offcanvas/dropdown/backdrop compatibility keys are added. Native top-layer order is separate from numeric z-index."}</p>
+
+<div class="table-responsive"><table class="table">
+<thead><tr><th scope="col">Map key</th><th scope="col">Value</th></tr></thead>
+<tbody>
+<tr><td><span>n1 / 0 / 1 / 2 / 3</span></td><td><span>-1 / 0 / 1 / 2 / 3</span></td></tr>
+<tr><td><span>menu</span></td><td><span>1000</span></td></tr>
+<tr><td><span>sticky</span></td><td><span>1010</span></td></tr>
+<tr><td><span>fixed</span></td><td><span>1020</span></td></tr>
+<tr><td><span>drawer</span></td><td><span>1030</span></td></tr>
+<tr><td><span>dialog</span></td><td><span>1040</span></td></tr>
+<tr><td><span>popover</span></td><td><span>1050</span></td></tr>
+<tr><td><span>tooltip</span></td><td><span>1060</span></td></tr>
+<tr><td><span>toast</span></td><td><span>1070</span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Native top layer</h2>
+
+<p>Native modal dialogs and browser popovers can enter the browser’s top layer. Ordinary z-index values cannot place regular page content above a top-layer modal. Test Dialog, Drawer, Menu, Tooltip, and nested overlays together before changing their layer rules.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">Sass configuration</h2>
+
+<p>This map is replaced, not merged by defaults(). Supply the full coherent scale when changing it. There is no z-index() convenience function; use map.get or the emitted root token.</p>
+
+<Code sample={samples["layout/z-index#3"].code[0]} standalone={true} />
+
+</section>

@@ -1,0 +1,152 @@
+---
+{
+  "component": "menu",
+  "title": "Menu",
+  "description": "Menu component documentation for Tremplin.",
+  "lead": "Display contextual actions with positioning, auto-close, keyboard navigation, and submenus.",
+  "variants": [
+    {
+      "title": "Actions and disabled items",
+      "description": "Static presentation sample: native disabled buttons cannot activate. For unavailable links, remove or guard the destination; CSS disabled styling is not a keyboard guard."
+    },
+    {
+      "title": "Headers and descriptions",
+      "description": "Static content composition with explicit readable foregrounds. Headers and descriptions do not create a command controller."
+    },
+    {
+      "title": "Scrollable menu",
+      "description": "A real toggle initializes keyboard handling; menu-scrollable constrains overflow using the actual max-height fallback token."
+    },
+    {
+      "title": "Submenu structure",
+      "description": "Initialize the owning top-level toggle. Nested submenu triggers receive popup/expanded state; logical entry/exit keys follow document direction. This example uses click submenu activation."
+    },
+    {
+      "title": "Auto-close policies",
+      "description": "Default, inside-only, outside-only and manual policies govern clicks. Escape still closes while focus is in a menu, including autoClose=false; forms are exempt from normal inside-click closing."
+    },
+    {
+      "title": "Responsive placement",
+      "description": "Placement prefixes use viewport breakpoints. Floating UI resolves logical end from the document direction, flips/shifts when necessary and updates on resize."
+    },
+    {
+      "title": "Native form content",
+      "description": "Generic menus can contain native forms. Clicking the checkbox keeps the menu open; no application-menu roles or automatic submission behavior are added."
+    },
+    {
+      "title": "Selected and translucent presentation",
+      "description": "Selected/check styling is authored state, not an automatic radio or selection model. Translucent adds backdrop filtering."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Static dark presentation uses logical alignment. Interactive submenu arrow direction follows the document, not only an isolated dir wrapper."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "ArrowDown / ArrowUp",
+      "behavior": "Open from the toggle and focus enabled items; navigation stops at each end once inside."
+    },
+    {
+      "keys": "Home / End",
+      "behavior": "Focus the first/last enabled item in the current menu."
+    },
+    {
+      "keys": "ArrowRight / ArrowLeft",
+      "behavior": "Enter/leave a submenu; reversed for an RTL document."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Activate a native item or open its submenu."
+    },
+    {
+      "keys": "Escape",
+      "behavior": "Close the current submenu or root menu and return focus to its trigger, regardless of autoClose."
+    },
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Use native focus navigation; eligible menus close when focus leaves. Forms and autoClose policy affect dismissal."
+    }
+  ],
+  "guidelines": [
+    "Use data-trm-toggle=\"menu\" even with programmatic calls so global keyboard/close handling can find the trigger.",
+    "Floating UI is required: use the bundle or resolve the dependency in a module build.",
+    "Menu does not add complete ARIA application-menu roles or typeahead. Use native links/buttons and author an appropriate complete widget model if required.",
+    "Disabled styling alone does not guard an anchor; use native disabled or remove/guard the destination.",
+    "Static show examples illustrate styling; initialized toggles demonstrate the JavaScript contract.",
+    "show/hide start events are cancelable on the trigger. shown/hidden report settled CSS transitions; hide restores any moved menu to its original parent.",
+    "container can move the menu outside clipping ancestors; test geometry, focus and document RTL. update recalculates placement."
+  ],
+  "events": {
+    "hidden.trm.menu": "On the toggle after exit and Floating UI cleanup; a moved menu is restored to its original parent.",
+    "hide.trm.menu": "Cancelable start on the toggle; clickEvent is supplied for click-driven dismissal.",
+    "show.trm.menu": "Cancelable start on the toggle, before opening or moving the menu.",
+    "shown.trm.menu": "On the toggle after the entry transition settles, if still open."
+  }
+}
+---
+
+import { componentApi } from '../../../data/component-api'
+import ApiOptions from '../../../components/component/ApiOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("menu")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="menu" />
+
+{componentDetail("menu").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="menu" />
+</>}
+
+{componentDetail("menu").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("menu").sass} standalone={true} />
+</>}
+
+{componentDetail("menu").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="menu" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="menu" />
+
+{documentedComponents.find(component => component.name === "menu").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="menu" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("menu").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("menu").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<ApiOptions name="menu" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="menu" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="menu" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="menu" />
+<p class="mt-4"><a href="/api/menu/">View the generated {componentApi("menu").definition.className}{" API reference →"}</a></p>

@@ -1,0 +1,76 @@
+---
+{
+  "title": "Height",
+  "description": "Use height utilities from the configured Tremplin utility map.",
+  "group": "Utilities",
+  "lead": "Use height utilities from the configured Tremplin utility map.",
+  "order": 24,
+  "utility": {
+    "category": "Sizing",
+    "classes": [
+      "h-25",
+      "h-50",
+      "h-75",
+      "h-100",
+      "h-auto",
+      "h-min",
+      "h-max",
+      "h-fit",
+      "max-h-100",
+      "min-h-0",
+      "min-h-100",
+      "vh-100",
+      "min-vh-100",
+      "dvh-100",
+      "min-dvh-100"
+    ],
+    "notes": "Height uses physical height and a fixed percentage/auto/intrinsic family, not the numeric sizes map. Percentage heights need a definite containing height. max-h/min-h are canonical; mh aliases and default viewport prefixes are absent. Dynamic viewport units follow changing browser chrome, not just the initial viewport.",
+    "responsive": false
+  }
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { utilitiesExamples as samples } from '../../../data/utilities-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<div class="docs-example"><Html source={samples["utilities/height"][0].example} /></div>
+
+<Code sample={samples["utilities/height"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Supported classes"}</h2>
+
+<p><Html source={"Height uses physical height and a fixed percentage/auto/intrinsic family, not the numeric sizes map. Percentage heights need a definite containing height. max-h/min-h are canonical; mh aliases and default viewport prefixes are absent. Dynamic viewport units follow changing browser chrome, not just the initial viewport."} /></p>
+
+<Code sample={samples["utilities/height"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Configuration and limits"}</h2>
+
+<p><Html source={"Do not infer responsive, dark, print or state variants from a base selector. Family definitions and helper layers have separate contracts. The default declarations have normal priority; inspect configuration and generated CSS before adding flags."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Shrinkable content"}</h2>
+
+<p><Html source={"min-h-0 or min-w-0 can let flex/Grid items shrink below an automatic minimum. Preserve a usable way to read overflowed content rather than clipping essential text."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-4">
+<h2 id="section-4">{"Verification"}</h2>
+
+<p><Html source={"Test actual content at narrow widths, in both directions, after changing theme/OS preference, and with zoom and supported assistive technology. Role names, reduced alpha and decorative effects are not accessibility guarantees."} /></p>
+
+<p><Html source={"Continue to <a href=\"/utilities/api/\">Utility API</a> for configuration and pinned limitations. Compiled selectors prove availability, not universal browser feature support."} /></p>
+
+</section>

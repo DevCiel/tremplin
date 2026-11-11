@@ -1,0 +1,64 @@
+---
+title: Getting started
+description: Build your first Tremplin page and follow the complete setup path.
+---
+
+import { Code } from 'astro:components'
+import { starterHtml, frameworkVersion } from '../../../data/getting-started-guides'
+import GettingStartedCards from '../../../components/GettingStartedCards.astro'
+
+<p class="docs-eyebrow">Your first Tremplin project</p>
+
+# Getting started
+
+<p class="lead">Start with one working HTML page. Then choose your installation method, learn the conventions, and add the components your project needs.</p>
+
+<div class="docs-callout"><strong>Local beta workflow.</strong> This checkout provides working downloads and a packable npm tarball. Public npm/CDN commands are for use after the exact release has been published. A successful local build does not publish a package.</div>
+
+## 1. Get the local browser assets
+
+For a published package, use `npm i tremplin`, or `npm i tremplin@0.8.0-beta.0`
+to select this planned version explicitly. These commands require verified npm
+publication; for this unpublished checkout, follow the working local workflow
+below. See [Install](/getting-started/install/) for npm, pnpm, Yarn, and Bun.
+
+Copy the repository's `dist/css/`, `dist/js/`, and `dist/icons/` folders beside your `index.html`, keeping their layout. The starter uses [tremplin.min.css](/dist/css/tremplin.min.css) and [tremplin.bundle.min.js](/dist/js/tremplin.bundle.min.js); preserve [datepicker-chevron.svg](/dist/icons/datepicker-chevron.svg) under `dist/icons/` for calendar arrows. CSS-only pages can omit JavaScript. Load only one ES module runtime with `type="module"`. No public build creates a window global. Preserve the distribution’s license and third-party notices. For the standard build and its local dependency import map, see [Install](/getting-started/install/).
+
+## 2. Create your first document
+
+Save the following as `index.html`. It includes a responsive viewport, a labelled disclosure trigger, and the self-contained ES module.
+
+<div class="docs-code docs-code-standalone"><span class="docs-code-label">HTML</span><button class="btn btn-sm btn-outline-secondary docs-copy" type="button" aria-label="Copy HTML starter">Copy</button><Code code={starterHtml} lang="html" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} /></div>
+
+## 3. Serve the folder and try the button
+
+Use XAMPP or your application's local HTTP server. Open the URL printed by that server; keep the terminal running while you view the page. For a folder under XAMPP's `htdocs`, start Apache and open its matching `http://localhost/your-folder/` path.
+
+The example below is already connected to Tremplin on this documentation site:
+
+<div class="docs-example">
+  <button class="btn-solid theme-inverse" type="button" data-trm-toggle="collapse" data-trm-target="#first-page-details" aria-expanded="false" aria-controls="first-page-details">Show details</button>
+  <div class="collapse mt-3" id="first-page-details"><div class="card card-body">Your framework is working.</div></div>
+</div>
+
+If your own button does nothing, check both asset requests in the Network panel and confirm the target ID matches exactly. See [Installation](/getting-started/install/) for the full troubleshooting table.
+
+## 4. Choose your setup path
+
+Follow these pages in order, or jump to the task you are working on. The guides cover Tremplin’s exports, data hooks, build formats and project setup.
+
+<div class="docs-card-grid">
+  <GettingStartedCards />
+</div>
+
+## 5. Build on the foundation
+
+Use [Layout](/layout/grid/) to arrange content, [Forms](/forms/overview/) for labelled inputs, and the [Component catalog](/components/) for documented patterns. Change runtime branding through [CSS variables](/getting-started/css-variables/), and use [Sass](/customize/sass/) when you need compiled configuration.
+
+Public CSS classes stay unprefixed. Behavior hooks and CSS variables use `data-trm-*` and `--trm-*`. Load application overrides after framework CSS, and avoid combining frameworks with overlapping selectors.
+
+## Reference and release status
+
+<p>This guide describes Tremplin {frameworkVersion}. Start with <a href="/getting-started/install/">Install</a>, then follow the <a href="/guides/quickstart/">Quickstart</a> using the project’s supported exports and assets.</p>
+
+The beta has automated browser, accessibility, and visual checks. Manual screen-reader and real-device sign-off remains pending; read the [Accessibility guide](/getting-started/accessibility/) before shipping a complete user journey.

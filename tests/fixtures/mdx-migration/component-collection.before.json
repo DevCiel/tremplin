@@ -1,0 +1,444 @@
+[
+  {
+    "name": "breadcrumb",
+    "title": "Breadcrumb",
+    "description": "Breadcrumb component documentation for Tremplin.",
+    "lead": "Show the current page location within a navigational hierarchy.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Text dividers",
+          "description": "Explicit decorative content replaces the empty-divider CSS mask. No obsolete divider-string token or implicit separator is needed.",
+          "markup": "<nav aria-label=\"Slash breadcrumb\"><ol class=\"breadcrumb\"><li class=\"breadcrumb-item\"><a class=\"breadcrumb-link fg-body\" href=\"/\">Home</a></li><li class=\"breadcrumb-divider\" aria-hidden=\"true\" role=\"presentation\">/</li><li class=\"breadcrumb-item\"><a class=\"breadcrumb-link fg-body\" href=\"/components/\">Components</a></li><li class=\"breadcrumb-divider\" aria-hidden=\"true\" role=\"presentation\">/</li><li class=\"breadcrumb-item\" aria-current=\"page\"><span class=\"breadcrumb-link active\">Breadcrumb</span></li></ol></nav>"
+        },
+        {
+          "title": "SVG dividers",
+          "description": "Nonempty dividers use authored SVG instead of the default pseudo-element. Keep decorative shapes out of the accessible hierarchy.",
+          "markup": "<nav aria-label=\"SVG breadcrumb\"><ol class=\"breadcrumb\"><li class=\"breadcrumb-item\"><a class=\"breadcrumb-link fg-body\" href=\"/\">Home</a></li><li class=\"breadcrumb-divider\" aria-hidden=\"true\" role=\"presentation\"><svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m5 3 5 5-5 5\"></path></svg></li><li class=\"breadcrumb-item\"><a class=\"breadcrumb-link fg-body\" href=\"/components/\">Components</a></li><li class=\"breadcrumb-divider\" aria-hidden=\"true\" role=\"presentation\"><svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m5 3 5 5-5 5\"></path></svg></li><li class=\"breadcrumb-item\" aria-current=\"page\"><span class=\"breadcrumb-link active\">Examples</span></li></ol></nav>"
+        },
+        {
+          "title": "Divider dimensions",
+          "description": "Use the real icon dimension/margin tokens. The full mask URL remains available in the token table; separator color does not carry page meaning.",
+          "markup": "<div style=\"--trm-breadcrumb-divider-width: .5rem; --trm-breadcrumb-divider-height: 1rem\"><nav aria-label=\"Sized breadcrumb\"><ol class=\"breadcrumb\"><li class=\"breadcrumb-item\"><a class=\"breadcrumb-link fg-body\" href=\"/\">Home</a></li><li class=\"breadcrumb-divider\" aria-hidden=\"true\" role=\"presentation\"></li><li class=\"breadcrumb-item\"><a class=\"breadcrumb-link fg-body\" href=\"/components/\">Components</a></li><li class=\"breadcrumb-divider\" aria-hidden=\"true\" role=\"presentation\"></li><li class=\"breadcrumb-item\" aria-current=\"page\"><span class=\"breadcrumb-link active\">Tokens</span></li></ol></nav></div>"
+        },
+        {
+          "title": "Long and wrapping trails",
+          "description": "Breadcrumb wraps by default. Keep labels concise and verify longer hierarchy names at small widths.",
+          "markup": "<nav aria-label=\"Long breadcrumb\"><ol class=\"breadcrumb\"><li class=\"breadcrumb-item\"><a class=\"breadcrumb-link fg-body\" href=\"/\">Organization</a></li><li class=\"breadcrumb-divider\" aria-hidden=\"true\" role=\"presentation\"></li><li class=\"breadcrumb-item\"><a class=\"breadcrumb-link fg-body\" href=\"/components/\">Design systems</a></li><li class=\"breadcrumb-divider\" aria-hidden=\"true\" role=\"presentation\"></li><li class=\"breadcrumb-item\" aria-current=\"page\"><span class=\"breadcrumb-link active\">Accessibility</span></li></ol></nav>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Spacing follows direction; an explicitly authored left-pointing separator is used here. A mask does not automatically mirror its SVG path.",
+          "markup": "<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><nav aria-label=\"RTL breadcrumb\"><ol class=\"breadcrumb\"><li class=\"breadcrumb-item\"><a class=\"breadcrumb-link fg-body\" href=\"/\">Home</a></li><li class=\"breadcrumb-divider\" aria-hidden=\"true\" role=\"presentation\">&#8249;</li><li class=\"breadcrumb-item\"><a class=\"breadcrumb-link fg-body\" href=\"/components/\">Components</a></li><li class=\"breadcrumb-divider\" aria-hidden=\"true\" role=\"presentation\">&#8249;</li><li class=\"breadcrumb-item\" aria-current=\"page\"><span class=\"breadcrumb-link active\">Current page</span></li></ol></nav></div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-breadcrumb-font-size",
+          "defaultValue": "inherit",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-bg",
+          "defaultValue": "transparent",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-border-radius",
+          "defaultValue": "var(--trm-radius-5)",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-divider-margin-x",
+          "defaultValue": "calc(var(--trm-breadcrumb-link-padding-x) / 4)",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-divider-color",
+          "defaultValue": "var(--trm-fg-4)",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-divider-icon",
+          "defaultValue": "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 16'%3e%3cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M2 2l4 6-4 6'/%3e%3c/svg%3e\")",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-divider-width",
+          "defaultValue": "0.375rem",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-divider-height",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-link-padding-x",
+          "defaultValue": "0.75rem",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-link-padding-y",
+          "defaultValue": "0.25rem",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-link-color",
+          "defaultValue": "var(--trm-fg-3)",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-link-hover-color",
+          "defaultValue": "var(--trm-fg-2)",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-link-hover-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-link-active-color",
+          "defaultValue": "var(--trm-fg-1)",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-breadcrumb-link-border-radius",
+          "defaultValue": "var(--trm-radius-7)",
+          "purpose": "Default exported through $breadcrumb-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Follow ancestor links; the non-link current item and decorative dividers are not keyboard controls."
+        },
+        {
+          "keys": "Enter",
+          "behavior": "Navigate through a focused ancestor link."
+        }
+      ],
+      "guidelines": [
+        "Use a named navigation landmark and an ordered list for hierarchy.",
+        "Add explicit breadcrumb-divider elements and authored aria-hidden; do not assume CSS hides content from assistive technology.",
+        "Use breadcrumb-link on each destination/current surface and mark exactly one current item.",
+        "Separators can be empty for the CSS mask or contain text/SVG; there is no breadcrumb-divider string token.",
+        "These examples deliberately compose fg-body for readable ancestor text. Test colors when customizing tokens.",
+        "Localize directional glyphs deliberately; logical spacing is not automatic icon mirroring."
+      ],
+      "sass": "@use 'tremplin/scss/breadcrumb' with (\n  $breadcrumb-tokens: (\n    --trm-breadcrumb-divider-margin-x: .25rem,\n    --trm-breadcrumb-link-padding-x: .5rem\n  )\n);"
+    },
+    "example": "<nav aria-label=\"Breadcrumb\"><ol class=\"breadcrumb\"><li class=\"breadcrumb-item\"><a class=\"breadcrumb-link fg-body\" href=\"/\">Home</a></li><li class=\"breadcrumb-divider\" aria-hidden=\"true\" role=\"presentation\"></li><li class=\"breadcrumb-item\"><a class=\"breadcrumb-link fg-body\" href=\"/components/\">Components</a></li><li class=\"breadcrumb-divider\" aria-hidden=\"true\" role=\"presentation\"></li><li class=\"breadcrumb-item\" aria-current=\"page\"><span class=\"breadcrumb-link active\">Docs</span></li></ol></nav>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_breadcrumb.scss",
+    "javascript": "Breadcrumb is CSS-only. Explicit divider elements and authored ARIA supply presentation and hierarchy; no navigation controller is installed."
+  },
+  {
+    "name": "list-group",
+    "title": "List Group",
+    "description": "List Group component documentation for Tremplin.",
+    "lead": "Display flexible lists of content, links, or actions.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Static and flush lists",
+          "description": "Use real list items for static content; flush removes outer edges for an adjoining surface.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"vstack gap-3\"><ul class=\"list-group\"><li class=\"list-group-item\">Design</li><li class=\"list-group-item\">Build</li></ul><ul class=\"list-group list-group-flush\"><li class=\"list-group-item\">Documentation</li><li class=\"list-group-item\">Examples</li></ul></div>\n</div>"
+        },
+        {
+          "title": "Actionable and unavailable items",
+          "description": "Use real links or native buttons. A disabled class alone does not guard keyboard or scripted activation; the unavailable link has no href.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"list-group\" role=\"group\" aria-label=\"Project actions\"><a class=\"list-group-item list-group-item-action\" href=\"/components/\">Open dashboard</a><button class=\"list-group-item list-group-item-action\" type=\"button\">Duplicate project</button><button class=\"list-group-item list-group-item-action\" type=\"button\" disabled>Delete project</button><a class=\"list-group-item list-group-item-action disabled\" role=\"link\" aria-disabled=\"true\" tabindex=\"-1\">Archived project</a></div>\n</div>"
+        },
+        {
+          "title": "Numbered rich content and badges",
+          "description": "Native ordered-list structure and CSS counters accompany readable content; badge counts include context.",
+          "markup": "<div class=\"demo-contrast\">\n<ol class=\"list-group list-group-numbered\"><li class=\"list-group-item\"><strong>Install Tremplin</strong><p class=\"mb-0 fg-body\">Import the package stylesheet.</p></li><li class=\"list-group-item\"><strong>Review tasks</strong> <span class=\"badge theme-inverse\">4<span class=\"visually-hidden\"> pending tasks</span></span></li></ol>\n</div>"
+        },
+        {
+          "title": "Container-responsive horizontal group",
+          "description": "The sm prefix follows the containing block, not the viewport. A contains-inline ancestor is required; do not combine horizontal and flush modifiers.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"contains-inline\"><ul class=\"list-group sm:list-group-horizontal\"><li class=\"list-group-item flex-fill\">Design</li><li class=\"list-group-item flex-fill\">Build</li><li class=\"list-group-item flex-fill\">Ship</li></ul></div>\n</div>"
+        },
+        {
+          "title": "Contextual items",
+          "description": "Compose real theme classes rather than retired list-group-item-color aliases. Understandable labels communicate status alongside color.",
+          "markup": "<div class=\"demo-contrast\">\n<ul class=\"list-group\"><li class=\"list-group-item theme-success\">Deployment succeeded</li><li class=\"list-group-item theme-warning\">Review pending</li></ul>\n</div>"
+        },
+        {
+          "title": "Native checkboxes and radios",
+          "description": "Native inputs own checked state. Use actual check/radio classes with a form-field and associated label, not a list-group selection plugin.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"vstack gap-3\"><ul class=\"list-group\"><li class=\"list-group-item\"><div class=\"form-field\"><input class=\"check\" type=\"checkbox\" id=\"list-updates\"><label for=\"list-updates\">Email updates</label></div></li><li class=\"list-group-item\"><div class=\"form-field\"><input class=\"check\" type=\"checkbox\" id=\"list-locked\" disabled><label for=\"list-locked\">Locked updates</label></div></li></ul><ul class=\"list-group\"><li class=\"list-group-item\"><div class=\"form-field\"><input class=\"radio\" type=\"radio\" id=\"list-mode-one\" name=\"list-mode\" checked><label for=\"list-mode-one\">Compact mode</label></div></li><li class=\"list-group-item\"><div class=\"form-field\"><input class=\"radio\" type=\"radio\" id=\"list-mode-two\" name=\"list-mode\"><label for=\"list-mode-two\">Detailed mode</label></div></li></ul></div>\n</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Logical borders and surfaces adapt to direction and theme. Active styles do not automatically update application selection.",
+          "markup": "<div class=\"demo-contrast\">\n<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><nav aria-label=\"Dark workspace\"><div class=\"list-group\"><a class=\"list-group-item list-group-item-action active\" href=\"/components/list-group/\" aria-current=\"true\">Current workspace</a><a class=\"list-group-item list-group-item-action\" href=\"/components/\">Components</a></div></nav></div>\n</div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-list-group-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-border-radius",
+          "defaultValue": "var(--trm-radius-5)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-item-padding-x",
+          "defaultValue": "var(--trm-spacer)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-item-padding-y",
+          "defaultValue": "var(--trm-spacer-2)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-action-color",
+          "defaultValue": "var(--trm-fg-2)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-action-hover-color",
+          "defaultValue": "var(--trm-fg-1)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-action-hover-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-action-active-color",
+          "defaultValue": "var(--trm-fg-body)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-action-active-bg",
+          "defaultValue": "var(--trm-bg-2)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-disabled-color",
+          "defaultValue": "var(--trm-fg-3)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-disabled-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-active-color",
+          "defaultValue": "var(--trm-primary-contrast)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-active-bg",
+          "defaultValue": "var(--trm-primary-bg)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-list-group-active-border-color",
+          "defaultValue": "var(--trm-primary-bg)",
+          "purpose": "Default exported through $list-group-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Follow native controls in DOM order; static items are not tab stops."
+        },
+        {
+          "keys": "Enter / Space",
+          "behavior": "Activate native buttons; links retain Enter navigation and inputs retain native selection behavior."
+        }
+      ],
+      "guidelines": [
+        "Choose native list, navigation or control semantics based on the actual content.",
+        "CSS active state is visual; application selection and dynamic panels are separate concerns. Use the Tab plugin for dynamic list-backed tab panes.",
+        "Use native disabled on buttons and deliberately remove/guard unavailable link destinations.",
+        "Responsive horizontal variants use container queries and require a query container; avoid combining horizontal and flush layouts.",
+        "Use real theme classes and text status labels. Copy the disclosed demo contrast CSS for the customized active/contextual examples.",
+        "Native checkboxes/radios require accessible labels and do not become a custom listbox widget."
+      ],
+      "sass": "@use 'tremplin/scss/list-group' with (\n  $list-group-tokens: (\n    --trm-list-group-border-radius: .75rem,\n    --trm-list-group-item-padding-y: 1rem\n  )\n);"
+    },
+    "example": "<div class=\"demo-contrast\">\n<nav aria-label=\"Workspace sections\"><div class=\"list-group\"><a class=\"list-group-item list-group-item-action active\" href=\"/components/list-group/\" aria-current=\"true\">Overview</a><a class=\"list-group-item list-group-item-action\" href=\"/getting-started/install/\">Installation</a></div></nav>\n</div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_list-group.scss",
+    "javascript": "List group styles and native input examples need no List group JavaScript plugin. Use the separate Tab plugin for dynamic list-backed panes."
+  },
+  {
+    "name": "pagination",
+    "title": "Pagination",
+    "description": "Pagination component documentation for Tremplin.",
+    "lead": "Navigate between related pages of content.",
+    "detail": {
+      "variants": [
+        {
+          "title": "Current and disabled pages",
+          "description": "Mark one current destination and remove the unavailable boundary href. CSS disabled styling is not an activation guard.",
+          "markup": "<div class=\"demo-contrast\">\n<nav aria-label=\"Search results pages\"><ul class=\"pagination theme-inverse\"><li class=\"page-item disabled\"><a class=\"page-link\" role=\"link\" aria-disabled=\"true\" tabindex=\"-1\">Previous</a></li><li class=\"page-item active\"><a class=\"page-link\" href=\"/components/pagination/?page=1\" aria-current=\"page\">1</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=2\">2</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=3\">3</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=2\">Next</a></li></ul></nav>\n</div>"
+        },
+        {
+          "title": "Small and large sizes",
+          "description": "Size the whole pagination control with sm or lg; the real size generator uses button/input sizing tokens.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"vstack gap-3\"><nav aria-label=\"Compact pages\"><ul class=\"pagination pagination-sm theme-inverse\"><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=1\">1</a></li><li class=\"page-item active\"><a class=\"page-link\" href=\"/components/pagination/?page=2\" aria-current=\"page\">2</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=3\">3</a></li></ul></nav><nav aria-label=\"Default pages\"><ul class=\"pagination theme-inverse\"><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=1\">1</a></li><li class=\"page-item active\"><a class=\"page-link\" href=\"/components/pagination/?page=2\" aria-current=\"page\">2</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=3\">3</a></li></ul></nav><nav aria-label=\"Large pages\"><ul class=\"pagination pagination-lg theme-inverse\"><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=1\">1</a></li><li class=\"page-item active\"><a class=\"page-link\" href=\"/components/pagination/?page=2\" aria-current=\"page\">2</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=3\">3</a></li></ul></nav></div>\n</div>"
+        },
+        {
+          "title": "Icons and accessible labels",
+          "description": "Arrow glyphs are decorative; explicit labels supply the actual previous/next meaning.",
+          "markup": "<div class=\"demo-contrast\">\n<nav aria-label=\"Article pages\"><ul class=\"pagination theme-inverse\"><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=4\" aria-label=\"Previous page\"><span aria-hidden=\"true\">&#8249;</span></a></li><li class=\"page-item active\"><a class=\"page-link\" href=\"/components/pagination/?page=5\" aria-current=\"page\">5</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=6\" aria-label=\"Next page\"><span aria-hidden=\"true\">&#8250;</span></a></li></ul></nav>\n</div>"
+        },
+        {
+          "title": "Alignment and wrapping",
+          "description": "Compose real flex utilities for alignment and a wrapping window of links when space is limited. There is no pagination-gap token.",
+          "markup": "<div class=\"demo-contrast\">\n<div class=\"vstack gap-3\"><nav aria-label=\"Centered pages\"><ul class=\"pagination theme-inverse justify-content-center flex-wrap\"><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=1\">1</a></li><li class=\"page-item active\"><a class=\"page-link\" href=\"/components/pagination/?page=2\" aria-current=\"page\">2</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=3\">3</a></li></ul></nav><nav aria-label=\"End-aligned pages\"><ul class=\"pagination theme-inverse justify-content-end flex-wrap\"><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=1\">1</a></li><li class=\"page-item active\"><a class=\"page-link\" href=\"/components/pagination/?page=2\" aria-current=\"page\">2</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=3\">3</a></li></ul></nav></div>\n</div>"
+        },
+        {
+          "title": "Noninteractive current item",
+          "description": "A current span can replace a self-link. Current context is still supplied explicitly in this example.",
+          "markup": "<div class=\"demo-contrast\">\n<nav aria-label=\"Static current page\"><ul class=\"pagination theme-inverse\"><li class=\"page-item active\"><span class=\"page-link\" aria-current=\"page\">1</span></li><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=2\">2</a></li></ul></nav>\n</div>"
+        },
+        {
+          "title": "Dark mode and RTL",
+          "description": "Logical seams follow direction. Localize words and icon shapes deliberately; the CSS is not a data or localization controller.",
+          "markup": "<div class=\"demo-contrast\">\n<div data-trm-theme=\"dark\" dir=\"rtl\" class=\"p-3 rounded-5 bg-body fg-body\"><nav aria-label=\"RTL results\"><ul class=\"pagination theme-inverse\"><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=1\">1</a></li><li class=\"page-item active\"><a class=\"page-link\" href=\"/components/pagination/?page=2\" aria-current=\"page\">2</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=3\">3</a></li></ul></nav></div>\n</div>"
+        }
+      ],
+      "variables": [
+        {
+          "name": "--trm-pagination-min-height",
+          "defaultValue": "var(--trm-btn-input-min-height)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-padding-x",
+          "defaultValue": "var(--trm-btn-input-padding-x)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-padding-y",
+          "defaultValue": "var(--trm-btn-input-padding-y)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-font-size",
+          "defaultValue": "var(--trm-btn-input-font-size)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-color",
+          "defaultValue": "var(--trm-link-color)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-bg",
+          "defaultValue": "var(--trm-bg-body)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-border-width",
+          "defaultValue": "var(--trm-border-width)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-border-radius",
+          "defaultValue": "var(--trm-btn-input-border-radius)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-hover-color",
+          "defaultValue": "var(--trm-link-hover-color)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-hover-bg",
+          "defaultValue": "var(--trm-bg-1)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-hover-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-active-color",
+          "defaultValue": "var(--trm-theme-contrast, var(--trm-primary-contrast))",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-active-bg",
+          "defaultValue": "var(--trm-theme-bg, var(--trm-primary-bg))",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-active-border-color",
+          "defaultValue": "var(--trm-theme-bg, var(--trm-primary-bg))",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-disabled-color",
+          "defaultValue": "var(--trm-fg-3)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-disabled-bg",
+          "defaultValue": "var(--trm-bg-2)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        },
+        {
+          "name": "--trm-pagination-disabled-border-color",
+          "defaultValue": "var(--trm-border-color)",
+          "purpose": "Default exported through $pagination-tokens; configure that map before its first Sass load."
+        }
+      ],
+      "keyboard": [
+        {
+          "keys": "Tab / Shift+Tab",
+          "behavior": "Follow enabled native page links; unavailable no-href links and current spans are not tab stops."
+        },
+        {
+          "keys": "Enter",
+          "behavior": "Navigate through the focused real page URL. No arrow-key or data-fetching controller is supplied."
+        }
+      ],
+      "guidelines": [
+        "Give each result navigation a meaningful label and mark exactly one current page.",
+        "Use page-item wrappers for seam and radius rules and page-link for the actual surface.",
+        "Remove or guard disabled destinations; aria-disabled and tabindex alone do not prevent all activation.",
+        "Provide names for icon-only links and hide decorative glyphs from assistive technology.",
+        "Example query URLs demonstrate destinations only; your application must provide result data and render the corresponding current state.",
+        "Use the actual size and padding/radius tokens; the pinned source has no pagination-gap token. Test custom colors and copy the disclosed demo contrast CSS when using customized examples."
+      ],
+      "sass": "@use 'tremplin/scss/pagination' with (\n  $pagination-tokens: (\n    --trm-pagination-border-radius: .5rem,\n    --trm-pagination-padding-x: .875rem\n  )\n);"
+    },
+    "example": "<div class=\"demo-contrast\">\n<nav aria-label=\"Results pages\"><ul class=\"pagination theme-inverse\"><li class=\"page-item active\"><a class=\"page-link\" href=\"/components/pagination/?page=1\" aria-current=\"page\">1</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=2\">2</a></li><li class=\"page-item\"><a class=\"page-link\" href=\"/components/pagination/?page=3\">3</a></li></ul></nav>\n</div>",
+    "reference": "https://github.com/DevCiel/tremplin/blob/main/src/scss/_pagination.scss",
+    "javascript": "Pagination is CSS-only. Your application supplies destinations, result data and current-page state."
+  }
+]

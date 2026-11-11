@@ -1,0 +1,11 @@
+# Keep the Git-verified upstream notice byte-identical on Windows checkouts too.
+licenses/third-party-code.txt text eol=lf
+THIRD_PARTY_NOTICES.txt text eol=lf
+tests/fixtures/documentation-scope/*.json text eol=lf
+tests/fixtures/documentation-scope/docs.initial.css text eol=lf
+tests/fixtures/mdx-migration/** text eol=lf
+# Keep committed distribution bytes stable for integrity hashes on all platforms.
+/dist/** text eol=lf
+/js/dist/** text eol=lf
+# Shell entry point must work from Windows and Unix source checkouts.
+build/docs-prep.sh text eol=lf

@@ -1,0 +1,126 @@
+---
+{
+  "component": "navbar",
+  "title": "Navbar",
+  "description": "Navbar component documentation for Tremplin.",
+  "lead": "Build responsive, branded navigation headers.",
+  "variants": [
+    {
+      "title": "Brand and navigation",
+      "description": "Use a labelled landmark, real links, nav plus navbar-nav and an authored current-page marker. Navbar has no independent controller."
+    },
+    {
+      "title": "Responsive Drawer navigation",
+      "description": "Container-width expansion displays the same native dialog inline. Below the breakpoint, Drawer supplies modal behavior. The launcher identifies a dialog, not an unsynchronized expanded state."
+    },
+    {
+      "title": "Container-based expansion",
+      "description": "At the same viewport width, narrowing this navbar can show its launcher. sm:navbar-expand expands at 576px of navbar container width, not a viewport media query."
+    },
+    {
+      "title": "Always expanded and always collapsed",
+      "description": "navbar-expand always renders descendants inline. Omitting an expand class keeps the Drawer launcher, independent of viewport size."
+    },
+    {
+      "title": "Menu integration",
+      "description": "A nested Menu needs its own trigger and wrapper. Menu, not Navbar, owns arrow/Escape behavior and expanded state."
+    },
+    {
+      "title": "Forms and actions",
+      "description": "Keep a named search form and native labelled input. Submission navigates to the component catalog with a query parameter; it does not implement server-side search."
+    },
+    {
+      "title": "Text and containers",
+      "description": "navbar-text supports inline content. Inner containers align contents; spacing and position remain utility/application concerns."
+    },
+    {
+      "title": "Image and text brand",
+      "description": "A native brand image can accompany text. This existing local illustration is decorative because adjacent text names the brand; explicit dimensions reserve space."
+    },
+    {
+      "title": "Drawer placement",
+      "description": "Use actual Drawer direction modifiers. This example always uses a top Drawer, with a named close control and initial focus authored explicitly."
+    },
+    {
+      "title": "Translucent presentation",
+      "description": "navbar-translucent supplies a blurred backing layer, not fixed positioning. Fixed layouts need application space for content; this in-flow example does not cover the documentation shell."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Set the theme on the actual navbar for dark navbar tokens. Logical spacing adapts direction; Drawer still owns modal behavior."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Native links and controls follow document order. An open modal Drawer contains focus."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Activate the native Drawer launcher or Menu trigger."
+    },
+    {
+      "keys": "Escape",
+      "behavior": "The active Menu or Drawer handles dismissal; Navbar supplies no Escape controller."
+    }
+  ],
+  "guidelines": [
+    "Use nav or a named navigation landmark and real destinations; author aria-current on the actual current link.",
+    "Include nav with navbar-nav. An always-expanded example uses navbar-expand; responsive sm:/md:/lg:navbar-expand classes use container queries.",
+    "The navbar container, not the viewport, determines expansion. Keep inner containers and test actual available width.",
+    "Responsive Drawer needs a native named dialog and Drawer JavaScript. Author initial focus and a visible close control.",
+    "Do not claim the launcher synchronizes aria-expanded: this Drawer implementation does not. aria-haspopup=dialog and aria-controls describe the relationship.",
+    "Use a separate Menu for contextual actions; Navbar has no JavaScript class or Toggler-based disclosure policy.",
+    "Close a modal Drawer before changing application layout. CSS expansion alone does not promise to release top-layer inertness or transfer focus.",
+    "Configure navbar-tokens, navbar-dark-tokens and navbar-nav-tokens. navbar-breakpoints controls generation; size lookup uses the global breakpoint helpers in this pin.",
+    "Dark navbar overrides can require explicit contrast choices in applications; the demo does not redefine core defaults."
+  ]
+}
+---
+
+import { navbarFocusJavascript } from '../../../data/adaptive-navigation-docs'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("navbar")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="navbar" />
+
+{componentDetail("navbar").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="navbar" />
+</>}
+
+{componentDetail("navbar").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("navbar").sass} standalone={true} />
+</>}
+
+{componentDetail("navbar").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="navbar" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="navbar" />
+
+{documentedComponents.find(component => component.name === "navbar").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="navbar" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Navbar layout is CSS-only. The responsive Drawer examples require the Drawer JavaScript plugin for modal behavior, Escape and focus restoration.</p>
+<div class="docs-callout"><strong>Explicit application focus policy.</strong> These examples focus the authored autofocus control after a modal Drawer finishes opening. WebKit can otherwise leave focus outside this responsive example. Copy this handler with the markup and load it after that markup. This is documentation/application wiring, not an extra Navbar plugin or a change to pinned Drawer behavior.</div>
+<Code source={navbarFocusJavascript} standalone={true} plain={true} label="Copy Navbar application focus handler" />

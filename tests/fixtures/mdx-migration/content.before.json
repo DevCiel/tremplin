@@ -1,0 +1,586 @@
+[
+  {
+    "slug": "content/reboot",
+    "group": "Content",
+    "title": "Reboot",
+    "description": "Understand the element-level defaults that Tremplin applies before component classes.",
+    "lead": "Understand the element-level defaults that Tremplin applies before component classes.",
+    "sections": [
+      {
+        "heading": "Approach",
+        "paragraphs": [
+          "Reboot supplies a common starting point for document elements. It is global CSS, not a component you opt into with a class. Review an existing application’s reset before adding it, and avoid loading the focused reboot build alongside the full framework unnecessarily."
+        ]
+      },
+      {
+        "heading": "Root CSS variables",
+        "code": [
+          {
+            "language": "css",
+            "source": ":root {\n  --trm-bg-body: #fff;\n  --trm-fg-body: #202431;\n  --trm-body-font-family: Arial, sans-serif;\n  --trm-body-line-height: 1.5;\n}"
+          }
+        ],
+        "paragraphs": [
+          "Body consumes body-font-family, body-font-size, body-font-weight, body-line-height, fg-body and bg-body. The default sans stack starts with -apple-system/BlinkMacSystemFont and Segoe UI; it deliberately omits system-ui. No web font is downloaded by the framework. The documentation shell can style its own typography independently."
+        ]
+      },
+      {
+        "heading": "Page defaults",
+        "table": {
+          "headings": [
+            "Rule",
+            "Pinned behavior"
+          ],
+          "rows": [
+            [
+              "Box sizing",
+              "border-box on elements and pseudo-elements"
+            ],
+            [
+              "Body",
+              "No margin; 1rem text and 1.5 line-height via runtime tokens"
+            ],
+            [
+              "Images",
+              "Inline by default; responsive dimensions are opt-in via img-fluid"
+            ],
+            [
+              "Controls",
+              "Normalized font and native semantics; component classes add styling"
+            ],
+            [
+              "Iframes",
+              "color-scheme: light dark and no border"
+            ]
+          ]
+        }
+      },
+      {
+        "heading": "Headings and paragraphs",
+        "example": "<div><h3>A document section</h3><p>Use semantic headings and paragraphs rather than spacing with repeated line breaks.</p><p>Paragraphs have block-end spacing by default.</p></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div><h3>A document section</h3><p>Use semantic headings and paragraphs rather than spacing with repeated line breaks.</p><p>Paragraphs have block-end spacing by default.</p></div>"
+          }
+        ],
+        "paragraphs": [
+          "All h1 through h6 and matching h1–h6 classes use named font-size tokens, configured heading margins and a 1.2 line-height. Paragraphs use paragraph-margin-bottom. Choose heading levels semantically."
+        ]
+      },
+      {
+        "heading": "Links and horizontal rules",
+        "example": "<div><p>Read the <a style=\"--trm-link-color:var(--trm-primary-fg-emphasis)\" href=\"/content/typography/\">typography guide</a> for text styling.</p><hr><p>A thematic break separates changes in topic.</p></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div><p>Read the <a style=\"--trm-link-color:var(--trm-primary-fg-emphasis)\" href=\"/content/typography/\">typography guide</a> for text styling.</p><hr><p>A thematic break separates changes in topic.</p></div>"
+          }
+        ],
+        "paragraphs": [
+          "Links use a runtime color and underline offset. A horizontal rule draws a themed block-start border. Keep link purpose clear without relying on color alone.",
+          "This live link explicitly uses primary-fg-emphasis as application CSS for normal-text contrast; it does not alter the pinned link default."
+        ]
+      },
+      {
+        "heading": "Code, user input, and sample output",
+        "example": "<div><p>Use <code>npm run build</code> in a terminal.</p><p>Press <kbd>Ctrl</kbd> + <kbd>S</kbd> to save.</p><p>Example output: <samp>Build complete</samp>.</p></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div><p>Use <code>npm run build</code> in a terminal.</p><p>Press <kbd>Ctrl</kbd> + <kbd>S</kbd> to save.</p><p>Example output: <samp>Build complete</samp>.</p></div>"
+          }
+        ],
+        "paragraphs": [
+          "code, pre, kbd, and samp use the monospace stack. Preformatted blocks scroll when necessary. Escape user-provided source text before putting it into HTML; CSS does not make unsafe markup safe."
+        ]
+      },
+      {
+        "heading": "Forms and miscellaneous elements",
+        "paragraphs": [
+          "The local reset only normalizes part of native form and document styling. Use the dedicated <a href=\"/forms/overview/\">Forms guide</a> for controls, visible labels, validation, and keyboard behavior. Details/summary, address, embeds, and other native elements must still be tested across supported browsers."
+        ]
+      },
+      {
+        "heading": "Hidden content and reduced motion",
+        "code": [
+          {
+            "language": "html",
+            "source": "<p hidden>This content is not displayed.</p>"
+          }
+        ],
+        "paragraphs": [
+          "Reboot enforces hidden with display:none !important. Smooth scrolling is opt-in and only enabled when reduced motion is not requested. Transition mixins and individual components handle their own preference rules; Reboot does not globally shorten every application animation.",
+          "Iframes receive color-scheme: light dark; third-party embed contents still require independent review."
+        ]
+      },
+      {
+        "heading": "Sass",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss' with (\n  $root-tokens: (--trm-body-font-size: 1rem, --trm-body-line-height: 1.6),\n  $enable-smooth-scroll: false\n);"
+          }
+        ]
+      }
+    ],
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/content-guides.ts"
+    }
+  },
+  {
+    "slug": "content/typography",
+    "group": "Content",
+    "title": "Typography",
+    "description": "Style readable text while preserving headings, lists, quotations, and document semantics.",
+    "lead": "Style readable text while preserving headings, lists, quotations, and document semantics.",
+    "sections": [
+      {
+        "heading": "Global settings",
+        "paragraphs": [
+          "Body typography comes from the framework configuration and runtime font variables. Keep a readable line-height and test browser text zoom. The documentation shell overrides its own typography, so its heading measurements are not the default values of a consumer page."
+        ]
+      },
+      {
+        "heading": "Headings",
+        "example": "<div><h3>A third-level heading</h3><h4>A fourth-level heading</h4><p>Choose heading levels by document structure, not by preferred visual size.</p></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div><h3>A third-level heading</h3><h4>A fourth-level heading</h4><p>Choose heading levels by document structure, not by preferred visual size.</p></div>"
+          }
+        ],
+        "paragraphs": [
+          "Native h1–h6 and matching heading classes exist. Use fs-* utilities with named sizes when appearance should differ from the semantic level; classes do not change document structure."
+        ]
+      },
+      {
+        "heading": "Display headings and lead text",
+        "example": "<div><p class=\"fs-3xl fw-light\">Build with Tremplin</p><p class=\"fs-xl\">A larger introductory paragraph for a section or page.</p></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div><p class=\"fs-3xl fw-light\">Build with Tremplin</p><p class=\"fs-xl\">A larger introductory paragraph for a section or page.</p></div>"
+          }
+        ],
+        "paragraphs": [
+          "The strict pin uses named font-size and weight utilities rather than display-1 through display-6 or lead classes. This example deliberately uses fs-3xl/fw-light and fs-xl. Test long text and zoom at narrow widths."
+        ]
+      },
+      {
+        "heading": "Inline text elements",
+        "example": "<div><p><mark>Highlighted text</mark> draws attention without changing the sentence.</p><p><del>Removed content</del> and <ins>inserted content</ins> describe a revision.</p><p><strong>Important text</strong>, <em>emphasis</em>, and <small>a supplementary note</small> preserve meaning.</p></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div><p><mark>Highlighted text</mark> draws attention without changing the sentence.</p><p><del>Removed content</del> and <ins>inserted content</ins> describe a revision.</p><p><strong>Important text</strong>, <em>emphasis</em>, and <small>a supplementary note</small> preserve meaning.</p></div>"
+          }
+        ],
+        "paragraphs": [
+          "Use elements that describe the meaning you intend. The .mark and .small classes provide corresponding visual treatments when different markup is appropriate."
+        ]
+      },
+      {
+        "heading": "Text utilities and abbreviations",
+        "example": "<div><p class=\"fw-semibold text-start\">A semibold paragraph aligned to the logical start.</p><p><abbr title=\"Application Programming Interface\" class=\"initialism\">API</abbr> describes an application interface.</p></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div><p class=\"fw-semibold text-start\">A semibold paragraph aligned to the logical start.</p><p><abbr title=\"Application Programming Interface\" class=\"initialism\">API</abbr> describes an application interface.</p></div>"
+          }
+        ],
+        "paragraphs": [
+          "Utilities cover size, weight, alignment, wrapping, and decoration. Give abbreviations an understandable expansion in surrounding text where needed; a title attribute alone is not an accessible tooltip replacement."
+        ]
+      },
+      {
+        "heading": "Blockquotes and sources",
+        "example": "<figure><blockquote class=\"blockquote\"><p>Keep important content understandable before adding visual polish.</p></blockquote><figcaption class=\"blockquote-footer\">Tremplin documentation example</figcaption></figure>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<figure><blockquote class=\"blockquote\"><p>Keep important content understandable before adding visual polish.</p></blockquote><figcaption class=\"blockquote-footer\">Tremplin documentation example</figcaption></figure>"
+          }
+        ],
+        "paragraphs": [
+          "Use blockquote for a quotation and put attribution outside it. The local quote style has an inline-start accent border and adapts to RTL. Do not invent a real person or publication as the source of sample text."
+        ]
+      },
+      {
+        "heading": "Lists",
+        "example": "<div><ul><li>Use semantic lists for related items.</li><li>Keep the reading order meaningful.</li></ul><ul class=\"list-unstyled\"><li>Unstyled list item</li><li>Another unstyled item</li></ul><ul class=\"list-inline\"><li class=\"list-inline-item\">HTML</li><li class=\"list-inline-item\">CSS</li></ul></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div><ul><li>Use semantic lists for related items.</li><li>Keep the reading order meaningful.</li></ul><ul class=\"list-unstyled\"><li>Unstyled list item</li><li>Another unstyled item</li></ul><ul class=\"list-inline\"><li class=\"list-inline-item\">HTML</li><li class=\"list-inline-item\">CSS</li></ul></div>"
+          }
+        ],
+        "paragraphs": [
+          "list-unstyled removes markers and start padding. list-inline/list-inline-item supply inline-list styling. Use the native list semantics and a meaningful reading order; layout classes do not change them."
+        ]
+      },
+      {
+        "heading": "Responsive font sizes",
+        "paragraphs": [
+          "Heading sizes refer to named runtime tokens such as font-size-3xl and font-size-xl; larger scale entries use clamp() fluid sizing. These are not the retired display-* classes. Scope runtime token changes or opt into generated responsive utility families deliberately; do not assume default responsive font-size variants."
+        ]
+      },
+      {
+        "heading": "CSS and Sass",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss' with (\n  $root-tokens: (--trm-body-font-family: 'Arial, sans-serif', --trm-body-line-height: 1.6),\n  $font-sizes: (xl: (font-size: 1.75rem, line-height: 1.4))\n);"
+          }
+        ],
+        "paragraphs": [
+          "Font-sizes entries use named keys and nested font-size/line-height maps, emitting runtime scale tokens consumed by headings and fs-* utilities. Replacement entries must supply both values. Root tokens configure body typography; component token maps control component-specific text."
+        ]
+      }
+    ],
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/content-guides.ts"
+    }
+  },
+  {
+    "slug": "content/images",
+    "group": "Content",
+    "title": "Images",
+    "description": "Keep images responsive, dimensioned, and meaningful alongside captions and alternative text.",
+    "lead": "Keep images responsive, dimensioned, and meaningful alongside captions and alternative text.",
+    "sections": [
+      {
+        "heading": "Responsive images",
+        "example": "<div style=\"max-inline-size: 32rem\" data-content-demo=\"image\"><img src=\"/content-sample.svg\" width=\"800\" height=\"400\" class=\"img-fluid\" alt=\"Three blue panels arranged in a two-column layout\"></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div style=\"max-inline-size: 32rem\" data-content-demo=\"image\"><img src=\"/content-sample.svg\" width=\"800\" height=\"400\" class=\"img-fluid\" alt=\"Three blue panels arranged in a two-column layout\"></div>"
+          }
+        ],
+        "paragraphs": [
+          "img-fluid sets physical max-width:100% and height:auto. It is opt-in, not a global reset. Intrinsic width/height reserve aspect-ratio space. Supply meaningful alternative text or alt=\"\" for decorative images."
+        ]
+      },
+      {
+        "heading": "Image thumbnails",
+        "example": "<img src=\"/content-sample.svg\" width=\"240\" height=\"120\" class=\"img-thumbnail\" alt=\"Three blue panels in a thumbnail\">",
+        "code": [
+          {
+            "language": "html",
+            "source": "<img src=\"/content-sample.svg\" width=\"240\" height=\"120\" class=\"img-thumbnail\" alt=\"Three blue panels in a thumbnail\">"
+          }
+        ],
+        "paragraphs": [
+          "img-thumbnail adds padding, a border, and a themed background. It is an appearance class, not an image-loading or cropping feature."
+        ]
+      },
+      {
+        "heading": "Aligning images",
+        "example": "<img src=\"/content-sample.svg\" width=\"256\" height=\"128\" class=\"img-fluid d-block mx-auto\" alt=\"Three blue panels centered in the container\">",
+        "code": [
+          {
+            "language": "html",
+            "source": "<img src=\"/content-sample.svg\" width=\"256\" height=\"128\" class=\"img-fluid d-block mx-auto\" alt=\"Three blue panels centered in the container\">"
+          }
+        ],
+        "paragraphs": [
+          "Images remain inline by default. Add d-block and constrain width before mx-auto; text-center can center an inline image. Use layout utilities for image groups."
+        ]
+      },
+      {
+        "heading": "Figures",
+        "example": "<figure class=\"figure\"><img src=\"/content-sample.svg\" width=\"800\" height=\"400\" class=\"img-fluid\" alt=\"Three blue panels arranged in a two-column layout\"><figcaption class=\"figure-caption\">An example two-column arrangement with one tall panel and two stacked panels.</figcaption></figure>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<figure class=\"figure\"><img src=\"/content-sample.svg\" width=\"800\" height=\"400\" class=\"img-fluid\" alt=\"Three blue panels arranged in a two-column layout\"><figcaption class=\"figure-caption\">An example two-column arrangement with one tall panel and two stacked panels.</figcaption></figure>"
+          }
+        ],
+        "paragraphs": [
+          "Use figure with figcaption when the caption belongs to the image. A visible caption does not automatically replace an image’s alternative text; decide how the two complement each other."
+        ]
+      },
+      {
+        "heading": "Picture",
+        "code": [
+          {
+            "language": "html",
+            "source": "<picture>\n  <source media=\"(min-width: 48rem)\" srcset=\"/content-sample.svg\">\n  <img src=\"/content-sample.svg\" width=\"800\" height=\"400\"\n    class=\"img-fluid\" alt=\"Three blue panels arranged in a two-column layout\">\n</picture>"
+          }
+        ],
+        "paragraphs": [
+          "Put responsive sizing on the img fallback inside picture. This example uses the same local SVG in both branches; production art direction can supply genuinely different crops or resolutions. Do not advertise an image format you have not actually provided."
+        ]
+      },
+      {
+        "heading": "CSS and loading",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/content/images' with (\n  $thumbnail-tokens: (--trm-thumbnail-border-radius: 1rem),\n  $figure-tokens: (--trm-figure-gap: .75rem)\n);"
+          }
+        ],
+        "paragraphs": [
+          "Thumbnail and figure maps expose their consumed --trm-* tokens. Figure uses a column flex layout and gap; no figure-img alias is required. Focused modules do not include the complete root/reset. Lazy-load suitable off-screen images, not the primary above-the-fold image."
+        ]
+      }
+    ],
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/content-guides.ts"
+    }
+  },
+  {
+    "slug": "content/tables",
+    "group": "Content",
+    "title": "Tables",
+    "description": "Present tabular data with semantic headers, captions, optional accents, and responsive scrolling.",
+    "lead": "Present tabular data with semantic headers, captions, optional accents, and responsive scrolling.",
+    "sections": [
+      {
+        "heading": "Overview",
+        "example": "<table class=\"table \"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr><th scope=\"row\">Design</th><td>Ready</td><td>Devciel</td></tr><tr><th scope=\"row\">Documentation</th><td>In review</td><td>Community</td></tr></tbody></table>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<table class=\"table \"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr><th scope=\"row\">Design</th><td>Ready</td><td>Devciel</td></tr><tr><th scope=\"row\">Documentation</th><td>In review</td><td>Community</td></tr></tbody></table>"
+          }
+        ],
+        "paragraphs": [
+          "Use a table for related row/column data, not page layout. Add a useful caption and scope attributes on headers. The table class opts into the component styling."
+        ]
+      },
+      {
+        "heading": "Variants",
+        "example": "<table class=\"table theme-inverse\"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr><th scope=\"row\">Design</th><td>Ready</td><td>Devciel</td></tr><tr><th scope=\"row\">Documentation</th><td>In review</td><td>Community</td></tr></tbody></table>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<table class=\"table theme-inverse\"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr><th scope=\"row\">Design</th><td>Ready</td><td>Devciel</td></tr><tr><th scope=\"row\">Documentation</th><td>In review</td><td>Community</td></tr></tbody></table>"
+          }
+        ],
+        "paragraphs": [
+          "Use theme-primary, theme-success or another semantic helper on table to supply contextual foreground, subtle background and border roles. There are no table-primary/table-success compatibility classes. The live example uses theme-inverse. Verify the actual role pair in both color modes."
+        ]
+      },
+      {
+        "heading": "Striped rows and columns",
+        "example": "<table class=\"table table-striped\"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr><th scope=\"row\">Design</th><td>Ready</td><td>Devciel</td></tr><tr><th scope=\"row\">Documentation</th><td>In review</td><td>Community</td></tr></tbody></table>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<table class=\"table table-striped-columns\"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr><th scope=\"row\">Design</th><td>Ready</td><td>Devciel</td></tr><tr><th scope=\"row\">Documentation</th><td>In review</td><td>Community</td></tr></tbody></table>"
+          }
+        ],
+        "paragraphs": [
+          "Use table-striped for alternating body rows or table-striped-columns for alternating columns. Striping is a visual reading aid, not a substitute for meaningful headers."
+        ]
+      },
+      {
+        "heading": "Hoverable and active rows",
+        "example": "<table class=\"table table-striped table-hover\"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr class=\"table-active\"><th scope=\"row\">Design</th><td>Selected for review</td><td>Devciel</td></tr><tr><th scope=\"row\">Documentation</th><td class=\"table-active\">Selected for review</td><td>Community</td></tr></tbody></table>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<table class=\"table table-striped table-hover\"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr class=\"table-active\"><th scope=\"row\">Design</th><td>Selected for review</td><td>Devciel</td></tr><tr><th scope=\"row\">Documentation</th><td class=\"table-active\">Selected for review</td><td>Community</td></tr></tbody></table>"
+          }
+        ],
+        "paragraphs": [
+          "Striping sets type-layer properties; active and hover use higher-priority state-layer properties read by each cell's inset shadow. Row active state inherits into its cells until a cell declares its own state. Hover is generated after active and writes state on each hovered row's cells, overriding an inherited active state or a cell's active class. This pinned behavior is not silently changed to the previous local active-always-wins contract. Review keyboard interaction separately; CSS classes do not implement row selection."
+        ]
+      },
+      {
+        "heading": "Table borders",
+        "example": "<table class=\"table table-bordered\"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr><th scope=\"row\">Design</th><td>Ready</td><td>Devciel</td></tr><tr><th scope=\"row\">Documentation</th><td>In review</td><td>Community</td></tr></tbody></table>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<table class=\"table table-borderless\"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr><th scope=\"row\">Design</th><td>Ready</td><td>Devciel</td></tr><tr><th scope=\"row\">Documentation</th><td>In review</td><td>Community</td></tr></tbody></table>"
+          }
+        ],
+        "paragraphs": [
+          "Use table-bordered for explicit cell borders or table-borderless to remove the default cell rules. Choose one border treatment rather than combining conflicting classes."
+        ]
+      },
+      {
+        "heading": "Small tables",
+        "example": "<table class=\"table table-sm\"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr><th scope=\"row\">Design</th><td>Ready</td><td>Devciel</td></tr><tr><th scope=\"row\">Documentation</th><td>In review</td><td>Community</td></tr></tbody></table>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<table class=\"table table-sm\"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr><th scope=\"row\">Design</th><td>Ready</td><td>Devciel</td></tr><tr><th scope=\"row\">Documentation</th><td>In review</td><td>Community</td></tr></tbody></table>"
+          }
+        ],
+        "paragraphs": [
+          "table-sm reduces cell padding. Keep interactive targets usable if you add buttons or fields; small cells are not a reason to shrink controls below a comfortable target size."
+        ]
+      },
+      {
+        "heading": "Group dividers and vertical alignment",
+        "code": [
+          {
+            "language": "html",
+            "source": "<table class=\"table\">\n  <caption>Workstream totals</caption>\n  <thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Count</th></tr></thead>\n  <tbody><tr><th scope=\"row\">Open</th><td>12</td></tr></tbody>\n  <tbody class=\"table-group-divider\">\n    <tr><th scope=\"row\">Completed</th><td class=\"align-middle\">8</td></tr>\n  </tbody>\n</table>"
+          }
+        ],
+        "paragraphs": [
+          "table-group-divider emphasizes the boundary between row groups. align-middle is available for cell alignment. Ensure the table remains understandable when divider styling is absent."
+        ]
+      },
+      {
+        "heading": "Nesting",
+        "paragraphs": [
+          "Cell rules use direct-child selectors to limit leakage into nested tables. A nested table must declare its own table class and have useful headers. Component custom properties can still inherit, so verify accents and state tokens in the nested region. For complex hierarchical data, separate related tables can be clearer."
+        ]
+      },
+      {
+        "heading": "Footer and caption",
+        "code": [
+          {
+            "language": "html",
+            "source": "<table class=\"table caption-top\">\n  <caption>Items in this release</caption>\n  <thead><tr><th scope=\"col\">Category</th><th scope=\"col\">Items</th></tr></thead>\n  <tbody><tr><th scope=\"row\">Guides</th><td>5</td></tr></tbody>\n  <tfoot><tr><th scope=\"row\">Total</th><td>5</td></tr></tfoot>\n</table>"
+          }
+        ],
+        "paragraphs": [
+          "caption-top moves the caption above the table. A tfoot contains summary rows, not unrelated page footer content."
+        ]
+      },
+      {
+        "heading": "Responsive tables",
+        "example": "<div class=\"table-responsive\" role=\"region\" aria-label=\"Scrollable project workstreams\" tabindex=\"0\" data-content-demo=\"table-scroll\"><table class=\"table \"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th><th scope=\"col\">Owner</th></tr></thead><tbody><tr><th scope=\"row\">Accessibility and documentation verification</th><td>Awaiting final review of narrow-screen behavior</td><td>Framework contributors and maintainers</td></tr></tbody></table></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"md:table-responsive\">\n  <table class=\"table\"><caption>Project totals</caption><tbody><tr><th scope=\"row\">Guides</th><td>5</td></tr></tbody></table>\n</div>"
+          }
+        ],
+        "paragraphs": [
+          "table-responsive always scrolls overflow and establishes an inline-size query container. md:table-responsive scrolls below the md viewport minimum. Name and focus genuinely overflowing regions for keyboard access. Responsive suffix aliases are not generated."
+        ]
+      },
+      {
+        "heading": "Card-like and stacked tables",
+        "example": "<div class=\"table-card\"><div class=\"table-responsive\" role=\"region\" aria-label=\"Stacked workstream example\" tabindex=\"0\"><table class=\"table md:table-stacked\"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th></tr></thead><tbody><tr><td data-cell=\"Workstream\">Design</td><td data-cell=\"Status\">In progress</td></tr></tbody></table></div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"table-card\"><div class=\"table-responsive\" role=\"region\" aria-label=\"Stacked workstream example\" tabindex=\"0\"><table class=\"table md:table-stacked\"><caption>Project workstreams</caption><thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Status</th></tr></thead><tbody><tr><td data-cell=\"Workstream\">Design</td><td data-cell=\"Status\">In progress</td></tr></tbody></table></div></div>"
+          }
+        ],
+        "paragraphs": [
+          "table-card clips and rounds a wrapper. A table-responsive ancestor establishes inline-size containment. md:table-stacked switches rows/cells to blocks below the 768px container boundary and uses data-cell labels. Preserve real table headers; pseudo-element labels alone are not an accessible table model. Review stacked-table semantics with assistive technology."
+        ]
+      },
+      {
+        "heading": "CSS variables",
+        "code": [
+          {
+            "language": "css",
+            "source": ".project-table {\n  --trm-table-cell-padding-x: 1rem;\n  --trm-table-cell-padding-y: .75rem;\n  --trm-table-active-bg-factor: 15%;\n}"
+          }
+        ],
+        "paragraphs": [
+          "Color-state/type and bg-state/type properties select state and striping layers. Cell backgrounds use the contextual subtle role and an inset box shadow. Adjust factors or the consumed state property instead of relying on a retired table-active-bg token."
+        ]
+      },
+      {
+        "heading": "Sass customization",
+        "code": [
+          {
+            "language": "scss",
+            "source": "@use 'tremplin/scss/content/tables' with (\n  $table-tokens: (--trm-table-cell-padding-x: 1rem)\n);"
+          }
+        ],
+        "paragraphs": [
+          "Configure a component before another module loads it. This focused module does not emit root colors or Reboot; pair it with an appropriate base. Use the full framework entry when you do not need a custom composition."
+        ]
+      }
+    ],
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/content-guides.ts"
+    }
+  },
+  {
+    "slug": "content/prose",
+    "group": "Content",
+    "title": "Prose",
+    "description": "Give long-form semantic HTML a readable measure and deliberate spacing.",
+    "lead": "Give long-form semantic HTML a readable measure and deliberate spacing.",
+    "sections": [
+      {
+        "heading": "How it works",
+        "paragraphs": [
+          "Prose is a column flex container with content-gap, a 1000px max-width and automatic inline margins. Its content-font-size and line-height tokens change at 1024px. It normalizes common margins, styles all six heading levels, links, lists, quotations, images and tables. It does not sanitize HTML or make arbitrary content accessible."
+        ]
+      },
+      {
+        "heading": "Example",
+        "example": "<article class=\"prose\" data-content-demo=\"prose\"><h3>Writing useful documentation</h3><p>Start with a concrete task and keep the instructions in a logical order.</p><h4>Review the result</h4><ul><li>Check the example against the actual framework.</li><li>Test the complete task with the keyboard.</li></ul><p>Use <strong>clear labels</strong> and links with understandable purpose.</p></article>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<article class=\"prose\" data-content-demo=\"prose\"><h3>Writing useful documentation</h3><p>Start with a concrete task and keep the instructions in a logical order.</p><h4>Review the result</h4><ul><li>Check the example against the actual framework.</li><li>Test the complete task with the keyboard.</li></ul><p>Use <strong>clear labels</strong> and links with understandable purpose.</p></article>"
+          }
+        ]
+      },
+      {
+        "heading": "Inline HTML and headings",
+        "paragraphs": [
+          "Use semantic heading levels and native paragraphs, emphasis and quotes. Prose styles h1–h6 with em sizes, and excludes classed headings from selected spacing rules. The documentation shell's article styling is not a consumer default."
+        ]
+      },
+      {
+        "heading": "Code and lists",
+        "example": "<div class=\"prose\"><p>Run <code>npm run build</code> before reviewing the output.</p><ol><li>Check the local build.</li><li>Open the page at a narrow width.</li></ol></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"prose\"><p>Run <code>npm run build</code> before reviewing the output.</p><ol><li>Check the local build.</li><li>Open the page at a narrow width.</li></ol></div>"
+          }
+        ],
+        "paragraphs": [
+          "Use escaped pre/code content for multiline source. Long lines may scroll horizontally inside code blocks. Native lists keep their meaning; do not fake a list with manually typed bullet characters."
+        ]
+      },
+      {
+        "heading": "Images and tables",
+        "paragraphs": [
+          "Prose constrains images and styles unclassed tables with basic borders/padding. It does not generate responsive wrappers or captions. Use img-fluid/table for those dedicated components, and supply an accessible scroll region for wide tables."
+        ]
+      },
+      {
+        "heading": "Opting out of prose spacing",
+        "example": "<div class=\"prose\"><p>Article content surrounds an embedded application region.</p><div class=\"not-prose\"><h4>Embedded controls</h4><ul><li>First option</li><li>Second option</li></ul></div></div>",
+        "code": [
+          {
+            "language": "html",
+            "source": "<div class=\"prose\"><p>Article content surrounds an embedded application region.</p><div class=\"not-prose\"><h4>Embedded controls</h4><ul><li>First option</li><li>Second option</li></ul></div></div>"
+          }
+        ],
+        "paragraphs": [
+          "not-prose excludes its subtree from descendant prose rules, including heading/list spacing and typography. It does not undo inherited font properties, Reboot, the parent's flex gap or application styles. Put an opt-out region in a wrapper when the direct-child gap is unwanted."
+        ]
+      },
+      {
+        "heading": "Customizing",
+        "code": [
+          {
+            "language": "css",
+            "source": ".project-article {\n  max-inline-size: 65ch;\n  line-height: 1.7;\n}\n.project-article :where(pre, .table-responsive) {\n  max-inline-size: 100%;\n}"
+          }
+        ],
+        "paragraphs": [
+          "Load project CSS after the framework. Check long words, deep lists, zoom, mixed-direction content, and nested interactive components. The documentation site deliberately overrides its own main content width rather than enforcing the default prose measure."
+        ]
+      }
+    ],
+    "reference": {
+      "title": "Tremplin source",
+      "url": "https://github.com/DevCiel/tremplin/blob/main/site/src/data/content-guides.ts"
+    }
+  }
+]

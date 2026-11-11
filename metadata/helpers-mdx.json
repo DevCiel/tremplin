@@ -1,0 +1,42 @@
+{
+  "phase": "helpers-authored-mdx",
+  "guides": 9,
+  "remaining": 48,
+  "previousPolicy": {
+    "file": "metadata/component-completion-mdx.json",
+    "sha256": "edcdba69b0803020092f98a3916784951ebcabdc729ab7621b2b8d35d78581a8"
+  },
+  "historicalSources": {
+    "site/src/data/helpers-guides.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/helpers-guides.before.ts.txt",
+      "sha256": "014a619800e55280e9cec02dc7002c24b29121e715ca5d01bbe54e25c216258f"
+    },
+    "site/src/libs/mdx-guides.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/mdx-guides.before-helpers.ts.txt",
+      "sha256": "abdcdcf0a6cb7e3cdbad447edb79a788c4e4b93b8600184f8e79b284d35c674c"
+    },
+    "site/src/components/GuideScripts.astro": {
+      "snapshot": "tests/fixtures/mdx-migration/guide-scripts.before-helpers.astro.txt",
+      "sha256": "b0e8a6ba66b635d77db28f66b17557f8f5c23d65a6fb8fc452d2c8c3e3987f06"
+    }
+  },
+  "expectation": {
+    "snapshot": "tests/fixtures/mdx-migration/helpers.before.json",
+    "sha256": "c9239ea95f7214dd8b1282ff7a0bb9fc79bf3d492b927f8421f3c7e8d8c8c686"
+  },
+  "sources": {
+    "site/src/data/helpers-examples.ts": "4e9d38419ba702df8968e36e40f54676743fa5bde9f4f4abaa4fef0e1b80b5a7",
+    "site/src/content/docs/helpers/focus-ring.mdx": "06afe4b7693e2dc7abc1349a04b99f32c6d4602c118037fe4d23c3306ce9fbf0",
+    "site/src/content/docs/helpers/hover-lift.mdx": "563783041e40eb323a79b29b7956f0dd8d44c9633f7265c85954d0c7b19b2528",
+    "site/src/content/docs/helpers/icon-link.mdx": "8453675ec17343a45ceaf6fa28ee0a3a155b7943b139e28771092e2745868508",
+    "site/src/content/docs/helpers/position.mdx": "6a20fa76865e106b01b83fbc47fddfe465bc0b289ca5b08823fc2dd237f00ed5",
+    "site/src/content/docs/helpers/stacks.mdx": "b9bb724a25d2acd3d9ddfc00efa005e6efeeffd0cdb638d1e3ab27eac2ba9f9b",
+    "site/src/content/docs/helpers/stretched-link.mdx": "ad3a168944ef87dfef5c6e6a9895541ae9283fac4ab201574aa4e638189df713",
+    "site/src/content/docs/helpers/text-truncation.mdx": "30508e9219d94ca085178de1db0afb45e153f7c9db54acc55a24de7a88d26442",
+    "site/src/content/docs/helpers/vertical-rule.mdx": "b91bd58df2076cd16c54f5c77cb11ba4c26397e5e60e8a9d62ee7c277ba3b89e",
+    "site/src/content/docs/helpers/visually-hidden.mdx": "3ca391cc843f5c14d37cc60ecb4d9f7409b4ebcbc82a9496e3cd7ebda137f72e",
+    "site/src/data/helpers-guides.ts": "5b4cabf34f3c3ede23d6047efba767a82856c82366462ce26f6867dae86454ca",
+    "site/src/libs/mdx-guides.ts": "a3ebc1424422dd189172239d8891a83feb44d57a410be20cb36db0696d7ed43d",
+    "site/src/components/GuideScripts.astro": "c8a1861f059e8f3a562a38545fac736e65f645c20cd369a2285db4a0d0faf048"
+  }
+}

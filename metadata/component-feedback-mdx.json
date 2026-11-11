@@ -1,0 +1,53 @@
+{
+  "phase": "component-feedback-authored-mdx",
+  "names": [
+    "scrollspy",
+    "toast",
+    "toasts"
+  ],
+  "canonical": [
+    "scrollspy",
+    "toast"
+  ],
+  "remaining": 25,
+  "previousPolicy": {
+    "file": "metadata/component-interaction-mdx.json",
+    "sha256": "3caccbcb4e0ae062f10de9597cb65d6380e3185b80bff05acbd6ba578fc37d47"
+  },
+  "historicalSources": {
+    "site/src/data/component-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-docs.before-feedback.ts.txt",
+      "sha256": "6e08041edba37412b067ca4eb6bc5181b69efb695c94e772f28d7d3659d0b784"
+    },
+    "site/src/data/selection-feedback-docs.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/selection-feedback-docs.before-feedback.ts.txt",
+      "sha256": "93eb8cb9ab01a673940c61efb91c95e65b91c402957d0db9a4dd6de638bc78ae"
+    },
+    "site/src/data/component-api.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-api.before-feedback.ts.txt",
+      "sha256": "f362553493ea4e50c61ec1b672353e29216b4d066d26bd7a7fd1f1b216a8b38d"
+    },
+    "site/src/libs/component-mdx.ts": {
+      "snapshot": "tests/fixtures/mdx-migration/component-mdx.before-feedback.ts.txt",
+      "sha256": "482d5e8b09c91ee174167860fb211f784a3c5af7d8897cae080c8a66314c85a2"
+    },
+    "site/src/pages/components/[slug].astro": {
+      "snapshot": "tests/fixtures/mdx-migration/component-page.before-feedback.astro.txt",
+      "sha256": "7e851a85eed7879ca8769522fd2fe49c8cc72e48335ad5722ce015c136937878"
+    }
+  },
+  "expectation": {
+    "snapshot": "tests/fixtures/mdx-migration/component-feedback.before.json",
+    "sha256": "b890a658bf48041d2f2d04c075bf5bb7774fefb0b2abe320e89349a0250e6d84"
+  },
+  "sources": {
+    "site/src/content/docs/components/scrollspy.mdx": "386b59612e1e287ccb5be1cbc4633a2afb122b4e4e3c69e0247ea138c2e96e7d",
+    "site/src/content/docs/components/toast.mdx": "9c41a197486d3a65f04dc9294a3a6a196c8876ed93780b0d170aeaa1fb2ae9e2",
+    "site/src/content/docs/components/toasts.mdx": "efa54025d45db669f3f34346339dac8ae886b9e732f612abd30bb09f37b10b38",
+    "site/src/data/component-api.ts": "94afc3b8b977a233cd0bad9ab74dfd3c47d65272091a94bd2e6177af2b89ae27",
+    "site/src/data/component-docs.ts": "50b510493e9cd500f15d896d955d7276cc8be6e255f776757d9b8bc263ce3081",
+    "site/src/data/selection-feedback-docs.ts": "92a2ae9e20e54159e8d94f1b099bbb68ebc39f029bc89acb6603d7da0f3702dd",
+    "site/src/libs/component-mdx.ts": "7bad2bf1651cdc51adad904e886018349acc43bd848497d413b54ec2db956eff",
+    "site/src/pages/components/[slug].astro": "58b05d3db2cec166af10e7cb504b37635422d3d9da6597205c20a9b29bcd1544"
+  }
+}

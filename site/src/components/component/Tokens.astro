@@ -1,0 +1,12 @@
+---
+import { componentDetail } from '../../data/component-reference'
+interface Props { name: string }
+const { name } = Astro.props
+const variables = componentDetail(name)?.variables
+if (!variables) throw new Error('Missing component tokens')
+const balanced = ['close-button', 'breadcrumb', 'navbar'].includes(name)
+---
+<div class="table-responsive" tabindex="0" role="region" aria-label="Scrollable CSS variables"><table class="table table-bordered" style={balanced ? 'table-layout: fixed' : undefined}>{balanced && <colgroup><col style="width: 28%" /><col style="width: 37%" /><col style="width: 35%" /></colgroup>}
+  <thead><tr><th scope="col">Variable</th><th scope="col">Default</th><th scope="col">Purpose</th></tr></thead>
+  <tbody>{variables.map(variable => <tr><td><code>{variable.name}</code></td><td><code style={balanced ? 'overflow-wrap: anywhere' : undefined}>{variable.defaultValue}</code></td><td>{variable.purpose}</td></tr>)}</tbody>
+</table></div>

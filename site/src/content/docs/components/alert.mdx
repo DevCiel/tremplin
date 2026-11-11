@@ -1,0 +1,118 @@
+---
+{
+  "component": "alert",
+  "title": "Alert",
+  "description": "Alert component documentation for Tremplin.",
+  "lead": "Provide contextual feedback messages with optional dismiss behavior.",
+  "variants": [
+    {
+      "title": "Contextual alerts",
+      "description": "Compose alert with a semantic theme. Use polite status announcements for routine updates and alert only for urgent messages."
+    },
+    {
+      "title": "Headings and links",
+      "description": "Group rich content inside the flex container. Alert headings and links inherit the contextual foreground."
+    },
+    {
+      "title": "Dismissible alert",
+      "description": "The Alert data API emits cancelable close, removes the element after its exit transition, then emits closed. No alert-dismissible or initial show class is required."
+    },
+    {
+      "title": "Instant dismissal",
+      "description": "alert-instant opts out of the exit transition. It does not change removal, cancellation or focus policy."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Logical auto margins place the empty masked close control at the inline end. Do not add a second text glyph inside btn-close."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Focus the authored links and optional close button."
+    },
+    {
+      "keys": "Enter / Space",
+      "behavior": "Activate a focused native dismiss button. No built-in focus restoration is supplied after the alert is removed."
+    }
+  ],
+  "guidelines": [
+    "Reserve role=\"alert\" for urgent messages; routine updates should not interrupt the user.",
+    "Keep recovery instructions available, and do not automatically dismiss validation errors.",
+    "The alert starts visible in normal markup. The plugin adds hiding during exit, removes the element, emits closed and disposes its instance.",
+    "Application code can cancel close or handle closed.trm.alert to move focus to a suitable surviving element. Focus restoration is not automatic.",
+    "Use an empty, named native btn-close with data-trm-dismiss=\"alert\"; use actual theme classes, not retired alert-color aliases."
+  ],
+  "events": {
+    "close.trm.alert": "Before removal; cancel this event to keep the alert.",
+    "closed.trm.alert": "After removal; arrange application focus if needed. This is a notification, not a cancelable state change."
+  }
+}
+---
+
+import { componentApi } from '../../../data/component-api'
+import ApiOptions from '../../../components/component/ApiOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import Contrast from '../../../components/component/Contrast.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Contrast />
+
+<Example markup={componentExample("alert")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="alert" />
+
+{componentDetail("alert").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="alert" />
+</>}
+
+{componentDetail("alert").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("alert").sass} standalone={true} />
+</>}
+
+{componentDetail("alert").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="alert" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="alert" />
+
+{documentedComponents.find(component => component.name === "alert").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="alert" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("alert").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("alert").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<ApiOptions name="alert" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="alert" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="alert" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<p>Use <code>{'data-trm-dismiss="alert"'}</code> on a named native close button. Alternatively, create an Alert instance and call <code>{"close()"}</code>.</p>
+<p class="mt-4"><a href="/api/alert/">View the generated {componentApi("alert").definition.className}{" API reference →"}</a></p>

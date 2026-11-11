@@ -1,0 +1,27 @@
+@use '../config' as *;
+@use '../mixins/tokens' as *;
+@use '../theme' as *;
+
+$status-colors: theme-color-values("base") !default;
+
+$status-tokens: () !default;
+$status-tokens: defaults((
+  --trm-status-gap: .4rem,
+  --trm-status-dot-size: .55rem,
+  --trm-status-color: var(--trm-fg-2),
+  --trm-status-ring-color: var(--trm-bg-body),
+  --trm-status-pulse-duration: 1.5s,
+), $status-tokens);
+
+@layer custom {
+  .status { @include tokens($status-tokens); display: inline-flex; align-items: center; gap: var(--trm-status-gap); }
+  .status::before, .status-dot { flex: 0 0 auto; inline-size: var(--trm-status-dot-size); block-size: var(--trm-status-dot-size); border-radius: 50%; background-color: var(--trm-status-color); box-shadow: 0 0 0 1px var(--trm-status-ring-color); }
+  .status::before { content: ''; }
+  .status-dot { display: inline-block; }
+  .status-sm { --trm-status-dot-size: .4rem; }
+  .status-lg { --trm-status-dot-size: .75rem; }
+  @each $name, $color in $status-colors { .status-#{$name} { --trm-status-color: var(--trm-#{$name}-base, #{$color}); } }
+  .status-pulse::before, .status-dot.status-pulse { animation: trm-status-pulse var(--trm-status-pulse-duration) ease-out infinite; }
+  @keyframes trm-status-pulse { 50% { box-shadow: 0 0 0 .3rem color-mix(in srgb, var(--trm-status-color) 20%, transparent); } }
+  @media (prefers-reduced-motion: reduce) { .status-pulse::before, .status-dot.status-pulse { animation: none; } }
+}

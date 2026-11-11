@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.core.json",
+  "compilerOptions": {
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "noEmitOnError": true,
+    "outDir": "artifacts/test-typecheck/core",
+    "tsBuildInfoFile": "artifacts/test-typecheck/core.tsbuildinfo"
+  }
+}

@@ -1,0 +1,6 @@
+---
+import { componentApi } from '../../data/component-api'
+interface Props { name: string }
+const api = componentApi(Astro.props.name)
+---
+<ul>{[...api.commonMethods, ...api.definition.methods].map(method => <li><code>{method}</code></li>)}</ul>

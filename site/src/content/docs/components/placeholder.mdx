@@ -1,0 +1,52 @@
+---
+{
+  "component": "placeholder",
+  "title": "Placeholder",
+  "description": "Placeholder component documentation for Tremplin.",
+  "implementation": "skeleton"
+}
+---
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("placeholder")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="placeholder" />
+
+{componentDetail("placeholder").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="placeholder" />
+</>}
+
+{componentDetail("placeholder").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("placeholder").sass} standalone={true} />
+</>}
+
+{componentDetail("placeholder").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="placeholder" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="placeholder" />
+
+{documentedComponents.find(component => component.name === "placeholder").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="placeholder" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>This is a CSS component and does not require Tremplin JavaScript.</p>

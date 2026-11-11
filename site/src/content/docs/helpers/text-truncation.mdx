@@ -1,0 +1,47 @@
+---
+{
+  "title": "Text truncation",
+  "description": "Shorten a constrained single line visually while keeping its full text in the document.",
+  "group": "Helpers",
+  "lead": "Shorten a constrained single line visually while keeping its full text in the document.",
+  "order": 6
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { helpersExamples as samples } from '../../../data/helpers-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">{"Example"}</h2>
+
+<p><Html source={"text-truncate sets hidden overflow, nowrap and an ellipsis. It does not set width or display. Use a block or inline-block box with a useful size constraint."} /></p>
+
+<div class="docs-example"><Html source={samples["helpers/text-truncation"][0].example} /></div>
+
+<Code sample={samples["helpers/text-truncation"][0].code[0]} standalone={false} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">{"Flex and Grid containers"}</h2>
+
+<p><Html source={"An item may need min-inline-size: 0 to shrink below its intrinsic width. Test translations and real content. Truncation is not a multiline clamping API."} /></p>
+
+<Code sample={samples["helpers/text-truncation"][1].code[0]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">{"Accessible content"}</h2>
+
+<p><Html source={"The complete text remains in the DOM, but some sighted users may not be able to read it. Provide a usable way to reveal important truncated content. A title attribute alone is not dependable for touch or keyboard users."} /></p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">{"Sass"}</h2>
+
+<Code sample={samples["helpers/text-truncation"][3].code[0]} standalone={true} />
+
+</section>

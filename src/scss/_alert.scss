@@ -1,0 +1,79 @@
+@use "config" as *;
+@use "functions" as *;
+@use "mixins/border-radius" as *;
+@use "mixins/tokens" as *;
+@use "mixins/transition" as *;
+
+$alert-tokens: () !default;
+
+// scss-docs-start alert-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$alert-tokens: defaults(
+  (
+    --trm-alert-gap: var(--trm-spacer-3),
+    --trm-alert-bg: var(--trm-bg-1),
+    --trm-alert-padding-x: var(--trm-spacer),
+    --trm-alert-padding-y: var(--trm-spacer),
+    --trm-alert-color: inherit,
+    --trm-alert-border-color: var(--trm-border-color),
+    --trm-alert-border-radius: var(--trm-radius-7),
+    --trm-alert-link-color: inherit,
+    --trm-alert-transition-property: "opacity",
+    --trm-alert-transition-duration: .15s,
+    --trm-alert-transition-timing: linear,
+    --trm-hr-border-color: var(--trm-theme-border, var(--trm-alert-border-color)),
+  ),
+  $alert-tokens
+);
+// scss-docs-end alert-tokens
+
+@layer components {
+  .alert {
+    @include tokens($alert-tokens);
+
+    display: flex;
+    gap: var(--trm-alert-gap);
+    align-items: start;
+    padding: var(--trm-alert-padding-y) var(--trm-alert-padding-x);
+    color: var(--trm-theme-fg, var(--trm-alert-color));
+    background-color: var(--trm-theme-bg-subtle, var(--trm-alert-bg));
+    border: var(--trm-border-width) solid var(--trm-theme-border, var(--trm-alert-border-color));
+    @include border-radius(var(--trm-alert-border-radius));
+
+    // scss-docs-start alert-transition
+    // An alert is visible in the markup, so only the exit animates. The JS adds
+    // .hiding for the length of it, then removes the element. Add
+    // .alert-instant to remove the alert at once instead.
+    &:not(.alert-instant) {
+      @include transition-props(
+        var(--trm-alert-transition-property),
+        var(--trm-alert-transition-duration),
+        var(--trm-alert-transition-timing)
+      );
+    }
+
+    &.hiding {
+      opacity: 0;
+    }
+    // scss-docs-end alert-transition
+  }
+
+  .alert > p {
+    margin-bottom: 0;
+  }
+
+  .alert .btn-close {
+    color: inherit;
+  }
+
+  .alert-heading {
+    // Specified to prevent conflicts of changing --trm-heading-color
+    color: inherit;
+  }
+
+  // Provide class for links that match alerts
+  .alert-link {
+    font-weight: var(--trm-font-weight-semibold);
+    color: var(--trm-alert-link-color);
+  }
+}

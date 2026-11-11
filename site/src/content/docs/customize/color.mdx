@@ -1,0 +1,56 @@
+---
+{
+  "title": "Color",
+  "description": "Use Tremplin’s semantic palette and pair every color with readable content.",
+  "group": "Customize",
+  "lead": "Use Tremplin’s semantic palette and pair every color with readable content.",
+  "order": 3
+}
+---
+
+import Code from '../../../components/shortcodes/Code.astro'
+import Html from '../../../components/shortcodes/Html.astro'
+import { customizeExamples as samples } from '../../../data/customize-examples'
+
+<section class="docs-section" aria-labelledby="section-0">
+<h2 id="section-0">Colors</h2>
+
+<p>{"The colors map includes sixteen hue/neutral families. Base 500 values, tint keys 025/050/100 through 400 and shade keys 600 through 950 generate runtime palette properties such as --trm-blue-500. Semantic roles are defined separately by theme."}</p>
+
+<div class="table-responsive"><table class="table">
+<thead><tr><th scope="col">Palette family</th><th scope="col">Default base</th></tr></thead>
+<tbody>
+<tr><td><span>blue</span></td><td><span>oklch(60% 0.24 240)</span></td></tr>
+<tr><td><span>indigo</span></td><td><span>oklch(56% 0.26 288)</span></td></tr>
+<tr><td><span>green</span></td><td><span>oklch(64% 0.22 160)</span></td></tr>
+<tr><td><span>red</span></td><td><span>oklch(60% 0.22 20)</span></td></tr>
+<tr><td><span>gray</span></td><td><span>oklch(60% 0.02 245)</span></td></tr>
+</tbody>
+</table></div>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-1">
+<h2 id="section-1">How it works</h2>
+
+<p>colors emits runtime palette properties; theme defines semantic roles and light-dark() values; root emits role references and other global tokens. Semantic names are primary, accent, secondary, success, danger, warning, info and inverse. A base color is not a universal accessible foreground/background pair.</p>
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-2">
+<h2 id="section-2">Customizing</h2>
+
+<p>{"A palette-map change regenerates that family's tonal references. A runtime primary-base override alone does not change primary-bg, fg or every state. Review all role pairs in both color modes."}</p>
+
+<Code sample={samples["customize/color#2"].code[0]} standalone={true} />
+
+<Code sample={samples["customize/color#2"].code[1]} standalone={true} />
+
+</section>
+
+<section class="docs-section" aria-labelledby="section-3">
+<h2 id="section-3">From colors to theme</h2>
+
+<p>Changing a base color does not automatically recompute every local emphasis or dark-mode value. Review the <a href="/customize/theme/">{"theme mappings"}</a> and test each state in both modes. Never rely on color alone to communicate errors or status.</p>
+
+</section>

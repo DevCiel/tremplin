@@ -1,0 +1,128 @@
+---
+{
+  "component": "collapse",
+  "title": "Collapse",
+  "description": "Collapse component documentation for Tremplin.",
+  "lead": "Toggle content regions with CSS-owned transitions and Collapse JavaScript.",
+  "variants": [
+    {
+      "title": "Disclosure",
+      "description": "Collapse changes show and synchronizes trigger aria-expanded. Padding belongs on inner content, not on the animated wrapper."
+    },
+    {
+      "title": "Initially open",
+      "description": "The constructor preserves authored state. Add show and an initially expanded trigger; no automatic constructor toggle option is required."
+    },
+    {
+      "title": "Horizontal collapse",
+      "description": "The CSS changes inline-size and display. A fixed inline size is set on the immediate child; the outer minimum height is a documentation layout choice."
+    },
+    {
+      "title": "Multiple controls and targets",
+      "description": "Individual controls and a selector-list control can operate the same targets. ARIA controls names every target; no extra styling hook class is invented."
+    },
+    {
+      "title": "Parent coordination",
+      "description": "Set parent on target panels. First-level siblings coordinate; this is a Collapse feature, not the native Accordion component."
+    },
+    {
+      "title": "Independent nested collapse",
+      "description": "Nested panel state is independent of outer sibling coordination. Closing an ancestor hides its contents without inventing a nested-state reset."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "The logical animation axis and native button semantics remain unchanged in a local dark RTL region."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Enter / Space",
+      "behavior": "Activate a focused native disclosure button. Collapse adds no optional accordion arrow-key policy."
+    },
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Follow enabled triggers and visible content. Applications manage focus if they hide the currently focused region."
+    }
+  ],
+  "guidelines": [
+    "Use native type=button triggers with matching targets, aria-controls and initial aria-expanded state.",
+    "Collapse adds/removes show only; there is no collapsing transition class or collapsed-trigger class synchronization in this pin.",
+    "Keep padding on inner content; horizontal collapse needs an explicit child inline size.",
+    "show and hide start events are cancelable; shown/hidden notify after the transition callback. Await completion before dependent operations; calls during a transition are ignored rather than queued.",
+    "Parent belongs to the target. Shared triggers can open multiple targets; nested panels retain their own state.",
+    "The constructor preserves authored state. Configure parent if needed and call show/hide/toggle explicitly; these methods return completion promises.",
+    "Size interpolation is progressive enhancement, with immediate fallback where unsupported. Verify reduced motion and do not hide critical instructions by default."
+  ],
+  "events": {
+    "show.trm.collapse": "Before adding show; cancel this event to keep the panel closed.",
+    "shown.trm.collapse": "After the show transition callback; a completion notification, not a cancelable start event.",
+    "hide.trm.collapse": "Before removing show; cancel this event to keep the panel open.",
+    "hidden.trm.collapse": "After the hide transition callback; arrange application focus if needed."
+  }
+}
+---
+
+import { componentApi } from '../../../data/component-api'
+import ApiOptions from '../../../components/component/ApiOptions.astro'
+import ApiMethods from '../../../components/component/ApiMethods.astro'
+import ApiEvents from '../../../components/component/ApiEvents.astro'
+import ApiAttributes from '../../../components/component/ApiAttributes.astro'
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+
+<Example markup={componentExample("collapse")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="collapse" />
+
+{componentDetail("collapse").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="collapse" />
+</>}
+
+{componentDetail("collapse").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("collapse").sass} standalone={true} />
+</>}
+
+{componentDetail("collapse").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="collapse" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="collapse" />
+
+{documentedComponents.find(component => component.name === "collapse").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="collapse" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>Declarative <code>{"data-trm-*"}</code> hooks initialize automatically when the browser bundle is loaded. You can also create or retrieve a typed instance directly.</p>
+<Code source={componentApi("collapse").javascript} />
+<p>For the smallest application bundle, import only this component:</p>
+<Code source={componentApi("collapse").moduleImport} standalone={true} />
+
+<h3 id="options">Options</h3>
+<ApiOptions name="collapse" />
+
+<h3 id="methods">Methods</h3>
+<ApiMethods name="collapse" />
+
+<h3 id="events">Events</h3>
+<ApiEvents name="collapse" />
+
+<h3 id="data-attributes">Data attributes</h3>
+<ApiAttributes name="collapse" />
+<p class="mt-4"><a href="/api/collapse/">View the generated {componentApi("collapse").definition.className}{" API reference →"}</a></p>

@@ -1,0 +1,220 @@
+@use "../functions" as *;
+@use "../mixins/border-radius" as *;
+@use "../mixins/box-shadow" as *;
+@use "../mixins/focus-ring" as *;
+@use "../mixins/transition" as *;
+@use "../mixins/gradients" as *;
+@use "../mixins/tokens" as *;
+
+// stylelint-disable custom-property-no-missing-var-function
+$range-tokens: () !default;
+
+// scss-docs-start range-tokens
+// stylelint-disable-next-line scss/dollar-variable-default
+$range-tokens: defaults(
+  (
+    --trm-range-track-width: 100%,
+    --trm-range-track-height: .5rem,
+    --trm-range-track-cursor: pointer,
+    --trm-range-track-bg: var(--trm-bg-3),
+    --trm-range-track-border-radius: 1rem,
+    --trm-range-track-fill-bg: var(--trm-theme-bg, var(--trm-primary-base)),
+    --trm-range-track-disabled-bg: color-mix(in oklch, var(--trm-bg-4), var(--trm-fg-3)),
+    --trm-range-thumb-width: 1rem,
+    --trm-range-thumb-height: var(--trm-range-thumb-width),
+    --trm-range-thumb-bg: var(--trm-theme-bg, var(--trm-primary-base)),
+    --trm-range-thumb-border: var(--trm-range-thumb-bg) solid var(--trm-border-color),
+    --trm-range-thumb-border-radius: 1rem,
+    --trm-range-thumb-box-shadow: "0 1px 2px rgb(0 0 0 / 7.5%), 0 2px 4px rgb(0 0 0 / 7.5%)",
+    --trm-range-thumb-active-bg: color-mix(in oklch, var(--trm-theme-bg, var(--trm-primary-base)) 70%, var(--trm-bg-body)),
+    --trm-range-thumb-disabled-bg: var(--trm-fg-3),
+    --trm-range-thumb-transition-property: "background-color, border-color, box-shadow",
+    --trm-range-thumb-transition-duration: .15s,
+    --trm-range-thumb-transition-timing: ease-in-out,
+    --trm-range-tick-width: var(--trm-border-width),
+    --trm-range-tick-height: .5rem,
+    --trm-range-tick-bg: var(--trm-border-color),
+  ),
+  $range-tokens
+);
+// scss-docs-end range-tokens
+// stylelint-enable custom-property-no-missing-var-function
+
+// scss-docs-start range-mixins
+@mixin range-thumb() {
+  width: var(--trm-range-thumb-width);
+  height: var(--trm-range-thumb-height);
+  appearance: none;
+  @include gradient-bg(var(--trm-range-thumb-bg));
+  border: var(--trm-range-thumb-border);
+  @include border-radius(var(--trm-range-thumb-border-radius));
+  @include box-shadow(var(--trm-range-thumb-box-shadow));
+  @include transition-props(
+    var(--trm-range-thumb-transition-property),
+    var(--trm-range-thumb-transition-duration),
+    var(--trm-range-thumb-transition-timing)
+  );
+
+  &:active {
+    @include gradient-bg(var(--trm-range-thumb-active-bg));
+  }
+}
+
+@mixin range-track() {
+  width: var(--trm-range-track-width);
+  height: var(--trm-range-track-height);
+  color: transparent;
+  cursor: var(--trm-range-track-cursor);
+  // Fill (progress) up to the thumb. The Range plugin keeps `--trm-range-fill` (0–1) in sync.
+  background-color: var(--trm-range-track-bg);
+  background-image:
+    linear-gradient(
+      to right,
+      var(--trm-range-track-fill-bg) calc(var(--trm-range-fill, 0) * 100%),
+      transparent calc(var(--trm-range-fill, 0) * 100%)
+    );
+  border-color: transparent;
+  @include border-radius(var(--trm-range-track-border-radius));
+  @include box-shadow(var(--trm-range-track-box-shadow));
+}
+// scss-docs-end range-mixins
+
+@layer forms {
+  .form-range {
+    @include tokens($range-tokens);
+
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+
+  .form-range-input {
+    display: block;
+    width: 100%;
+    height: calc(var(--trm-range-thumb-height) + (var(--trm-focus-ring-width) * 2));
+    padding: 0;
+    appearance: none;
+    background-color: transparent;
+
+    &:hover {
+      &::-webkit-slider-thumb {
+        @include focus-ring(false, color-mix(in oklch, var(--trm-theme-focus-ring, var(--trm-primary-focus-ring)), transparent));
+      }
+      &::-moz-range-thumb     {
+        @include focus-ring(false, color-mix(in oklch, var(--trm-theme-focus-ring, var(--trm-primary-focus-ring)), transparent));
+      }
+    }
+
+    &:focus-visible {
+      outline: 0;
+
+      &::-webkit-slider-thumb {
+        @include focus-ring(true);
+        --trm-focus-ring-offset: 0;
+      }
+      &::-moz-range-thumb     {
+        @include focus-ring(true);
+        --trm-focus-ring-offset: 0;
+      }
+    }
+
+    &::-moz-focus-outer {
+      border: 0;
+    }
+
+    &::-webkit-slider-thumb {
+      @include range-thumb();
+      margin-top: calc((var(--trm-range-track-height) - var(--trm-range-thumb-height)) * .5);
+    }
+
+    &::-moz-range-thumb {
+      @include range-thumb();
+    }
+
+    &::-webkit-slider-runnable-track {
+      @include range-track();
+    }
+
+    &::-moz-range-track {
+      @include range-track();
+    }
+
+    &:disabled {
+      pointer-events: none;
+
+      &::-webkit-slider-thumb {
+        background-color: var(--trm-range-thumb-disabled-bg);
+      }
+
+      &::-moz-range-thumb {
+        background-color: var(--trm-range-thumb-disabled-bg);
+      }
+
+      &::-webkit-slider-runnable-track {
+        --trm-range-track-fill-bg: var(--trm-range-track-disabled-bg);
+      }
+
+      &::-moz-range-track {
+        --trm-range-track-fill-bg: var(--trm-range-track-disabled-bg);
+      }
+    }
+  }
+
+  // Value bubble: reuses the tooltip styles (`.tooltip` markup) so we don't duplicate the
+  // pill and arrow. We only add the static positioning the Tooltip plugin would normally do.
+  .form-range-bubble {
+    position: absolute;
+    bottom: 100%;
+    left: calc((var(--trm-range-thumb-width) * .5) + var(--trm-range-fill, 0) * (100% - var(--trm-range-thumb-width)));
+    margin-bottom: var(--trm-tooltip-arrow-height);
+    pointer-events: none;
+    transform: translateX(-50%);
+
+    .tooltip-arrow {
+      position: absolute;
+      bottom: calc(-1 * var(--trm-tooltip-arrow-height));
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  // Tick marks generated from the linked <datalist>. Plugin builds `grid-template-columns`
+  // from the gaps between values so each tick lands on a grid line (handles uneven values).
+  // Track is inset by 1/4th of the thumb width to keep alignment.
+  .form-range-ticks {
+    display: grid;
+    padding-inline: calc(var(--trm-range-thumb-width) * .25);
+  }
+
+  .form-range-tick {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: start;
+    // Zero-width items so labels never widen their `fr` column; the tick line and label
+    // overflow centered on the grid line via `align-items`.
+    width: 0;
+
+    &::before {
+      width: var(--trm-range-tick-width);
+      height: var(--trm-range-tick-height);
+      content: "";
+      background-color: var(--trm-range-tick-bg);
+    }
+
+    &:first-child {
+      align-items: flex-start;
+    }
+
+    &:last-child {
+      align-items: flex-end;
+    }
+  }
+
+  .form-range-tick-label {
+    margin-top: .125rem;
+    font-size: var(--trm-font-size-sm);
+    color: var(--trm-fg-2);
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,99 @@
+---
+{
+  "component": "timeline",
+  "title": "Timeline",
+  "description": "Timeline component documentation for Tremplin.",
+  "lead": "Present chronological list content with an optional local timeline layout.",
+  "variants": [
+    {
+      "title": "Chronological history",
+      "description": "An ordered list preserves sequence; role=list explicitly preserves the list contract when list-style is removed. time supplies machine-readable values."
+    },
+    {
+      "title": "Semantic events",
+      "description": "Marker colors supplement explicit event text, not independent state announcements. DOM order remains chronological."
+    },
+    {
+      "title": "Compact activity",
+      "description": "Compact reduces gap, offset and marker size; it does not collapse events or fetch further activity."
+    },
+    {
+      "title": "Horizontal milestones",
+      "description": "The list itself owns overflow, so it is the named, focusable scroll target. The border line spans the box, not an endlessly extending canvas. No roving arrow-key controller is supplied."
+    },
+    {
+      "title": "Custom spacing and native links",
+      "description": "Token changes affect presentation only. An actual native link provides navigation; events are not made focusable just to look interactive."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Logical line/marker positions follow direction while the DOM and time ordering stay unchanged."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "Tab / Shift+Tab",
+      "behavior": "Visits real links and the explicitly focusable scrolling list. Events are not roving-tabindex widgets."
+    },
+    {
+      "keys": "Arrow keys",
+      "behavior": "Native scrolling on the focused horizontal list; no event-selection controller is supplied."
+    }
+  ],
+  "guidelines": [
+    "This optional local extension provides CSS, not an activity API.",
+    "Use chronological DOM order, meaningful headings and valid time datetime values. Direction does not reverse the data sequence.",
+    "role=list preserves list intent when presentation removes native markers; do not add arbitrary tabindex to events.",
+    "Make the actual horizontal scrolling element named and focusable. Focusing an outer non-scrolling div is not sufficient.",
+    "The horizontal connector follows the element box, not every offscreen event; do not promise a virtualized infinite connector.",
+    "Use links for real destinations. CSS has no fetch, expand, keyboard-selection or automatic live-update policy."
+  ]
+}
+---
+
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+<div class="docs-callout docs-callout-info"><strong>Optional local extension.</strong> This optional pattern is separate from the core and has no matching core plugin. This guide explicitly loads the existing optional extension CSS after core; normal core pages do not. Its Sass belongs to the <code>{"custom"}</code> layer. Import optional styling explicitly in your application.</div>
+<Code source={"import 'tremplin/css'\nimport 'tremplin/css/extensions'"} standalone={true} plain={true} label="Copy optional extension CSS imports" />
+
+<Example markup={componentExample("timeline")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="timeline" />
+
+{componentDetail("timeline").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="timeline" />
+</>}
+
+{componentDetail("timeline").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("timeline").sass} standalone={true} />
+</>}
+
+{componentDetail("timeline").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="timeline" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="timeline" />
+
+{documentedComponents.find(component => component.name === "timeline").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="timeline" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>This optional CSS extension has no matching core JavaScript plugin. Any demonstrated dynamic action is application-owned and is disclosed below.</p>

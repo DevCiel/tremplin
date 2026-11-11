@@ -1,0 +1,95 @@
+---
+{
+  "component": "divider",
+  "title": "Divider",
+  "description": "Divider component documentation for Tremplin.",
+  "lead": "Separate content with an optional local CSS pattern and deliberate decorative or structural semantics.",
+  "variants": [
+    {
+      "title": "Decorative divider",
+      "description": "A decorative break is hidden from assistive technology; its label is not a section heading."
+    },
+    {
+      "title": "Label alignment",
+      "description": "Start/end remove the corresponding logical line; they do not alter reading order."
+    },
+    {
+      "title": "Semantic separator",
+      "description": "A meaningful, named horizontal boundary is structural rather than interactive."
+    },
+    {
+      "title": "Vertical divider",
+      "description": "Set vertical orientation when a meaningful boundary divides adjacent summaries; it is not a draggable splitter."
+    },
+    {
+      "title": "Custom spacing",
+      "description": "Use actual extension tokens rather than adding another separator plugin."
+    },
+    {
+      "title": "Dark mode and RTL",
+      "description": "Logical start/end behavior follows direction without adding interactive semantics."
+    }
+  ],
+  "keyboard": [
+    {
+      "keys": "None",
+      "behavior": "Decorative and semantic separators are not focusable splitters. No dragging or keyboard-resize behavior is implemented."
+    }
+  ],
+  "guidelines": [
+    "This optional local extension is separate from the Menu divider class.",
+    "Hide purely decorative separators with aria-hidden=true; use a named separator role only when the boundary is meaningful.",
+    "Set aria-orientation=vertical on meaningful vertical separators. Never add tabindex unless implementing a complete splitter separately.",
+    "Use real headings for sections; generated lines and short divider labels do not establish document headings.",
+    "Start/end reflect logical direction; they do not reorder content.",
+    "CSS only supplies lines, labels and spacing. There is no resize, focus or dismissal controller."
+  ]
+}
+---
+
+
+import Code from '../../../components/component/Code.astro'
+import Example from '../../../components/component/Example.astro'
+import Variants from '../../../components/component/Variants.astro'
+import Tokens from '../../../components/component/Tokens.astro'
+import Keyboard from '../../../components/component/Keyboard.astro'
+import Guidelines from '../../../components/component/Guidelines.astro'
+import Classes from '../../../components/component/Classes.astro'
+import { componentDetail, componentExample, documentedComponents } from '../../../data/component-reference'
+
+<h2 id="example">Example</h2>
+<div class="docs-callout docs-callout-info"><strong>Optional local extension.</strong> This optional pattern is separate from the core and has no matching core plugin. This guide explicitly loads the existing optional extension CSS after core; normal core pages do not. Its Sass belongs to the <code>{"custom"}</code> layer. Import optional styling explicitly in your application.</div>
+<Code source={"import 'tremplin/css'\nimport 'tremplin/css/extensions'"} standalone={true} plain={true} label="Copy optional extension CSS imports" />
+
+<Example markup={componentExample("divider")} />
+
+<h2 id="variants">Variants and states</h2>
+<Variants name="divider" />
+
+{componentDetail("divider").variables.length > 0 && <>
+<h2 id="css-variables">CSS variables</h2>
+<p>Override these namespaced properties globally or on a component subtree.</p>
+<Tokens name="divider" />
+</>}
+
+{componentDetail("divider").sass && <>
+<h2 id="sass">Sass customization</h2>
+<Code source={componentDetail("divider").sass} standalone={true} />
+</>}
+
+{componentDetail("divider").keyboard.length > 0 && <>
+<h2 id="keyboard">Keyboard interactions</h2>
+<Keyboard name="divider" />
+</>}
+
+<h2 id="guidelines">Usage guidelines</h2>
+<Guidelines name="divider" />
+
+{documentedComponents.find(component => component.name === "divider").classes.length > 0 && <>
+<h2 id="classes">CSS classes</h2>
+<p>Use these public, unprefixed classes in application markup.</p>
+<Classes name="divider" />
+</>}
+
+<h2 id="javascript">JavaScript</h2>
+<p>This optional CSS extension has no matching core JavaScript plugin. Any demonstrated dynamic action is application-owned and is disclosed below.</p>

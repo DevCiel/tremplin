@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-08",
+  "sourceArtifact": "artifacts/local-patterns-before.json",
+  "sourceSha256": "45b4aefca05cee516bc8c437d31d00fd65e35687bafb7d4443c2a0e80312049d",
+  "protectedInputs": {
+    "metadata/strict-api-baseline.json": "d25081fdf87e799f40525e540ded1615729da9a3517ce615daf9816e8ed34b67",
+    "metadata/bootstrap6-security-patches.json": "ff4658e324e38d79e9cad20b2869867725a83fa64107468fb16a04c45e475f68",
+    "metadata/bootstrap6-reference.json": "b37994647e3baad1f908bb1c3212c1531ba4e05642838ce59d6cbba6966dcbc9",
+    "metadata/api.json": "c682efb6686acc914c5b4401c9f1898d33c54094690d1ae506bda0e013e3d3c2",
+    "metadata/documentation-tokens.json": "dd43d627c44e7128639431a56766998b2455b1d42ac6e336a21110da0a40d11c",
+    "tsconfig.core.json": "0e1a421add852ca9ce0449055a2a1f5bbbdd4cf66fc97cc5c88800322fd4645c",
+    "tsconfig.json": "5a84d33e53063c6771f5a9b1badc67d6327cac2e17e093236989acfedee395f3",
+    "playwright.docs-visual.config.ts": "c3b76624908d33c2a6dd0f9e0e4ae580cc3cb9e72c4236e8b4f41917a8f30d83",
+    "playwright.component-docs.config.ts": "623698c6118222d8bc0f76f69c86e911cac1ec5c8812bdecec3d307c4cd19057",
+    "site/public/docs.css": "ba36831052f1e80af37b1117824b0d974ca36c264859ab6dc69536d39cdc7763",
+    "package.json": "a79e25ad5bd9643838472289333f7ae83ea1cf03cac27e521e1bd5f046281b11",
+    "dist/css/tremplin.css": "2a286a2b093bb07c581baf5c7af79b383a183de87ab503557639a6ed14e16b21",
+    "dist/js/tremplin.js": "b47dc1b2a0f21fb5693f698808f9ff0a8e1b21807f5fbdbfe853f578a308e550",
+    "dist/css/tremplin-extensions.css": "e4c7e77c09cb3b83180e9b9e69870c64317328cd0e51555a70e6e36e6ea903eb",
+    "dist/css/tremplin-extensions.min.css": "6a1ba55fe4b2d0d230b36bb0add872eeeec3bd1a263ce4bb8b765c2a4127a045",
+    "src/scss/extensions/_status.scss": "abc420ccb3c76a0ae533dbbb0433b2997cf9716754e5c3aa266f2a389881abf9",
+    "src/scss/extensions/_timeline.scss": "be5aff79de24d91542e9a9f13c00664f4cc6febe351ca17b11a54ab7fb51a9cf",
+    "src/scss/extensions/_divider.scss": "8e54529f254429d277e3bc8db3de46cdeeb908726b0a416fb972a71f9ec8ffd5",
+    "src/scss/extensions/_empty-state.scss": "2e0624c0b4b12836502d53b048f36aa66dac9fff3ac85211e16b31dcf8bce93d",
+    "src/scss/extensions/_data-table.scss": "974eeb558d785218afb40508790c92ce7b21db346f0ea1a59a4ea88d7677525f"
+  }
+}
